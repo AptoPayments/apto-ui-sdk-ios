@@ -1,0 +1,262 @@
+default_platform(:ios)
+
+WORKSPACE = "ShiftSDK.xcworkspace"
+SCHEME = {
+  :unit => "ShiftSDK Demo Local",
+  :ui => "ShiftSDK Automation Tests"
+}
+PUBLIC_REPOS = {
+  :core => "../../../apto-sdk-ios",
+  :ui => "../../../apto-ui-sdk-ios"
+}
+POD_SPEC = "../../AptoSDK.podspec"
+UI_POD_SPEC = "../../AptoUISDK.podspec"
+
+
+platform :ios do
+  before_all do
+    setup_circle_ci
+  end
+
+  desc "Run unit tests"
+  lane :unit_tests do
+    scan(
+      workspace: WORKSPACE,
+      device: "iPhone X",
+      scheme: SCHEME[:unit],
+      clean: true,
+      output_style: "rspec",
+      output_types: "junit",
+      output_files: "rspec/results.xml",
+      code_coverage: true
+    )
+  end
+
+  desc "Run automation test"
+  lane :automation_tests do
+    scan(
+      workspace: WORKSPACE,
+      device: "iPhone X",
+      scheme: SCHEME[:ui],
+      clean: true,
+      output_style: "rspec",
+      output_types: "junit",
+      output_files: "rspec/results.xml"
+    )
+  end
+
+  desc "Run all tests"
+  lane :tests do
+    unit_tests
+    automation_tests
+  end
+
+  desc "Publish Core SDK"
+  lane :release_core do
+    # We will modify, commit and push files, better to start clean
+    ensure_git_status_clean
+
+    # Current branch
+    current_branch = git_branch
+
+    # If not in the integration branch. Double check!!
+    should_continue = prompt(text: "Are you in the release branch? (Current branch: #{current_branch})", boolean: true)
+    UI.user_error!("Checkout the release branch to continue") unless should_continue
+
+    # Verify tests pass before releasing.
+    # TODO: Replace by tests lane when Automation test are fixed
+    unit_tests
+
+    # New version
+    version = prompt(text: "New Core SDK version (Current version #{current_core_pod_version}): ")
+    update_core_pod_version(version)
+
+    # Update public repo
+    update_core_repo
+    validate_core_pod
+    publish_core_repo(version)
+    update_private_repo_core(version)
+
+    # Push repos to cocoapods
+    update_core_cocoapods
+  end
+
+  desc "Publish UI SDK"
+  lane :release_ui do
+    # We will modify, commit and push files, better to start clean
+    ensure_git_status_clean
+
+    # Current branch
+    current_branch = git_branch
+
+    # If not in the integration branch. Double check!!
+    should_continue = prompt(text: "Are you in the release branch? (Current branch: #{current_branch})", boolean: true)
+    UI.user_error!("Checkout the release branch to continue") unless should_continue
+
+    # Verify tests pass before releasing.
+    # TODO: Replace by tests lane when Automation test are fixed
+    unit_tests
+
+    # New version
+    version = prompt(text: "New Core SDK version (Current version #{current_ui_pod_version}): ")
+    update_ui_pod_version(version)
+
+    # Update public repo
+    update_ui_repo
+    validate_ui_pod
+    publish_ui_repo(version)
+    update_private_repo_ui(version)
+
+    # Push repos to cocoapods
+    update_ui_cocoapods
+  end
+
+  desc "Release core and UI SDKs"
+  lane :release do
+    release_core
+    release_ui
+  end
+end
+
+def current_core_pod_version()
+  text = File.read(POD_SPEC)
+  current_version = text.scan(/version.+".+"/).first
+  current_version.scan(/".+"/).first
+end
+
+def current_ui_pod_version()
+  text = File.read(UI_POD_SPEC)
+  current_version = text.scan(/version.+".+"/).first
+  current_version.scan(/".+"/).first
+end
+
+def update_core_pod_version(version)
+  # Update Podspec file
+  text = File.read(POD_SPEC)
+  new_contents = text.gsub(/version\s+=\s".+"/, "version          = \"#{version}\"")
+  new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
+  File.open(POD_SPEC, "w") {|file| file.puts new_contents }
+end
+
+def update_ui_pod_version(version)
+  # Update UI Podspec file
+  text = File.read(UI_POD_SPEC)
+  new_contents = text.gsub(/version\s+=\s".+"/, "version          = \"#{version}\"")
+  new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
+  File.open(UI_POD_SPEC, "w") {|file| file.puts new_contents }
+end
+
+def update_public_repo
+  update_core_repo
+  update_ui_repo
+end
+
+def update_core_repo
+  repo = PUBLIC_REPOS[:core]
+  repo_pod = "#{repo}/Pod"
+  repo_assets = "#{repo}/Pod/Assets"
+  repo_loc = "#{repo}/Pod"
+  repo_code = "#{repo}/Pod/Classes"
+
+  # Remove current content
+  sh("cp #{POD_SPEC} #{repo}")
+  sh("rm -rf #{repo_pod} | true")
+
+  # Copy new content
+  sh("mkdir -p #{repo_assets}")
+  sh("cp ../../Pod/Assets/*.cer #{repo_assets} | true")
+  sh("cp -r ../../Pod/Localization #{repo_loc}")
+  sh("mkdir -p #{repo_code}")
+  sh("cp -r ../../Pod/Classes/core #{repo_code}")
+end
+
+def update_ui_repo
+  repo = PUBLIC_REPOS[:ui]
+  repo_pod = "#{repo}/Pod"
+  repo_assets = "#{repo}/Pod"
+  repo_loc = "#{repo}/Pod"
+  repo_fonts = "#{repo}/Pod/Fonts"
+  repo_code = "#{repo}/Pod/Classes"
+
+  # Remove current content
+  sh("cp #{UI_POD_SPEC} #{repo}")
+  sh("rm -rf #{repo_pod} | true")
+  sh("rm -rf #{repo}/Example | true")
+  sh("mkdir -p #{repo_pod}")
+
+  # Copy new content
+  sh("cp -r ../../Pod/Assets #{repo_assets}")
+  sh("cp -r ../../Pod/Localization #{repo_loc}")
+  sh("mkdir -p #{repo_fonts}")
+  sh("cp ../../Pod/Fonts/*.ttf #{repo_fonts}")
+  sh("mkdir -p #{repo_code}")
+  sh("cp -r ../../Pod/Classes/ui #{repo_code}")
+  sh("cp -r ../../Example #{repo}")
+
+  # Clean Example App
+  sh("rm -rf #{repo}/Example/Pods | true")
+  sh("rm -rf #{repo}/Example/Demo/Fonts | true")
+  sh("rm #{repo}/Assets/*.cer | true")
+end
+
+def validate_core_pod
+  # Verify Podspec file. We do not wanna validate the dependencies. Unit tests already passed.
+  Dir.chdir(PUBLIC_REPOS[:core]) do
+    sh("pod lib lint AptoSDK.podspec --allow-warnings --no-subspecs --skip-tests --silent")
+  end
+end
+
+def validate_ui_pod
+  # Verify Podspec file. We do not wanna validate the dependencies. Unit tests already passed.
+  Dir.chdir(PUBLIC_REPOS[:ui]) do
+    sh("pod lib lint AptoUISDK.podspec --allow-warnings --no-subspecs --skip-tests --silent")
+  end
+end
+
+def update_private_repo_core(version)
+  sh("git add #{POD_SPEC}")
+  sh("git commit -m \"bump core SDK podspec version to #{version}\"")
+  sh("git push -u")
+end
+
+def update_private_repo_ui(version)
+  sh("git add #{UI_POD_SPEC}")
+  sh("git commit -m \"bump UI SDK podspec version to #{version}\"")
+  sh("git push -u")
+end
+
+def publish_core_repo(version)
+  Dir.chdir(PUBLIC_REPOS[:core]) do
+    sh("git add .")
+    sh("git commit -m \"release version #{version}\"")
+    sh("git push -u")
+    sh("git tag #{version}")
+    sh("git push origin --tags")
+  end
+end
+
+def publish_ui_repo(version)
+  Dir.chdir(PUBLIC_REPOS[:ui]) do
+    sh("git add .")
+    sh("git commit -m \"release version #{version}\"")
+    sh("git push -u")
+    sh("git tag #{version}")
+    sh("git push origin --tags")
+  end
+end
+
+def update_core_cocoapods
+  # This step requires that you first:
+  # pod trunk register user@server.com 'Your Full Name' --description='macbook pro'
+  Dir.chdir(PUBLIC_REPOS[:core]) do
+    sh("pod trunk push AptoSDK.podspec --allow-warnings --skip-tests")
+  end
+end
+
+def update_ui_cocoapods
+  # This step requires that you first:
+  # pod trunk register user@server.com 'Your Full Name' --description='macbook pro'
+  Dir.chdir(PUBLIC_REPOS[:ui]) do
+    sh("pod trunk push AptoUISDK.podspec --allow-warnings --skip-tests")
+  end
+end
