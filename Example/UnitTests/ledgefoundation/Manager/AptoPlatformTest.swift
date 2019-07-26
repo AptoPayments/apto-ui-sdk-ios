@@ -37,7 +37,7 @@ class AptoPlatformTest: XCTestCase {
     sut.initializeWithApiKey(apiKey)
 
     // Then
-    XCTAssertEqual(AptoPlatformEnvironment.sandbox, sut.environment)
+    XCTAssertEqual(AptoPlatformEnvironment.production, sut.environment)
   }
 
   func testInitializeNotifyDelegate() {

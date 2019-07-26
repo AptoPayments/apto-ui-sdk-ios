@@ -69,7 +69,7 @@ open class FormRowDatePickerView: FormRowTextInputView {
     textField.inputView = datePicker
     datePicker.addTarget(self, action: #selector(FormRowDatePickerView.datePickerValueChanged(_:)), for: .valueChanged)
     guard let date = self.date else {
-      self.valid.next(false)
+      self.valid.send(false)
       return
     }
     datePicker.date = date
@@ -107,7 +107,7 @@ open class FormRowDatePickerView: FormRowTextInputView {
   }
 
   @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-    bndDate.next(sender.date)
+    bndDate.send(sender.date)
     updateTextWith(date: sender.date)
   }
 

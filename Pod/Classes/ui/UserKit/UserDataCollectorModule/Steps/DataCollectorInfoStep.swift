@@ -155,8 +155,8 @@ private extension InfoStep {
     emailNotSpecified.checkIcon.tintColor = uiConfig.tintColor
     rows.append(emailNotSpecified)
     if let notSpecified = emailDataPoint.notSpecified {
-      emailNotSpecified.bndValue.next(notSpecified)
-      emailField.bndValue.next(nil)
+      emailNotSpecified.bndValue.send(notSpecified)
+      emailField.bndValue.send(nil)
       self.validatableRows = self.validatableRows.compactMap { ($0 == emailField) ? nil: $0 }
       self.setupStepValidation()
     }
@@ -164,7 +164,7 @@ private extension InfoStep {
       emailDataPoint.notSpecified = checked
       emailField.isEnabled = !checked
       if checked {
-        emailField.bndValue.next(nil)
+        emailField.bndValue.send(nil)
         self.validatableRows = self.validatableRows.compactMap { ($0 == emailField) ? nil: $0 }
       }
       else {
@@ -210,11 +210,11 @@ private extension InfoStep {
                                                    uiConfig: uiConfig)
     phoneField.bndValue.observeNext { phoneNumber in
       if let countryCode = phoneNumber?.countryCode {
-        phoneDataPoint.countryCode.next(countryCode)
+        phoneDataPoint.countryCode.send(countryCode)
       }
       if let formattedPhone = PhoneHelper.sharedHelper().parsePhoneWith(countryCode: phoneNumber?.countryCode,
                                                                         nationalNumber: phoneNumber?.phoneNumber) {
-        phoneDataPoint.phoneNumber.next(formattedPhone.phoneNumber.value)
+        phoneDataPoint.phoneNumber.send(formattedPhone.phoneNumber.value)
       }
     }.dispose(in: disposeBag)
     return phoneField

@@ -46,6 +46,11 @@ Publish UI SDK
 fastlane ios release
 ```
 Release core and UI SDKs
+### ios release_objc
+```
+fastlane ios release_objc
+```
+Publish ObjC Wrapper SDK
 
 ----
 

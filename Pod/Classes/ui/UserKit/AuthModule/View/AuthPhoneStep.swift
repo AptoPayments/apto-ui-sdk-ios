@@ -40,11 +40,11 @@ class AuthPhoneStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                                                    uiConfig: uiConfig)
     phoneField.bndValue.observeNext { phoneNumber in
       if let countryCode = phoneNumber?.countryCode {
-        phoneDataPoint.countryCode.next(countryCode)
+        phoneDataPoint.countryCode.send(countryCode)
       }
       if let formattedPhone = PhoneHelper.sharedHelper().parsePhoneWith(countryCode: phoneNumber?.countryCode,
                                                                         nationalNumber: phoneNumber?.phoneNumber) {
-        phoneDataPoint.phoneNumber.next(formattedPhone.phoneNumber.value)
+        phoneDataPoint.phoneNumber.send(formattedPhone.phoneNumber.value)
       }
     }.dispose(in: disposeBag)
     retVal.append(phoneField)

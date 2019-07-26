@@ -183,7 +183,7 @@ class UIPinEntryTextField: UIView {
   ///
   /// - Parameter textField: textField Current textfield
   private func moveFrom(currentTextField textField: UITextField) {
-    guard let index = textFields.index(of: textField), index < (pinCount - 1) else {
+    guard let index = textFields.firstIndex(of: textField), index < (pinCount - 1) else {
       return
     }
     textFields[index + 1].text = invisibleSign
@@ -194,7 +194,7 @@ class UIPinEntryTextField: UIView {
   ///
   /// - Parameter textField: textField Current textfield
   private func moveBackwardFrom(currentTextField textField: UITextField) {
-    guard let index = textFields.index(of: textField), index > 0 else {
+    guard let index = textFields.firstIndex(of: textField), index > 0 else {
       return
     }
     textFields[index].text = ""

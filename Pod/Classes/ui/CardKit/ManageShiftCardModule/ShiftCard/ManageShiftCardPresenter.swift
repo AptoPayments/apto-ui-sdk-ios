@@ -104,7 +104,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
       case .failure(let error):
         self.view.show(error: error)
       case .success:
-        self.viewModel.state.next(.active)
+        self.viewModel.state.send(.active)
       }
     }
   }
@@ -144,7 +144,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
       case .success(let cardDetails):
         if let wself = self {
           wself.updateViewModelWith(cardDetails: cardDetails)
-          wself.viewModel.cardInfoVisible.next(true)
+          wself.viewModel.cardInfoVisible.send(true)
           wself.cardInfoDataTimeout = Date().add(2, units: Calendar.Component.minute)
         }
       }
@@ -153,7 +153,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
   }
 
   func hideCardInfo() {
-    viewModel.cardInfoVisible.next(false)
+    viewModel.cardInfoVisible.send(false)
   }
 
   func reloadTapped(showSpinner: Bool) {
@@ -233,52 +233,52 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
 
   private func updateViewModelWith(card: Card) {
     router.update(card: card)
-    viewModel.cardHolder.next(card.cardHolder)
-    viewModel.lastFour.next(card.lastFourDigits)
-    viewModel.cardNetwork.next(card.cardNetwork)
-    viewModel.fundingSource.next(card.fundingSource)
+    viewModel.cardHolder.send(card.cardHolder)
+    viewModel.lastFour.send(card.lastFourDigits)
+    viewModel.cardNetwork.send(card.cardNetwork)
+    viewModel.fundingSource.send(card.fundingSource)
     if card.orderedStatus == .ordered && card.orderedStatus != viewModel.orderedStatus.value {
-      viewModel.showPhysicalCardActivationMessage.next(true)
+      viewModel.showPhysicalCardActivationMessage.send(true)
     }
     else {
-      viewModel.showPhysicalCardActivationMessage.next(false)
+      viewModel.showPhysicalCardActivationMessage.send(false)
     }
-    viewModel.orderedStatus.next(card.orderedStatus)
-    viewModel.spendableToday.next(card.spendableToday)
-    viewModel.nativeSpendableToday.next(card.nativeSpendableToday)
-    viewModel.cardStyle.next(card.cardStyle)
-    viewModel.state.next(card.state)
+    viewModel.orderedStatus.send(card.orderedStatus)
+    viewModel.spendableToday.send(card.spendableToday)
+    viewModel.nativeSpendableToday.send(card.nativeSpendableToday)
+    viewModel.cardStyle.send(card.cardStyle)
+    viewModel.state.send(card.state)
     if let showActivateCardButton = config.showActivateCardButton {
-      viewModel.isActivateCardFeatureEnabled.next(showActivateCardButton)
+      viewModel.isActivateCardFeatureEnabled.send(showActivateCardButton)
     }
     else {
-      viewModel.isActivateCardFeatureEnabled.next(false)
+      viewModel.isActivateCardFeatureEnabled.send(false)
     }
     if viewModel.cardLoaded.value == false {
-      viewModel.cardLoaded.next(true)
+      viewModel.cardLoaded.send(true)
     }
     if let showStatsButton = config.showStatsButton {
-      viewModel.isStatsFeatureEnabled.next(showStatsButton)
+      viewModel.isStatsFeatureEnabled.send(showStatsButton)
     }
     else {
-      viewModel.isStatsFeatureEnabled.next(false)
+      viewModel.isStatsFeatureEnabled.send(false)
     }
   }
 
   private func updateViewModelWith(cardDetails: CardDetails) {
-    viewModel.pan.next(cardDetails.pan)
-    viewModel.cvv.next(cardDetails.cvv)
+    viewModel.pan.send(cardDetails.pan)
+    viewModel.cvv.send(cardDetails.cvv)
     let expirationComponents = cardDetails.expiration.split(separator: "-")
     if var year = UInt(expirationComponents[0]), let month = UInt(expirationComponents[1]) {
       if year > 99 { year = year - 2000 }
-      viewModel.expirationMonth.next(month)
-      viewModel.expirationYear.next(year)
+      viewModel.expirationMonth.send(month)
+      viewModel.expirationYear.send(year)
     }
   }
 
   fileprivate func refreshTransactions(forceRefresh: Bool = true,
                                        completion: @escaping (_ transactionsLoaded: Int) -> Void) {
-    viewModel.transactionsLoaded.next(false)
+    viewModel.transactionsLoaded.send(false)
     fetchTransactionOperationQueue.reloadTransactions(rows: rowsPerPage,
                                                       forceRefresh: forceRefresh) { [weak self] result in
       guard let self = self else { return }
@@ -287,7 +287,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
         self.view.show(error: error)
       case .success(let transactions):
         self.viewModel.transactions.removeAllItemsAndSections()
-        self.viewModel.transactionsLoaded.next(true)
+        self.viewModel.transactionsLoaded.send(true)
         self.process(newTransactions: transactions)
         completion(transactions.count)
       }
@@ -348,7 +348,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
     }
     let isFirstMonthOfTheYearWithTransaction = firstTransactionMonthPerYear[transactionYear] == transactionMonth
     let sectionName = section(for: transaction, includeYearNumber: isFirstMonthOfTheYearWithTransaction)
-    if let indexOfSection = sections.index(of: sectionName) {
+    if let indexOfSection = sections.firstIndex(of: sectionName) {
       if asTopItem {
         viewModel.transactions.insert(item: transaction, at: IndexPath(row: 0, section: indexOfSection))
       }

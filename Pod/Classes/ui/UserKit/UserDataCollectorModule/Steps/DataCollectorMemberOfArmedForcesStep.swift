@@ -50,17 +50,17 @@ class MemberOfArmedForcesStep: DataCollectorBaseStep, DataCollectorStepProtocol 
     let memberOfArmedForces = FormBuilder.radioRowWith(labels: labels, values: [0, 1], uiConfig: uiConfig)
     _ = memberOfArmedForces.bndValue.observeNext { [weak self] value in
       if let selectedValue = value {
-        self?.memberOfArmedForcesDataPoint.memberOfArmedForces.next(selectedValue == 0)
+        self?.memberOfArmedForcesDataPoint.memberOfArmedForces.send(selectedValue == 0)
       }
       else {
-        self?.memberOfArmedForcesDataPoint.memberOfArmedForces.next(nil)
+        self?.memberOfArmedForcesDataPoint.memberOfArmedForces.send(nil)
       }
     }
     if let value = self.memberOfArmedForcesDataPoint.memberOfArmedForces.value {
-      memberOfArmedForces.bndValue.next(value == true ? 0 : 1)
+      memberOfArmedForces.bndValue.send(value == true ? 0 : 1)
     }
     else {
-      memberOfArmedForces.bndValue.next(nil)
+      memberOfArmedForces.bndValue.send(nil)
     }
     let failReasonMessage = "member-of-armed-forces-collector.time-at-address.warning.empty".podLocalized()
     memberOfArmedForces.numberValidator = NonNullIntValidator(failReasonMessage: failReasonMessage)

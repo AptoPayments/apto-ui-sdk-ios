@@ -15,7 +15,7 @@ class ContentPresenterPresenter: ContentPresenterPresenterProtocol {
 
   func viewLoaded() {
     interactor.provideContent { content in
-      self.viewModel.content.next(content)
+      self.viewModel.content.send(content)
     }
   }
 

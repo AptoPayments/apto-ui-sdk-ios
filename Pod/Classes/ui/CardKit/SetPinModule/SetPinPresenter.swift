@@ -21,12 +21,12 @@ class SetPinPresenter: SetPinPresenterProtocol {
 
   func pinEntered(_ pin: String) {
     analyticsManager?.track(event: .setPinConfirmed)
-    viewModel.showLoading.next(true)
+    viewModel.showLoading.send(true)
     interactor?.changePin(pin) { [weak self] result in
-      self?.viewModel.showLoading.next(false)
+      self?.viewModel.showLoading.send(false)
       switch(result) {
       case .failure(let error):
-        self?.viewModel.error.next(error)
+        self?.viewModel.error.send(error)
       case .success:
         self?.router?.pinChanged()
       }

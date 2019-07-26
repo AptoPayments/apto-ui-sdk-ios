@@ -3,15 +3,18 @@ default_platform(:ios)
 WORKSPACE = "ShiftSDK.xcworkspace"
 SCHEME = {
   :unit => "ShiftSDK Demo Local",
-  :ui => "ShiftSDK Automation Tests"
+  :ui => "ShiftSDK Automation Tests",
 }
 PUBLIC_REPOS = {
   :core => "../../../apto-sdk-ios",
-  :ui => "../../../apto-ui-sdk-ios"
+  :ui => "../../../apto-ui-sdk-ios",
+  :objc => "../../../apto-objc-sdk-ios"
 }
-POD_SPEC = "../../AptoSDK.podspec"
-UI_POD_SPEC = "../../AptoUISDK.podspec"
-
+POD_SPECS = {
+  :core => "../../AptoSDK.podspec",
+  :ui => "../../AptoUISDK.podspec",
+  :objc => "../../AptoObjCSDK.podspec"
+}
 
 platform :ios do
   before_all do
@@ -116,39 +119,78 @@ platform :ios do
     release_core
     release_ui
   end
+
+  desc "Publish ObjC Wrapper SDK"
+  lane :release_objc do
+    # We will modify, commit and push files, better to start clean
+    ensure_git_status_clean
+
+    # Current branch
+    current_branch = git_branch
+
+    # If not in the integration branch. Double check!!
+    should_continue = prompt(text: "Are you in the release branch? (Current branch: #{current_branch})", boolean: true)
+    UI.user_error!("Checkout the release branch to continue") unless should_continue
+
+    # Verify tests pass before releasing.
+    # TODO: Replace by tests lane when Automation test are fixed
+    unit_tests
+
+    # New version
+    version = prompt(text: "New Core SDK version (Current version #{current_objc_pod_version}): ")
+    update_objc_pod_version(version)
+
+    # Update public repo
+    update_objc_repo
+    validate_objc_pod
+    publish_objc_repo(version)
+    update_private_repo_objc(version)
+
+    # Push repos to cocoapods
+    update_objc_cocoapods
+  end
 end
 
 def current_core_pod_version()
-  text = File.read(POD_SPEC)
+  text = File.read(POD_SPECS[:core])
   current_version = text.scan(/version.+".+"/).first
   current_version.scan(/".+"/).first
 end
 
 def current_ui_pod_version()
-  text = File.read(UI_POD_SPEC)
+  text = File.read(POD_SPECS[:ui])
+  current_version = text.scan(/version.+".+"/).first
+  current_version.scan(/".+"/).first
+end
+
+def current_objc_pod_version()
+  text = File.read(POD_SPECS[:objc])
   current_version = text.scan(/version.+".+"/).first
   current_version.scan(/".+"/).first
 end
 
 def update_core_pod_version(version)
   # Update Podspec file
-  text = File.read(POD_SPEC)
+  text = File.read(POD_SPECS[:core])
   new_contents = text.gsub(/version\s+=\s".+"/, "version          = \"#{version}\"")
   new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
-  File.open(POD_SPEC, "w") {|file| file.puts new_contents }
+  File.open(POD_SPECS[:core], "w") {|file| file.puts new_contents }
 end
 
 def update_ui_pod_version(version)
   # Update UI Podspec file
-  text = File.read(UI_POD_SPEC)
+  text = File.read(POD_SPECS[:ui])
   new_contents = text.gsub(/version\s+=\s".+"/, "version          = \"#{version}\"")
   new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
-  File.open(UI_POD_SPEC, "w") {|file| file.puts new_contents }
+  File.open(POD_SPECS[:ui], "w") {|file| file.puts new_contents }
 end
 
-def update_public_repo
-  update_core_repo
-  update_ui_repo
+def update_objc_pod_version(version)
+  # Update UI Podspec file
+  text = File.read(POD_SPECS[:objc])
+  new_contents = text.gsub(/version\s+=\s".+"/, "version          = \"#{version}\"")
+  new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
+  File.open(POD_SPECS[:objc], "w") {|file| file.puts new_contents }
 end
 
 def update_core_repo
@@ -159,10 +201,11 @@ def update_core_repo
   repo_code = "#{repo}/Pod/Classes"
 
   # Remove current content
-  sh("cp #{POD_SPEC} #{repo}")
+  sh("cp #{POD_SPECS[:core]} #{repo}")
   sh("rm -rf #{repo_pod} | true")
 
   # Copy new content
+  sh("cp ../../README.md #{repo}/")
   sh("mkdir -p #{repo_assets}")
   sh("cp ../../Pod/Assets/*.cer #{repo_assets} | true")
   sh("cp -r ../../Pod/Localization #{repo_loc}")
@@ -179,7 +222,7 @@ def update_ui_repo
   repo_code = "#{repo}/Pod/Classes"
 
   # Remove current content
-  sh("cp #{UI_POD_SPEC} #{repo}")
+  sh("cp #{POD_SPECS[:ui]} #{repo}")
   sh("rm -rf #{repo_pod} | true")
   sh("rm -rf #{repo}/Example | true")
   sh("mkdir -p #{repo_pod}")
@@ -199,6 +242,20 @@ def update_ui_repo
   sh("rm #{repo}/Assets/*.cer | true")
 end
 
+def update_objc_repo
+  repo = PUBLIC_REPOS[:objc]
+  repo_pod = "#{repo}/Pod"
+  repo_code = "#{repo}/Pod/Classes/wrappers"
+
+  # Remove current content
+  sh("cp #{POD_SPECS[:objc]} #{repo}")
+  sh("rm -rf #{repo_pod} | true")
+
+  # Copy new content
+  sh("mkdir -p #{repo_code}")
+  sh("cp -r ../../Pod/Classes/wrappers/objc #{repo_code}")
+end
+
 def validate_core_pod
   # Verify Podspec file. We do not wanna validate the dependencies. Unit tests already passed.
   Dir.chdir(PUBLIC_REPOS[:core]) do
@@ -213,15 +270,28 @@ def validate_ui_pod
   end
 end
 
+def validate_objc_pod
+  # Verify Podspec file. We do not wanna validate the dependencies. Unit tests already passed.
+  Dir.chdir(PUBLIC_REPOS[:objc]) do
+    sh("pod lib lint AptoObjCSDK.podspec --allow-warnings --no-subspecs --skip-tests --silent")
+  end
+end
+
 def update_private_repo_core(version)
-  sh("git add #{POD_SPEC}")
+  sh("git add #{POD_SPECS[:core]}")
   sh("git commit -m \"bump core SDK podspec version to #{version}\"")
   sh("git push -u")
 end
 
 def update_private_repo_ui(version)
-  sh("git add #{UI_POD_SPEC}")
+  sh("git add #{POD_SPECS[:ui]}")
   sh("git commit -m \"bump UI SDK podspec version to #{version}\"")
+  sh("git push -u")
+end
+
+def update_private_repo_objc(version)
+  sh("git add #{POD_SPECS[:objc]}")
+  sh("git commit -m \"bump Obj-C wrapper podspec version to #{version}\"")
   sh("git push -u")
 end
 
@@ -245,6 +315,16 @@ def publish_ui_repo(version)
   end
 end
 
+def publish_objc_repo(version)
+  Dir.chdir(PUBLIC_REPOS[:objc]) do
+    sh("git add .")
+    sh("git commit -m \"release version #{version}\"")
+    sh("git push -u")
+    sh("git tag #{version}")
+    sh("git push origin --tags")
+  end
+end
+
 def update_core_cocoapods
   # This step requires that you first:
   # pod trunk register user@server.com 'Your Full Name' --description='macbook pro'
@@ -258,5 +338,13 @@ def update_ui_cocoapods
   # pod trunk register user@server.com 'Your Full Name' --description='macbook pro'
   Dir.chdir(PUBLIC_REPOS[:ui]) do
     sh("pod trunk push AptoUISDK.podspec --allow-warnings --skip-tests")
+  end
+end
+
+def update_objc_cocoapods
+  # This step requires that you first:
+  # pod trunk register user@server.com 'Your Full Name' --description='macbook pro'
+  Dir.chdir(PUBLIC_REPOS[:objc]) do
+    sh("pod trunk push AptoObjCSDK.podspec --allow-warnings --skip-tests")
   end
 end

@@ -54,7 +54,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                                         faq: config.faq,
                                         termsAndConditions: config.termsAndCondition,
                                         privacyPolicy: config.privacyPolicy)
-    self.viewModel.legalDocuments.next(legalDocuments)
+    self.viewModel.legalDocuments.send(legalDocuments)
   }
 
   func viewLoaded() {
@@ -68,11 +68,11 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
         guard let self = self else { return }
         switch result {
         case .failure(let error):
-          self.viewModel.locked.next(false)
+          self.viewModel.locked.send(false)
           switcher.isOn = false
           self.handleDisableCardError(error: error)
         case .success:
-          self.viewModel.locked.next(true)
+          self.viewModel.locked.send(true)
           self.router.cardStateChanged()
         }
       }
@@ -82,10 +82,10 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
         guard let self = self else { return }
         switch result {
         case .failure(let error):
-          self.viewModel.locked.next(true)
+          self.viewModel.locked.send(true)
           self.handleEnableCardError(error: error)
         case .success:
-          self.viewModel.locked.next(false)
+          self.viewModel.locked.send(false)
           self.router.cardStateChanged()
         }
       }
@@ -128,7 +128,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
       self.showCardInfoAction.run { [weak self] accessGranted in
         guard let self = self else { return }
         if !accessGranted {
-          self.viewModel.showCardInfo.next(false)
+          self.viewModel.showCardInfo.send(false)
         }
         else {
           self.view.showLoadingSpinner()
@@ -140,29 +140,29 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
       }
     }
     else {
-      viewModel.showCardInfo.next(false)
+      viewModel.showCardInfo.send(false)
       router.hideCardInfo()
     }
   }
 
   fileprivate func refreshData() {
     if let setPin = card.features?.setPin, setPin.status == .enabled {
-      viewModel.showChangePin.next(true)
+      viewModel.showChangePin.send(true)
     }
     else {
-      viewModel.showChangePin.next(false)
+      viewModel.showChangePin.send(false)
     }
     if let getPin = card.features?.getPin, getPin.status == .enabled {
-      viewModel.showGetPin.next(true)
+      viewModel.showGetPin.send(true)
     }
     else {
-      viewModel.showGetPin.next(false)
+      viewModel.showGetPin.send(false)
     }
-    viewModel.locked.next(card.state != .active)
-    viewModel.showCardInfo.next(router.isCardInfoVisible())
-    viewModel.showIVRSupport.next(card.features?.ivrSupport?.status == .enabled)
-    viewModel.isShowDetailedCardActivityEnabled.next(interactor.isShowDetailedCardActivityEnabled())
-    viewModel.showDetailedCardActivity.next(config.showDetailedCardActivity)
+    viewModel.locked.send(card.state != .active)
+    viewModel.showCardInfo.send(router.isCardInfoVisible())
+    viewModel.showIVRSupport.send(card.features?.ivrSupport?.status == .enabled)
+    viewModel.isShowDetailedCardActivityEnabled.send(interactor.isShowDetailedCardActivityEnabled())
+    viewModel.showDetailedCardActivity.send(config.showDetailedCardActivity)
   }
 
   func closeTapped() {
@@ -188,7 +188,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
         }
         self.view.show(error: error)
       case .success:
-        self.viewModel.locked.next(true)
+        self.viewModel.locked.send(true)
         self.router.cardStateChanged()
       }
     }

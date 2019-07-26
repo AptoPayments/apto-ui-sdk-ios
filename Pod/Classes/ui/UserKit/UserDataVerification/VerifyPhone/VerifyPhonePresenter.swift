@@ -45,9 +45,9 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
   var userTriggeredResendPin = false
 
   func viewLoaded() {
-    viewModel.title.next("auth.verify_phone.title".podLocalized())
-    viewModel.subtitle.next("auth.verify_phone.explanation".podLocalized())
-    viewModel.pinEntryState.next(.enabled)
+    viewModel.title.send("auth.verify_phone.title".podLocalized())
+    viewModel.subtitle.send("auth.verify_phone.explanation".podLocalized())
+    viewModel.pinEntryState.send(.enabled)
     interactor.providePhoneNumber()
   }
 
@@ -68,17 +68,17 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
 
   func phoneNumberReceived(_ phone: PhoneNumber) {
     guard let nationalNumber = phone.phoneNumber.value else {
-      viewModel.datapointValue.next("??")
+      viewModel.datapointValue.send("??")
       return
     }
     let phoneNumber = PhoneHelper.sharedHelper().formatPhoneWith(countryCode: phone.countryCode.value,
                                                                  nationalNumber: nationalNumber,
                                                                  numberFormat: .nationalWithPrefix)
-    viewModel.datapointValue.next(phoneNumber)
+    viewModel.datapointValue.send(phoneNumber)
   }
 
   func unknownPhoneNumber() {
-    viewModel.datapointValue.next("")
+    viewModel.datapointValue.send("")
   }
 
   func verificationReceived(_ verification: Verification) {
@@ -92,7 +92,7 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
   func sendPinSuccess() {
     view.hideLoadingSpinner()
     startResendPinCountDown()
-    viewModel.pinEntryState.next(.enabled)
+    viewModel.pinEntryState.send(.enabled)
     if (userTriggeredResendPin) { view.showPinResent() }
   }
 
@@ -110,7 +110,7 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
 
   func pinVerificationExpired() {
     view.hideLoadingSpinner()
-    viewModel.pinEntryState.next(.expired)
+    viewModel.pinEntryState.send(.expired)
   }
 
   func pinVerificationError(_ error: NSError) {
@@ -118,16 +118,16 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
   }
 
   private func startResendPinCountDown() {
-    viewModel.footerTitle.next("auth.verify_phone.footer".podLocalized())
-    viewModel.resendButtonState.next(.waiting(pendingSeconds: Constants.waitSeconds))
+    viewModel.footerTitle.send("auth.verify_phone.footer".podLocalized())
+    viewModel.resendButtonState.send(.waiting(pendingSeconds: Constants.waitSeconds))
     countDown = CountDown()
     countDown.start(
       seconds: Constants.waitSeconds + 1,
       fireBlock: { [weak self] pendingSeconds in
-        self?.viewModel.resendButtonState.next(.waiting(pendingSeconds: pendingSeconds))
+        self?.viewModel.resendButtonState.send(.waiting(pendingSeconds: pendingSeconds))
       },
       endBlock: { [weak self] in
-        self?.viewModel.resendButtonState.next(.enabled)
+        self?.viewModel.resendButtonState.send(.enabled)
         self?.countDown.stop()
     })
   }

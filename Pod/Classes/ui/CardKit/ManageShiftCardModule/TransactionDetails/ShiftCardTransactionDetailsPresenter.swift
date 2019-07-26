@@ -55,40 +55,40 @@ class ShiftCardTransactionDetailsPresenter: ShiftCardTransactionDetailsPresenter
   }
 
   private func refreshViewModelWith(transaction: Transaction) {
-    viewModel.latitude.next(transaction.store?.latitude)
-    viewModel.longitude.next(transaction.store?.longitude)
-    viewModel.mccIcon.next(transaction.merchant?.mcc?.icon)
-    viewModel.description.next(transaction.transactionDescription?.capitalized)
-    viewModel.fiatAmount.next(transaction.localAmountRepresentation)
-    viewModel.nativeAmount.next(transaction.nativeBalance?.absText)
+    viewModel.latitude.send(transaction.store?.latitude)
+    viewModel.longitude.send(transaction.store?.longitude)
+    viewModel.mccIcon.send(transaction.merchant?.mcc?.icon)
+    viewModel.description.send(transaction.transactionDescription?.capitalized)
+    viewModel.fiatAmount.send(transaction.localAmountRepresentation)
+    viewModel.nativeAmount.send(transaction.nativeBalance?.absText)
     //address
-    viewModel.transactionDate.next(self.format(date: transaction.createdAt))
-    viewModel.transactionStatus.next(transaction.state.description())
+    viewModel.transactionDate.send(self.format(date: transaction.createdAt))
+    viewModel.transactionStatus.send(transaction.state.description())
     let genericDeclineReason = "transaction_details.details.decline_default.description".podLocalized()
-    viewModel.declineReason.next(transaction.declineCode?.description ?? genericDeclineReason)
-    viewModel.category.next(
+    viewModel.declineReason.send(transaction.declineCode?.description ?? genericDeclineReason)
+    viewModel.category.send(
       transaction.merchant?.mcc?.description() ?? "transaction_details.basic_info.category.unavailable".podLocalized()
     )
     // Funding source
     if let fee = transaction.feeAmount?.amount.value, abs(fee) > Double(0) {
-      viewModel.fee.next(transaction.feeAmount?.absText)
+      viewModel.fee.send(transaction.feeAmount?.absText)
     }
     else {
-      viewModel.fee.next(nil)
+      viewModel.fee.send(nil)
     }
     // Currency exchange???
     if let (nativeAmount, fiatAmount) = computeExchangeRateFor(adjustments: transaction.adjustments),
       let nativeCurrencySymbol = nativeAmount.currencySymbol {
-      viewModel.exchangeRate.next("1 \(nativeCurrencySymbol) ≈ \(fiatAmount.exchangeText)")
+      viewModel.exchangeRate.send("1 \(nativeCurrencySymbol) ≈ \(fiatAmount.exchangeText)")
     }
     else {
-      viewModel.exchangeRate.next(nil)
+      viewModel.exchangeRate.send(nil)
     }
-    viewModel.fundingSourceName.next(transaction.fundingSourceName)
-    viewModel.deviceType.next(transaction.deviceType.description())
-    viewModel.transactionClass.next(transaction.transactionClass.description())
-    viewModel.transactionType.next(transaction.transactionType.description())
-    viewModel.transactionId.next(transaction.transactionId)
+    viewModel.fundingSourceName.send(transaction.fundingSourceName)
+    viewModel.deviceType.send(transaction.deviceType.description())
+    viewModel.transactionClass.send(transaction.transactionClass.description())
+    viewModel.transactionType.send(transaction.transactionType.description())
+    viewModel.transactionId.send(transaction.transactionId)
     if let adjustments = transaction.adjustments {
       viewModel.adjustments.insert(contentsOf: adjustments, at: 0)
     }

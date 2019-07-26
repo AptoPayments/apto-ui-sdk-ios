@@ -16,7 +16,7 @@ class DataConfirmationPresenter: DataConfirmationPresenterProtocol {
 
   func viewLoaded() {
     interactor.provideUserData { [unowned self] userData in
-      self.viewModel.userData.next(userData)
+      self.viewModel.userData.send(userData)
     }
     analyticsManager?.track(event: Event.selectBalanceStoreOauthConfirm)
   }
@@ -41,14 +41,14 @@ class DataConfirmationPresenter: DataConfirmationPresenterProtocol {
       guard let self = self else { return }
       switch result {
       case .failure(let error):
-        self.viewModel.error.next(error)
+        self.viewModel.error.send(error)
       case .success(let userData):
-        self.viewModel.userData.next(userData)
+        self.viewModel.userData.send(userData)
       }
     }
   }
 
   func updateUserData(_ userData: DataPointList) {
-    viewModel.userData.next(userData)
+    viewModel.userData.send(userData)
   }
 }

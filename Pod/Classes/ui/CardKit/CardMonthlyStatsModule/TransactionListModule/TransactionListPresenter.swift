@@ -24,7 +24,7 @@ class TransactionListPresenter: TransactionListPresenterProtocol {
 
   func viewLoaded() {
     let title = config.categoryId?.name ?? "transactions.list.title".podLocalized()
-    viewModel.title.next(title)
+    viewModel.title.send(title)
     fetchTransactions(showLoadingSpinner: true, clearCurrent: true) { _ in }
     analyticsManager?.track(event: Event.transactionList)
   }
@@ -98,7 +98,7 @@ class TransactionListPresenter: TransactionListPresenterProtocol {
     }
     let isFirstMonthOfTheYearWithTransaction = firstTransactionMonthPerYear[transactionYear] == transactionMonth
     let sectionName = section(for: transaction, includeYearNumber: isFirstMonthOfTheYearWithTransaction)
-    if let indexOfSection = sections.index(of: sectionName) {
+    if let indexOfSection = sections.firstIndex(of: sectionName) {
       viewModel.transactions.appendItem(transaction, toSection: indexOfSection)
     }
     else {

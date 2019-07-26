@@ -51,25 +51,25 @@ private extension FormRowAddressView {
     textField.reactive.text.observeNext { [unowned self] address in
       guard let address = address, !address.isEmpty else {
         self.selectedPlace = nil
-        self.places.next([])
-        self.address.next(nil)
+        self.places.send([])
+        self.address.send(nil)
         return
       }
       guard address != self.selectedPlace?.name, address != self.address.value?.formattedAddress else {
         return
       }
-      self.address.next(nil)
+      self.address.send(nil)
       self.addressManager.autoComplete(address: address, countries: self.allowedCountries) { [weak self] result in
         switch result {
         case .failure:
           break
         case .success(let places):
-          self?.places.next(places)
+          self?.places.send(places)
         }
       }
     }.dispose(in: disposeBag)
     address.observeNext { [unowned self] address in
-      self.valid.next(address != nil)
+      self.valid.send(address != nil)
     }.dispose(in: disposeBag)
   }
 }
@@ -107,9 +107,9 @@ extension FormRowAddressView: UITableViewDelegate {
     addressManager.placeDetails(placeId: place.id) { [unowned self] result in
       switch result {
       case .failure:
-        self.address.next(nil)
+        self.address.send(nil)
       case .success(let address):
-        self.address.next(address)
+        self.address.send(address)
         self.textField.text = address.formattedAddress
       }
     }

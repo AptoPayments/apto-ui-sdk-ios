@@ -24,7 +24,7 @@ class FullScreenDisclaimerPresenter: FullScreenDisclaimerPresenterProtocol {
   }
 
   private func set(disclaimer: Content) {
-    viewModel.disclaimer.next(disclaimer)
+    viewModel.disclaimer.send(disclaimer)
   }
 
   func closeTapped() {

@@ -133,8 +133,8 @@ class InputDocumentPresenter: InputDocumentEventHandler {
                    actionDescription: "verify-document.action.front-card.description".podLocalized(),
                    okButtonTitle: "verify-document.ok-button.title".podLocalized(),
                    retakeButtonTitle: "verify-document.retake-button.title".podLocalized())
-    viewModel.state.next(.captureFrontPhoto)
-    viewModel.canSkip.next(false)
+    viewModel.state.send(.captureFrontPhoto)
+    viewModel.canSkip.send(false)
   }
 
   fileprivate func showCaptureBackDocument() {
@@ -145,8 +145,8 @@ class InputDocumentPresenter: InputDocumentEventHandler {
                    actionDescription: "verify-document.action.back-card.description".podLocalized(),
                    okButtonTitle: "verify-document.ok-button.title".podLocalized(),
                    retakeButtonTitle: "verify-document.retake-button.title".podLocalized())
-    viewModel.state.next(.captureBackPhoto)
-    viewModel.canSkip.next(true)
+    viewModel.state.send(.captureBackPhoto)
+    viewModel.canSkip.send(true)
   }
 
   fileprivate func showCaptureSelfie() {
@@ -157,8 +157,8 @@ class InputDocumentPresenter: InputDocumentEventHandler {
                    actionDescription: "verify-document.action.selfie.description".podLocalized(),
                    okButtonTitle: "verify-document.ok-button-selfie.title".podLocalized(),
                    retakeButtonTitle: "verify-document.retake-button.title".podLocalized())
-    viewModel.state.next(.captureSelfie)
-    viewModel.canSkip.next(false)
+    viewModel.state.send(.captureSelfie)
+    viewModel.canSkip.send(false)
   }
 
   fileprivate func showCheckFrontDocument(image: UIImage) {
@@ -168,7 +168,7 @@ class InputDocumentPresenter: InputDocumentEventHandler {
                    actionDescription: "verify-document.action.check-readability.description".podLocalized(),
                    okButtonTitle: "verify-document.ok-button.title".podLocalized(),
                    retakeButtonTitle: "verify-document.retake-button.title".podLocalized())
-    viewModel.state.next(.checkFrontPhoto(image))
+    viewModel.state.send(.checkFrontPhoto(image))
   }
 
   fileprivate func showCheckBackDocument(image: UIImage) {
@@ -178,7 +178,7 @@ class InputDocumentPresenter: InputDocumentEventHandler {
                    actionDescription: "verify-document.action.check-readability.description".podLocalized(),
                    okButtonTitle: "verify-document.ok-button.title".podLocalized(),
                    retakeButtonTitle: "verify-document.retake-button.title".podLocalized())
-    viewModel.state.next(.checkBackPhoto(image))
+    viewModel.state.send(.checkBackPhoto(image))
   }
 
   fileprivate func showCheckSelfieDocument(image: UIImage) {
@@ -188,7 +188,7 @@ class InputDocumentPresenter: InputDocumentEventHandler {
                    actionDescription: nil,
                    okButtonTitle: "verify-document.ok-button-selfie.title".podLocalized(),
                    retakeButtonTitle: "verify-document.retake-button.title".podLocalized())
-    viewModel.state.next(.checkSelfie(image))
+    viewModel.state.send(.checkSelfie(image))
   }
 
   fileprivate func configureTexts(screenTitle: String?,
@@ -197,11 +197,11 @@ class InputDocumentPresenter: InputDocumentEventHandler {
                                   actionDescription: String?,
                                   okButtonTitle: String?,
                                   retakeButtonTitle: String?) {
-    viewModel.frameNote.next(frameNote)
-    viewModel.screenTitle.next(screenTitle)
-    viewModel.actionTitle.next(actionTitle)
-    viewModel.actionDescription.next(actionDescription)
-    viewModel.okButtonTitle.next(okButtonTitle)
-    viewModel.retakeButtonTitle.next(retakeButtonTitle)
+    viewModel.frameNote.send(frameNote)
+    viewModel.screenTitle.send(screenTitle)
+    viewModel.actionTitle.send(actionTitle)
+    viewModel.actionDescription.send(actionDescription)
+    viewModel.okButtonTitle.send(okButtonTitle)
+    viewModel.retakeButtonTitle.send(retakeButtonTitle)
   }
 }

@@ -60,10 +60,10 @@ open class FormRowValuePickerView: FormRowTextInputView {
           let validationResult = validator.validate(wself.selectedValue)
           switch validationResult {
           case .pass:
-            wself.valid.next(true)
+            wself.valid.send(true)
           case .fail(let reason):
-            wself.valid.next(false)
-            wself.validationMessage.next(reason)
+            wself.valid.send(false)
+            wself.validationMessage.send(reason)
           }
         }
       }
@@ -84,7 +84,7 @@ open class FormRowValuePickerView: FormRowTextInputView {
       let bndValue = Observable<String?>(self.selectedValue)
       _ = bndValue.observeNext { [weak self] (value: String?) in
         self?.selectedValue = value
-        if let selectedIndex = self?.values.index(where: { $0.id == value }) {
+        if let selectedIndex = self?.values.firstIndex(where: { $0.id == value }) {
           self?.valuePicker.selectRow(selectedIndex + 1, inComponent: 0, animated: false)
         }
         self?.validateText(self?.textValidator, text: self?.selectedValue)
@@ -125,11 +125,11 @@ extension FormRowValuePickerView: UIPickerViewDelegate {
     }
     var value: String? = nil
     if row == 0 {
-      self.bndValue.next(nil)
+      self.bndValue.send(nil)
       self.textField.text = nil
     }
     else {
-      self.bndValue.next(self.values[row - 1].id)
+      self.bndValue.send(self.values[row - 1].id)
       self.textField.text = self.values[row - 1].text
       value = self.values[row - 1].id
     }

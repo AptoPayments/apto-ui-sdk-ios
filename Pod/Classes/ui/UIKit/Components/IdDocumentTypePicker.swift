@@ -111,6 +111,6 @@ extension IdDocumentTypePicker: UIPickerViewDelegate {
   }
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    bndValue.next(allowedDocumentTypes[row])
+    bndValue.send(allowedDocumentTypes[row])
   }
 }

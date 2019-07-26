@@ -128,7 +128,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
     // Setup first screen
     let firstStep = stepVisibility[0] as! DataCollectorStep // swiftlint:disable:this force_cast
     previousStep = firstStep
-    step.next(firstStep)
+    step.send(firstStep)
   }
 
   private func show(step: DataCollectorStep) {
@@ -170,7 +170,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
     let nextStep = firstNonCompleteStep(from: step.value)
     unbindNavigationFromCurrentStep()
     viewController.deactivateNavNextButton(uiConfig.disabledTextTopBarColor)
-    step.next(nextStep)
+    step.send(nextStep)
   }
 
   func showLoadingView() {
@@ -203,7 +203,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
       router.close()
       return
     }
-    step.next(lastNonCompleteStep(from: step.value))
+    step.send(lastNonCompleteStep(from: step.value))
   }
 
   // MARK: - Private Methods

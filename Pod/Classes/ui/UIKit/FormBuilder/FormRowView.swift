@@ -140,20 +140,20 @@ extension FormRowView {
       return
     }
     if !self.isEnabled {
-      self.valid.next(true)
-      self.validationMessage.next("")
+      self.valid.send(true)
+      self.validationMessage.send("")
       self.presentPassedValidationResult()
     }
     else {
       let result = validator.validate(text)
       switch result {
       case .pass:
-        self.valid.next(true)
-        self.validationMessage.next("")
+        self.valid.send(true)
+        self.validationMessage.send("")
         self.presentPassedValidationResult()
       case .fail(let reason):
-        self.valid.next(false)
-        self.validationMessage.next(reason)
+        self.valid.send(false)
+        self.validationMessage.send(reason)
       }
     }
   }
@@ -165,12 +165,12 @@ extension FormRowView {
     let result = validator.validate(number)
     switch result {
     case .pass:
-      self.valid.next(true)
-      self.validationMessage.next("")
+      self.valid.send(true)
+      self.validationMessage.send("")
       self.presentPassedValidationResult()
     case .fail(let reason):
-      self.valid.next(false)
-      self.validationMessage.next(reason)
+      self.valid.send(false)
+      self.validationMessage.send(reason)
     }
   }
 
@@ -181,12 +181,12 @@ extension FormRowView {
     let result = validator.validate(number)
     switch result {
     case .pass:
-      self.valid.next(true)
-      self.validationMessage.next("")
+      self.valid.send(true)
+      self.validationMessage.send("")
       self.presentPassedValidationResult()
     case .fail(let reason):
-      self.valid.next(false)
-      self.validationMessage.next(reason)
+      self.valid.send(false)
+      self.validationMessage.send(reason)
     }
   }
 
@@ -197,12 +197,12 @@ extension FormRowView {
     let result = validator.validate(date)
     switch result {
     case .pass:
-      self.valid.next(true)
-      self.validationMessage.next("")
+      self.valid.send(true)
+      self.validationMessage.send("")
       self.presentPassedValidationResult()
     case .fail(let reason):
-      self.valid.next(false)
-      self.validationMessage.next(reason)
+      self.valid.send(false)
+      self.validationMessage.send(reason)
     }
   }
 }

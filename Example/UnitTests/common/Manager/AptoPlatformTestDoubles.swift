@@ -60,25 +60,25 @@ class AptoPlatformFake: AptoPlatformProtocol {
     return nextFetchUIConfigResult
   }
 
-  var nextFetchCardConfigurationResult: Result<CardConfiguration, NSError>?
-  private(set) var fetchCardConfigurationCalled = false
-  private(set) var lastFetchCardConfigurationForceRefresh: Bool?
-  private(set) var lastFetchCardConfigurationCardProductId: String?
-  func fetchCardConfiguration(forceRefresh: Bool, cardProductId: String,
-                              callback: @escaping Result<CardConfiguration, NSError>.Callback) {
-    fetchCardConfigurationCalled = true
-    lastFetchCardConfigurationForceRefresh = forceRefresh
-    lastFetchCardConfigurationCardProductId = cardProductId
-    if let result = nextFetchCardConfigurationResult {
-      callback(result)
-    }
-  }
-
   var nextFetchCardProductsResult: Result<[CardProductSummary], NSError>?
   private(set) var fetchCardProductsCalled = false
   func fetchCardProducts(callback: @escaping Result<[CardProductSummary], NSError>.Callback) {
     fetchCardProductsCalled = true
     if let result = nextFetchCardProductsResult {
+      callback(result)
+    }
+  }
+
+  var nextFetchCardProductResult: Result<CardProduct, NSError>?
+  private(set) var fetchCardConfigurationCalled = false
+  private(set) var lastFetchCardConfigurationCardProductId: String?
+  private(set) var lastFetchCardConfigurationForceRefresh: Bool?
+  func fetchCardProduct(cardProductId: String, forceRefresh: Bool,
+                        callback: @escaping Result<CardProduct, NSError>.Callback) {
+    fetchCardConfigurationCalled = true
+    lastFetchCardConfigurationCardProductId = cardProductId
+    lastFetchCardConfigurationForceRefresh = forceRefresh
+    if let result = nextFetchCardProductResult {
       callback(result)
     }
   }
@@ -413,6 +413,18 @@ class AptoPlatformFake: AptoPlatformProtocol {
   func issueCard(applicationId: String, callback: @escaping Result<Card, NSError>.Callback) {
     issueCardCalled = true
     lastIssueCardApplicationId = applicationId
+    if let result = nextIssueCardResult {
+      callback(result)
+    }
+  }
+
+  private(set) var issueCardWithCustodianCalled = true
+  private(set) var lastIssueCardCardProduct: CardProduct?
+  private(set) var lastIssueCardCustodian: Custodian?
+  func issueCard(cardProduct: CardProduct, custodian: Custodian?, callback: @escaping Result<Card, NSError>.Callback) {
+    issueCardWithCustodianCalled = true
+    lastIssueCardCardProduct = cardProduct
+    lastIssueCardCustodian = custodian
     if let result = nextIssueCardResult {
       callback(result)
     }

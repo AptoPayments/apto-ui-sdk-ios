@@ -84,9 +84,9 @@ class NotificationPreferencesPresenter: NotificationPreferencesPresenterProtocol
       categories.append(NotificationCategory(title: currentCategory.title, description: currentCategory.description,
                                              rows: currentRows))
     }
-    viewModel.channel1.next(channel1)
-    viewModel.channel2.next(channel2)
-    viewModel.categories.next(categories)
+    viewModel.channel1.send(channel1)
+    viewModel.channel2.send(channel2)
+    viewModel.categories.send(categories)
   }
 }
 

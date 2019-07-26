@@ -59,17 +59,17 @@ class HomeStep: DataCollectorBaseStep, DataCollectorStepProtocol {
     housingTypeField.showSplitter = false
     let housingDataPoint = userData.housingDataPoint
     if let housingTypeId = housingDataPoint.housingType.value?.housingTypeId {
-      housingTypeField.bndValue.next(String(housingTypeId))
+      housingTypeField.bndValue.send(String(housingTypeId))
     }
     else {
-      housingTypeField.bndValue.next(nil)
+      housingTypeField.bndValue.send(nil)
     }
     _ = housingTypeField.bndValue.observeNext { housingType in
       guard let housingType = housingType, let housingTypeId = Int(housingType) else {
-        housingDataPoint.housingType.next(nil)
+        housingDataPoint.housingType.send(nil)
         return
       }
-      housingDataPoint.housingType.next(HousingType(housingTypeId: housingTypeId))
+      housingDataPoint.housingType.send(HousingType(housingTypeId: housingTypeId))
     }
   }
 }

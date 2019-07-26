@@ -24,7 +24,7 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
   }
 
   func viewLoaded() {
-    viewModel.showNotificationPreferences.next(config.showNotificationPreferences)
+    viewModel.showNotificationPreferences.send(config.showNotificationPreferences)
     analyticsManager?.track(event: Event.accountSettings)
   }
 

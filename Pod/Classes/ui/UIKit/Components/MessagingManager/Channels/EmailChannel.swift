@@ -36,18 +36,14 @@ extension EmailChannel: MFMailComposeViewControllerDelegate {
     case MFMailComposeResult.sent:
       self.delegate?.didSucceededFor(channel: self)
       UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
-      break;
     case MFMailComposeResult.saved:
       self.delegate?.didSaveFor(channel: self)
       UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
-      break;
     case MFMailComposeResult.cancelled:
       self.delegate?.didCancelFor(channel: self)
       UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
-      break;
     case MFMailComposeResult.failed:
       self.delegate?.didReceiveErrorFor(channel: self)
-      break;
     }
   }
 }

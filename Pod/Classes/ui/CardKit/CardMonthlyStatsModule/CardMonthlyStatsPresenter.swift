@@ -54,10 +54,10 @@ class CardMonthlyStatsPresenter: CardMonthlyStatsPresenterProtocol {
   }
 
   private func updateViewModelWith(spending: MonthlySpending) {
-    viewModel.dataLoaded.next(true)
-    viewModel.spentList.next(spending.spending.sorted(by: { $0.categoryId.name < $1.categoryId.name }))
-    viewModel.previousSpendingExists.next(spending.previousSpendingExists)
-    viewModel.nextSpendingExists.next(spending.nextSpendingExists)
+    viewModel.dataLoaded.send(true)
+    viewModel.spentList.send(spending.spending.sorted(by: { $0.categoryId.name < $1.categoryId.name }))
+    viewModel.previousSpendingExists.send(spending.previousSpendingExists)
+    viewModel.nextSpendingExists.send(spending.nextSpendingExists)
   }
 
   private func cache(spending: MonthlySpending) {

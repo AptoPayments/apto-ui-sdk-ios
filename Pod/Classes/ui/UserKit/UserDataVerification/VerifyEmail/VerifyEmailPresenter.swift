@@ -26,9 +26,9 @@ class VerifyEmailPresenter: PINVerificationPresenter, VerifyEmailDataReceiver {
   let viewModel = PINVerificationViewModel()
 
   func viewLoaded() {
-    viewModel.title.next("auth.verify_email.title".podLocalized())
-    viewModel.subtitle.next("auth.verify_email.explanation".podLocalized())
-    viewModel.resendButtonState.next(.enabled)
+    viewModel.title.send("auth.verify_email.title".podLocalized())
+    viewModel.subtitle.send("auth.verify_email.explanation".podLocalized())
+    viewModel.resendButtonState.send(.enabled)
     interactor.provideEmail()
   }
 
@@ -48,12 +48,12 @@ class VerifyEmailPresenter: PINVerificationPresenter, VerifyEmailDataReceiver {
 
   func emailReceived(_ email: Email) {
     if let emailAddress = email.email.value {
-      viewModel.datapointValue.next(emailAddress)
+      viewModel.datapointValue.send(emailAddress)
     }
   }
 
   func unknownEmail() {
-    viewModel.datapointValue.next("")
+    viewModel.datapointValue.send("")
   }
 
   func verificationReceived(_ verification: Verification) {

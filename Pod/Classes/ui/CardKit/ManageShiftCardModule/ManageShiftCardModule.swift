@@ -16,7 +16,7 @@ class ManageShiftCardModule: UIModule {
   private var accountSettingsModule: UIModuleProtocol?
   private var projectConfiguration: ProjectConfiguration! // swiftlint:disable:this implicitly_unwrapped_optional
   private var mailSender: MailSender?
-  private var cardConfiguration: CardConfiguration?
+  private var cardProduct: CardProduct?
   private var presenter: ManageShiftCardPresenterProtocol?
   private var kycPresenter: KYCPresenterProtocol?
   private var transactionDetailsPresenter: ShiftCardTransactionDetailsPresenterProtocol?
@@ -57,23 +57,23 @@ class ManageShiftCardModule: UIModule {
               return
             }
             self.card = card
-            self.platform.fetchCardConfiguration(cardProductId: cardProductId) { [weak self] result in
+            self.platform.fetchCardProduct(cardProductId: cardProductId) { [weak self] result in
               guard let self = self else { return }
               switch result {
               case .failure(let error):
                 completion(.failure(error))
-              case .success(let cardConfiguration):
-                self.cardConfiguration = cardConfiguration
+              case .success(let cardProduct):
+                self.cardProduct = cardProduct
                 if let kyc = self.card.kyc {
                   switch kyc {
                   case .passed:
-                    self.showManageCard(addChild: true, cardConfiguration: cardConfiguration, completion: completion)
+                    self.showManageCard(addChild: true, cardProduct: cardProduct, completion: completion)
                   default:
                     self.showKYCViewController(addChild: true, card: self.card, completion: completion)
                   }
                 }
                 else {
-                  self.showManageCard(addChild: true, cardConfiguration: cardConfiguration, completion: completion)
+                  self.showManageCard(addChild: true, cardProduct: cardProduct, completion: completion)
                 }
               }
             }
@@ -100,11 +100,10 @@ class ManageShiftCardModule: UIModule {
 
   // MARK: - Manage Card View Controller
 
-  private func showManageCard(addChild: Bool,
-                              cardConfiguration: CardConfiguration,
+  private func showManageCard(addChild: Bool, cardProduct: CardProduct,
                               completion: @escaping Result<UIViewController, NSError>.Callback) {
     if card.isInWaitList == true {
-      showWaitListModule(addChild: addChild, cardConfiguration: cardConfiguration, completion: completion)
+      showWaitListModule(addChild: addChild, cardProduct: cardProduct, completion: completion)
     }
     else if card.state == .created && card.orderedStatus == .ordered {
       showPhysicalCardActivationModule(addChild: addChild, completion: completion)
@@ -114,10 +113,8 @@ class ManageShiftCardModule: UIModule {
     }
   }
 
-  private func showWaitListModule(addChild: Bool,
-                                  cardConfiguration: CardConfiguration,
+  private func showWaitListModule(addChild: Bool, cardProduct: CardProduct,
                                   completion: @escaping Result<UIViewController, NSError>.Callback) {
-    let cardProduct = cardConfiguration.cardProduct
     let module = serviceLocator.moduleLocator.cardWaitListModule(card: card, cardProduct: cardProduct)
     self.cardWaitListModule = module
     if addChild {
@@ -257,9 +254,9 @@ extension ManageShiftCardModule: ManageShiftCardRouterProtocol {
           self.close()
         case .success(let cards):
           let nonClosedCards = cards.filter { $0.state != .cancelled }
-          if let card = nonClosedCards.first, let cardConfiguration = self.cardConfiguration {
+          if let card = nonClosedCards.first, let cardProduct = self.cardProduct {
             self.card = card
-            self.showManageCard(addChild: false, cardConfiguration: cardConfiguration) { _ in }
+            self.showManageCard(addChild: false, cardProduct: cardProduct) { _ in }
           }
           else {
             // Close the SDK
@@ -393,7 +390,7 @@ extension ManageShiftCardModule: KYCRouterProtocol {
   }
 
   func kycPassed() {
-    if let cardConfiguration = self.cardConfiguration {
+    if let cardProduct = self.cardProduct {
       platform.fetchFinancialAccount(self.card.accountId, forceRefresh: true,
                                      retrieveBalances: false) { [weak self] result in
         guard let self = self else { return }
@@ -412,7 +409,7 @@ extension ManageShiftCardModule: KYCRouterProtocol {
           }
           else {
             self.popViewController(animated: false) {
-              self.showManageCard(addChild: false, cardConfiguration: cardConfiguration) { _ in }
+              self.showManageCard(addChild: false, cardProduct: cardProduct) { _ in }
             }
           }
         }

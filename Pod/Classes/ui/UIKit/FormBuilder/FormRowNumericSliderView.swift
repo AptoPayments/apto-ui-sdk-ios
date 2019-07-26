@@ -19,7 +19,7 @@ open class FormRowNumericSliderView: FormRowView, RangeSliderDelegate {
         self.validateInt(self.numberValidator, number: self.value)
       }
       else {
-        self.valid.next(false)
+        self.valid.send(false)
       }
     }
   }
@@ -34,7 +34,7 @@ open class FormRowNumericSliderView: FormRowView, RangeSliderDelegate {
         self.validateInt(self.numberValidator, number: self.value)
       }
       else {
-        self.valid.next(false)
+        self.valid.send(false)
       }
     }
   }
@@ -182,7 +182,7 @@ open class FormRowNumericSliderView: FormRowView, RangeSliderDelegate {
   private var swipping = false
 
   func didStartSwippingIn(rangeSlider: RangeSlider) {
-    self.valid.next(false)
+    self.valid.send(false)
     swipping = true
   }
 

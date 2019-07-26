@@ -73,15 +73,15 @@ class PhoneTextFieldTheme2: PhoneTextFieldView {
                                                                                   phoneNumber: self.phoneNumber.value))
     combineLatest(self.countryCode, self.phoneNumber).observeNext { [unowned bndValue] countryCode, phoneNumber in
       let intPhoneNumber = InternationalPhoneNumber(countryCode: countryCode, phoneNumber: phoneNumber)
-      bndValue.next(intPhoneNumber)
+      bndValue.send(intPhoneNumber)
     }.dispose(in: disposeBag)
     bndValue.observeNext { [unowned self] internationalPhoneNumber in
       let validationResult = self.validator.validate(internationalPhoneNumber)
       switch validationResult {
       case .fail:
-        self.isValid.next(false)
+        self.isValid.send(false)
       case .pass:
-        self.isValid.next(true)
+        self.isValid.send(true)
       }
     }.dispose(in: disposeBag)
     _bndValue = bndValue
@@ -153,16 +153,16 @@ private extension PhoneTextFieldTheme2 {
     if let value = initialPhoneNumber {
       if let countryCode = value.countryCode,
          let country = allowedCountries.first(where: { $0.isoCode == phoneHelper.region(for: countryCode) }) {
-        self.countryPicker.bndValue.next(country)
+        self.countryPicker.bndValue.send(country)
       }
       self.phoneNumberField.text = value.phoneNumber
     }
     else if let regionCode = Locale.current.regionCode,
             let country = allowedCountries.first(where: { $0.isoCode == regionCode }) {
-      self.countryPicker.bndValue.next(country)
+      self.countryPicker.bndValue.send(country)
     }
     else {
-      self.countryPicker.bndValue.next(allowedCountries[0])
+      self.countryPicker.bndValue.send(allowedCountries[0])
     }
   }
 }
@@ -177,7 +177,7 @@ private extension PhoneTextFieldTheme2 {
   func setUpCountryObserver() {
     countryPicker.bndValue.observeNext { [unowned self] country in
       let countryCode = self.phoneHelper.countryCode(for: country.isoCode)
-      self.countryCode.next(countryCode)
+      self.countryCode.send(countryCode)
       var formattedCountryCode = "\(country.flag)+\(countryCode)"
       if self.allowedCountries.count > 1 {
         formattedCountryCode += String.dropDownCharacter
@@ -190,7 +190,7 @@ private extension PhoneTextFieldTheme2 {
 
   func setUpPhoneNumberObserver() {
     phoneNumberField.reactive.text.observeNext { [unowned self] phoneNumber in
-      self.phoneNumber.next(phoneNumber)
+      self.phoneNumber.send(phoneNumber)
     }.dispose(in: disposeBag)
   }
 }

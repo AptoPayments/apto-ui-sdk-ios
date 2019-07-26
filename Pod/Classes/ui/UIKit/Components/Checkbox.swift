@@ -84,6 +84,6 @@ private extension Checkbox {
   }
 
   func toggleChecked() {
-    isChecked.next(!isChecked.value)
+    isChecked.send(!isChecked.value)
   }
 }

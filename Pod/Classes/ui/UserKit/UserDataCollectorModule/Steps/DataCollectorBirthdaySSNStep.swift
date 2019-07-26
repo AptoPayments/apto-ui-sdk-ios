@@ -107,7 +107,7 @@ private extension BirthdaySSNStep {
 
     let idDocumentDataPoint = userData.IdDocumentDataPoint
     guard allowedCountries.count > 1 else {
-      idDocumentDataPoint.country.next(allowedCountries.first)
+      idDocumentDataPoint.country.send(allowedCountries.first)
       return nil
     }
 
@@ -115,7 +115,7 @@ private extension BirthdaySSNStep {
                                                     allowedCountries: allowedCountries,
                                                     uiConfig: uiConfig)
     countryField.bndValue.observeNext { [unowned self] country in
-      idDocumentDataPoint.country.next(country)
+      idDocumentDataPoint.country.send(country)
       guard let allowedDocumentTypes = self.allowedDocuments[country] else {
         fatalError("No document types configured for country \(country.name)")
       }
@@ -135,7 +135,7 @@ private extension BirthdaySSNStep {
       fatalError("No document types configured for country \(currentCountry.name)")
     }
     guard allowedCountries.count > 1 || allowedDocumentTypes.count > 1 else {
-      idDocumentDataPoint.documentType.next(allowedDocumentTypes[0])
+      idDocumentDataPoint.documentType.send(allowedDocumentTypes[0])
       return nil
     }
     let label = "collect_user_data.dob.doc_type.title".podLocalized()
@@ -143,7 +143,7 @@ private extension BirthdaySSNStep {
                                                                 allowedDocumentTypes: allowedDocumentTypes,
                                                                 uiConfig: uiConfig)
     documentTypeField.bndValue.observeNext { documentType in
-      idDocumentDataPoint.documentType.next(documentType)
+      idDocumentDataPoint.documentType.send(documentType)
     }.dispose(in: disposeBag)
     self.documentTypeField = documentTypeField
     return documentTypeField
@@ -185,21 +185,21 @@ private extension BirthdaySSNStep {
     documentNotSpecified.checkIcon.tintColor = uiConfig.uiPrimaryColor
     rows.append(documentNotSpecified)
     if let notSpecified = idDocumentDataPoint.notSpecified {
-      documentNotSpecified.bndValue.next(notSpecified)
-      numberField.bndValue.next(nil)
+      documentNotSpecified.bndValue.send(notSpecified)
+      numberField.bndValue.send(nil)
       self.validatableRows = self.validatableRows.compactMap { ($0 == self.numberField) ? nil : $0 }
       self.setupStepValidation()
     }
     documentNotSpecified.bndValue.observeNext { checked in
       idDocumentDataPoint.notSpecified = checked
-      idDocumentDataPoint.country.next(nil)
-      idDocumentDataPoint.value.next(nil)
-      idDocumentDataPoint.documentType.next(nil)
+      idDocumentDataPoint.country.send(nil)
+      idDocumentDataPoint.value.send(nil)
+      idDocumentDataPoint.documentType.send(nil)
       self.numberField.isEnabled = !checked
       self.countryField?.isEnabled = !checked
       self.documentTypeField?.isEnabled = !checked
       if checked {
-        self.numberField.bndValue.next(nil)
+        self.numberField.bndValue.send(nil)
         self.validatableRows = self.validatableRows.compactMap {
           ($0 == self.numberField || $0 == self.countryField || $0 == self.documentTypeField) ? nil : $0
         }

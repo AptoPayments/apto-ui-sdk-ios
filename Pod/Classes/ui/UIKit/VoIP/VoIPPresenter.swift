@@ -26,11 +26,11 @@ class VoIPPresenter: VoIPPresenterProtocol {
 
   func viewLoaded() {
     analyticsManager?.track(event: .voIPCallStarted)
-    viewModel.callState.next(.starting)
+    viewModel.callState.send(.starting)
     interactor?.fetchVoIPToken { [weak self] result in
       switch result {
       case .failure(let error):
-        self?.viewModel.error.next(error)
+        self?.viewModel.error.send(error)
       case .success(let voIpToken):
         self?.startCall(token: voIpToken)
       }
@@ -48,7 +48,7 @@ class VoIPPresenter: VoIPPresenterProtocol {
   func hangupCallTapped() {
     analyticsManager?.track(event: .voIPCallEnded, properties: ["time_elapsed": voIPCaller.timeElapsed as Any])
     voIPCaller.disconnect()
-    viewModel.callState.next(.finished)
+    viewModel.callState.send(.finished)
     timer?.invalidate()
     router?.callFinished()
   }
@@ -62,10 +62,10 @@ class VoIPPresenter: VoIPPresenterProtocol {
       switch result {
       case .failure(let error):
         self?.analyticsManager?.track(event: .voIPCallFails)
-        self?.viewModel.error.next(error)
+        self?.viewModel.error.send(error)
       case .success:
-        self?.viewModel.callState.next(.established)
-        self?.viewModel.timeElapsed.next("00:00")
+        self?.viewModel.callState.send(.established)
+        self?.viewModel.timeElapsed.send("00:00")
         let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
           self?.updateTimeElapsed()
         }
@@ -79,6 +79,6 @@ class VoIPPresenter: VoIPPresenterProtocol {
     let interval = Int(voIPCaller.timeElapsed)
     let seconds = interval % 60
     let minutes = (interval / 60) % 60
-    viewModel.timeElapsed.next(String(format: "%02d:%02d", minutes, seconds))
+    viewModel.timeElapsed.send(String(format: "%02d:%02d", minutes, seconds))
   }
 }

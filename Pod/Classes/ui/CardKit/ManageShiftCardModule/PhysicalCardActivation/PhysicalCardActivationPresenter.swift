@@ -101,13 +101,13 @@ class PhysicalCardActivationPresenter: PhysicalCardActivationPresenterProtocol {
   }
 
   private func updateViewModel(with card: Card) {
-    viewModel.cardHolder.next(card.cardHolder)
-    viewModel.cardStyle.next(card.cardStyle)
-    viewModel.cardNetwork.next(card.cardNetwork)
+    viewModel.cardHolder.send(card.cardHolder)
+    viewModel.cardStyle.send(card.cardStyle)
+    viewModel.cardNetwork.send(card.cardNetwork)
   }
 
   private func updateViewModel(with user: ShiftUser) {
-    viewModel.address.next(user.userData.addressDataPoint)
+    viewModel.address.send(user.userData.addressDataPoint)
   }
 
   private func showPhysicalCardActivationByCode() {

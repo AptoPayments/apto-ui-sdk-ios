@@ -45,32 +45,32 @@ class VerifyDocumentPresenter: VerifyDocumentEventHandler, VerifyDocumentDataRec
   }
 
   func startingVerification() {
-    viewModel.state.next(.processing)
+    viewModel.state.send(.processing)
   }
 
   func verificationFailed(_ error: Error?) {
-    viewModel.state.next(.error("verify_document.explanation.error".podLocalized()))
+    viewModel.state.send(.error("verify_document.explanation.error".podLocalized()))
   }
 
   func verificationReceived(_ verification:Verification) {
-    viewModel.state.next(.processing)
+    viewModel.state.send(.processing)
   }
 
   func verificationSucceeded(_ verification:Verification) {
     self.verification = verification
     guard let documentVerificationResult = verification.documentVerificationResult, documentVerificationResult.docCompletionStatus == .ok else {
-      viewModel.state.next(.error("Can't verify Document"))
+      viewModel.state.send(.error("Can't verify Document"))
       return
     }
     guard documentVerificationResult.docAuthenticity == .authentic else {
-      viewModel.state.next(.error("Invalid Document: \(documentVerificationResult.docAuthenticity.description())"))
+      viewModel.state.send(.error("Invalid Document: \(documentVerificationResult.docAuthenticity.description())"))
       return
     }
     guard documentVerificationResult.faceComparisonResult == .faceMatch else {
-      viewModel.state.next(.selfieDoNotMatch(documentVerificationResult.faceComparisonResult.description()))
+      viewModel.state.send(.selfieDoNotMatch(documentVerificationResult.faceComparisonResult.description()))
       return
     }
-    viewModel.state.next(.success)
+    viewModel.state.send(.success)
   }
 
   func continueTapped() {

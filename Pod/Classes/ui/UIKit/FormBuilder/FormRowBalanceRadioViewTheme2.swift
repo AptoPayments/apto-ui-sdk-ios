@@ -55,7 +55,7 @@ class FormRowBalanceRadioViewTheme2: FormRowMultilineView, BalanceRadioViewProto
         view.alpha = 1
       }
     }
-    self.bndValue.next(view.tag)
+    self.bndValue.send(view.tag)
   }
 
   // MARK: - Binding Extensions

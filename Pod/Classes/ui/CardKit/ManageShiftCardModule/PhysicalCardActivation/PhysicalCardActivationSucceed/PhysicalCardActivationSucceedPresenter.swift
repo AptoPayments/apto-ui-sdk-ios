@@ -24,14 +24,14 @@ class PhysicalCardActivationSucceedPresenter: PhysicalCardActivationSucceedPrese
       self.actionType = type
       switch type {
       case .changePin:
-        self.viewModel.showGetPinButton.next(true)
-        self.viewModel.showChargeLabel.next(false)
+        self.viewModel.showGetPinButton.send(true)
+        self.viewModel.showChargeLabel.send(false)
       case .ivr, .voIP:
-        self.viewModel.showGetPinButton.next(true)
-        self.viewModel.showChargeLabel.next(true)
+        self.viewModel.showGetPinButton.send(true)
+        self.viewModel.showChargeLabel.send(true)
       case .disabled:
-        self.viewModel.showGetPinButton.next(false)
-        self.viewModel.showChargeLabel.next(false)
+        self.viewModel.showGetPinButton.send(false)
+        self.viewModel.showChargeLabel.send(false)
       }
     }
   }

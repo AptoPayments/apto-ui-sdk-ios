@@ -107,17 +107,17 @@ class IncomeStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                                                            uiConfig: uiConfig)
     employmentStatusField.showSplitter = false
     if let incomeTypeId = incomeSourceDataPoint.incomeType.value?.incomeTypeId {
-      employmentStatusField.bndValue.next(String(incomeTypeId))
+      employmentStatusField.bndValue.send(String(incomeTypeId))
     }
     else {
-      employmentStatusField.bndValue.next(nil)
+      employmentStatusField.bndValue.send(nil)
     }
     _ = employmentStatusField.bndValue.observeNext { employmentStatus in
       guard let employmentStatus = employmentStatus, let incomeTypeId = Int(employmentStatus) else {
-        incomeSourceDataPoint.incomeType.next(nil)
+        incomeSourceDataPoint.incomeType.send(nil)
         return
       }
-      incomeSourceDataPoint.incomeType.next(IncomeType(incomeTypeId: incomeTypeId))
+      incomeSourceDataPoint.incomeType.send(IncomeType(incomeTypeId: incomeTypeId))
     }
   }
 
@@ -137,17 +137,17 @@ class IncomeStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                                                           uiConfig: uiConfig)
     salaryFrequencyField.showSplitter = false
     if let salaryFrequencyId = incomeSourceDataPoint.salaryFrequency.value?.salaryFrequencyId {
-      salaryFrequencyField.bndValue.next(String(salaryFrequencyId))
+      salaryFrequencyField.bndValue.send(String(salaryFrequencyId))
     }
     else {
-      salaryFrequencyField.bndValue.next(nil)
+      salaryFrequencyField.bndValue.send(nil)
     }
     _ = salaryFrequencyField.bndValue.observeNext { salaryFrequency in
       guard let salaryFrequency = salaryFrequency, let salaryFrequencyId = Int(salaryFrequency) else {
-        incomeSourceDataPoint.salaryFrequency.next(nil)
+        incomeSourceDataPoint.salaryFrequency.send(nil)
         return
       }
-      incomeSourceDataPoint.salaryFrequency.next(SalaryFrequency(salaryFrequencyId: salaryFrequencyId))
+      incomeSourceDataPoint.salaryFrequency.send(SalaryFrequency(salaryFrequencyId: salaryFrequencyId))
     }
   }
 }

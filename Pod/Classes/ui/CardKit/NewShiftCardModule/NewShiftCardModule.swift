@@ -17,7 +17,7 @@ class NewShiftCardModule: UIModule {
   var projectConfiguration: ProjectConfiguration {
     return contextConfiguration.projectConfiguration
   }
-  var cardConfiguration: CardConfiguration!
+  var cardProduct: CardProduct!
   // swiftlint:enable implicitly_unwrapped_optional
 
   public init(serviceLocator: ServiceLocatorProtocol, initialDataPoints: DataPointList, cardProductId: String) {
@@ -49,14 +49,14 @@ class NewShiftCardModule: UIModule {
         completion(.failure(error))
       case .success (let contextConfiguration):
         self.contextConfiguration = contextConfiguration
-        self.platform.fetchCardConfiguration(cardProductId: self.cardProductId) { [weak self] result in
+        self.platform.fetchCardProduct(cardProductId: self.cardProductId) { [weak self] result in
           guard let self = self else { return }
           self.hideLoadingView()
           switch result {
           case .failure(let error):
             completion(.failure(error))
-          case .success(let cardConfiguration):
-            self.cardConfiguration = cardConfiguration
+          case .success(let cardProduct):
+            self.cardProduct = cardProduct
             completion(.success(Void()))
           }
         }
@@ -66,7 +66,7 @@ class NewShiftCardModule: UIModule {
 
   private func startNewApplication(completion: @escaping Result<UIViewController, NSError>.Callback) {
     showLoadingView()
-    platform.applyToCard(cardProduct: cardConfiguration.cardProduct) { [weak self] result in
+    platform.applyToCard(cardProduct: cardProduct) { [weak self] result in
       guard let self = self else { return }
       self.hideLoadingView()
       switch result {

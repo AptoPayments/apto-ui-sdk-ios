@@ -43,10 +43,10 @@ class TimeAtAddressStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                                             uiConfig: uiConfig)
     _ = picker.bndValue.observeNext { [unowned self] timeAtAddress in
       guard let timeAtAddress = timeAtAddress, let timeAtAddressId = Int(timeAtAddress) else {
-        self.timeAtAddressDataPoint.timeAtAddress.next(nil)
+        self.timeAtAddressDataPoint.timeAtAddress.send(nil)
         return
       }
-      self.timeAtAddressDataPoint.timeAtAddress.next(TimeAtAddressOption(timeAtAddressId: timeAtAddressId))
+      self.timeAtAddressDataPoint.timeAtAddress.send(TimeAtAddressOption(timeAtAddressId: timeAtAddressId))
     }
     _ = picker.becomeFirstResponder()
     validatableRows.append(picker)

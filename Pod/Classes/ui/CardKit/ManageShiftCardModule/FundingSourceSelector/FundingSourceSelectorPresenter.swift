@@ -35,10 +35,10 @@ class FundingSourceSelectorPresenter: FundingSourceSelectorPresenterProtocol {
     }
     let fundingSources = viewModel.fundingSources.value
     if index < fundingSources.count {
-      viewModel.showLoadingSpinner.next(true)
+      viewModel.showLoadingSpinner.send(true)
       interactor.setActive(fundingSource: fundingSources[index]) { [weak self] result in
         guard let self = self else { return }
-        self.viewModel.showLoadingSpinner.next(false)
+        self.viewModel.showLoadingSpinner.send(false)
         switch result {
         case .failure(_):
           self.router.show(message: "manage_card.funding_source_selector.error.message".podLocalized(),
@@ -63,31 +63,31 @@ class FundingSourceSelectorPresenter: FundingSourceSelectorPresenterProtocol {
 
   // MARK: - Private methods
   private func refreshData(forceRefresh: Bool) {
-    viewModel.showLoadingSpinner.next(true)
+    viewModel.showLoadingSpinner.send(true)
     interactor.loadFundingSources(forceRefresh: forceRefresh) { [weak self] result in
       guard let self = self else { return }
-      self.viewModel.showLoadingSpinner.next(false)
+      self.viewModel.showLoadingSpinner.send(false)
       switch result {
       case .failure(let error):
         self.router.show(error: error)
       case .success(let fundingSources):
-        self.viewModel.showLoadingSpinner.next(true)
+        self.viewModel.showLoadingSpinner.send(true)
         self.interactor.activeCardFundingSource(forceRefresh: forceRefresh) { [weak self] result in
           guard let self = self else { return }
-          self.viewModel.showLoadingSpinner.next(false)
+          self.viewModel.showLoadingSpinner.send(false)
           switch result {
           case .failure(let error):
             self.router.show(error: error)
           case .success(let fundingSource):
-            self.viewModel.fundingSources.next(fundingSources)
-            if let idx = fundingSources.index(where: { $0.fundingSourceId == fundingSource?.fundingSourceId }) {
-              self.viewModel.activeFundingSourceIdx.next(idx)
+            self.viewModel.fundingSources.send(fundingSources)
+            if let idx = fundingSources.firstIndex(where: { $0.fundingSourceId == fundingSource?.fundingSourceId }) {
+              self.viewModel.activeFundingSourceIdx.send(idx)
             }
             else {
-              self.viewModel.activeFundingSourceIdx.next(nil)
+              self.viewModel.activeFundingSourceIdx.send(nil)
             }
             if self.viewModel.dataLoaded.value == false {
-              self.viewModel.dataLoaded.next(true)
+              self.viewModel.dataLoaded.send(true)
             }
           }
         }

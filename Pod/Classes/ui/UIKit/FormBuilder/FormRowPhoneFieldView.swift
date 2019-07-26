@@ -39,7 +39,7 @@ class FormRowPhoneFieldView: FormRowView {
 
   private func linkValidation() {
     phoneTextField.isValid.observeNext { [unowned self] valid in
-      self.valid.next(valid)
+      self.valid.send(valid)
     }.dispose(in: disposeBag)
   }
 }

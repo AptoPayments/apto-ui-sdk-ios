@@ -57,7 +57,7 @@ class VerifyBirthDateViewControllerTheme2: VerifyBirthDateViewControllerProtocol
 
   func showWrongBirthDateErrorMessage() {
     show(error: BackendError(code: .birthDateVerificationFailed))
-    birthdayField.bndDate.next(nil)
+    birthdayField.bndDate.send(nil)
     let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
     DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
       self?.birthdayField.focus()

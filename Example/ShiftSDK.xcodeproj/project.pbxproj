@@ -58,6 +58,7 @@
 		2CFD384E1FA8BA1500ADD20E /* InputPhoneScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */; };
 		3C1074192265C89F0050F8D1 /* PhoneHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDDAA9712890A02CB79BC /* PhoneHelperTest.swift */; };
 		3C1ECAB122D8E33400DBC484 /* TransactionDeclineCodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */; };
+		3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD60A22D2072B3066FE37 /* CustodianSerializerTest.swift */; };
 		3C65E0BA217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */; };
 		3CD47E74228D640D00DD56FF /* CardProductSelectorModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDA3FDCA41F36733ACF07 /* CardProductSelectorModuleTest.swift */; };
 		3CEBF048215A871500B077BD /* DataConfirmationTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEBF047215A871500B077BD /* DataConfirmationTestDoubles.swift */; };
@@ -347,6 +348,7 @@
 		D99BD5D1CAEA83B9B60373F1 /* InMemoryUserDefaultsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryUserDefaultsStorage.swift; sourceTree = "<group>"; };
 		D99BD5E15145A4AE8EB03459 /* ContentPresenterInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPresenterInteractorTest.swift; sourceTree = "<group>"; };
 		D99BD5E4D62F488DFC73A2E8 /* CardMonthlyStatsInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardMonthlyStatsInteractorTest.swift; sourceTree = "<group>"; };
+		D99BD60A22D2072B3066FE37 /* CustodianSerializerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustodianSerializerTest.swift; sourceTree = "<group>"; };
 		D99BD60AED73A81C6CE99349 /* TransactionListInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListInteractorTest.swift; sourceTree = "<group>"; };
 		D99BD62BDB6D3977738C0E36 /* NotificationPreferencesInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesInteractorTest.swift; sourceTree = "<group>"; };
 		D99BD639C1E08F321E36C066 /* InteractorLocatorFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractorLocatorFake.swift; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 				2C1127741EC6507400567792 /* Model */,
 				2CF425FA1E7FF1BB00ABAB94 /* Base */,
 				2CF426051E80858300ABAB94 /* Helpers */,
+				D99BD448EB7241FEE7D26E1F /* Transport */,
 			);
 			path = ledgecore;
 			sourceTree = "<group>";
@@ -818,6 +821,14 @@
 				D99BDB329550D080F898DD71 /* ManageShiftCardInteractorTest.swift */,
 			);
 			path = ShiftCard;
+			sourceTree = "<group>";
+		};
+		D99BD448EB7241FEE7D26E1F /* Transport */ = {
+			isa = PBXGroup;
+			children = (
+				D99BD60A22D2072B3066FE37 /* CustodianSerializerTest.swift */,
+			);
+			path = Transport;
 			sourceTree = "<group>";
 		};
 		D99BD44D9505EB968BB6B904 /* ledgekit */ = {
@@ -1390,6 +1401,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
+				"${BUILT_PRODUCTS_DIR}/AptoObjCSDK/AptoObjCSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/AptoSDK/AptoSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/AptoUISDK/AptoUISDK.framework",
 				"${BUILT_PRODUCTS_DIR}/Bond/Bond.framework",
@@ -1411,6 +1423,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AptoObjCSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AptoSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AptoUISDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bond.framework",
@@ -1592,6 +1605,7 @@
 				D99BD8ABD809C4D124541F0C /* UserPreferencesStorageTest.swift in Sources */,
 				D99BD10C4AF529884446BCD4 /* InMemoryUserDefaultsStorage.swift in Sources */,
 				D99BD9977D9A58EDE426D10D /* CardSettingsInteractorTest.swift in Sources */,
+				3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */,
 				D99BD84471B327EBEF19578E /* TransactionListFiltersTest.swift in Sources */,
 				D99BDDC6A3CD3CDE8560A0FB /* ResultTest.swift in Sources */,
 				D99BD6C045406F3BBE6F6540 /* CardStyleTest.swift in Sources */,

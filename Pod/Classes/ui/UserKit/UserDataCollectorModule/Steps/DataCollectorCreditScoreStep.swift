@@ -42,10 +42,10 @@ class CreditScoreStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                                             uiConfig: uiConfig)
     _ = picker.bndValue.observeNext { [unowned self] creditScore in
       guard let creditScore = creditScore, let creditScoreId = Int(creditScore) else {
-        self.creditScoreDataPoint.creditRange.next(nil)
+        self.creditScoreDataPoint.creditRange.send(nil)
         return
       }
-      self.creditScoreDataPoint.creditRange.next(creditScoreId)
+      self.creditScoreDataPoint.creditRange.send(creditScoreId)
     }
     _ = picker.becomeFirstResponder()
     validatableRows.append(picker)

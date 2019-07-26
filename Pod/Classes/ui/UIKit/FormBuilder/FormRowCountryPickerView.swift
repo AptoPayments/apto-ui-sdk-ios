@@ -71,7 +71,7 @@ private extension FormRowCountryPickerView {
         text += " " + String.dropDownCharacter
       }
       self.textField.text = text
-      self.valid.next(true)
+      self.valid.send(true)
     }.dispose(in: disposeBag)
   }
 }

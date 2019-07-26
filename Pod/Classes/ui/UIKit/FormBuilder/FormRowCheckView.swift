@@ -74,6 +74,6 @@ class FormRowCheckView: FormRowView {
   }
 
   @objc func switchValue() {
-    self.bndValue.next(!self.bndValue.value)
+    self.bndValue.send(!self.bndValue.value)
   }
 }

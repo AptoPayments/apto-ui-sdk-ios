@@ -35,7 +35,7 @@ class AuthEmailStep: DataCollectorBaseStep, DataCollectorStepProtocol {
     emailField.textField.adjustsFontSizeToFitWidth = true
     emailField.showSplitter = false
     _ = emailField.bndValue.observeNext { text in
-      emailDataPoint.email.next(text)
+      emailDataPoint.email.send(text)
     }
     retVal.append(emailField)
     validatableRows.append(emailField)

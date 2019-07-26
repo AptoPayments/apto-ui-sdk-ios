@@ -50,17 +50,17 @@ class PaydayLoanStep: DataCollectorBaseStep, DataCollectorStepProtocol {
     let paydayLoan = FormBuilder.radioRowWith(labels: labels, values: [0, 1], uiConfig: uiConfig)
     _ = paydayLoan.bndValue.observeNext { [weak self] value in
       if let selectedValue = value {
-        self?.paydayLoanDataPoint.usedPaydayLoan.next(selectedValue == 0)
+        self?.paydayLoanDataPoint.usedPaydayLoan.send(selectedValue == 0)
       }
       else {
-        self?.paydayLoanDataPoint.usedPaydayLoan.next(nil)
+        self?.paydayLoanDataPoint.usedPaydayLoan.send(nil)
       }
     }
     if let value = self.paydayLoanDataPoint.usedPaydayLoan.value {
-      paydayLoan.bndValue.next(value == true ? 0 : 1)
+      paydayLoan.bndValue.send(value == true ? 0 : 1)
     }
     else {
-      paydayLoan.bndValue.next(nil)
+      paydayLoan.bndValue.send(nil)
     }
     let failReasonMessage = "payday-loan-collector.time-at-address.warning.empty".podLocalized()
     paydayLoan.numberValidator = NonNullIntValidator(failReasonMessage: failReasonMessage)

@@ -110,7 +110,7 @@ extension CountryPicker: UIPickerViewDelegate {
   }
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    bndValue.next(allowedCountries[row])
+    bndValue.send(allowedCountries[row])
   }
 }
 

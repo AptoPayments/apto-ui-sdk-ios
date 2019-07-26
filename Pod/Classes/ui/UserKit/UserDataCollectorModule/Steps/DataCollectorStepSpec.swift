@@ -44,7 +44,7 @@ open class DataCollectorBaseStep {
     // The bond library doesn't support a more generic approach to combine the values, so an
     // ugly (but functional) method is used here:
     if validatableRows.isEmpty {
-      self.valid.next(true)
+      self.valid.send(true)
     }
     else {
       let signals = validatableRows.map {

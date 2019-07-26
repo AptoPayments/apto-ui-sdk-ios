@@ -60,12 +60,12 @@ class AddressStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                                                        allowedCountries: allowedCountries,
                                                        uiConfig: uiConfig)
     addressField.address.observeNext { [unowned self] address in
-      self.address.address.next(address?.address.value)
-      self.address.apUnit.next(address?.apUnit.value)
-      self.address.country.next(address?.country.value)
-      self.address.city.next(address?.city.value)
-      self.address.region.next(address?.region.value)
-      self.address.zip.next(address?.zip.value)
+      self.address.address.send(address?.address.value)
+      self.address.apUnit.send(address?.apUnit.value)
+      self.address.country.send(address?.country.value)
+      self.address.city.send(address?.city.value)
+      self.address.region.send(address?.region.value)
+      self.address.zip.send(address?.zip.value)
     }.dispose(in: disposeBag)
     addressField.valid.observeNext { [unowned self] valid in
       self.aptUnitField?.isHidden = !valid

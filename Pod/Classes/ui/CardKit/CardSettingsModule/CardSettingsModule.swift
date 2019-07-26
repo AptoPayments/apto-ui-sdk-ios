@@ -33,17 +33,15 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
       case .failure(let error):
         completion(.failure(error))
       case .success(let contextConfiguration):
-        self.platform.fetchCardConfiguration(cardProductId: cardProductId) { [weak self] result in
+        self.platform.fetchCardProduct(cardProductId: cardProductId) { [weak self] result in
           guard let self = self else { return }
           switch result {
           case .failure(let error):
             completion(.failure(error))
-          case .success(let cardConfiguration):
+          case .success(let cardProduct):
             self.projectConfiguration = contextConfiguration.projectConfiguration
-            let viewController = self.buildShiftCardSettingsViewController(
-              self.uiConfig,
-              cardConfiguration: cardConfiguration,
-              card: self.card)
+            let viewController = self.buildShiftCardSettingsViewController(self.uiConfig,cardProduct: cardProduct,
+                                                                           card: self.card)
             self.addChild(viewController: viewController, completion: completion)
           }
         }
@@ -52,9 +50,8 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
   }
 
   fileprivate func buildShiftCardSettingsViewController(_ uiConfig: UIConfig,
-                                                        cardConfiguration: CardConfiguration,
+                                                        cardProduct: CardProduct,
                                                         card: Card) -> ShiftViewController {
-    let cardProduct = cardConfiguration.cardProduct
     let isShowDetailedInfoEnabled = platform.isFeatureEnabled(.showDetailedCardActivityOption)
     let presenterConfig = CardSettingsPresenterConfig(cardholderAgreement: cardProduct.cardholderAgreement,
                                                       privacyPolicy: cardProduct.privacyPolicy,

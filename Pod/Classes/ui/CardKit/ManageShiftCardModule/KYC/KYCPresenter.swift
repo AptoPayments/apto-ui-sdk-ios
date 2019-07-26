@@ -29,7 +29,7 @@ class KYCPresenter: KYCPresenterProtocol {
       case .failure(let error):
         self?.view.show(error: error)
       case .success(let kyc):
-        self?.viewModel.kycState.next(kyc)
+        self?.viewModel.kycState.send(kyc)
       }
     }
     analyticsManager?.track(event: Event.manageCardKycStatus)
@@ -48,7 +48,7 @@ class KYCPresenter: KYCPresenterProtocol {
       case .failure(let error):
         self.view.show(error: error)
       case .success(let kyc):
-        self.viewModel.kycState.next(kyc)
+        self.viewModel.kycState.send(kyc)
         if let kyc = kyc {
           switch kyc {
           case .passed:

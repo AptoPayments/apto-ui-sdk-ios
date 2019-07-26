@@ -24,8 +24,8 @@ class ExternalOAuthPresenter: ExternalOAuthPresenterProtocol {
   }
 
   func viewLoaded() {
-    viewModel.title.next(config.title)
-    viewModel.allowedBalanceTypes.next(config.allowedBalanceTypes)
+    viewModel.title.send(config.title)
+    viewModel.allowedBalanceTypes.send(config.allowedBalanceTypes)
     analyticsManager?.track(event: Event.selectBalanceStoreLogin)
   }
 
@@ -40,7 +40,7 @@ class ExternalOAuthPresenter: ExternalOAuthPresenterProtocol {
   }
 
   func show(error: NSError) {
-    viewModel.error.next(error)
+    viewModel.error.send(error)
   }
 
   func show(url: URL) {
