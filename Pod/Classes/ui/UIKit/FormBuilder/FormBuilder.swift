@@ -70,11 +70,13 @@ class FormBuilder {
       ]
     case .theme2:
       attributedLabel.linkAttributes = [
-        NSAttributedString.Key.foregroundColor: uiConfig.textSecondaryColor,
-        NSAttributedString.Key.font: uiConfig.fontProvider.formTextLink,
-        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-        NSAttributedString.Key.underlineColor: uiConfig.textSecondaryColor
+        NSAttributedString.Key.foregroundColor: uiConfig.textLinkColor,
+        NSAttributedString.Key.font: uiConfig.fontProvider.formTextLink
       ]
+      if uiConfig.underlineLinks {
+        attributedLabel.linkAttributes[NSAttributedString.Key.underlineColor] = uiConfig.textLinkColor
+        attributedLabel.linkAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
+      }
     }
     let label = FormRowRichTextLabelView(label: attributedLabel,
                                          showSplitter: false,

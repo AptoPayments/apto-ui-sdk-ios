@@ -128,7 +128,7 @@ private extension BalanceViewTheme2 {
 
   func setUpBalanceLabel() {
     balanceLabel.font = uiConfiguration.fontProvider.amountBigFont
-    balanceLabel.textColor = uiConfiguration.textTopBarColor
+    balanceLabel.textColor = uiConfiguration.textTopBarSecondaryColor
     balanceLabel.textAlignment = .left
     addSubview(balanceLabel)
     balanceLabel.snp.makeConstraints { make in
@@ -140,7 +140,7 @@ private extension BalanceViewTheme2 {
 
   func setUpBalanceBitCoins() {
     balanceBitCoins.font = uiConfiguration.fontProvider.subCurrencyFont
-    balanceBitCoins.textColor = uiConfiguration.textTopBarColor.withAlphaComponent(0.7)
+    balanceBitCoins.textColor = uiConfiguration.textTopBarSecondaryColor.withAlphaComponent(0.7)
     balanceBitCoins.textAlignment = .left
     addSubview(balanceBitCoins)
     balanceBitCoins.snp.makeConstraints { make in

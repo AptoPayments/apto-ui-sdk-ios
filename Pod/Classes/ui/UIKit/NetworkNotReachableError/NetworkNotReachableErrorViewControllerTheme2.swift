@@ -96,7 +96,7 @@ private extension NetworkNotReachableErrorViewControllerTheme2 {
   }
 
   var tintColor: UIColor {
-    return config?.textTopBarColor ?? .white
+    return config?.textTopBarSecondaryColor ?? .white
   }
 
   var titleFont: UIFont {

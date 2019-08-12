@@ -203,8 +203,7 @@ class ShiftCardTransactionDetailsViewControllerTheme2: ShiftViewController, Shif
     return rows
   }
 
-  private func detailsInfoSectionRowsFrom(_ viewModel: ShiftCardTransactionDetailsViewModel) -> [FormRowView] {
-    var rows: [FormRowView] = []
+  private func addDetailsTitleRow(to rows: inout [FormRowView]) {
     let sectionHeaderRow = FormRowSectionTitleViewTheme2(title: "transaction_details.details.title".podLocalized(),
                                                          uiConfig: uiConfiguration)
     detailsArrowImageView.removeFromSuperview()
@@ -224,6 +223,14 @@ class ShiftCardTransactionDetailsViewControllerTheme2: ShiftViewController, Shif
     rows.append(FormRowSeparatorView(backgroundColor: .clear, height: 4))
     rows.append(sectionHeaderRow)
     rows.append(FormRowSeparatorView(backgroundColor: .clear, height: 4))
+  }
+
+  private func detailsInfoSectionRowsFrom(_ viewModel: ShiftCardTransactionDetailsViewModel) -> [FormRowView] {
+    var rows: [FormRowView] = []
+    if uiConfiguration.transactionDetailsShowDetailsSectionTitle {
+      addDetailsTitleRow(to: &rows)
+    }
+    showDetails = !uiConfiguration.transactionDetailsShowDetailsSectionTitle
     if showDetails {
       addRowIfHasValue(rows: &rows,
                        title: "transaction_details.basic_info.transaction_status.title".podLocalized(),

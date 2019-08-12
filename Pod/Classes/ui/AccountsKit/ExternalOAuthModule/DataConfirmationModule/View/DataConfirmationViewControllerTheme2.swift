@@ -66,7 +66,7 @@ private extension DataConfirmationViewControllerTheme2 {
   func setUpNavigationBar() {
     navigationController?.navigationBar.hideShadow()
     navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationPrimaryColor,
-                                              tintColor: uiConfiguration.uiSecondaryColor)
+                                              tintColor: uiConfiguration.textTopBarPrimaryColor)
     navigationController?.navigationBar.isTranslucent = true
     showNavPreviousButton(uiTheme: .theme2)
     setUpRefreshButton()
@@ -155,8 +155,7 @@ private extension DataConfirmationViewControllerTheme2 {
   }
 
   func styledContent(_ content: String) -> NSAttributedString {
-    let htmlData = content.data(using: String.Encoding.utf8)
-    guard let data = htmlData else {
+    guard let data = content.data(using: String.Encoding.utf8) else {
       return NSAttributedString(string: content)
     }
     let options = [
@@ -173,7 +172,7 @@ private extension DataConfirmationViewControllerTheme2 {
                                               color: uiConfiguration.textTertiaryColor,
                                               paragraphSpacing: 4)
       mutableAttrString.replaceLinkStyle(font: uiConfiguration.fontProvider.formTextLink,
-                                         color: uiConfiguration.textSecondaryColor,
+                                         color: uiConfiguration.textLinkColor,
                                          paragraphSpacing: 0)
       return mutableAttrString
     }

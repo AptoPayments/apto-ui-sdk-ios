@@ -169,7 +169,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
   func showNextStep() {
     let nextStep = firstNonCompleteStep(from: step.value)
     unbindNavigationFromCurrentStep()
-    viewController.deactivateNavNextButton(uiConfig.disabledTextTopBarColor)
+    viewController.deactivateNavNextButton(uiConfig.disabledTextTopPrimaryBarColor)
     step.send(nextStep)
   }
 
@@ -188,7 +188,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
   // MARK: - DataCollectionEventHandler
 
   func nextStepTapped() {
-    viewController.deactivateNavNextButton(uiConfig.disabledTextTopBarColor)
+    viewController.deactivateNavNextButton(uiConfig.disabledTextTopPrimaryBarColor)
     if step.value == lastStep {
       lastStepFinished()
     }
@@ -285,7 +285,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
                                                tintColor: self?.uiConfig.iconTertiaryColor)
       }
       else {
-        self?.viewController.deactivateNavNextButton(self?.uiConfig.disabledTextTopBarColor)
+        self?.viewController.deactivateNavNextButton(self?.uiConfig.disabledTextTopPrimaryBarColor)
       }
     }
   }

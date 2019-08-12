@@ -68,7 +68,7 @@ private extension TransactionHeaderViewTheme2 {
 
   func setUpFiatAmountLabel() {
     fiatAmountLabel.font = uiConfiguration.fontProvider.amountBigFont
-    fiatAmountLabel.textColor = uiConfiguration.textTopBarColor
+    fiatAmountLabel.textColor = uiConfiguration.textTopBarSecondaryColor
     fiatAmountLabel.textAlignment = .left
     contentView.addSubview(fiatAmountLabel)
     fiatAmountLabel.snp.makeConstraints { make in
@@ -80,7 +80,7 @@ private extension TransactionHeaderViewTheme2 {
 
   func setUpNativeAmountLabel() {
     nativeAmountLabel.font = uiConfiguration.fontProvider.subCurrencyFont
-    nativeAmountLabel.textColor = uiConfiguration.textTopBarColor.withAlphaComponent(0.7)
+    nativeAmountLabel.textColor = uiConfiguration.textTopBarSecondaryColor.withAlphaComponent(0.7)
     nativeAmountLabel.textAlignment = .left
     contentView.addSubview(nativeAmountLabel)
     nativeAmountLabel.snp.makeConstraints { make in

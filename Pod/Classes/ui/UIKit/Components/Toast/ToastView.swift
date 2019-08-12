@@ -32,6 +32,7 @@ class ToastView: UIView, ToastViewProtocol {
     messageLabel.textAlignment = toast.textAlignment
     messageLabel.textColor = toast.textColor
     messageLabel.font = toast.font
+    messageLabel.numberOfLines = 0
     backgroundColor = toast.backgroundColor
     isUserInteractionEnabled = toast.isUserInteractionEnabled
   }

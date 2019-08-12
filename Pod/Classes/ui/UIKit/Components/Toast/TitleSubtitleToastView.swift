@@ -10,7 +10,7 @@ import AptoSDK
 import SnapKit
 
 class TitleSubtitleToast: ToastProtocol {
-  var title: String
+  var title: String?
   var message: String
   var backgroundColor: UIColor
   var duration: Double?
@@ -19,11 +19,7 @@ class TitleSubtitleToast: ToastProtocol {
   var target: ToastDelegate?
   var style: ToastStyle = .bottomToTop
 
-  init(title: String,
-       message: String,
-       backgroundColor: UIColor,
-       duration: Double?,
-       delegate: ToastDelegate?) {
+  init(title: String?, message: String, backgroundColor: UIColor, duration: Double?, delegate: ToastDelegate?) {
     self.title = title
     self.message = message
     self.backgroundColor = backgroundColor
@@ -36,6 +32,7 @@ class TitleSubtitleToastView: UIView, ToastViewProtocol {
   private let titleLabel: UILabel
   private let messageLabel: UILabel
   private let uiConfig: UIConfig
+  private let buttonContainerView = UIView()
   private let closeButton: UIButton
 
   var tapHandler: (() -> Void)?
@@ -53,7 +50,6 @@ class TitleSubtitleToastView: UIView, ToastViewProtocol {
   }
 
   func nib() -> ToastViewProtocol? {
-    setUpUI()
     return self
   }
 
@@ -61,29 +57,50 @@ class TitleSubtitleToastView: UIView, ToastViewProtocol {
     guard let toastConfig = toast as? TitleSubtitleToast else { return }
     backgroundColor = toastConfig.backgroundColor
     closeButton.tintColor = toastConfig.backgroundColor
+    buttonContainerView.isHidden = (toastConfig.duration != nil)
     closeButton.isHidden = (toastConfig.duration != nil)
     titleLabel.text = toastConfig.title
     messageLabel.text = toastConfig.message
+    setUpUI(toastConfig: toastConfig)
   }
 
   // MARK: - Private methods
-  private func setUpUI() {
-    setUpMessageLabel()
+  private func setUpUI(toastConfig: TitleSubtitleToast) {
+    setUpMessageLabel(toastConfig: toastConfig)
+    setUpButtonContainer()
     setUpCloseButton()
-    setUpTitleLabel()
+    setUpTitleLabel(toastConfig: toastConfig)
   }
 
-  private func setUpMessageLabel() {
+  private func setUpMessageLabel(toastConfig: TitleSubtitleToast) {
     addSubview(messageLabel)
     messageLabel.textColor = uiConfig.textMessageColor
+    let isTitleHidden: Bool = toastConfig.title == nil
     messageLabel.snp.makeConstraints { make in
-      make.left.right.equalToSuperview().inset(24)
+      make.left.equalToSuperview().inset(24)
+      make.right.equalToSuperview().inset(isTitleHidden ? 50 : 24)
       make.bottom.equalToSuperview().inset(52)
+      if isTitleHidden {
+        make.top.equalToSuperview().offset(24)
+      }
+    }
+  }
+
+  private func setUpButtonContainer() {
+    buttonContainerView.backgroundColor = .clear
+    addSubview(buttonContainerView)
+    buttonContainerView.snp.makeConstraints { make in
+      make.height.width.equalTo(40)
+      make.top.equalToSuperview().offset(16)
+      make.right.equalToSuperview().inset(16)
+    }
+    buttonContainerView.addTapGestureRecognizer {
+      UIApplication.topViewController()?.dismissToast(true)
     }
   }
 
   private func setUpCloseButton() {
-    addSubview(closeButton)
+    buttonContainerView.addSubview(closeButton)
     let image = UIImage.imageFromPodBundle("top_close_default@2x")?.asTemplate()
     closeButton.setImage(image, for: .normal)
     closeButton.contentMode = .center
@@ -92,15 +109,15 @@ class TitleSubtitleToastView: UIView, ToastViewProtocol {
     closeButton.layer.cornerRadius = 10
     closeButton.snp.makeConstraints { make in
       make.height.width.equalTo(20)
-      make.top.equalToSuperview().offset(26)
-      make.right.equalToSuperview().inset(26)
+      make.center.equalToSuperview()
     }
     closeButton.addTapGestureRecognizer {
       UIApplication.topViewController()?.dismissToast(true)
     }
   }
 
-  private func setUpTitleLabel() {
+  private func setUpTitleLabel(toastConfig: TitleSubtitleToast) {
+    guard toastConfig.title != nil else { return }
     addSubview(titleLabel)
     titleLabel.textColor = uiConfig.textMessageColor
     titleLabel.snp.makeConstraints { make in

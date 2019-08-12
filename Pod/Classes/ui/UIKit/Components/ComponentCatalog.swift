@@ -222,14 +222,15 @@ class ComponentCatalog {
     let button = UIButton()
     button.backgroundColor = .clear
     button.accessibilityLabel = accessibilityLabel
-    let attributes: [NSAttributedString.Key: Any] = [
+    var attributes: [NSAttributedString.Key: Any] = [
       NSAttributedString.Key.font: uiConfig.fontProvider.formTextLink,
-      NSAttributedString.Key.foregroundColor: uiConfig.textSecondaryColor,
-      NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-      NSAttributedString.Key.underlineColor: uiConfig.textSecondaryColor
+      NSAttributedString.Key.foregroundColor: uiConfig.textLinkColor
     ]
-    let attributedTitle = NSAttributedString(string: title,
-                                             attributes: attributes)
+    if uiConfig.underlineLinks {
+      attributes[NSAttributedString.Key.underlineColor] = uiConfig.textLinkColor
+      attributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
+    }
+    let attributedTitle = NSAttributedString(string: title, attributes: attributes)
     button.setAttributedTitle(attributedTitle, for: UIControl.State())
     button.snp.makeConstraints { make in
       make.height.equalTo(50)
@@ -246,19 +247,12 @@ class ComponentCatalog {
     let retVal = ContentPresenterView(uiConfig: uiConfig)
     retVal.textAlignment = textAlignment
     retVal.font = uiConfig.fontProvider.formTextLink
-    let textColor: UIColor
-    switch uiConfig.uiTheme {
-    case .theme1:
-      textColor = uiConfig.textLinkColor
-    case .theme2:
-      textColor = uiConfig.textSecondaryColor
-    }
+    let textColor = uiConfig.textLinkColor
     retVal.textColor = textColor
     retVal.linkColor = textColor
-    retVal.underlineLinks = true
+    retVal.underlineLinks = uiConfig.underlineLinks
     retVal.delegate = delegate
     retVal.set(content: Content.plainText(title))
-
     return retVal
   }
 
@@ -409,7 +403,7 @@ class ComponentCatalog {
                                            accessibilityLabel: String? = nil,
                                            uiConfig: UIConfig) -> UILabel {
     let retVal = UILabel()
-    let textColor = color ?? uiConfig.textTopBarColor.withAlphaComponent(0.7)
+    let textColor = color ?? uiConfig.textTopBarSecondaryColor.withAlphaComponent(0.7)
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.alignment = textAlignment
     paragraphStyle.lineSpacing = 1.17
@@ -489,7 +483,7 @@ class ComponentCatalog {
     let retVal = UILabel()
     retVal.text = text
     retVal.font = uiConfig.fontProvider.topBarAmountFont
-    retVal.textColor = uiConfig.textTopBarColor
+    retVal.textColor = uiConfig.textTopBarSecondaryColor
     retVal.textAlignment = textAlignment
     retVal.accessibilityLabel = accessibilityLabel
     return retVal
@@ -502,7 +496,7 @@ class ComponentCatalog {
     let retVal = UILabel()
     retVal.text = text
     retVal.font = uiConfig.fontProvider.topBarTitleFont
-    retVal.textColor = uiConfig.textTopBarColor
+    retVal.textColor = uiConfig.textTopBarSecondaryColor
     retVal.textAlignment = textAlignment
     retVal.accessibilityLabel = accessibilityLabel
     return retVal
@@ -515,7 +509,7 @@ class ComponentCatalog {
     let retVal = UILabel()
     retVal.text = text
     retVal.font = uiConfig.fontProvider.topBarTitleBigFont
-    retVal.textColor = uiConfig.textTopBarColor
+    retVal.textColor = uiConfig.textTopBarSecondaryColor
     retVal.textAlignment = textAlignment
     retVal.accessibilityLabel = accessibilityLabel
     return retVal

@@ -64,7 +64,7 @@ private extension DataConfirmationViewControllerTheme1 {
   func setUpNavigationBar() {
     navigationController?.navigationBar.setUpWith(uiConfig: uiConfiguration)
     showNavNextButton(title: "select_balance_store.oauth_confirm.call_to_action.title".podLocalized(),
-                      tintColor: uiConfiguration.textTopBarColor)
+                      tintColor: uiConfiguration.textTopBarPrimaryColor)
   }
 
   func setUpUI(for userData: DataPointList?) {

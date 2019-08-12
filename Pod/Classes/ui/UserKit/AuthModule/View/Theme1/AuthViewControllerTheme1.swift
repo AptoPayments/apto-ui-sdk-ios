@@ -68,7 +68,7 @@ class AuthViewControllerTheme1: AuthViewControllerProtocol {
   }
 
   func deactivateNextButton() {
-    deactivateNavNextButton(uiConfiguration.disabledTextTopBarColor)
+    deactivateNavNextButton(uiConfiguration.disabledTextTopPrimaryBarColor)
   }
 
   func show(error: NSError) {

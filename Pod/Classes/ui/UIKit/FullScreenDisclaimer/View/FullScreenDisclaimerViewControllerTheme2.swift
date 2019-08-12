@@ -100,7 +100,7 @@ extension FullScreenDisclaimerViewControllerTheme2: ContentPresenterViewDelegate
 
 private extension FullScreenDisclaimerViewControllerTheme2 {
   func setUpUI() {
-    view.backgroundColor = uiConfiguration.uiBackgroundPrimaryColor
+    view.backgroundColor = uiConfiguration.disclaimerBackgroundColor
     extendedLayoutIncludesOpaqueBars = true
     automaticallyAdjustsScrollViewInsets = true
     edgesForExtendedLayout = .top

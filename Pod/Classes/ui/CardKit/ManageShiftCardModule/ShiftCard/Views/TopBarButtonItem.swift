@@ -43,7 +43,7 @@ class TopBarButtonItem: UIBarButtonItem {
     self.icon = icon?.asTemplate()
     self.tapHandler = tapHandler
     self.labelBackgroundColor = uiConfig.uiPrimaryColor.withAlphaComponent(0.12)
-    self.labelTextColor = uiConfig.textTopBarColor
+    self.labelTextColor = uiConfig.textTopBarSecondaryColor
     super.init()
     setupUI()
     setupTapHandlers()

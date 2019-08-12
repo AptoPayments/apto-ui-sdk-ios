@@ -32,11 +32,7 @@ public protocol ViewControllerProtocol {
   func hideNetworkNotReachableError()
   func showServerMaintenanceError()
   func showMessage(_ message: String, uiConfig: UIConfig?)
-  func show(message: String,
-            title: String,
-            animated: Bool,
-            isError: Bool,
-            uiConfig: UIConfig,
+  func show(message: String, title: String, animated: Bool, isError: Bool, uiConfig: UIConfig,
             tapHandler: (() -> Void)?)
   func showLoadingSpinner(tintColor: UIColor, position: SubviewPosition)
   func hideLoadingSpinner()
@@ -292,18 +288,12 @@ extension UIViewController: ViewControllerProtocol {
     present(toast, animated: true)
   }
 
-  public func show(message: String,
-                   title: String,
-                   animated: Bool = true,
-                   isError: Bool = false,
-                   uiConfig: UIConfig,
+  public func show(message: String, title: String, animated: Bool = true, isError: Bool = false, uiConfig: UIConfig,
                    tapHandler: (() -> Void)?) {
     let toastView = TitleSubtitleToastView(uiConfig: uiConfig)
     let backgroundColor = isError ? uiConfig.uiErrorColor : uiConfig.uiPrimaryColor
-    let toast = TitleSubtitleToast(title: title,
-                                   message: message,
-                                   backgroundColor: backgroundColor,
-                                   duration: tapHandler == nil ? 5 : nil,
+    let toast = TitleSubtitleToast(title: uiConfig.showToastTitle ? title : nil, message: message,
+                                   backgroundColor: backgroundColor, duration: tapHandler == nil ? 5 : nil, 
                                    delegate: toastView)
     toastView.tapHandler = tapHandler
     present(toast, withCustomToastView: toastView, animated: animated)

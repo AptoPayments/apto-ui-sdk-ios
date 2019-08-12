@@ -125,7 +125,7 @@ private extension KYCViewControllerTheme2 {
   func setUpFooterLabel() {
     view.addSubview(footerLabel)
     footerLabel.textAlignment = .center
-    footerLabel.underlineLinks = true
+    footerLabel.underlineLinks = uiConfiguration.underlineLinks
     footerLabel.linkColor = uiConfiguration.textSecondaryColor
     footerLabel.font = uiConfiguration.fontProvider.formTextLink
     footerLabel.delegate = self

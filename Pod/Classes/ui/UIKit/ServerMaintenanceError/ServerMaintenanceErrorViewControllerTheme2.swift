@@ -97,7 +97,7 @@ private extension ServerMaintenanceErrorViewControllerTheme2 {
   }
 
   var tintColor: UIColor {
-    return config?.textTopBarColor ?? .white
+    return config?.textTopBarSecondaryColor ?? .white
   }
 
   var buttonBackgroundColor: UIColor {

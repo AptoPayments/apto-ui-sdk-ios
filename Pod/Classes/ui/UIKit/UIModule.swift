@@ -400,18 +400,11 @@ extension UIViewController {
       return
     }
     if let mode = mode, let uiConfig = uiConfig {
-      let color: UIColor
-      switch uiConfig.uiTheme {
-      case .theme1:
-        color = uiConfig.textTopBarColor
-      case .theme2:
-        color = uiConfig.textSecondaryColor
-      }
       switch mode {
       case .back:
-        showNavPreviousButton(color, uiTheme: uiConfig.uiTheme)
+        showNavPreviousButton(uiConfig.textTopBarPrimaryColor, uiTheme: uiConfig.uiTheme)
       case .close:
-        showNavCancelButton(color, uiTheme: uiConfig.uiTheme)
+        showNavCancelButton(uiConfig.textTopBarPrimaryColor, uiTheme: uiConfig.uiTheme)
       case .none:
         hideNavPreviousButton()
       }

@@ -293,7 +293,7 @@ private extension ManageShiftCardViewControllerTheme1 {
     var items = navigationItem.rightBarButtonItems ?? []
     if showActivateButton {
       if !items.contains(activationButton) {
-        activationButton.tintColor = uiConfiguration.textTopBarColor
+        activationButton.tintColor = uiConfiguration.textTopBarPrimaryColor
         items.append(activationButton)
         navigationItem.rightBarButtonItems = items
       }

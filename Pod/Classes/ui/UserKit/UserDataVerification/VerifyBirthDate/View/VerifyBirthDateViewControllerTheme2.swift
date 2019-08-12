@@ -94,7 +94,7 @@ private extension VerifyBirthDateViewControllerTheme2 {
   func setUpNavigation() {
     navigationController?.navigationBar.hideShadow()
     navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationPrimaryColor,
-                                              tintColor: uiConfiguration.uiSecondaryColor)
+                                              tintColor: uiConfiguration.textTopBarPrimaryColor)
     edgesForExtendedLayout = .top
     extendedLayoutIncludesOpaqueBars = false
   }

@@ -166,7 +166,7 @@ class CreditCardView: UIView {
 
   fileprivate func set(cardNetwork: CardNetwork, enabled: Bool, alpha: CGFloat) {
     UIView.animate(withDuration: 2) {
-      self.imageView.tintColor = self.uiConfiguration.textTopBarColor
+      self.imageView.tintColor = self.textColor
       self.imageView.image = self.logos[cardNetwork]! // swiftlint:disable:this force_unwrapping
     }
   }
@@ -345,7 +345,7 @@ private extension CreditCardView {
   func setUpCVC() {
     cvc.translatesAutoresizingMaskIntoConstraints = false
     cvc.formattingPattern = "***"
-    cvc.backgroundColor = uiConfiguration.textTopBarColor
+    cvc.backgroundColor = textColor
     cvc.textAlignment = .center
     backView.addSubview(cvc)
     cvc.snp.makeConstraints { make in
@@ -363,6 +363,7 @@ private extension CreditCardView {
     expireDate.textColor = textColor
     frontCvvText.textColor = textColor.withAlphaComponent(0.7)
     frontCvv.textColor = textColor
+    imageView.tintColor = textColor
   }
 }
 

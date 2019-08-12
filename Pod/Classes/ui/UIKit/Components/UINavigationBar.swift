@@ -13,9 +13,9 @@ extension UINavigationBar {
   func setUpWith(uiConfig: UIConfig) {
     backgroundColor = uiConfig.uiNavigationPrimaryColor
     barTintColor = uiConfig.uiNavigationPrimaryColor
-    tintColor = uiConfig.textTopBarColor
+    tintColor = uiConfig.textTopBarPrimaryColor
     titleTextAttributes = [
-      NSAttributedString.Key.foregroundColor: uiConfig.textTopBarColor
+      NSAttributedString.Key.foregroundColor: uiConfig.textTopBarPrimaryColor
     ]
     isTranslucent = false
   }

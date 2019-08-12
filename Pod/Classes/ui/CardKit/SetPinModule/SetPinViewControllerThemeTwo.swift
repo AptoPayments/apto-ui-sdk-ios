@@ -139,7 +139,7 @@ private extension SetPinViewControllerThemeTwo {
   func setUpNavigationBar() {
     navigationController?.navigationBar.hideShadow()
     navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationPrimaryColor,
-                                              tintColor: uiConfiguration.uiSecondaryColor)
+                                              tintColor: uiConfiguration.textTopBarPrimaryColor)
   }
 
   func setUpTitleLabel() {

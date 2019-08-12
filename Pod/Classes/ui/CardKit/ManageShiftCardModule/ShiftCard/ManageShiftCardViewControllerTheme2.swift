@@ -37,6 +37,7 @@ class ManageShiftCardViewControllerTheme2: ShiftViewController, ManageShiftCardV
   private let disposeBag = DisposeBag()
   private let cardActivationTextFieldDelegate = UITextFieldLengthLimiterDelegate(6)
   private let navigationBarVisibilityThreshold: CGFloat = 4
+  private let refreshTextAlpha: CGFloat = 0.7
 
   private lazy var notifyViewLoaded: () -> Void = { [unowned self] in
     self.presenter.viewLoaded()
@@ -319,7 +320,7 @@ private extension ManageShiftCardViewControllerTheme2 {
   func createRefreshHeader() {
     let header = DefaultRefreshHeader.header()
     header.imageRenderingWithTintColor = true
-    header.tintColor = uiConfiguration.textTopBarColor.withAlphaComponent(0.7)
+    header.tintColor = uiConfiguration.textTopBarSecondaryColor.withAlphaComponent(refreshTextAlpha)
     header.textLabel.font = uiConfiguration.fontProvider.timestampFont
     transactionsList.configRefreshHeader(with: header, container: self) { [weak self] in
       self?.presenter.reloadTapped(showSpinner: false)
@@ -327,7 +328,7 @@ private extension ManageShiftCardViewControllerTheme2 {
   }
 
   func createRefreshFooter() {
-    footer.tintColor = uiConfiguration.textTopBarColor.withAlphaComponent(0.7)
+    footer.tintColor = uiConfiguration.textTopBarSecondaryColor.withAlphaComponent(refreshTextAlpha)
     footer.textLabel.font = uiConfiguration.fontProvider.timestampFont
     footer.textLabel.numberOfLines = 0
     footer.setText("manage.shift.card.refresh.title".podLocalized(), mode: .scrollAndTapToRefresh)
