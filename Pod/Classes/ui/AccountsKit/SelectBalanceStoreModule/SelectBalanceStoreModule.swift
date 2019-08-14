@@ -26,7 +26,12 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
     guard let action = application.nextAction.configuration as? SelectBalanceStoreActionConfiguration else {
       fatalError("Wrong select balance store configuration")
     }
-    externalOAuthModuleConfig = ExternalOAuthModuleConfig(title: "select_balance_store.login.title".podLocalized(),
+    let title = "select_balance_store.login.title".podLocalized()
+    let explanation = "select_balance_store.login.explanation".podLocalized()
+    let callToAction = "select_balance_store.login.call_to_action.title".podLocalized()
+    let newUserAction = "select_balance_store.login.new_user.title".podLocalized()
+    externalOAuthModuleConfig = ExternalOAuthModuleConfig(title: title, explanation: explanation,
+                                                          callToAction: callToAction, newUserAction: newUserAction,
                                                           allowedBalanceTypes: action.allowedBalanceTypes)
     super.init(serviceLocator: serviceLocator)
   }

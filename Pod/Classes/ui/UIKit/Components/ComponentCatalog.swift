@@ -134,7 +134,7 @@ class ComponentCatalog {
     retVal.keyboardType = .emailAddress
     retVal.returnKeyType = .done
     retVal.backgroundColor = .white
-    retVal.layer.cornerRadius = uiConfig.buttonCornerRadius
+    retVal.layer.cornerRadius = uiConfig.fieldCornerRadius
     retVal.layer.shadowOffset = CGSize(width: 0, height: 2)
     retVal.layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:0.12).cgColor
     retVal.layer.shadowOpacity = 1

@@ -24,15 +24,13 @@ class ExternalOAuthViewControllerTheme2: ShiftViewController {
   init(uiConfiguration: UIConfig, eventHandler: ExternalOAuthPresenterProtocol) {
     self.presenter = eventHandler
     super.init(uiConfiguration: uiConfiguration)
-    let callToActionTitle = "select_balance_store.login.call_to_action.title".podLocalized()
-    self.actionButton = ComponentCatalog.buttonWith(title: callToActionTitle,
+    self.actionButton = ComponentCatalog.buttonWith(title: " ",
                                                     showShadow: false,
                                                     uiConfig: uiConfiguration) { [unowned self] in
       let custodianType: CustodianType = self.allowedBalanceTypes.first?.type ?? .coinbase
       self.custodianSelected(type: custodianType)
     }
-    let newUserTitle = "select_balance_store.login.new_user.title".podLocalized()
-    self.newUserButton = ComponentCatalog.anchorLinkButtonWith(title: newUserTitle,
+    self.newUserButton = ComponentCatalog.anchorLinkButtonWith(title: " ",
                                                                delegate: self,
                                                                uiConfig: uiConfiguration)
   }
@@ -70,6 +68,18 @@ private extension ExternalOAuthViewControllerTheme2 {
 
     viewModel.title.ignoreNils().observeNext { [unowned self] title in
       self.titleLabel.updateAttributedText(title)
+    }.dispose(in: disposeBag)
+
+    viewModel.explanation.ignoreNils().observeNext { [unowned self] explanation in
+      self.explanationLabel.updateAttributedText(explanation)
+    }.dispose(in: disposeBag)
+
+    viewModel.callToAction.ignoreNils().observeNext { [unowned self] callToAction in
+      self.actionButton.updateAttributedTitle(callToAction, for: .normal)
+    }.dispose(in: disposeBag)
+
+    viewModel.newUserAction.ignoreNils().observeNext { [unowned self] newUserAction in
+      self.newUserButton.set(content: .plainText(newUserAction))
     }.dispose(in: disposeBag)
 
     viewModel.allowedBalanceTypes.ignoreNils().observeNext { [unowned self] allowedBalanceTypes in
@@ -110,7 +120,7 @@ private extension ExternalOAuthViewControllerTheme2 {
   }
 
   func setUpExplanationLabel() {
-    explanationLabel = ComponentCatalog.formLabelWith(text: "select_balance_store.login.explanation".podLocalized(),
+    explanationLabel = ComponentCatalog.formLabelWith(text: " ",
                                                       multiline: true,
                                                       lineSpacing: uiConfiguration.lineSpacing,
                                                       letterSpacing: uiConfiguration.letterSpacing,

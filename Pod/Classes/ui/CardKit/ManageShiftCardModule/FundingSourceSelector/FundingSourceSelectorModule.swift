@@ -30,7 +30,13 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
     guard let allowedBalanceTypes = card.features?.allowedBalanceTypes, !allowedBalanceTypes.isEmpty else {
       return
     }
-    let oauthModuleConfig = ExternalOAuthModuleConfig(title: "Coinbase", allowedBalanceTypes: allowedBalanceTypes)
+    let title = "external_auth.login.title".podLocalized()
+    let explanation = "external_auth.login.explanation".podLocalized()
+    let callToAction = "external_auth.login.call_to_action.title".podLocalized()
+    let newUserAction = "external_auth.login.new_user.title".podLocalized()
+    let oauthModuleConfig = ExternalOAuthModuleConfig(title: title, explanation: explanation,
+                                                      callToAction: callToAction, newUserAction: newUserAction,
+                                                      allowedBalanceTypes: allowedBalanceTypes)
     let externalOAuthModule = ExternalOAuthModule(serviceLocator: serviceLocator,
                                                   config: oauthModuleConfig,
                                                   uiConfig: uiConfig)
@@ -78,7 +84,29 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
       show(error: error)
       return
     }
-    let result = SelectBalanceStoreResult(result: .invalid, errorCode: errorCode)
+    let result = SelectBalanceStoreResult(result: .invalid, errorCode: errorCode, errorMessageKeys: errorMessageKeys)
     show(message: result.errorMessage, title: "", isError: true)
   }
+
+  private lazy var errorMessageKeys = [
+    "external_auth.login.error_wrong_country.message", 
+    "external_auth.login.error_wrong_region.message",
+    "external_auth.login.error_unverified_address.message", 
+    "external_auth.login.error_unsupported_currency.message",
+    "external_auth.login.error_cant_capture_funds.message",
+    "external_auth.login.error_insufficient_funds.message",
+    "external_auth.login.error_balance_not_found.message",
+    "external_auth.login.error_access_token_invalid.message",
+    "external_auth.login.error_scopes_required.message",
+    "external_auth.login.error_missing_legal_name.message",
+    "external_auth.login.error_missing_birthdate.message",
+    "external_auth.login.error_wrong_birthdate.message",
+    "external_auth.login.error_missing_address.message",
+    "external_auth.login.error_missing_email.message",
+    "external_auth.login.error_wrong_email.message",
+    "external_auth.login.error_email_sends_disabled.message",
+    "external_auth.login.error_insufficient_application_limit.message",
+    "external_auth.login.error_identity_not_verified.message",
+    "external_auth.login.error_unknown.message"
+  ]
 }

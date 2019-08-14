@@ -345,7 +345,7 @@ private extension ManageShiftCardViewControllerTheme2 {
   func setUpEmptyCaseView() {
     emptyCaseView.subviews.forEach { $0.removeFromSuperview() }
     emptyCaseView.backgroundColor = .clear
-    let label = ComponentCatalog.sectionTitleLabelWith(text: "manage.shift.card.no.transactions".podLocalized(),
+    let label = ComponentCatalog.sectionTitleLabelWith(text: "manage_card.transaction_list.empty_case.title".podLocalized(),
                                                        textAlignment: .center,
                                                        uiConfig: uiConfiguration)
     label.textColor = uiConfiguration.textTertiaryColor

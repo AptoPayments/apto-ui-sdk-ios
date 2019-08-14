@@ -25,6 +25,9 @@ class ExternalOAuthPresenter: ExternalOAuthPresenterProtocol {
 
   func viewLoaded() {
     viewModel.title.send(config.title)
+    viewModel.explanation.send(config.explanation)
+    viewModel.callToAction.send(config.callToAction)
+    viewModel.newUserAction.send(config.newUserAction)
     viewModel.allowedBalanceTypes.send(config.allowedBalanceTypes)
     analyticsManager?.track(event: Event.selectBalanceStoreLogin)
   }

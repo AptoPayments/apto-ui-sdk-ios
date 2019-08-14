@@ -47,6 +47,9 @@ protocol ExternalOAuthViewProtocol: ViewControllerProtocol {}
 
 class ExternalOAuthViewModel {
   let title: Observable<String?> = Observable(nil)
+  let explanation: Observable<String?> = Observable(nil)
+  let callToAction: Observable<String?> = Observable(nil)
+  let newUserAction: Observable<String?> = Observable(nil)
   let error: Observable<Error?> = Observable(nil)
   let allowedBalanceTypes: Observable<[AllowedBalanceType]?> = Observable(nil)
 }

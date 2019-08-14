@@ -144,7 +144,7 @@ private extension AuthViewControllerTheme2 {
     view.addSubview(explanationLabel)
     explanationLabel.snp.makeConstraints { make in
       make.left.right.equalTo(titleLabel)
-      make.top.equalTo(titleLabel.snp.bottom).offset(6)
+      make.top.equalTo(titleLabel.snp.bottom).offset(8)
     }
   }
 

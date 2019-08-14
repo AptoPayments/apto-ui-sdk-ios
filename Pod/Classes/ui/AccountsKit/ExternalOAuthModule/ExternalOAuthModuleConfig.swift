@@ -9,5 +9,8 @@ import AptoSDK
 
 struct ExternalOAuthModuleConfig {
   let title: String
+  let explanation: String
+  let callToAction: String
+  let newUserAction: String
   let allowedBalanceTypes: [AllowedBalanceType]
 }

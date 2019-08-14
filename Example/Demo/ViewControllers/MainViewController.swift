@@ -90,7 +90,8 @@ class MainViewController: UIViewController {
   fileprivate func showCardSDK() {
     // Launch Card Flow
     self.showLoadingSpinner(tintColor: .white, position: .bottomCenter)
-    AptoPlatform.defaultManager().startCardFlow(from: self, mode: .standalone) { [weak self] result in
+    let options = CardOptions(features: [.useBalanceVersionV2: true, .showStatsButton: true, .showNotificationPreferences: true, .showDetailedCardActivityOption: true])
+    AptoPlatform.defaultManager().startCardFlow(from: self, mode: .standalone, options: options) { [weak self] result in
       self?.hideLoadingSpinner()
       switch result {
       case .failure(let error):

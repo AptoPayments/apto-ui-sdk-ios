@@ -415,7 +415,10 @@ class ModelDataProvider {
                                                 amountHold: nil,
                                                 state: .invalid)
 
-  lazy var externalOauthModuleConfig = ExternalOAuthModuleConfig(title: "title",
+  lazy var externalOauthModuleConfig = ExternalOAuthModuleConfig(title: "title", 
+                                                                 explanation: "explanation",
+                                                                 callToAction: "callToAction",
+                                                                 newUserAction: "newUserAction",
                                                                  allowedBalanceTypes: [coinbaseBalanceType])
 
   lazy var custodian = Custodian(custodianType: .coinbase, name: "Coinbase")

@@ -161,7 +161,7 @@ private extension SetPinViewControllerThemeTwo {
 
   func setUpPinEntryContainer() {
     pinEntryContainerView.backgroundColor = view.backgroundColor
-    pinEntryContainerView.layer.cornerRadius = uiConfiguration.buttonCornerRadius
+    pinEntryContainerView.layer.cornerRadius = uiConfiguration.fieldCornerRadius
     pinEntryContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
     pinEntryContainerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
     pinEntryContainerView.layer.shadowOpacity = 1

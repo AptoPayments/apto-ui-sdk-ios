@@ -43,13 +43,13 @@ class PINVerificationViewControllerTheme2: PINVerificationViewControllerProtocol
 
   private func setupViewModelSubscriptions() {
     let viewModel = presenter.viewModel
-    viewModel.title.observeNext { [unowned self] title in
+    viewModel.title.ignoreNils().observeNext { [unowned self] title in
       self.titleLabel.updateAttributedText(title)
     }.dispose(in: disposeBag)
-    viewModel.subtitle.observeNext { [unowned self] subtitle in
+    viewModel.subtitle.ignoreNils().observeNext { [unowned self] subtitle in
       self.explanationLabel.updateAttributedText(subtitle)
     }.dispose(in: disposeBag)
-    viewModel.footerTitle.observeNext { footerTitle in
+    viewModel.footerTitle.ignoreNils().observeNext { footerTitle in
       self.resendExplanationLabel.updateAttributedText(footerTitle)
     }.dispose(in: disposeBag)
     viewModel.resendButtonState.ignoreNils().observeNext { state in
@@ -206,7 +206,7 @@ private extension PINVerificationViewControllerTheme2 {
   func createPinEntryContainer() -> UIView {
     let containerView = UIView()
     containerView.backgroundColor = .white
-    containerView.layer.cornerRadius = uiConfiguration.buttonCornerRadius
+    containerView.layer.cornerRadius = uiConfiguration.fieldCornerRadius
     containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
     containerView.layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:0.12).cgColor
     containerView.layer.shadowOpacity = 1
