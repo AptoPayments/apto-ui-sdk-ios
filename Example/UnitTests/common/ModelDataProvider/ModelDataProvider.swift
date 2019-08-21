@@ -6,18 +6,23 @@
 //
 //
 
-import UIKit
+import Foundation
 @testable import AptoSDK
 @testable import AptoUISDK
+import SwiftyJSON
 
 class ModelDataProvider {
   static let provider: ModelDataProvider = ModelDataProvider()
   private init() {
   }
 
+  lazy var emptyJSON = JSON()
+
   lazy var user = ShiftUser(userId: "userId", accessToken: AccessToken(token: "AccessToken",
                                                                        primaryCredential: .email,
                                                                        secondaryCredential: .phoneNumber))
+
+  lazy var userJSON = JSON(dictionaryLiteral: ("user_id", "user_id"), ("user_token", "user_token"))
 
   lazy var teamConfig = TeamConfiguration(logoUrl: nil, name: "Test team")
 
@@ -101,6 +106,9 @@ class ModelDataProvider {
                                 trackerAccessToken: nil)
   }()
 
+  lazy var contextConfiguration = ContextConfiguration(teamConfiguration: teamConfig,
+                                                       projectConfiguration: projectConfiguration)
+
   lazy var uiConfig: UIConfig = UIConfig(projectConfiguration: projectConfiguration)
 
   lazy var phoneDataPoint: DataPoint = DataPoint(type: .phoneNumber, verified: true, notSpecified: false)
@@ -142,6 +150,8 @@ class ModelDataProvider {
                                                      applicationDate: Date(),
                                                      workflowObjectId: "workflow_id",
                                                      nextAction: waitListAction)
+
+  lazy var cardJSON = JSON(dictionaryLiteral: ("account_id", "account_id"), ("state", "created"), ("last_four", "1234"))
 
   lazy var card: Card = {
     let card = Card(accountId: "card_id",

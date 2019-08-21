@@ -25,8 +25,10 @@ class AnalyticsManagerSpy: AnalyticsServiceProtocol {
   }
 
   private(set) var createUserCalled = false
+  private(set) var lastCreateUserUserId: String?
   func createUser(userId: String) {
     createUserCalled = true
+    lastCreateUserUserId = userId
   }
 
   private(set) var loginUserCalled = false

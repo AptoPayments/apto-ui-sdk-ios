@@ -131,9 +131,12 @@ class AptoPlatformFake: AptoPlatformProtocol {
   var nextCreateUserResult: Result<ShiftUser, NSError>?
   private(set) var createUserCalled = false
   private(set) var lastCreateUserUserData: DataPointList?
-  func createUser(userData: DataPointList, callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  private(set) var lastCreateUserCustodianUid: String?
+  func createUser(userData: DataPointList, custodianUid: String?,
+                  callback: @escaping Result<ShiftUser, NSError>.Callback) {
     createUserCalled = true
     lastCreateUserUserData = userData
+    lastCreateUserCustodianUid = custodianUid
     if let result = nextCreateUserResult {
       callback(result)
     }
@@ -418,13 +421,16 @@ class AptoPlatformFake: AptoPlatformProtocol {
     }
   }
 
-  private(set) var issueCardWithCustodianCalled = true
+  private(set) var issueCardWithCustodianCalled = false
   private(set) var lastIssueCardCardProduct: CardProduct?
   private(set) var lastIssueCardCustodian: Custodian?
-  func issueCard(cardProduct: CardProduct, custodian: Custodian?, callback: @escaping Result<Card, NSError>.Callback) {
+  private(set) var lastIssueCardAdditionalFields: [String: AnyObject]?
+  func issueCard(cardProduct: CardProduct, custodian: Custodian?, additionalFields: [String: AnyObject]? = nil,
+                 callback: @escaping Result<Card, NSError>.Callback) {
     issueCardWithCustodianCalled = true
     lastIssueCardCardProduct = cardProduct
     lastIssueCardCustodian = custodian
+    lastIssueCardAdditionalFields = additionalFields
     if let result = nextIssueCardResult {
       callback(result)
     }

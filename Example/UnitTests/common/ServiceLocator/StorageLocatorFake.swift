@@ -9,55 +9,61 @@
 @testable import AptoSDK
 
 class StorageLocatorFake: StorageLocatorProtocol {
+  lazy var userStorageFake = UserStorageFake()
   func userStorage(transport: JSONTransport) -> UserStorageProtocol {
-    Swift.fatalError("userStorage(transport:) has not been implemented")
+    return userStorageFake
   }
 
+  lazy var configurationStorageFake = ConfigurationStorageFake()
   func configurationStorage(transport: JSONTransport) -> ConfigurationStorageProtocol {
-    Swift.fatalError("configurationStorage(transport:) has not been implemented")
+    return configurationStorageFake
   }
 
   func cardApplicationsStorage(transport: JSONTransport) -> CardApplicationsStorageProtocol {
-    Swift.fatalError("cardApplicationsStorage(transport:) has not been implemented")
+    return CardApplicationsStorage(transport: transport)
   }
 
+  lazy var financialAccountsStorageFake = FinancialAccountsStorageFake()
   func financialAccountsStorage(transport: JSONTransport) -> FinancialAccountsStorageProtocol {
-    Swift.fatalError("financialAccountsStorage(transport:) has not been implemented")
+    return financialAccountsStorageFake
   }
 
   func pushTokenStorage(transport: JSONTransport) -> PushTokenStorageProtocol {
-    Swift.fatalError("pushTokenStorage(transport:) has not been implemented")
+    return PushTokenStorage(transport: transport)
   }
 
   func oauthStorage(transport: JSONTransport) -> OauthStorageProtocol {
-    Swift.fatalError("oauthStorage(transport:) has not been implemented")
+    return OauthStorage(transport: transport)
   }
 
   func notificationPreferencesStorage(transport: JSONTransport) -> NotificationPreferencesStorageProtocol {
-    Swift.fatalError("notificationPreferencesStorage(transport:) has not been implemented")
+    return NotificationPreferencesStorage(transport: transport)
   }
 
+  lazy var userTokenStorageFake = UserTokenStorageFake()
   func userTokenStorage() -> UserTokenStorageProtocol {
-    Swift.fatalError("userTokenStorage() has not been implemented")
+    return userTokenStorageFake
   }
 
+  lazy var featuresStorageSpy = FeaturesStorageSpy()
   func featuresStorage() -> FeaturesStorageProtocol {
-    Swift.fatalError("featuresStorage() has not been implemented")
+    return featuresStorageSpy
   }
 
   func voIPStorage(transport: JSONTransport) -> VoIPStorageProtocol {
-    Swift.fatalError("voIpStorage(transport:) has not been implemented")
+    return VoIPStorage(transport: transport)
   }
 
   func authenticatedLocalFileManager() -> LocalCacheFileManagerProtocol {
-    Swift.fatalError("authenticatedLocalFileManager() has not been implemented")
+    return localCacheFileManagerFake
   }
 
+  lazy var localCacheFileManagerFake = LocalCacheFileManager()
   func localCacheFileManager() -> LocalCacheFileManagerProtocol {
-    Swift.fatalError("localCacheFileManager() has not been implemented")
+    return localCacheFileManagerFake
   }
 
   func userPreferencesStorage() -> UserPreferencesStorageProtocol {
-    Swift.fatalError("userPreferencesStorage() has not been implemented")
+    return UserPreferencesStorage(userDefaultsStorage: UserDefaultsStorage())
   }
 }

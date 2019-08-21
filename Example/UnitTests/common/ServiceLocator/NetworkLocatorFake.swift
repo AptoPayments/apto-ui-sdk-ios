@@ -16,10 +16,11 @@ class NetworkLocatorFake: NetworkLocatorProtocol {
     return networkManagerSpy
   }
 
+  lazy var jsonTransportFake = JSONTransportFake()
   func jsonTransport(environment: JSONTransportEnvironment,
                      baseUrlProvider: BaseURLProvider,
                      certPinningConfig: [String: [String: AnyObject]]?,
                      allowSelfSignedCertificate: Bool) -> JSONTransport {
-    Swift.fatalError("jsonTransport not implemented")
+    return jsonTransportFake
   }
 }
