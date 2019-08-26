@@ -75,9 +75,10 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
   private(set) var lastIssueCardCustodian: Custodian?
   private(set) var lastIssueCardBalanceVersion: BalanceVersion?
   private(set) var lastIssueCardAdditionalFields: [String: AnyObject]?
+  private(set) var lastIssueCardInitialFundingSourceId: String?
   func issueCard(_ apiKey: String, userToken: String, cardProduct: CardProduct, custodian: Custodian?,
                  balanceVersion: BalanceVersion, additionalFields: [String: AnyObject]?,
-                 callback: @escaping Result<Card, NSError>.Callback) {
+                 initialFundingSourceId: String?, callback: @escaping Result<Card, NSError>.Callback) {
     issueCardCalled = true
     lastIssueCardApiKey = apiKey
     lastIssueCardUserToken = userToken
@@ -85,6 +86,7 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
     lastIssueCardCustodian = custodian
     lastIssueCardBalanceVersion = balanceVersion
     lastIssueCardAdditionalFields = additionalFields
+    lastIssueCardInitialFundingSourceId = initialFundingSourceId
   }
 }
 
@@ -92,9 +94,10 @@ class FinancialAccountsStorageFake: FinancialAccountsStorageSpy {
   var nextIssueCardResult: Result<Card, NSError>?
   override func issueCard(_ apiKey: String, userToken: String, cardProduct: CardProduct, custodian: Custodian?,
                           balanceVersion: BalanceVersion, additionalFields: [String: AnyObject]?,
-                          callback: @escaping Result<Card, NSError>.Callback) {
+                          initialFundingSourceId: String?, callback: @escaping Result<Card, NSError>.Callback) {
     super.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                    balanceVersion: balanceVersion, additionalFields: additionalFields, callback: callback)
+                    balanceVersion: balanceVersion, additionalFields: additionalFields,
+                    initialFundingSourceId: initialFundingSourceId, callback: callback)
     if let result = nextIssueCardResult {
       callback(result)
     }

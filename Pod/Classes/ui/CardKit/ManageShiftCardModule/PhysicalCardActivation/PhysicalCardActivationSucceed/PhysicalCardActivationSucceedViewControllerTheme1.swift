@@ -69,7 +69,7 @@ private extension PhysicalCardActivationSucceedViewControllerTheme1 {
   }
 
   func createTitleLabel(bottomView: UIView) {
-    let title = "physical.card.activation.succeed.label.title".podLocalized()
+    let title = "manage_card.get_pin_nue.title".podLocalized()
     let label = ComponentCatalog.largeTitleLabelWith(text: title, uiConfig: uiConfiguration)
     view.addSubview(label)
     label.snp.makeConstraints { make in
@@ -79,7 +79,7 @@ private extension PhysicalCardActivationSucceedViewControllerTheme1 {
   }
 
   func createExplanationLabel(bottomConstraint: ConstraintItem) -> UILabel {
-    let explanation = "physical.card.activation.succeed.label.message".podLocalized()
+    let explanation = "manage_card.get_pin_nue.explanation".podLocalized()
     let label = ComponentCatalog.mainItemRegularLabelWith(text: explanation, multiline: true, uiConfig: uiConfiguration)
     view.addSubview(label)
     label.snp.makeConstraints { make in
@@ -90,7 +90,7 @@ private extension PhysicalCardActivationSucceedViewControllerTheme1 {
   }
 
   func createGetPinButton(bottomView: UIView) -> UIButton {
-    let button = ComponentCatalog.buttonWith(title: "physical.card.activation.succeed.button.title".podLocalized(),
+    let button = ComponentCatalog.buttonWith(title: "manage_card.get_pin_nue.call_to_action.title".podLocalized(),
                                              uiConfig: uiConfiguration) { [unowned self] in
       self.presenter.getPinTapped()
     }
@@ -103,7 +103,7 @@ private extension PhysicalCardActivationSucceedViewControllerTheme1 {
   }
 
   func createChargeApplyLabel() -> UILabel {
-    let chargeExplanation = "physical.card.activation.succeed.call.charge".podLocalized()
+    let chargeExplanation = "manage_card.get_pin_nue.footer".podLocalized()
     let label = ComponentCatalog.instructionsLabelWith(text: chargeExplanation, uiConfig: uiConfiguration)
     view.addSubview(label)
     label.snp.makeConstraints { make in

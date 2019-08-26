@@ -20,10 +20,10 @@ class PhysicalCardActivationSucceedViewControllerTheme2: PhysicalCardActivationS
 
   init(uiConfiguration: UIConfig, presenter: PhysicalCardActivationSucceedPresenterProtocol) {
     self.presenter = presenter
-    let title = "physical.card.activation.succeed.label.title".podLocalized()
+    let title = "manage_card.get_pin_nue.title".podLocalized()
     self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: title, textAlignment: .center,
                                                            uiConfig: uiConfiguration)
-    let explanation = "physical.card.activation.succeed.label.message".podLocalized()
+    let explanation = "manage_card.get_pin_nue.explanation".podLocalized()
     self.explanationLabel = ComponentCatalog.formLabelWith(text: explanation, textAlignment: .center, multiline: true,
                                                            uiConfig: uiConfiguration)
     super.init(uiConfiguration: uiConfiguration)
@@ -120,7 +120,7 @@ private extension PhysicalCardActivationSucceedViewControllerTheme2 {
   }
 
   func createGetPinButton() {
-    let button = ComponentCatalog.buttonWith(title: "physical.card.activation.succeed.button.title".podLocalized(),
+    let button = ComponentCatalog.buttonWith(title: "manage_card.get_pin_nue.call_to_action.title".podLocalized(),
                                              showShadow: false, accessibilityLabel: "Get PIN button",
                                              uiConfig: uiConfiguration) { [unowned self] in
       self.presenter.getPinTapped()
@@ -142,7 +142,7 @@ private extension PhysicalCardActivationSucceedViewControllerTheme2 {
   }
 
   func createChargeApplyLabel() {
-    let chargeExplanation = "physical.card.activation.succeed.call.charge".podLocalized()
+    let chargeExplanation = "manage_card.get_pin_nue.footer".podLocalized()
     let label = ComponentCatalog.instructionsLabelWith(text: chargeExplanation, uiConfig: uiConfiguration)
     chargeLabelContainerView.addSubview(label)
     label.snp.makeConstraints { make in

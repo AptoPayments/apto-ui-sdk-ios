@@ -113,6 +113,14 @@ class AptoPlatformFake: AptoPlatformProtocol {
     return nextCurrentTokenResult
   }
 
+  private(set) var setUserTokenCalled = false
+  private(set) var lastSetUserTokenUserToken: String?
+  func setUserToken(_ userToken: String) {
+    setUserTokenCalled = true
+    lastSetUserTokenUserToken = userToken
+    nextCurrentTokenResult = AccessToken(token: userToken, primaryCredential: nil, secondaryCredential: nil)
+  }
+
   private(set) var clearUserTokenCalled = false
   func clearUserToken() {
     clearUserTokenCalled = true

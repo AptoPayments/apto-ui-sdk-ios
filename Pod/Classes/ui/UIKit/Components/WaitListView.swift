@@ -124,12 +124,12 @@ private extension WaitListView {
   func setUpAssetImageView() {
     guard shouldRenderAsset else { return }
     contentView.addSubview(assetImageView)
-    assetImageView.contentMode = .scaleAspectFill
+    assetImageView.contentMode = .scaleAspectFit
     assetImageView.snp.makeConstraints { make in
       make.top.equalToSuperview()
       make.centerX.equalToSuperview()
-      make.height.equalTo(184)
-      make.width.equalTo(200)
+      make.height.lessThanOrEqualTo(300)
+      make.width.lessThanOrEqualTo(250)
     }
   }
 

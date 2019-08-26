@@ -26,6 +26,7 @@ class FinancialAccountsStorageTest: XCTestCase {
     ] as AnyObject,
     "field2": 3 as AnyObject
   ]
+  private let initialFundingSourceId = "initial_funding_source_id"
 
   override func setUp() {
     super.setUp()
@@ -35,7 +36,7 @@ class FinancialAccountsStorageTest: XCTestCase {
   func testIssueCardCallTransport() {
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: nil) { _ in }
+                  balanceVersion: balanceVersion, additionalFields: nil, initialFundingSourceId: nil) { _ in }
 
     // Then
     XCTAssertTrue(transport.postCalled)
@@ -55,7 +56,8 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields) { _ in }
+                  balanceVersion: balanceVersion, additionalFields: additionalFields,
+                  initialFundingSourceId: nil) { _ in }
 
     // Then
     guard let urlWrapper = transport.lastPostURL as? URLWrapper else {
@@ -68,10 +70,21 @@ class FinancialAccountsStorageTest: XCTestCase {
   func testIssueCardWithAdditionalFieldsAddAdditionalFieldsToParameters() {
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields) { _ in }
+                  balanceVersion: balanceVersion, additionalFields: additionalFields,
+                  initialFundingSourceId: nil) { _ in }
 
     // Then
     XCTAssertNotNil(transport.lastPostParameters?["additional_fields"])
+  }
+
+  func testIssueCardWithInitialFundingSourceIdAddInitialFundingSourceIdToParameters() {
+    // When
+    sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
+                  balanceVersion: balanceVersion, additionalFields: additionalFields,
+                  initialFundingSourceId: initialFundingSourceId) { _ in }
+
+    // Then
+    XCTAssertNotNil(transport.lastPostParameters?["initial_funding_source_id"])
   }
 
   func testIssueCardRequestFailCallbackFailure() {
@@ -81,7 +94,8 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields) { result in
+                  balanceVersion: balanceVersion, additionalFields: additionalFields,
+                  initialFundingSourceId: nil) { result in
       returnedResult = result
     }
 
@@ -96,7 +110,8 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields) { result in
+                  balanceVersion: balanceVersion, additionalFields: additionalFields,
+                  initialFundingSourceId: nil) { result in
       returnedResult = result
     }
 
@@ -111,7 +126,8 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields) { result in
+                  balanceVersion: balanceVersion, additionalFields: additionalFields,
+                  initialFundingSourceId: nil) { result in
       returnedResult = result
     }
 

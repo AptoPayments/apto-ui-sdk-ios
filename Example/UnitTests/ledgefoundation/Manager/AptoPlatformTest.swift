@@ -181,7 +181,7 @@ class AptoPlatformTest: XCTestCase {
 
     // When
     sut.issueCard(cardProduct: dataProvider.cardProduct, custodian: dataProvider.custodian,
-                  additionalFields: [:]) { _ in }
+                  additionalFields: [:], initialFundingSourceId: "initial_funding_source_id") { _ in }
 
     // Then
     let storage = storageLocator.financialAccountsStorageFake
@@ -192,6 +192,7 @@ class AptoPlatformTest: XCTestCase {
     XCTAssertNotNil(storage.lastIssueCardCustodian)
     XCTAssertEqual(BalanceVersion.v1, storage.lastIssueCardBalanceVersion)
     XCTAssertNotNil(storage.lastIssueCardAdditionalFields)
+    XCTAssertNotNil(storage.lastIssueCardInitialFundingSourceId)
   }
 
   func testBalanceV2EnabledIssueCardUseBalanceV2() {
@@ -235,6 +236,39 @@ class AptoPlatformTest: XCTestCase {
 
     // Then
     XCTAssertEqual(true, returnedResult?.isSuccess)
+  }
+
+  // MARK: - Set User Token
+  func testSetUserTokenSaveTokenInStorageWithDefaultCredentials() {
+    // Given
+    let storage = storageLocator.userTokenStorageFake
+    let userToken = "user_token"
+
+    // When
+    sut.setUserToken(userToken)
+
+    // Then
+    XCTAssertTrue(storage.setCurrentTokenCalled)
+    XCTAssertEqual(userToken, storage.lastSetCurrentToken)
+    XCTAssertEqual(DataPointType.phoneNumber, storage.lastSetCurrentTokenPrimaryCredential)
+    XCTAssertEqual(DataPointType.email, storage.lastSetCurrentTokenSecondaryCredential)
+  }
+
+  func testSetUserTokenWithPreviousCredentialsReuseCredentials() {
+    // Given
+    let storage = storageLocator.userTokenStorageFake
+    let userToken = "user_token"
+    let primaryCredential = DataPointType.address
+    let secondaryCredential = DataPointType.birthDate
+    storage.setCurrent(token: "", withPrimaryCredential: primaryCredential, andSecondaryCredential: secondaryCredential)
+
+    // When
+    sut.setUserToken(userToken)
+
+    // Then
+    XCTAssertEqual(userToken, storage.lastSetCurrentToken)
+    XCTAssertEqual(primaryCredential, storage.lastSetCurrentTokenPrimaryCredential)
+    XCTAssertEqual(secondaryCredential, storage.lastSetCurrentTokenSecondaryCredential)
   }
 
   // MARK: - Helper methods

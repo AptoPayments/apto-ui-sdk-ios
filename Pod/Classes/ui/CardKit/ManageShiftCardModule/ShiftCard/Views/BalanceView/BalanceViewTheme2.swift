@@ -12,7 +12,7 @@ import SnapKit
 class BalanceViewTheme2: BalanceViewProtocol {
   private let balanceLabel = UILabel()
   private let balanceExplanation: UILabel
-  private let balanceBitCoins = UILabel()
+  private let balanceNativeLabel = UILabel()
   private let refreshImageView = UIImageView(frame: .zero)
   private var showBalance = false {
     didSet {
@@ -23,7 +23,7 @@ class BalanceViewTheme2: BalanceViewProtocol {
   }
   private var showNativeBalance = false {
     didSet {
-      balanceBitCoins.isHidden = !showNativeBalance
+      balanceNativeLabel.isHidden = !showNativeBalance
     }
   }
 
@@ -65,7 +65,7 @@ class BalanceViewTheme2: BalanceViewProtocol {
 
   func scale(factor scaleFactor: CGFloat) {
     scaleLabel(label: balanceLabel, maxSize: 26, minSize: 18, scaleFactor: scaleFactor)
-    scaleLabel(label: balanceBitCoins, maxSize: 16, minSize: 14, scaleFactor: scaleFactor)
+    scaleLabel(label: balanceNativeLabel, maxSize: 16, minSize: 14, scaleFactor: scaleFactor)
     scaleLabel(label: balanceExplanation, maxSize: 12, minSize: 0, scaleFactor: scaleFactor)
     let newAlpha: CGFloat = max(1 - 2.5 * scaleFactor, 0)
     balanceExplanation.alpha = newAlpha
@@ -91,10 +91,11 @@ private extension BalanceViewTheme2 {
     if let custodianWallet = fundingSource as? CustodianWallet,
        let balance = fundingSource.balance,
        !balance.sameCurrencyThan(amount: custodianWallet.nativeBalance) {
-      balanceBitCoins.text = " ≈ " + custodianWallet.nativeBalance.text
+      balanceNativeLabel.text = " ≈ " + custodianWallet.nativeBalance.text
       showNativeBalance = true
     }
     else {
+      balanceNativeLabel.text = ""
       showNativeBalance = false
     }
   }
@@ -102,7 +103,7 @@ private extension BalanceViewTheme2 {
   func showInvalidBalance() {
     let emptyBalance = "manage_card.balance.invalid_balance.title".podLocalized()
     balanceLabel.text = emptyBalance
-    balanceBitCoins.text = ""
+    balanceNativeLabel.text = ""
     showBalance = true
     showNativeBalance = false
   }
@@ -114,7 +115,7 @@ private extension BalanceViewTheme2 {
     backgroundColor = uiConfiguration.uiNavigationSecondaryColor
     setUpBalanceExplanation()
     setUpBalanceLabel()
-    setUpBalanceBitCoins()
+    setUpBalanceNativeLabel()
     setUpRefreshImageView()
   }
 
@@ -138,12 +139,12 @@ private extension BalanceViewTheme2 {
     }
   }
 
-  func setUpBalanceBitCoins() {
-    balanceBitCoins.font = uiConfiguration.fontProvider.subCurrencyFont
-    balanceBitCoins.textColor = uiConfiguration.textTopBarSecondaryColor.withAlphaComponent(0.7)
-    balanceBitCoins.textAlignment = .left
-    addSubview(balanceBitCoins)
-    balanceBitCoins.snp.makeConstraints { make in
+  func setUpBalanceNativeLabel() {
+    balanceNativeLabel.font = uiConfiguration.fontProvider.subCurrencyFont
+    balanceNativeLabel.textColor = uiConfiguration.textTopBarSecondaryColor.withAlphaComponent(0.7)
+    balanceNativeLabel.textAlignment = .left
+    addSubview(balanceNativeLabel)
+    balanceNativeLabel.snp.makeConstraints { make in
       make.left.equalTo(balanceLabel.snp.right)
       make.bottom.equalTo(balanceLabel)
     }
@@ -153,8 +154,8 @@ private extension BalanceViewTheme2 {
     refreshImageView.isHidden = true
     addSubview(refreshImageView)
     refreshImageView.snp.makeConstraints { make in
-      make.left.equalTo(balanceBitCoins.snp.right).offset(8)
-      make.bottom.equalTo(balanceBitCoins)
+      make.left.equalTo(balanceNativeLabel.snp.right).offset(8)
+      make.bottom.equalTo(balanceNativeLabel)
       make.width.equalTo(24)
       make.height.equalTo(20)
     }
