@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "AptoUISDK"
-  s.version          = "2.0.5"
+  s.version          = "2.0.6"
   s.summary          = "The Apto UI platform iOS SDK."
   s.description      = <<-DESC
                         Apto iOS UI SDK
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/ShiftFinancial/apto-ui-sdk-ios.git"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.authors          = { "Ivan Oliver" => "ivan@aptopayments.com", "Takeichi Kanzaki" => "takeichi@aptopayments.com" }
-  s.source           = { :git => "https://github.com/ShiftFinancial/apto-ui-sdk-ios.git", :tag => "2.0.5" }
+  s.source           = { :git => "https://github.com/ShiftFinancial/apto-ui-sdk-ios.git", :tag => "2.0.6" }
 
   s.platform = :ios
   s.ios.deployment_target = '10.0'
@@ -37,7 +37,6 @@ Pod::Spec.new do |s|
   s.dependency 'TrustKit', '~> 1.6'
   s.dependency 'Down', '~> 0.8.0'
   s.dependency 'PullToRefreshKit', '~> 0.8'
-  s.dependency 'SwiftLint', '0.31.0'
   s.dependency 'Mixpanel-swift', '~> 2.6'
   s.dependency 'TwilioVoice', '~> 3.0'
 end

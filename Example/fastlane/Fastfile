@@ -57,7 +57,7 @@ platform :ios do
   desc "Publish Core SDK"
   lane :release_core do
     # We will modify, commit and push files, better to start clean
-    #ensure_git_status_clean
+    ensure_git_status_clean
 
     # Current branch
     current_branch = git_branch
@@ -68,7 +68,7 @@ platform :ios do
 
     # Verify tests pass before releasing.
     # TODO: Replace by tests lane when Automation test are fixed
-    #unit_tests
+    unit_tests
 
     # New version
     version = prompt(text: "New Core SDK version (Current version #{current_core_pod_version}): ")
@@ -87,7 +87,7 @@ platform :ios do
   desc "Publish UI SDK"
   lane :release_ui do
     # We will modify, commit and push files, better to start clean
-    #ensure_git_status_clean
+    ensure_git_status_clean
 
     # Current branch
     current_branch = git_branch
@@ -98,7 +98,7 @@ platform :ios do
 
     # Verify tests pass before releasing.
     # TODO: Replace by tests lane when Automation test are fixed
-    #unit_tests
+    unit_tests
 
     # New version
     version = prompt(text: "New Core SDK version (Current version #{current_ui_pod_version}): ")
