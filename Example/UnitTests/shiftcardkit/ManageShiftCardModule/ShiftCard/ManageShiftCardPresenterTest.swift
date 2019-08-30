@@ -140,7 +140,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
 
   func testCardTappedForCreatedCardDoNotCallRouter() {
     // Given
-    sut.viewModel.state.next(.created)
+    sut.viewModel.state.send(.created)
 
     // When
     sut.cardTapped()
@@ -151,7 +151,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
 
   func testCardTappedForInvalidFundingSourceCallRouterToShowBalance() {
     // Given
-    sut.viewModel.fundingSource.next(dataProvider.invalidFundingSource)
+    sut.viewModel.fundingSource.send(dataProvider.invalidFundingSource)
 
     // When
     sut.cardTapped()
@@ -171,7 +171,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
 
   func testCardSettingsTappedForCreatedCardDoNotCallRouter() {
     // Given
-    sut.viewModel.state.next(.created)
+    sut.viewModel.state.send(.created)
 
     // When
     sut.cardSettingsTapped()

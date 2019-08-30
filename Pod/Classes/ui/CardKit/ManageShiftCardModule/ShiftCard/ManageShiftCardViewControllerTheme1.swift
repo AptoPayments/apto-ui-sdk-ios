@@ -99,13 +99,13 @@ extension ManageShiftCardViewControllerTheme1: ManageShiftCardMainViewDelegate, 
   }
 
   func requestPhysicalActivationCode(completion: @escaping (_ code: String) -> Void) {
-    UIAlertController.prompt(title: "manage.shift.card.enter-code.title".podLocalized(),
-                             message: "manage.shift.card.enter-code.message".podLocalized(),
-                             placeholder: "manage.shift.card.enter-code.placeholder".podLocalized(),
+    UIAlertController.prompt(title: "manage_card.activate_physical_card_code.title".podLocalized(),
+                             message: "manage_card.activate_physical_card_code.message".podLocalized(),
+                             placeholder: "manage_card.activate_physical_card_code.placeholder".podLocalized(),
                              keyboardType: .numberPad,
                              textFieldDelegate: cardActivationTextFieldDelegate,
-                             okTitle: "manage.shift.card.enter-code.submit".podLocalized(),
-                             cancelTitle: "general.button.cancel".podLocalized()) { code in
+                             okTitle: "manage_card.activate_physical_card_code.call_to_action".podLocalized(),
+                             cancelTitle: "manage_card.activate_physical_card_code.cancel".podLocalized()) { code in
       guard let code = code, !code.isEmpty else { return }
       completion(code)
     }

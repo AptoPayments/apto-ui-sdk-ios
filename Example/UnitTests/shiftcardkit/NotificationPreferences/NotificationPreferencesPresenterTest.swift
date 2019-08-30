@@ -170,7 +170,7 @@ class NotificationPreferencesPresenterTest: XCTestCase {
     let viewModel = sut.viewModel
     let row = viewModel.categories.value[0].rows[0]
     interactor.nextUpdatePreferencesResult = .success(notificationPreferences)
-    viewModel.categories.next([])
+    viewModel.categories.send([])
 
     // When
     sut.didUpdateNotificationRow(row)

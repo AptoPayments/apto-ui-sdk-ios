@@ -42,7 +42,7 @@ class ExternalOAuthViewControllerTheme1: ShiftViewController {
     let callToActionTitle = "select_balance_store.login.call_to_action.title".podLocalized()
     self.actionButton = ComponentCatalog.buttonWith(title: callToActionTitle,
                                                     uiConfig: uiConfiguration) { [unowned self] in
-      let custodianType: CustodianType = self.allowedBalanceTypes.first?.type ?? .coinbase
+      let custodianType: String = self.allowedBalanceTypes.first?.type ?? ""
       self.custodianSelected(type: custodianType)
     }
     let newUserTitle = "select_balance_store.login.new_user.title".podLocalized()
@@ -67,7 +67,7 @@ class ExternalOAuthViewControllerTheme1: ShiftViewController {
     presenter.closeTapped()
   }
 
-  private func custodianSelected(type: CustodianType) {
+  private func custodianSelected(type: String) {
     if let balanceType = allowedBalanceTypes.first(where: { $0.type == type }) {
       presenter.balanceTypeTapped(balanceType)
     }

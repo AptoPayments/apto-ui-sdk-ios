@@ -18,7 +18,6 @@ class FinancialAccountsStorageTest: XCTestCase {
   private let userToken = "user_token"
   private let cardProduct = ModelDataProvider.provider.cardProduct
   private let custodian = ModelDataProvider.provider.custodian
-  private let balanceVersion = BalanceVersion.v2
   private let additionalFields: [String: AnyObject] = [
     "field1": "field1 value" as AnyObject,
     "nestedField": [
@@ -35,8 +34,8 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testIssueCardCallTransport() {
     // When
-    sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: nil, initialFundingSourceId: nil) { _ in }
+    sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian, additionalFields: nil,
+                  initialFundingSourceId: nil) { _ in }
 
     // Then
     XCTAssertTrue(transport.postCalled)
@@ -44,8 +43,6 @@ class FinancialAccountsStorageTest: XCTestCase {
     XCTAssertNotNil(transport.lastPostAuthorization)
     XCTAssertNotNil(transport.lastPostParameters)
     XCTAssertNotNil(transport.lastPostParameters?["card_product_id"])
-    XCTAssertNotNil(transport.lastPostParameters?["balance_version"])
-    XCTAssertEqual("v2", transport.lastPostParameters?["balance_version"] as? String)
     XCTAssertNil(transport.lastPostParameters?["additional_fields"])
     XCTAssertEqual(true, transport.lastPostFilterInvalidTokenResult)
   }
@@ -56,8 +53,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields,
-                  initialFundingSourceId: nil) { _ in }
+                  additionalFields: additionalFields, initialFundingSourceId: nil) { _ in }
 
     // Then
     guard let urlWrapper = transport.lastPostURL as? URLWrapper else {
@@ -70,8 +66,7 @@ class FinancialAccountsStorageTest: XCTestCase {
   func testIssueCardWithAdditionalFieldsAddAdditionalFieldsToParameters() {
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields,
-                  initialFundingSourceId: nil) { _ in }
+                  additionalFields: additionalFields, initialFundingSourceId: nil) { _ in }
 
     // Then
     XCTAssertNotNil(transport.lastPostParameters?["additional_fields"])
@@ -80,8 +75,7 @@ class FinancialAccountsStorageTest: XCTestCase {
   func testIssueCardWithInitialFundingSourceIdAddInitialFundingSourceIdToParameters() {
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields,
-                  initialFundingSourceId: initialFundingSourceId) { _ in }
+                  additionalFields: additionalFields, initialFundingSourceId: initialFundingSourceId) { _ in }
 
     // Then
     XCTAssertNotNil(transport.lastPostParameters?["initial_funding_source_id"])
@@ -94,8 +88,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields,
-                  initialFundingSourceId: nil) { result in
+                  additionalFields: additionalFields, initialFundingSourceId: nil) { result in
       returnedResult = result
     }
 
@@ -110,8 +103,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields,
-                  initialFundingSourceId: nil) { result in
+                  additionalFields: additionalFields, initialFundingSourceId: nil) { result in
       returnedResult = result
     }
 
@@ -126,8 +118,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                  balanceVersion: balanceVersion, additionalFields: additionalFields,
-                  initialFundingSourceId: nil) { result in
+                  additionalFields: additionalFields, initialFundingSourceId: nil) { result in
       returnedResult = result
     }
 

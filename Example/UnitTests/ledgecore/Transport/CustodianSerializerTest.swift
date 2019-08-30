@@ -11,7 +11,7 @@ import XCTest
 class CustodianSerializerTest: XCTestCase {
   func testSerializeNil() {
     // Given
-    let sut = Custodian(custodianType: .uphold, name: nil)
+    let sut = Custodian(custodianType: "uphold", name: nil)
     sut.externalCredentials = nil
     let expectedJson = [
       "balance_store": [
@@ -29,7 +29,7 @@ class CustodianSerializerTest: XCTestCase {
 
   func testSerializeOauthCredential() {
     // Given
-    let sut = Custodian(custodianType: .coinbase, name: nil)
+    let sut = Custodian(custodianType: "coinbase", name: nil)
     sut.externalCredentials = .oauth(OauthCredential(oauthTokenId: "oauth_token_id"))
     let expectedJson = ["oauth_token_id": "oauth_token_id"]
 
@@ -42,7 +42,7 @@ class CustodianSerializerTest: XCTestCase {
 
   func testSerializeOauthNone() {
     // Given
-    let sut = Custodian(custodianType: .coinbase, name: nil)
+    let sut = Custodian(custodianType: "coinbase", name: nil)
     sut.externalCredentials = ExternalCredential.none
 
     // When
@@ -58,7 +58,7 @@ class CustodianSerializerTest: XCTestCase {
 
   func testSerializeExternalOauthCredential() {
     // Given
-    let sut = Custodian(custodianType: .coinbase, name: nil)
+    let sut = Custodian(custodianType: "coinbase", name: nil)
     sut.externalCredentials = .externalOauth(ExternalOauthCredential(oauthToken: "token", refreshToken: "refresh"))
     let expectedCredential = [
       "access_token": "token",

@@ -27,7 +27,7 @@ class ExternalOAuthViewControllerTheme2: ShiftViewController {
     self.actionButton = ComponentCatalog.buttonWith(title: " ",
                                                     showShadow: false,
                                                     uiConfig: uiConfiguration) { [unowned self] in
-      let custodianType: CustodianType = self.allowedBalanceTypes.first?.type ?? .coinbase
+      let custodianType: String = self.allowedBalanceTypes.first?.type ?? ""
       self.custodianSelected(type: custodianType)
     }
     self.newUserButton = ComponentCatalog.anchorLinkButtonWith(title: " ",
@@ -51,7 +51,7 @@ class ExternalOAuthViewControllerTheme2: ShiftViewController {
     presenter.closeTapped()
   }
 
-  private func custodianSelected(type: CustodianType) {
+  private func custodianSelected(type: String) {
     if let balanceType = allowedBalanceTypes.first(where: { $0.type == type }) {
       presenter.balanceTypeTapped(balanceType)
     }

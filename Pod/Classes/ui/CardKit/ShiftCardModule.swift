@@ -183,12 +183,17 @@ open class ShiftCardModule: UIModule {
     self.existingShiftCardModule = existingCardModule
     let leftButtonMode: UIViewControllerLeftButtonMode = self.mode == .standalone ? .none : .close
     if addChild {
+      existingCardModule.onClose = { [unowned self] _ in
+        self.close()
+      }
       self.addChild(module: existingCardModule, leftButtonMode: leftButtonMode, completion: completion)
     }
     else {
       if pushModule {
         existingCardModule.onClose = { [unowned self] _ in
-          self.popModule {}
+          self.popModule(animated: false) { [unowned self] in
+            self.close()
+          }
         }
         push(module: existingCardModule, animated: true, leftButtonMode: leftButtonMode, completion: completion)
       }

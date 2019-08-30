@@ -190,22 +190,8 @@ class AptoPlatformTest: XCTestCase {
     XCTAssertNotNil(storage.lastIssueCardUserToken)
     XCTAssertNotNil(storage.lastIssueCardCardProduct)
     XCTAssertNotNil(storage.lastIssueCardCustodian)
-    XCTAssertEqual(BalanceVersion.v1, storage.lastIssueCardBalanceVersion)
     XCTAssertNotNil(storage.lastIssueCardAdditionalFields)
     XCTAssertNotNil(storage.lastIssueCardInitialFundingSourceId)
-  }
-
-  func testBalanceV2EnabledIssueCardUseBalanceV2() {
-    // Given
-    givenCurrentUser()
-    givenBalanceV2Enabled()
-
-    // When
-    sut.issueCard(cardProduct: dataProvider.cardProduct, custodian: nil) { _ in }
-
-    // Then
-    let storage = storageLocator.financialAccountsStorageFake
-    XCTAssertEqual(BalanceVersion.v2, storage.lastIssueCardBalanceVersion)
   }
 
   func testIssueCardFailCallbackFailure() {
@@ -280,10 +266,6 @@ class AptoPlatformTest: XCTestCase {
     if !sut.initialized { givenSutInitialized() }
     storageLocator.userTokenStorageFake.setCurrent(token: "token", withPrimaryCredential: .email,
                                                    andSecondaryCredential: .phoneNumber)
-  }
-
-  private func givenBalanceV2Enabled() {
-    storageLocator.featuresStorageSpy.update(features: [FeatureKey.useBalanceVersionV2: true])
   }
 }
 

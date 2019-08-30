@@ -105,6 +105,7 @@ platform :ios do
     update_ui_pod_version(version)
 
     # Update public repo
+    reference_remote_repos
     update_ui_repo
     validate_ui_pod
     publish_ui_repo(version)
@@ -235,6 +236,7 @@ def update_ui_repo
   sh("mkdir -p #{repo_code}")
   sh("cp -r ../../Pod/Classes/ui #{repo_code}")
   sh("cp -r ../../Example #{repo}")
+  sh("cp ../../README-UI.md #{repo}/README.md")
 
   # Clean Example App
   sh("rm -rf #{repo}/Example/Pods | true")
@@ -347,4 +349,10 @@ def update_objc_cocoapods
   Dir.chdir(PUBLIC_REPOS[:objc]) do
     sh("pod trunk push AptoObjCSDK.podspec --allow-warnings --skip-tests")
   end
+end
+
+def reference_remote_repos
+  text = File.read("../Podfile")
+  text.gsub! ", :path => '../'", ""
+  File.open("../Podfile", "w") {|file| file.puts text }
 end

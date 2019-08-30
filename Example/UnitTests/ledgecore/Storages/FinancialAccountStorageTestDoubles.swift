@@ -39,10 +39,6 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
                                         callback: @escaping Result<FundingSource, NSError>.Callback) {
   }
 
-  func addBankAccounts(userToken: String, apiKey: String, publicToken: String,
-                       callback: @escaping Result<[BankAccount], NSError>.Callback) {
-  }
-
   func activatePhysical(_ apiKey: String, userToken: String, accountId: String, code: String,
                         callback: @escaping Result<PhysicalCardActivationResult, NSError>.Callback) {
   }
@@ -73,18 +69,16 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
   private(set) var lastIssueCardUserToken: String?
   private(set) var lastIssueCardCardProduct: CardProduct?
   private(set) var lastIssueCardCustodian: Custodian?
-  private(set) var lastIssueCardBalanceVersion: BalanceVersion?
   private(set) var lastIssueCardAdditionalFields: [String: AnyObject]?
   private(set) var lastIssueCardInitialFundingSourceId: String?
   func issueCard(_ apiKey: String, userToken: String, cardProduct: CardProduct, custodian: Custodian?,
-                 balanceVersion: BalanceVersion, additionalFields: [String: AnyObject]?,
-                 initialFundingSourceId: String?, callback: @escaping Result<Card, NSError>.Callback) {
+                 additionalFields: [String: AnyObject]?, initialFundingSourceId: String?,
+                 callback: @escaping Result<Card, NSError>.Callback) {
     issueCardCalled = true
     lastIssueCardApiKey = apiKey
     lastIssueCardUserToken = userToken
     lastIssueCardCardProduct = cardProduct
     lastIssueCardCustodian = custodian
-    lastIssueCardBalanceVersion = balanceVersion
     lastIssueCardAdditionalFields = additionalFields
     lastIssueCardInitialFundingSourceId = initialFundingSourceId
   }
@@ -93,11 +87,11 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
 class FinancialAccountsStorageFake: FinancialAccountsStorageSpy {
   var nextIssueCardResult: Result<Card, NSError>?
   override func issueCard(_ apiKey: String, userToken: String, cardProduct: CardProduct, custodian: Custodian?,
-                          balanceVersion: BalanceVersion, additionalFields: [String: AnyObject]?,
-                          initialFundingSourceId: String?, callback: @escaping Result<Card, NSError>.Callback) {
+                          additionalFields: [String: AnyObject]?, initialFundingSourceId: String?,
+                          callback: @escaping Result<Card, NSError>.Callback) {
     super.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian,
-                    balanceVersion: balanceVersion, additionalFields: additionalFields,
-                    initialFundingSourceId: initialFundingSourceId, callback: callback)
+                    additionalFields: additionalFields, initialFundingSourceId: initialFundingSourceId,
+                    callback: callback)
     if let result = nextIssueCardResult {
       callback(result)
     }

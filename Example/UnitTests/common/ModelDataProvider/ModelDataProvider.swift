@@ -431,7 +431,7 @@ class ModelDataProvider {
                                                                  newUserAction: "newUserAction",
                                                                  allowedBalanceTypes: [coinbaseBalanceType])
 
-  lazy var custodian = Custodian(custodianType: .coinbase, name: "Coinbase")
+  lazy var custodian = Custodian(custodianType: "coinbase", name: "Coinbase")
 
   lazy var oauthCredential = OauthCredential(oauthTokenId: "oauth_token_id")
 
@@ -442,7 +442,7 @@ class ModelDataProvider {
 
   lazy var usa = Country(isoCode: "US", name: "United States")
 
-  lazy var coinbaseBalanceType = AllowedBalanceType(type: .coinbase, baseUri: "baseUri")
+  lazy var coinbaseBalanceType = AllowedBalanceType(type: "coinbase", baseUri: "baseUri")
 
   lazy var url = URL(string: "https://shiftpayments.com")! // swiftlint:disable:this implicitly_unwrapped_optional
 

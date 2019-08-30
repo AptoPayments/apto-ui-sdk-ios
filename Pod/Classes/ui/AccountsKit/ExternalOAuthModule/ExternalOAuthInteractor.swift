@@ -14,7 +14,7 @@ class ExternalOAuthInteractor: ExternalOAuthInteractorProtocol {
   weak var presenter: ExternalOAuthPresenterProtocol!
 
   private var attempt: OauthAttempt?
-  private var custodianType: CustodianType?
+  private var custodianType: String?
 
   init(platform: AptoPlatformProtocol) {
     self.platform = platform

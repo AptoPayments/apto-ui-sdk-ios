@@ -1,11 +1,11 @@
 platform :ios, '10.0'
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 use_frameworks!
 
 def runtimepods
-  pod 'AptoSDK', :path => '../'
-  pod 'AptoUISDK', :path => '../'
-  pod 'AptoObjCSDK', :path => '../'
+  pod 'AptoSDK'
+  pod 'AptoUISDK'
+  pod 'AptoObjCSDK'
   pod 'Alamofire', '~> 4.8'
   pod 'AlamofireNetworkActivityIndicator', '2.3.0'
   pod 'FTLinearActivityIndicator', '1.1.2'
