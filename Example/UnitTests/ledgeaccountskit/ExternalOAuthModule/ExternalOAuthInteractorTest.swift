@@ -17,7 +17,7 @@ class ExternalOAuthInteractorTest: XCTestCase {
   private let serviceLocator = ServiceLocatorFake()
   private lazy var dataProvider: ModelDataProvider = ModelDataProvider.provider
   private lazy var platform = serviceLocator.platformFake
-  private lazy var balanceType: AllowedBalanceType = dataProvider.coinbaseBalanceType
+  private lazy var balanceType: AllowedBalanceType = dataProvider.balanceType
   private lazy var oauthAttempt = dataProvider.oauthAttempt
   private lazy var presenter = serviceLocator.presenterLocatorFake.externalOauthPresenterSpy
 

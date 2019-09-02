@@ -29,7 +29,7 @@ class ModelDataProvider {
   lazy var amountRangeConfiguration = AmountRangeConfiguration(min: 0, max: 1000, def: 100, inc: 100)
 
   lazy var workflowAction: WorkflowAction = {
-    let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [coinbaseBalanceType])
+    let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [balanceType])
     return WorkflowAction(actionId: nil,
                           name: nil,
                           order: nil,
@@ -198,7 +198,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [coinbaseBalanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -225,7 +225,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
                                 getPin: FeatureAction(source: .voIP, status: .enabled),
-                                allowedBalanceTypes: [coinbaseBalanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -252,7 +252,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .api, status: .enabled),
-                                allowedBalanceTypes: [coinbaseBalanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -279,7 +279,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [coinbaseBalanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -306,7 +306,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
                                 getPin: FeatureAction(source: .unknown, status: .enabled),
-                                allowedBalanceTypes: [coinbaseBalanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -429,9 +429,9 @@ class ModelDataProvider {
                                                                  explanation: "explanation",
                                                                  callToAction: "callToAction",
                                                                  newUserAction: "newUserAction",
-                                                                 allowedBalanceTypes: [coinbaseBalanceType])
+                                                                 allowedBalanceTypes: [balanceType])
 
-  lazy var custodian = Custodian(custodianType: "coinbase", name: "Coinbase")
+  lazy var custodian = Custodian(custodianType: "custodian", name: "Custodian")
 
   lazy var oauthCredential = OauthCredential(oauthTokenId: "oauth_token_id")
 
@@ -442,7 +442,7 @@ class ModelDataProvider {
 
   lazy var usa = Country(isoCode: "US", name: "United States")
 
-  lazy var coinbaseBalanceType = AllowedBalanceType(type: "coinbase", baseUri: "baseUri")
+  lazy var balanceType = AllowedBalanceType(type: "custodian", baseUri: "baseUri")
 
   lazy var url = URL(string: "https://shiftpayments.com")! // swiftlint:disable:this implicitly_unwrapped_optional
 

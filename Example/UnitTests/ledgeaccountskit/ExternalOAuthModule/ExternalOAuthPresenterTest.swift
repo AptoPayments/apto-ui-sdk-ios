@@ -15,7 +15,7 @@ class ExternalOAuthPresenterTest: XCTestCase {
 
   // Collaborators
   private lazy var dataProvider: ModelDataProvider = ModelDataProvider.provider
-  private lazy var balanceType: AllowedBalanceType = dataProvider.coinbaseBalanceType
+  private lazy var balanceType: AllowedBalanceType = dataProvider.balanceType
   private let url = URL(string: "https://shitfpayments.com")! // swiftlint:disable:this force_unwrapping
   private let interactor = ExternalOAuthInteractorSpy()
   private let router = ExternalOAuthModuleFake(serviceLocator: ServiceLocatorFake())
