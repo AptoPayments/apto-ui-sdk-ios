@@ -9,11 +9,6 @@
 import Foundation
 
 extension UILabel {
-  override open func layoutSubviews() {
-    super.layoutSubviews()
-    self.preferredMaxLayoutWidth = self.bounds.size.width
-  }
-
   func updateAttributedText(_ text: String?) {
     guard let text = text else {
       self.text = ""
