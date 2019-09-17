@@ -23,7 +23,12 @@ class ManageShiftCardMainViewTheme2: UIView, CardPresentationProtocol {
   private var fundingSourceState: FundingSourceState?
   private var activeStateReceived = false
   private var balanceReceived = false
-  private var topMessageViewType = TopMessageViewType.none
+  private var shouldUpdateTopMessageView = false
+  private var topMessageViewType = TopMessageViewType.none {
+    didSet {
+      shouldUpdateTopMessageView = oldValue != topMessageViewType
+    }
+  }
   private let gearView = UIImageView(image: UIImage.imageFromPodBundle("btn_card_settings", uiTheme: .theme2))
   private let creditCardView: CreditCardView
   private let backgroundView = UIView()
@@ -97,12 +102,6 @@ class ManageShiftCardMainViewTheme2: UIView, CardPresentationProtocol {
         topMessageViewType = .invalidBalance
         showInvalidBalanceMessage()
       }
-      else {
-        if topMessageViewType != .activatePhysicalCard {
-          hideMessage()
-        }
-        topMessageViewType = .none
-      }
     }
     else {
       showNoBalanceMessage()
@@ -117,6 +116,12 @@ class ManageShiftCardMainViewTheme2: UIView, CardPresentationProtocol {
     if physicalCardActivationRequired == true {
       topMessageViewType = .activatePhysicalCard
       showActivatePhysicalCardMessage()
+    }
+    else {
+      topMessageViewType = .none
+      if shouldUpdateTopMessageView {
+        hideMessage()
+      }
     }
   }
 

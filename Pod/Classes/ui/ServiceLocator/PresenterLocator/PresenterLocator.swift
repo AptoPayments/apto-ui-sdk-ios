@@ -72,8 +72,8 @@ final class PresenterLocator: PresenterLocatorProtocol {
     return ManageShiftCardPresenter(config: config)
   }
 
-  func fundingSourceSelectorPresenter() -> FundingSourceSelectorPresenterProtocol {
-    return FundingSourceSelectorPresenter()
+  func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig) -> FundingSourceSelectorPresenterProtocol {
+    return FundingSourceSelectorPresenter(config: config)
   }
 
   func cardSettingsPresenter(card: Card, config: CardSettingsPresenterConfig, emailRecipients: [String?],

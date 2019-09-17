@@ -13,4 +13,5 @@ struct ExternalOAuthModuleConfig {
   let callToAction: String
   let newUserAction: String
   let allowedBalanceTypes: [AllowedBalanceType]
+  let oauthErrorMessageKeys: [String]?
 }

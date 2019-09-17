@@ -77,24 +77,22 @@ class ExternalOAuthInteractorTest: XCTestCase {
     platform.nextVerifyOauthAttemptStatusResult = .failure(BackendError(code: .other))
 
     // When
-    sut.verifyOauthAttemptStatus { _ in }
-
-    // Then
-    XCTAssertTrue(presenter.showErrorCalled)
-    XCTAssertNotNil(presenter.lastErrorShown)
+    sut.verifyOauthAttemptStatus { result in
+      // Then
+      XCTAssertEqual(Result<OauthAttempt, NSError>.failure(BackendError(code: .other)), result)
+    }
   }
 
   func testVerifyOauthAttemptSucceedCallCustodianSelected() {
     // Given
     givenStartOauthAuthenticationSucceed()
-    platform.nextVerifyOauthAttemptStatusResult = .success(dataProvider.custodian)
+    platform.nextVerifyOauthAttemptStatusResult = .success(dataProvider.oauthAttempt)
 
     // When
-    sut.verifyOauthAttemptStatus { _ in }
-
-    // Then
-    XCTAssertTrue(presenter.custodianSelectedCalled)
-    XCTAssertNotNil(presenter.lastCustodianSelected)
+    sut.verifyOauthAttemptStatus { result in
+      // Then
+      XCTAssertTrue(result.isSuccess)
+    }
   }
 
   private func givenStartOauthAuthenticationSucceed() {

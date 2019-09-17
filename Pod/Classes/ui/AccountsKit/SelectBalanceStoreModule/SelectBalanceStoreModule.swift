@@ -32,7 +32,8 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
     let newUserAction = "select_balance_store.login.new_user.title".podLocalized()
     externalOAuthModuleConfig = ExternalOAuthModuleConfig(title: title, explanation: explanation,
                                                           callToAction: callToAction, newUserAction: newUserAction,
-                                                          allowedBalanceTypes: action.allowedBalanceTypes)
+                                                          allowedBalanceTypes: action.allowedBalanceTypes,
+                                                          oauthErrorMessageKeys: nil)
     super.init(serviceLocator: serviceLocator)
   }
 
@@ -95,14 +96,11 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
   }
 
   private func confirm(address: String) {
-    var message = "select_balance_store.oauth_confirm.address.confirmation_start".podLocalized()
-    let separator = "\n\n"
-    message += separator + address + separator
-    message += "select_balance_store.oauth_confirm.address.confirmation_end".podLocalized()
+    let title = "select_balance_store.oauth_confirm.address.confirmation_title".podLocalized()
+    let message = "select_balance_store.oauth_confirm.address.confirmation_message".podLocalized()
     let okTitle = "select_balance_store.oauth_confirm.address.ok_button".podLocalized()
     let cancelTitle = "select_balance_store.oauth_confirm.address.cancel_button".podLocalized()
-    UIAlertController.confirm(message: message,
-                              okTitle: okTitle,
+    UIAlertController.confirm(title: title, message: message.replace(["<<ADDRESS>>": address]), okTitle: okTitle,
                               cancelTitle: cancelTitle) { [unowned self] action in
       if action.title == okTitle {
         self.uploadUserData()

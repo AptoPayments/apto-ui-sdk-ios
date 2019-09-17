@@ -17,7 +17,7 @@ class ExternalOAuthPresenterTest: XCTestCase {
   private lazy var dataProvider: ModelDataProvider = ModelDataProvider.provider
   private lazy var balanceType: AllowedBalanceType = dataProvider.balanceType
   private let url = URL(string: "https://shitfpayments.com")! // swiftlint:disable:this force_unwrapping
-  private let interactor = ExternalOAuthInteractorSpy()
+  private let interactor = ExternalOAuthInteractorFake()
   private let router = ExternalOAuthModuleFake(serviceLocator: ServiceLocatorFake())
   private let analyticsManager: AnalyticsManagerSpy = AnalyticsManagerSpy()
 
@@ -59,18 +59,37 @@ class ExternalOAuthPresenterTest: XCTestCase {
     XCTAssertTrue(router.backInExternalOAuthCalled)
   }
 
-  func testCustodianNotSelectedDoesntCallRouter() {
+  func testOauthInteractorGenericErrorDoesntCallRouter() {
+    // Given
+    interactor.nextVerifyOauthAttemptStatusResult = .failure(NSError())
+
     // When
-    sut.custodianStatusUpdated(nil)
+    sut.show(url: url)
 
     // Then
     XCTAssertFalse(router.oauthSucceededCalled)
     XCTAssertNil(router.lastOauthCustodian)
   }
 
-  func testCustodianSelectedCallRouter() {
+  func testOauthErrorDoesntCallRouter() {
+    // Given
+    interactor.nextVerifyOauthAttemptStatusResult = .success(dataProvider.oauthErrorAttempt)
+
     // When
-    sut.custodianStatusUpdated(dataProvider.custodian)
+    sut.show(url: url)
+
+    // Then
+    XCTAssertFalse(router.oauthSucceededCalled)
+    XCTAssertNil(router.lastOauthCustodian)
+  }
+
+  func testOauthSuccessCallRouter() {
+    // Given
+    sut.balanceTypeTapped(dataProvider.balanceType)
+    interactor.nextVerifyOauthAttemptStatusResult = .success(dataProvider.oauthAttempt)
+
+    // When
+    sut.show(url: url)
 
     // Then
     XCTAssertTrue(router.oauthSucceededCalled)

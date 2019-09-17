@@ -204,15 +204,13 @@ class AptoPlatformFake: AptoPlatformProtocol {
     }
   }
 
-  var nextVerifyOauthAttemptStatusResult: Result<Custodian?, NSError>?
+  var nextVerifyOauthAttemptStatusResult: Result<OauthAttempt, NSError>?
   private(set) var verifyOauthAttemptStatusCalled = false
   private(set) var lastVerifyOauthAttemptStatusAttempt: OauthAttempt?
-  private(set) var lastVerifyOauthAttemptStatusCustodianType: String?
-  func verifyOauthAttemptStatus(_ attempt: OauthAttempt, custodianType: String,
-                                callback: @escaping Result<Custodian?, NSError>.Callback) {
+  func verifyOauthAttemptStatus(_ attempt: OauthAttempt,
+                                callback: @escaping Result<OauthAttempt, NSError>.Callback) {
     verifyOauthAttemptStatusCalled = true
     lastVerifyOauthAttemptStatusAttempt = attempt
-    lastVerifyOauthAttemptStatusCustodianType = custodianType
     if let result = nextVerifyOauthAttemptStatusResult {
       callback(result)
     }

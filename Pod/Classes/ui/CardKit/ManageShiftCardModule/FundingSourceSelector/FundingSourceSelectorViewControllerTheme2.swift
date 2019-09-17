@@ -44,18 +44,21 @@ private extension FundingSourceSelectorViewControllerTheme2 {
     let viewModel = presenter.viewModel
 
     combineLatest(viewModel.fundingSources,
-                  viewModel.dataLoaded).observeNext { [unowned self] fundingSources, dataLoaded in
+                  viewModel.hideReconnectButton,
+                  viewModel.dataLoaded).observeNext { [unowned self] fundingSources, hideReconnectButton, dataLoaded in
       guard dataLoaded else { return }
       guard !fundingSources.isEmpty else {
         self.emptyCaseContainerView.isHidden = false
         return
       }
       self.emptyCaseContainerView.isHidden = true
-      let rows: [FormRowView] = [
-        self.createFundingSourceSelector(fundingSources: fundingSources),
-        self.createAddFundingSourceButton(),
-        FormRowSeparatorView(backgroundColor: .clear, height: 16)
+      var rows: [FormRowView] = [
+        self.createFundingSourceSelector(fundingSources: fundingSources)
       ]
+      if !hideReconnectButton {
+        rows += [ self.createAddFundingSourceButton() ]
+      }
+      rows += [ FormRowSeparatorView(backgroundColor: .clear, height: 16) ]
       self.formView.show(rows: rows)
     }.dispose(in: disposeBag)
 

@@ -193,7 +193,7 @@ private extension PINVerificationViewControllerTheme2 {
 
   func setUpExpiredPinLabel() {
     expiredPinLabel = ComponentCatalog.instructionsLabelWith(text: "auth.verify_phone.expired_pin.text".podLocalized(),
-                                                             textAlignment: .center,
+                                                             textAlignment: .left,
                                                              uiConfig: uiConfiguration)
     expiredPinLabel.textColor = uiConfiguration.uiErrorColor
     expiredPinLabel.isHidden = true

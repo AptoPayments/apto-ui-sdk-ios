@@ -9,6 +9,19 @@
 import UIKit
 import SnapKit
 
+private protocol _UITextFieldDelegate {
+  func deletePressed(_ textField: _UITextField)
+}
+
+private class _UITextField: UITextField {
+  var _delegate: _UITextFieldDelegate?
+
+  override func deleteBackward() {
+    _delegate?.deletePressed(self)
+    super.deleteBackward()
+  }
+}
+
 @objc protocol UIPinEntryTextFieldDelegate {
   func pinEntryTextField(didFinishInput frPinView: UIPinEntryTextField)
   @objc optional func pinEntryTextField(didDeletePin frPinView: UIPinEntryTextField)
@@ -71,15 +84,6 @@ class UIPinEntryTextField: UIView {
       }
     }
   }
-  var invisibleSign: String = "\u{200B}" {
-    didSet {
-      textFields.forEach {
-        if $0.text == oldValue {
-          $0.text = invisibleSign
-        }
-      }
-    }
-  }
   var placeholder: String? = nil {
     didSet {
       textFields.forEach { $0.placeholder = placeholder }
@@ -113,7 +117,7 @@ class UIPinEntryTextField: UIView {
   private func createTextFields() {
     // Create textfield based on size
     for index in 0..<self.pinCount {
-      let textField = UITextField()
+      let textField = _UITextField()
 
       // Set textfield params
       textField.keyboardType = keyboardType
@@ -122,6 +126,7 @@ class UIPinEntryTextField: UIView {
       textField.tintColor = self.backgroundColor
       textField.textColor = self.textColor
       textField.delegate = self
+      textField._delegate = self
       if let accessibilityLabel = self.accessibilityLabel {
         textField.accessibilityLabel = accessibilityLabel + " (" + String(index + 1) + ")"
       }
@@ -183,10 +188,10 @@ class UIPinEntryTextField: UIView {
   ///
   /// - Parameter textField: textField Current textfield
   private func moveFrom(currentTextField textField: UITextField) {
-    guard let index = textFields.firstIndex(of: textField), index < (pinCount - 1) else {
-      return
-    }
-    textFields[index + 1].text = invisibleSign
+    guard let index = textFields.firstIndex(of: textField), index < (pinCount - 1) else { return }
+    if let current = currentTextField, current != textField { return }
+    currentTextField = textFields[index + 1]
+    textFields[index + 1].text = ""
     textFields[index + 1].becomeFirstResponder()
   }
 
@@ -194,11 +199,11 @@ class UIPinEntryTextField: UIView {
   ///
   /// - Parameter textField: textField Current textfield
   private func moveBackwardFrom(currentTextField textField: UITextField) {
-    guard let index = textFields.firstIndex(of: textField), index > 0 else {
-      return
-    }
+    guard let index = textFields.firstIndex(of: textField), index > 0 else { return }
+    if let current = currentTextField, current != textField { return }
+    currentTextField = textFields[index - 1]
     textFields[index].text = ""
-    textFields[index - 1].text = invisibleSign
+    textFields[index - 1].text = ""
     textFields[index - 1].becomeFirstResponder()
   }
 
@@ -206,19 +211,12 @@ class UIPinEntryTextField: UIView {
   ///
   /// - Returns: return String Text from all pin textfields
   func getText() -> String {
-    var pin = ""
-    for textField in textFields {
-      if let text = textField.text {
-        pin += text
-      }
-    }
-    return pin.replacingOccurrences(of: invisibleSign, with: "")
+    return textFields.compactMap { $0.text }.reduce("", { $0 + $1 })
   }
 
   /// Reset text values
   func resetText() {
     textFields.forEach { $0.text = "" }
-    textFields[0].text = invisibleSign
   }
 
   /// Make the first textfield become first responder
@@ -235,12 +233,6 @@ class UIPinEntryTextField: UIView {
 
   @objc private func fieldChanged(_ notification: Notification) {
     if let sender = notification.object as? UITextField {
-      if var text = sender.text {
-        if text.count == 1 && text != invisibleSign {
-          text = invisibleSign + text
-          sender.text = text
-        }
-      }
       if sender == textFields.last && self.getText().count == self.pinCount {
         let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
@@ -249,6 +241,7 @@ class UIPinEntryTextField: UIView {
       }
     }
   }
+  private var currentTextField: UITextField?
 }
 
 extension UIPinEntryTextField: UITextFieldDelegate {
@@ -259,8 +252,7 @@ extension UIPinEntryTextField: UITextFieldDelegate {
     let isBackSpace = strcmp(char, "\\b")
 
     if isBackSpace == -92 {
-      if var string = textField.text {
-        string = string.replacingOccurrences(of: invisibleSign, with: "")
+      if let string = textField.text {
         if string.isEmpty {
           //last visible character, if needed u can skip replacement and detect once even in empty text field
           //for example u can switch to prev textField
@@ -272,18 +264,32 @@ extension UIPinEntryTextField: UITextFieldDelegate {
       }
     }
     else {
-      if textField == textFields.last && textField.text != invisibleSign {
+      if textField == textFields.last && textField.text != "" {
         return false
       }
-      // If there is already a value then replace it with the new one
-      if textField.text != invisibleSign {
-        textField.text = ""
+      // If there is already a value then forward the new text to the next textfield. This is needed to make the SMS
+      // autocomplete work.
+      if textField.text != "" {
+        let current = currentTextField ?? textField
+        moveFrom(currentTextField: current)
+        currentTextField?.insertText(string)
+        return false
       }
-      let delayTime = DispatchTime.now() + Double(Int64(0.001 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-      DispatchQueue.main.asyncAfter(deadline: delayTime) {
-        self.moveFrom(currentTextField: textField)
+      else {
+        let delayTime = DispatchTime.now() + Double(Int64(0.001 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+          self.moveFrom(currentTextField: textField)
+        }
       }
     }
     return true
+  }
+}
+
+extension UIPinEntryTextField: _UITextFieldDelegate {
+  fileprivate func deletePressed(_ textField: _UITextField) {
+    if textField.text?.isEmpty == true {
+      moveBackwardFrom(currentTextField: textField)
+    }
   }
 }

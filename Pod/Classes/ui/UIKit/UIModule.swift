@@ -15,6 +15,7 @@ open class UIModule: NSObject, UIModuleProtocol {
   // View Controllers and modules shown in the current module
   fileprivate var viewControllers: [UIViewController] = []
   fileprivate var uiModules: [UIModule] = []
+  fileprivate var isDismissingWebModule: Bool = false
 
   // Parent module (if any)
   fileprivate weak var parentUIModule: UIModule?
@@ -276,6 +277,33 @@ open class UIModule: NSObject, UIModuleProtocol {
                                             isError: isError,
                                             uiConfig: uiConfig,
                                             tapHandler: nil)
+  }
+
+  // MARK: - Web Browser module
+  func showExternal(url: URL, headers: [String: String]? = nil, useSafari: Bool? = false,
+                    alternativeTitle: String? = nil, completion: (() -> ())?) {
+    if useSafari == true {
+      UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    else {
+      let webBrowserModule = serviceLocator.moduleLocator.webBrowserModule(url: url, headers: headers,
+                                                                           alternativeTitle: alternativeTitle)
+      webBrowserModule.onClose = { [weak self] module in
+        guard self?.isDismissingWebModule == false else { return }
+        self?.isDismissingWebModule = true
+        self?.dismissModule {
+          completion?()
+        }
+      }
+      self.present(module: webBrowserModule) { [weak self] _ in
+        self?.isDismissingWebModule = false
+      }
+    }
+  }
+
+  func showExternal(url: URL, headers: [String: String]? = nil, useSafari: Bool? = false,
+                    alternativeTitle: String? = nil) {
+    showExternal(url: url, headers: headers, useSafari: useSafari, alternativeTitle: alternativeTitle, completion: nil)
   }
 
   // MARK: - Private Methods to remove the current module from navigation controller

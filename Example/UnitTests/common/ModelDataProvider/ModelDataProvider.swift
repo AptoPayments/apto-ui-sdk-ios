@@ -429,7 +429,8 @@ class ModelDataProvider {
                                                                  explanation: "explanation",
                                                                  callToAction: "callToAction",
                                                                  newUserAction: "newUserAction",
-                                                                 allowedBalanceTypes: [balanceType])
+                                                                 allowedBalanceTypes: [balanceType],
+                                                                 oauthErrorMessageKeys: nil)
 
   lazy var custodian = Custodian(custodianType: "custodian", name: "Custodian")
 
@@ -438,7 +439,16 @@ class ModelDataProvider {
   lazy var oauthAttempt = OauthAttempt(id: "attempt_id",
                                        status: .passed,
                                        url: url,
-                                       credentials: oauthCredential)
+                                       credentials: oauthCredential,
+                                       error: nil,
+                                       errorMessage: nil)
+
+  lazy var oauthErrorAttempt = OauthAttempt(id: "attempt_id",
+                                            status: .failed,
+                                            url: nil,
+                                            credentials: nil,
+                                            error: "unauthorised_access",
+                                            errorMessage: "unauthorised_access")
 
   lazy var usa = Country(isoCode: "US", name: "United States")
 

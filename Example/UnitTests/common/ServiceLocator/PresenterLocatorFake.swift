@@ -84,7 +84,7 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
     Swift.fatalError("manageCardPresenter(config:) has not been implemented")
   }
 
-  func fundingSourceSelectorPresenter() -> FundingSourceSelectorPresenterProtocol {
+  func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig) -> FundingSourceSelectorPresenterProtocol {
     Swift.fatalError("fundingSourceSelectorPresenter() has not been implemented")
   }
 

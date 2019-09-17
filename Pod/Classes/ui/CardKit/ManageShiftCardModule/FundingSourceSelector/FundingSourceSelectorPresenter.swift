@@ -14,9 +14,15 @@ class FundingSourceSelectorPresenter: FundingSourceSelectorPresenterProtocol {
   var interactor: FundingSourceSelectorInteractorProtocol!
   // swiftlint:enable implicitly_unwrapped_optional
   let viewModel = FundingSourceSelectorViewModel()
+  let config: FundingSourceSelectorPresenterConfig
   var analyticsManager: AnalyticsServiceProtocol?
 
+  init(config: FundingSourceSelectorPresenterConfig) {
+    self.config = config
+  }
+
   func viewLoaded() {
+    viewModel.hideReconnectButton.send(config.hideFundingSourcesReconnectButton)
     refreshData(forceRefresh: false)
     analyticsManager?.track(event: Event.manageCardFundingSourceSelector)
   }

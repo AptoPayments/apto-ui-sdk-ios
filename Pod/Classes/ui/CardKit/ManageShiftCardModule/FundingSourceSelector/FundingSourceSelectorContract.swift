@@ -40,4 +40,9 @@ class FundingSourceSelectorViewModel {
   let activeFundingSourceIdx: Observable<Int?> = Observable(nil)
   let dataLoaded: Observable<Bool> = Observable(false)
   let showLoadingSpinner: Observable<Bool> = Observable(false)
+  let hideReconnectButton: Observable<Bool> = Observable(false)
+}
+
+struct FundingSourceSelectorPresenterConfig {
+  public let hideFundingSourcesReconnectButton: Bool
 }

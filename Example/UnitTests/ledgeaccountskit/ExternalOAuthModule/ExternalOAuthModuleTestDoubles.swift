@@ -123,9 +123,19 @@ class ExternalOAuthInteractorSpy: ExternalOAuthInteractorProtocol {
   }
 
   private(set) var verifyOauthAttemptStatus = false
-  private(set) var lastVerifyOAuthAttemptStatusCallback: ((Result<Custodian, NSError>) -> ())? = nil
-  func verifyOauthAttemptStatus(callback: @escaping (Result<Custodian, NSError>) -> ()) {
+  private(set) var lastVerifyOAuthAttemptStatusCallback: ((Result<OauthAttempt, NSError>) -> ())?
+  func verifyOauthAttemptStatus(callback: @escaping (Result<OauthAttempt, NSError>) -> ()) {
     verifyOauthAttemptStatus = true
     lastVerifyOAuthAttemptStatusCallback = callback
+  }
+}
+
+class ExternalOAuthInteractorFake: ExternalOAuthInteractorSpy {
+  var nextVerifyOauthAttemptStatusResult: Result<OauthAttempt, NSError>?
+  override func verifyOauthAttemptStatus(callback: @escaping (Result<OauthAttempt, NSError>) -> ()) {
+    super.verifyOauthAttemptStatus(callback: callback)
+    if let result = nextVerifyOauthAttemptStatusResult {
+      callback(result)
+    }
   }
 }

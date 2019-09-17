@@ -36,7 +36,8 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
     let newUserAction = "external_auth.login.new_user.title".podLocalized()
     let oauthModuleConfig = ExternalOAuthModuleConfig(title: title, explanation: explanation,
                                                       callToAction: callToAction, newUserAction: newUserAction,
-                                                      allowedBalanceTypes: allowedBalanceTypes)
+                                                      allowedBalanceTypes: allowedBalanceTypes,
+                                                      oauthErrorMessageKeys: oauthErrorMessageKeys)
     let externalOAuthModule = ExternalOAuthModule(serviceLocator: serviceLocator,
                                                   config: oauthModuleConfig,
                                                   uiConfig: uiConfig)
@@ -67,7 +68,10 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
 
   // MARK: - Private methods
   private func buildViewController() -> ShiftViewController {
-    let presenter = serviceLocator.presenterLocator.fundingSourceSelectorPresenter()
+    let presenterConfig = FundingSourceSelectorPresenterConfig(
+      hideFundingSourcesReconnectButton: platform.isFeatureEnabled(.hideFundingSourcesReconnectButton)
+    )
+    let presenter = serviceLocator.presenterLocator.fundingSourceSelectorPresenter(config: presenterConfig)
     let interactor = serviceLocator.interactorLocator.fundingSourceSelector(card: card)
     let viewController = serviceLocator.viewLocator.fundingSourceSelectorView(presenter: presenter)
     navigationController?.modalPresentationStyle = .overCurrentContext
@@ -109,4 +113,15 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
     "external_auth.login.error_identity_not_verified.message",
     "external_auth.login.error_unknown.message"
   ]
+
+  private var oauthErrorMessageKeys: [String] { return [
+    "external_auth.login.error_oauth_invalid_request.message",
+    "external_auth.login.error_oauth_unauthorised_client.message",
+    "external_auth.login.error_oauth_access_denied.message",
+    "external_auth.login.error_oauth_unsupported_response_type.message",
+    "external_auth.login.error_oauth_invalid_scope.message",
+    "external_auth.login.error_oauth_server_error.message",
+    "external_auth.login.error_oauth_temporarily_unavailable.message"
+    ]
+  }
 }

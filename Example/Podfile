@@ -8,7 +8,7 @@ def runtimepods
   pod 'AptoObjCSDK'
   pod 'Alamofire', '~> 4.8'
   pod 'AlamofireNetworkActivityIndicator', '2.3.0'
-  pod 'FTLinearActivityIndicator', '1.1.2'
+  pod 'FTLinearActivityIndicator', '1.2.1'
   pod 'SwiftyJSON', '~> 5.0'
   pod 'SnapKit', '~> 5.0'
   pod 'Bond', '6.10.4'

@@ -24,7 +24,6 @@ protocol ExternalOAuthPresenterProtocol: class {
   func show(error: NSError)
   func show(url: URL)
   func newUserTapped(url: URL)
-  func custodianStatusUpdated(_ custodian: Custodian?)
   func closeTapped()
   func balanceTypeTapped(_ balanceType: AllowedBalanceType)
 }
@@ -40,7 +39,7 @@ protocol ExternalOAuthRouterProtocol: class {
 protocol ExternalOAuthInteractorProtocol {
   var presenter: ExternalOAuthPresenterProtocol! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
   func balanceTypeSelected(_ balanceType: AllowedBalanceType)
-  func verifyOauthAttemptStatus(callback: @escaping Result<Custodian, NSError>.Callback)
+  func verifyOauthAttemptStatus(callback: @escaping Result<OauthAttempt, NSError>.Callback)
 }
 
 protocol ExternalOAuthViewProtocol: ViewControllerProtocol {}
