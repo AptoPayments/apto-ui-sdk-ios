@@ -40,7 +40,7 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
             completion(.failure(error))
           case .success(let cardProduct):
             self.projectConfiguration = contextConfiguration.projectConfiguration
-            let viewController = self.buildShiftCardSettingsViewController(self.uiConfig,cardProduct: cardProduct,
+            let viewController = self.buildShiftCardSettingsViewController(self.uiConfig, cardProduct: cardProduct,
                                                                            card: self.card)
             self.addChild(viewController: viewController, completion: completion)
           }
@@ -53,11 +53,13 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
                                                         cardProduct: CardProduct,
                                                         card: Card) -> ShiftViewController {
     let isShowDetailedInfoEnabled = platform.isFeatureEnabled(.showDetailedCardActivityOption)
+    let isShowMonthlyStatementsEnabled = platform.isFeatureEnabled(.showMonthlyStatementsOption)
     let presenterConfig = CardSettingsPresenterConfig(cardholderAgreement: cardProduct.cardholderAgreement,
                                                       privacyPolicy: cardProduct.privacyPolicy,
                                                       termsAndCondition: cardProduct.termsAndConditions,
                                                       faq: cardProduct.faq,
-                                                      showDetailedCardActivity: isShowDetailedInfoEnabled)
+                                                      showDetailedCardActivity: isShowDetailedInfoEnabled,
+                                                      showMonthlyStatements: isShowMonthlyStatementsEnabled)
     let recipients = [self.projectConfiguration.supportEmailAddress]
     let presenter = serviceLocator.presenterLocator.cardSettingsPresenter(card: card, config: presenterConfig,
                                                                           emailRecipients: recipients,
@@ -131,5 +133,13 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
     }
     contentPresenterModule =  module
     present(module: module, leftButtonMode: .close) { _ in }
+  }
+
+  func showMonthlyStatements(){
+    let module = serviceLocator.moduleLocator.monthlyStatementsList()
+    module.onClose = { [weak self] _ in
+      self?.popModule {}
+    }
+    push(module: module) { _ in }
   }
 }

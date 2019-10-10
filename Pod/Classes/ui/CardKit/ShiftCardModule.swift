@@ -301,6 +301,7 @@ open class ShiftCardModule: UIModule {
   }
 
   fileprivate func clearUserToken() {
+    FileDownloaderImpl.clearCache()
     AptoPlatform.defaultManager().clearUserToken()
   }
 

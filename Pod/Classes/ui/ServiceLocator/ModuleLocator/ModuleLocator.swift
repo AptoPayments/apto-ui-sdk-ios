@@ -145,6 +145,14 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return VoIPModule(serviceLocator: serviceLocator, card: card, actionSource: actionSource)
   }
 
+  func monthlyStatementsList() -> MonthlyStatementsListModuleProtocol {
+    return MonthlyStatementsListModule(serviceLocator: serviceLocator)
+  }
+
+  func monthlyStatementsReportModule(statementReport: MonthlyStatementReport) -> MonthlyStatementsReportModuleProtocol {
+    return MonthlyStatementsReportModule(serviceLocator: serviceLocator, statementReport: statementReport)
+  }
+
   // MARK: - Physical card activation
   func physicalCardActivationModule(card: Card) -> PhysicalCardActivationModuleProtocol {
     return PhysicalCardActivationModule(serviceLocator: serviceLocator, card: card, phoneCaller: PhoneCaller())

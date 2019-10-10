@@ -175,6 +175,28 @@ class ModelDataProvider {
     return card
   }()
 
+  lazy var cardWithoutCardProductId: Card = {
+    let card = Card(accountId: "card_id",
+                    cardProductId: nil,
+                    cardNetwork: .other,
+                    cardIssuer: .shift,
+                    cardBrand: "Shift",
+                    state: .active,
+                    cardHolder: "Holder Name",
+                    lastFourDigits: "7890",
+                    spendableToday: Amount(value: 12.34, currency: "GBP"),
+                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                    totalBalance: Amount(value: 12.34, currency: "GBP"),
+                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                    kyc: .passed,
+                    orderedStatus: .received,
+                    panToken: "pan_token",
+                    cvvToken: "cvv_token",
+                    verified: true)
+    card.details = cardDetails
+    return card
+  }()
+
   lazy var cardWithoutDetails: Card = Card(accountId: "card_id",
                                            cardProductId: "card_product_id",
                                            cardNetwork: .other,
@@ -467,6 +489,33 @@ class ModelDataProvider {
                            date: date)
   }
 
+  lazy var monthlySpendingJSON = JSON(parseJSON:"""
+{
+  "next_spending_exists": false,
+  "prev_spending_exists": true,
+  "spending": {
+    "data": [
+      {
+        "category_id": "plane",
+        "difference": "-13.13",
+        "spending": {
+          "amount": 90,
+          "currency": "USD",
+          "type": "money"
+        },
+        "type": "category_spending"
+      }
+    ],
+    "has_more": false,
+    "page": 0,
+    "rows": 12,
+    "total_count": 1,
+    "type": "list"
+  },
+  "type": "monthly_spending"
+}
+""")
+
   lazy var cardProduct = CardProduct(id: "id",
                                      teamId: "teamId",
                                      name: "Name",
@@ -503,4 +552,41 @@ class ModelDataProvider {
                                                               userData: phoneNumberDataPointList)
 
   lazy var voIPToken = VoIPToken(accessToken: "access_token", requestToken: "request_token", provider: "twilio")
+
+  lazy var monthlyStatementReportJSON = JSON(dictionaryLiteral: ("type", "monthly_statement_report"), ("id", "id"), 
+                                             ("month", 2), ("year", 2019),
+                                             ("download_url", "https://aptopayments.com"), 
+                                             ("url_expiration", "2019-02-11T17:17:13.564128+00:00"))
+
+  lazy var monthlyStatementReport = MonthlyStatementReport(id: "id", month: 2, year: 2019,
+                                                           downloadUrl: "https://aptopyaments.com",
+                                                           urlExpirationDate: Date().add(3, units: .month))
+  lazy var monthlyStatementReportExpired = MonthlyStatementReport(id: "id", month: 2, year: 2019,
+                                                                  downloadUrl: "https://aptopyaments.com", 
+                                                                  urlExpirationDate: Date.distantPast)
+  lazy var monthlyStatementReportWithoutUrl = MonthlyStatementReport(id: "id", month: 2, year: 2019, downloadUrl: nil,
+                                                                     urlExpirationDate: Date.distantPast)
+  lazy var monthlyStatementReportWithoutExpiration = MonthlyStatementReport(id: "id", month: 2, year: 2019,
+                                                                            downloadUrl: nil, urlExpirationDate: nil)
+
+  lazy var monthJSON: JSON = ["type": "month", "month": 2, "year": 2019]
+
+  lazy var month = Month(month: 2, year: 2019)
+
+  lazy var monthlyStatementsPeriodJSON: JSON = [
+    "type": "monthly_statements_period",
+    "start": [
+      "type": "month",
+      "year": 2019,
+      "month": 5
+    ],
+    "end": [
+      "type": "month",
+      "year": 2019,
+      "month": 9
+    ]
+  ]
+
+  lazy var monthlyStatementsPeriod = MonthlyStatementsPeriod(start: Month(month: 5, year: 2019),
+                                                             end: Month(month: 9, year: 2019))
 }

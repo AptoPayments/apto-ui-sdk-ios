@@ -18,7 +18,7 @@ class CardMonthlyStatsInteractor: CardMonthlyStatsInteractorProtocol {
   }
 
   func fetchMonthlySpending(date: Date, callback: @escaping Result<MonthlySpending, NSError>.Callback) {
-    platform.cardMonthlySpending(card.accountId, date: date) { result in
+    platform.fetchMonthlySpending(cardId: card.accountId, month: date.month, year: date.year) { result in
       switch result {
       case .failure(let error):
         callback(.failure(error))

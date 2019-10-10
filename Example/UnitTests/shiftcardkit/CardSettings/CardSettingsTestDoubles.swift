@@ -66,6 +66,36 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
     lastContentToShow = content
     lastContentTitleToShow = title
   }
+
+  private(set) var showMonthlyStatementsCalled = false
+  func showMonthlyStatements() {
+    showMonthlyStatementsCalled = true
+  }
+}
+
+class CardSettingsModuleDelegateSpy: CardSettingsModuleDelegate {
+  private(set) var showCardInfoCalled = false
+  func showCardInfo(completion: @escaping () -> Void) {
+    showCardInfoCalled = true
+  }
+
+  private(set) var hideCardInfoCalled = false
+  func hideCardInfo() {
+    hideCardInfoCalled = true
+  }
+
+  private(set) var isCardInfoVisibleCalled = false
+  func isCardInfoVisible() -> Bool {
+    isCardInfoVisibleCalled = true
+    return true
+  }
+
+  private(set) var cardStateChangedCalled = false
+  private(set) var lastCardStateChangedIncludingTransactions: Bool?
+  func cardStateChanged(includingTransactions: Bool) {
+    cardStateChangedCalled = true
+    lastCardStateChangedIncludingTransactions = includingTransactions
+  }
 }
 
 class CardSettingsInteractorSpy: CardSettingsInteractorProtocol {
@@ -163,6 +193,11 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
   func showDetailedCardActivity(_ newValue: Bool) {
     showDetailedCardActivityCalled = true
   }
+
+  private(set) var monthlyStatementsTappedCalled = false
+  func monthlyStatementsTapped() {
+    monthlyStatementsTappedCalled = true
+  }
 }
 
 class CardSettingsViewSpy: ViewControllerSpy, CardSettingsViewProtocol {
@@ -175,5 +210,10 @@ class CardSettingsViewSpy: ViewControllerSpy, CardSettingsViewProtocol {
   func showClosedCardErrorAlert(title: String) {
     showClosedCardErrorAlertCalled = true
     lastClosedCardErrorAlertTitle = title
+  }
+}
+
+class CardSettingsViewControllerDummy: ShiftViewController, CardSettingsViewProtocol {
+  func showClosedCardErrorAlert(title: String) {
   }
 }

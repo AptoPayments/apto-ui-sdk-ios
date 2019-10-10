@@ -115,6 +115,15 @@ final class InteractorLocator: InteractorLocatorProtocol {
     return VoIPInteractor(platform: serviceLocator.platform, card: card, actionSource: actionSource)
   }
 
+  func monthlyStatementsListInteractor() -> MonthlyStatementsListInteractorProtocol {
+    return MonthlyStatementsListInteractor(platform: serviceLocator.platform)
+  }
+
+  func monthlyStatementsReportInteractor(report: MonthlyStatementReport,
+                                         downloader: FileDownloader) -> MonthlyStatementsReportInteractorProtocol {
+    return MonthlyStatementsReportInteractor(report: report, downloader: downloader)
+  }
+
   // MARK: - Physical card activation
   func physicalCardActivationInteractor(card: Card) -> PhysicalCardActivationInteractorProtocol {
     return PhysicalCardActivationInteractor(card: card, platform: serviceLocator.platform)

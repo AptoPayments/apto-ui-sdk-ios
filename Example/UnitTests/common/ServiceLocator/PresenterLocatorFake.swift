@@ -88,9 +88,10 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
     Swift.fatalError("fundingSourceSelectorPresenter() has not been implemented")
   }
 
+  lazy var cardSettingsPresenterSpy = CardSettingsPresenterSpy()
   func cardSettingsPresenter(card: Card, config: CardSettingsPresenterConfig, emailRecipients: [String?],
                              uiConfig: UIConfig) -> CardSettingsPresenterProtocol {
-    Swift.fatalError("cardSettingsPresenter(card:config:emailRecipients:uiConfig:) has not been implemented")
+    return cardSettingsPresenterSpy
   }
 
   func kycPresenter() -> KYCPresenterProtocol {
@@ -120,6 +121,16 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
   lazy var voIPPresenterSpy = VoIPPresenterSpy()
   func voIPPresenter() -> VoIPPresenterProtocol {
     return voIPPresenterSpy
+  }
+
+  lazy var monthlyStatementsListPresenterSpy = MonthlyStatementsListPresenterSpy()
+  func monthlyStatementsListPresenter() -> MonthlyStatementsListPresenterProtocol {
+    return monthlyStatementsListPresenterSpy
+  }
+
+  lazy var monthlyStatementsReportPresenterSpy = MonthlyStatementsReportPresenterSpy()
+  func monthlyStatementsReportPresenter() -> MonthlyStatementsReportPresenterProtocol {
+    return monthlyStatementsReportPresenterSpy
   }
 
   // MARK: - Physical card activation

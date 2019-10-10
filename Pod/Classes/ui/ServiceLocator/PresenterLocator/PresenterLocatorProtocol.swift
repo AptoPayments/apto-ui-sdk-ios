@@ -40,6 +40,8 @@ protocol PresenterLocatorProtocol {
   func notificationPreferencesPresenter() -> NotificationPreferencesPresenterProtocol
   func setPinPresenter() -> SetPinPresenterProtocol
   func voIPPresenter() -> VoIPPresenterProtocol
+  func monthlyStatementsListPresenter() -> MonthlyStatementsListPresenterProtocol
+  func monthlyStatementsReportPresenter() -> MonthlyStatementsReportPresenterProtocol
 
   // MARK: - Physical card activation
   func physicalCardActivationPresenter() -> PhysicalCardActivationPresenterProtocol

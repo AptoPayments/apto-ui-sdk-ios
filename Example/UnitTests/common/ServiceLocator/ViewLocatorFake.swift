@@ -84,7 +84,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   func cardSettingsView(presenter: CardSettingsPresenterProtocol) -> CardSettingsViewControllerProtocol {
-    Swift.fatalError("cardSettingsView(presenter:) has not been implemented")
+    return CardSettingsViewControllerDummy(uiConfiguration: uiConfig)
   }
 
   func kycView(presenter: KYCPresenterProtocol) -> KYCViewControllerProtocol {
@@ -108,6 +108,14 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   func voIPView(presenter: VoIPPresenterProtocol) -> ShiftViewController {
+    return ShiftViewController(uiConfiguration: uiConfig)
+  }
+
+  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> ShiftViewController {
+    return ShiftViewController(uiConfiguration: uiConfig)
+  }
+
+  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> ShiftViewController {
     return ShiftViewController(uiConfiguration: uiConfig)
   }
 

@@ -218,6 +218,14 @@ final class ViewLocator: ViewLocatorProtocol {
     return VoIPViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
   }
 
+  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> ShiftViewController {
+    return MonthlyStatementsListViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
+  }
+
+  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> ShiftViewController {
+    return MonthlyStatementsReportViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
+  }
+
   // MARK: - Physical card activation
   func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> ShiftViewController {
     switch uiTheme {

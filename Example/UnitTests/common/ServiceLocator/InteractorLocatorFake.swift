@@ -91,8 +91,9 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
     Swift.fatalError("fundingSourceSelector(card:) has not been implemented")
   }
 
+  lazy var cardSettingsInteractorFake = CardSettingsInteractorFake()
   func cardSettingsInteractor() -> CardSettingsInteractorProtocol {
-    Swift.fatalError("cardSettingsInteractor() has not been implemented")
+    return cardSettingsInteractorFake
   }
 
   func kycInteractor(card: Card) -> KYCInteractorProtocol {
@@ -122,6 +123,17 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
   lazy var voIPInteractorFake = VoIPInteractorFake()
   func voIPInteractor(card: Card, actionSource: VoIPActionSource) -> VoIPInteractorProtocol {
     return voIPInteractorFake
+  }
+
+  lazy var monthlyStatementsListFake = MonthlyStatementsListInteractorFake()
+  func monthlyStatementsListInteractor() -> MonthlyStatementsListInteractorProtocol {
+    return monthlyStatementsListFake
+  }
+
+  lazy var monthlyStatementsReportInteractorFake = MonthlyStatementsReportInteractorFake()
+  func monthlyStatementsReportInteractor(report: MonthlyStatementReport,
+                                         downloader: FileDownloader) -> MonthlyStatementsReportInteractorProtocol {
+    return monthlyStatementsReportInteractorFake
   }
 
   // MARK: - Physical card activation

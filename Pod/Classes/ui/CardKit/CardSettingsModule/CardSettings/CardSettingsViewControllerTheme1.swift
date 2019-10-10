@@ -94,9 +94,9 @@ private extension CardSettingsViewControllerTheme1 {
                   viewModel.showGetPin,
                   viewModel.legalDocuments,
                   viewModel.showIVRSupport,
-                  viewModel.showDetailedCardActivity).observeNext { [unowned self] showChangePin, showGetPin,
-                                                                                   legalDocuments, showIVRSupport,
-                                                                                   showDetailedCardActivity in
+                  viewModel.showDetailedCardActivity,
+                  viewModel.showMonthlyStatements).observeNext { [unowned self] showChangePin, showGetPin,
+                    legalDocuments, showIVRSupport, showDetailedCardActivity, showMonthlyStatements in
       let rows = [
         self.createSettingsTitle(),
         self.createChangePinRow(showButton: showChangePin),
@@ -110,6 +110,7 @@ private extension CardSettingsViewControllerTheme1 {
         self.createHelpButton(),
         self.createLostCardButton(),
         self.createFAQButton(legalDocuments.faq),
+        self.createStatementsButton(showMonthlyStatements),
         self.createLegalTitle(legalDocuments: legalDocuments),
         self.createCardholderAgreementButton(legalDocuments.cardHolderAgreement),
         self.createTermsAndConditionsButton(legalDocuments.termsAndConditions),
@@ -176,6 +177,16 @@ private extension CardSettingsViewControllerTheme1 {
     return createContentRow(faq,
                             title: "card_settings.legal.faq.title".podLocalized(),
                             subtitle: "card_settings.legal.faq.description".podLocalized())
+  }
+
+  func createStatementsButton(_ showMonthlyStatements: Bool) -> FormRowView? {
+    guard showMonthlyStatements else { return nil }
+    return FormBuilder.linkRowWith(title: "card_settings.help.monthly_statements.title".podLocalized(),
+                                   subtitle: "card_settings.help.monthly_statements.description".podLocalized(),
+                                   leftIcon: nil,
+                                   uiConfig: uiConfiguration) { [unowned self] in
+      self.presenter.monthlyStatementsTapped()
+    }
   }
 
   func createLegalTitle(legalDocuments: LegalDocuments) -> FormRowLabelView? {

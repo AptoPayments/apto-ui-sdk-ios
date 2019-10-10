@@ -16,6 +16,7 @@ struct CardSettingsPresenterConfig {
   let termsAndCondition: Content?
   let faq: Content?
   let showDetailedCardActivity: Bool
+  let showMonthlyStatements: Bool
 }
 
 class CardSettingsPresenter: CardSettingsPresenterProtocol {
@@ -163,6 +164,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     viewModel.showIVRSupport.send(card.features?.ivrSupport?.status == .enabled)
     viewModel.isShowDetailedCardActivityEnabled.send(interactor.isShowDetailedCardActivityEnabled())
     viewModel.showDetailedCardActivity.send(config.showDetailedCardActivity)
+    viewModel.showMonthlyStatements.send(config.showMonthlyStatements)
   }
 
   func closeTapped() {
@@ -222,5 +224,9 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   func showDetailedCardActivity(_ newValue: Bool) {
     interactor.setShowDetailedCardActivityEnabled(newValue)
     router.cardStateChanged(includingTransactions: true)
+  }
+
+  func monthlyStatementsTapped() {
+    router.showMonthlyStatements()
   }
 }

@@ -74,6 +74,30 @@ class UserStorageSpy: UserStorageProtocol {
   func fetchOauthData(_ apiKey: String, custodian: Custodian,
                       callback: @escaping Result<OAuthUserData, NSError>.Callback) {
   }
+
+  private(set) var fetchStatementsPeriodCalled = false
+  private(set) var lastFetchStatementsPeriodApiKey: String?
+  private(set) var lastFetchStatementsPeriodUserToken: String?
+  func fetchStatementsPeriod(_ apiKey: String, userToken: String,
+                             callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
+    fetchStatementsPeriodCalled = true
+    lastFetchStatementsPeriodApiKey = apiKey
+    lastFetchStatementsPeriodUserToken = userToken
+  }
+
+  private(set) var fetchStatementCalled = false
+  private(set) var lastFetchStatementApiKey: String?
+  private(set) var lastFetchStatementUserToken: String?
+  private(set) var lastFetchStatementMonth: Int?
+  private(set) var lastFetchStatementYear: Int?
+  func fetchStatement(_ apiKey: String, userToken: String, month: Int, year: Int,
+                      callback: @escaping Result<MonthlyStatementReport, NSError>.Callback) {
+    fetchStatementCalled = true
+    lastFetchStatementApiKey = apiKey
+    lastFetchStatementUserToken = userToken
+    lastFetchStatementMonth = month
+    lastFetchStatementYear = year
+  }
 }
 
 class UserStorageFake: UserStorageSpy {
@@ -82,6 +106,25 @@ class UserStorageFake: UserStorageSpy {
                            callback: @escaping Result<ShiftUser, NSError>.Callback) {
     super.createUser(apiKey, userData: userData, custodianUid: custodianUid, callback: callback)
     if let result = nextCreateUserResult {
+      callback(result)
+    }
+  }
+
+  var nextFetchStatementsPeriodResult: Result<MonthlyStatementsPeriod, NSError>?
+  override func fetchStatementsPeriod(_ apiKey: String, userToken: String,
+                                      callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
+    super.fetchStatementsPeriod(apiKey, userToken: userToken, callback: callback)
+    if let result = nextFetchStatementsPeriodResult {
+      callback(result)
+    }
+  }
+
+  var nextFetchStatementResult: Result<MonthlyStatementReport, NSError>?
+  override func fetchStatement(_ apiKey: String, userToken: String, month: Int, year: Int,
+                               callback: @escaping Result<MonthlyStatementReport, NSError>.Callback) {
+    super.fetchStatement(apiKey, userToken: userToken, month: month, year: year,
+                         callback: callback)
+    if let result = nextFetchStatementResult {
       callback(result)
     }
   }

@@ -24,8 +24,11 @@ class ManageShiftCardViewControllerTheme2: ShiftViewController, ManageShiftCardV
   private lazy var activationButton : UIBarButtonItem = { [unowned self] in
     return buildActivatePhysicalCardButtonItem()
   }()
-  private lazy var statsButton: UIBarButtonItem = { [unowned self] in
-    return buildStatsButtonItem()
+  private lazy var statsButton: UIBarButtonItem = {
+    return buildTopBarButton(iconName: "chart-section-icon", target: self, action: #selector(showStatsTapped))
+  }()
+  private lazy var accountSettingsButton: UIBarButtonItem = {
+    return buildTopBarButton(iconName: "top_profile", target: self, action: #selector(nextTapped), theme: .theme2)
   }()
   private let activateCardView: ActivateCardView
   private let balanceView: BalanceViewProtocol
@@ -242,9 +245,6 @@ private extension ManageShiftCardViewControllerTheme2 {
     else {
       showNavCancelButton(uiConfiguration.iconTertiaryColor, uiTheme: .theme2)
     }
-    // swiftlint:disable:next force_unwrapping
-    showNavNextButton(icon: UIImage.imageFromPodBundle("top_profile", uiTheme: .theme2)!,
-                      tintColor: uiConfiguration.iconTertiaryColor)
     setNeedsStatusBarAppearanceUpdate()
   }
 
@@ -255,23 +255,11 @@ private extension ManageShiftCardViewControllerTheme2 {
     }
   }
 
-  func setUpNavigationBarActions(isStatsFeatureEnabled: Bool = false) {
+  func setUpNavigationBarActions(isStatsFeatureEnabled: Bool = false, isAccountSettingsEnabled: Bool = true) {
     var items: [UIBarButtonItem] = navigationItem.rightBarButtonItems ?? []
-    if isStatsFeatureEnabled {
-      if !items.contains(statsButton) {
-        if items.isEmpty {
-          items.append(statsButton)
-        }
-        else {
-          items.insert(statsButton, at: 1)
-        }
-        navigationItem.rightBarButtonItems = items
-      }
-    }
-    else if items.contains(statsButton) {
-      items.removeAll { $0 == statsButton }
-      navigationItem.rightBarButtonItems = items
-    }
+    showOrHide(accountSettingsButton, index:0, items: &items, isVisible: isAccountSettingsEnabled)
+    showOrHide(statsButton, index:1, items: &items, isVisible: isStatsFeatureEnabled)
+    navigationItem.rightBarButtonItems = items
   }
 
   func setUpBackgrounds() {
@@ -483,8 +471,10 @@ private extension ManageShiftCardViewControllerTheme2 {
       self.balanceView.set(imageURL: cardStyle?.balanceSelectorImage)
     }.dispose(in: disposeBag)
 
-    viewModel.isStatsFeatureEnabled.observeNext { [unowned self] isStatsFeatureEnabled in
-      self.setUpNavigationBarActions(isStatsFeatureEnabled: isStatsFeatureEnabled)
+    combineLatest(viewModel.isStatsFeatureEnabled,
+                  viewModel.isAccountSettingsEnabled).observeNext { [unowned self] isStatsFeatureEnabled, isAccountSettingsEnabled in
+      self.setUpNavigationBarActions(isStatsFeatureEnabled: isStatsFeatureEnabled,
+                                     isAccountSettingsEnabled: isAccountSettingsEnabled)
     }.dispose(in: disposeBag)
   }
 
@@ -530,14 +520,5 @@ private extension ManageShiftCardViewControllerTheme2 {
         self.activatePhysicalCardTapped()
     }
     return topBarButtonItem
-  }
-
-  func buildStatsButtonItem() -> UIBarButtonItem {
-    let barButtonItem = UIBarButtonItem(image: UIImage.imageFromPodBundle("chart-section-icon")?.asTemplate(),
-                                        style: .plain,
-                                        target: self,
-                                        action: #selector(showStatsTapped))
-    barButtonItem.tintColor = uiConfiguration.iconTertiaryColor
-    return barButtonItem
   }
 }

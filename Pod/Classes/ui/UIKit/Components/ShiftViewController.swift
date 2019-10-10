@@ -57,4 +57,29 @@ class ShiftViewController: UIViewController {
   func showLoadingSpinner() {
     showLoadingSpinner(tintColor: uiConfiguration.uiPrimaryColor, position: .center)
   }
+
+  func showOrHide(_ action: UIBarButtonItem, index: Int, items: inout [UIBarButtonItem], isVisible: Bool) {
+    if isVisible {
+      if !items.contains(action) {
+        if items.isEmpty {
+          items.append(action)
+        }
+        else {
+          items.insert(action, at: index)
+        }
+      }
+    }
+    else {
+      items.removeAll { $0 == action }
+    }
+  }
+
+  func buildTopBarButton(iconName: String, target: Any, action: Selector, theme: UITheme? = nil) -> UIBarButtonItem {
+    let barButtonItem = UIBarButtonItem(image: UIImage.imageFromPodBundle(iconName, uiTheme: theme)?.asTemplate(),
+                                        style: .plain,
+                                        target: target,
+                                        action: action)
+    barButtonItem.tintColor = uiConfiguration.iconTertiaryColor
+    return barButtonItem
+  }
 }

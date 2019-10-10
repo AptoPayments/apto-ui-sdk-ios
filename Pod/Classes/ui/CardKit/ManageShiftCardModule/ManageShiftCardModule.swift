@@ -192,10 +192,12 @@ class ManageShiftCardModule: UIModule {
                                                       card: Card) -> ManageShiftCardViewControllerProtocol {
     let showActivateCardButton = platform.isFeatureEnabled(.showActivateCardButton)
     let showStatsButton = platform.isFeatureEnabled(.showStatsButton)
+    let showAccountSettingsButton = platform.isFeatureEnabled(.showAccountSettingsButton)
     let config = ManageShiftCardPresenterConfig(name: projectConfiguration.name,
                                                 imageUrl: projectConfiguration.branding.logoUrl,
                                                 showActivateCardButton: showActivateCardButton,
-                                                showStatsButton: showStatsButton)
+                                                showStatsButton: showStatsButton,
+                                                showAccountSettingsButton: showAccountSettingsButton)
     let presenter = serviceLocator.presenterLocator.manageCardPresenter(config: config)
     let interactor = serviceLocator.interactorLocator.manageCardInteractor(card: card)
     let viewController = serviceLocator.viewLocator.manageCardView(mode: mode, presenter: presenter)

@@ -41,6 +41,9 @@ protocol InteractorLocatorProtocol {
   func notificationPreferencesInteractor() -> NotificationPreferencesInteractorProtocol
   func setPinInteractor(card: Card) -> SetPinInteractorProtocol
   func voIPInteractor(card: Card, actionSource: VoIPActionSource) -> VoIPInteractorProtocol
+  func monthlyStatementsListInteractor() -> MonthlyStatementsListInteractorProtocol
+  func monthlyStatementsReportInteractor(report: MonthlyStatementReport,
+                                         downloader: FileDownloader) -> MonthlyStatementsReportInteractorProtocol
 
   // MARK: - Physical card activation
   func physicalCardActivationInteractor(card: Card) -> PhysicalCardActivationInteractorProtocol

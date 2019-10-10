@@ -16,7 +16,8 @@ class ManageShiftCardPresenterTest: XCTestCase {
   private let config = ManageShiftCardPresenterConfig(name: "name",
                                                       imageUrl: "url",
                                                       showActivateCardButton: true,
-                                                      showStatsButton: true)
+                                                      showStatsButton: true,
+                                                      showAccountSettingsButton: true)
   private let interactor = ManageShiftCardInteractorFake()
   private let view = ManageShiftCardViewFake()
   private let router = ManageShiftCardModuleSpy(serviceLocator: ServiceLocatorFake())
@@ -549,7 +550,8 @@ class ManageShiftCardPresenterTest: XCTestCase {
     let config = ManageShiftCardPresenterConfig(name: "name",
                                                 imageUrl: "url",
                                                 showActivateCardButton: true,
-                                                showStatsButton: true)
+                                                showStatsButton: true,
+                                                showAccountSettingsButton: false)
     setUpSUTWith(config: config)
     interactor.nextProvideFundingSourceResult = .success(dataProvider.card)
 
@@ -565,7 +567,8 @@ class ManageShiftCardPresenterTest: XCTestCase {
     let config = ManageShiftCardPresenterConfig(name: "name",
                                                 imageUrl: "url",
                                                 showActivateCardButton: true,
-                                                showStatsButton: false)
+                                                showStatsButton: false,
+                                                showAccountSettingsButton: false)
     setUpSUTWith(config: config)
     interactor.nextProvideFundingSourceResult = .success(dataProvider.card)
 
@@ -581,7 +584,8 @@ class ManageShiftCardPresenterTest: XCTestCase {
     let config = ManageShiftCardPresenterConfig(name: "name",
                                                 imageUrl: "url",
                                                 showActivateCardButton: true,
-                                                showStatsButton: nil)
+                                                showStatsButton: nil,
+                                                showAccountSettingsButton: false)
     setUpSUTWith(config: config)
     interactor.nextProvideFundingSourceResult = .success(dataProvider.card)
 
@@ -590,6 +594,57 @@ class ManageShiftCardPresenterTest: XCTestCase {
 
     // Then
     XCTAssertFalse(sut.viewModel.isStatsFeatureEnabled.value)
+  }
+
+  func testShowAccountSettingsButtonTrueFeatureIsEnabled() {
+    // Given
+    let config = ManageShiftCardPresenterConfig(name: "name",
+                                                imageUrl: "url",
+                                                showActivateCardButton: true,
+                                                showStatsButton: true,
+                                                showAccountSettingsButton: true)
+    setUpSUTWith(config: config)
+    interactor.nextProvideFundingSourceResult = .success(dataProvider.card)
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(sut.viewModel.isAccountSettingsEnabled.value)
+  }
+
+  func testShowAccountSettingsFalseStatsFeatureIsDisabled() {
+    // Given
+    let config = ManageShiftCardPresenterConfig(name: "name",
+                                                imageUrl: "url",
+                                                showActivateCardButton: true,
+                                                showStatsButton: false,
+                                                showAccountSettingsButton: false)
+    setUpSUTWith(config: config)
+    interactor.nextProvideFundingSourceResult = .success(dataProvider.card)
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertFalse(sut.viewModel.isAccountSettingsEnabled.value)
+  }
+
+  func testShowAccountSettingsNilStatsFeatureIsDisabled() {
+    // Given
+    let config = ManageShiftCardPresenterConfig(name: "name",
+                                                imageUrl: "url",
+                                                showActivateCardButton: true,
+                                                showStatsButton: nil,
+                                                showAccountSettingsButton: nil)
+    setUpSUTWith(config: config)
+    interactor.nextProvideFundingSourceResult = .success(dataProvider.card)
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(sut.viewModel.isAccountSettingsEnabled.value)
   }
 
   private func setUpSUTWith(config: ManageShiftCardPresenterConfig) {

@@ -31,6 +31,12 @@ class ManageShiftCardViewControllerTheme1: ManageShiftCardViewControllerProtocol
   private var shouldShowActivation: Bool? = false
   private let disposeBag = DisposeBag()
   private let cardActivationTextFieldDelegate = UITextFieldLengthLimiterDelegate(6)
+  private lazy var statsButton: UIBarButtonItem = {
+    return buildTopBarButton(iconName: "chart-section-icon", target: self, action: #selector(showStatsTapped))
+  }()
+  private lazy var accountSettingsButton: UIBarButtonItem = {
+    return buildTopBarButton(iconName: "top_profile", target: self, action: #selector(nextTapped))
+  }()
 
   init(mode: ShiftCardModuleMode, uiConfiguration: UIConfig, eventHandler: ManageShiftCardEventHandler) {
     self.eventHandler = eventHandler
@@ -187,19 +193,11 @@ private extension ManageShiftCardViewControllerTheme1 {
     }
   }
 
-  func setUpNavigationBarActions(isStatsFeatureEnabled: Bool = false) {
-    navigationItem.rightBarButtonItems = nil
-    // swiftlint:disable:next force_unwrapping
-    showNavNextButton(icon: UIImage.imageFromPodBundle("top_profile")!,
-                      tintColor: uiConfiguration.iconTertiaryColor)
-    if isStatsFeatureEnabled {
-      let barButtonItem = UIBarButtonItem(image: UIImage.imageFromPodBundle("chart-section-icon")?.asTemplate(),
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(showStatsTapped))
-      barButtonItem.tintColor = uiConfiguration.iconTertiaryColor
-      navigationItem.rightBarButtonItems?.append(barButtonItem)
-    }
+  func setUpNavigationBarActions(isStatsFeatureEnabled: Bool = false, isAccountSettingsEnabled: Bool = true) {
+    var items: [UIBarButtonItem] = navigationItem.rightBarButtonItems ?? []
+    showOrHide(accountSettingsButton, index:0, items: &items, isVisible: isAccountSettingsEnabled)
+    showOrHide(statsButton, index:1, items: &items, isVisible: isStatsFeatureEnabled)
+    navigationItem.rightBarButtonItems = items
   }
 
   func setUpTransactionList() {
@@ -387,8 +385,10 @@ private extension ManageShiftCardViewControllerTheme1 {
       self.mainView.set(cardStyle: cardStyle)
     }.dispose(in: disposeBag)
 
-    viewModel.isStatsFeatureEnabled.observeNext { [unowned self] isStatsFeatureEnabled in
-      self.setUpNavigationBarActions(isStatsFeatureEnabled: isStatsFeatureEnabled)
+    combineLatest(viewModel.isStatsFeatureEnabled,
+                  viewModel.isAccountSettingsEnabled).observeNext { [unowned self] isStatsFeatureEnabled, isAccountSettingsEnabled in
+      self.setUpNavigationBarActions(isStatsFeatureEnabled: isStatsFeatureEnabled,
+                                     isAccountSettingsEnabled: isAccountSettingsEnabled)
     }.dispose(in: disposeBag)
   }
 

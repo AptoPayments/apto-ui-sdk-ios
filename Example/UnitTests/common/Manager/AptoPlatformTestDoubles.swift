@@ -70,14 +70,14 @@ class AptoPlatformFake: AptoPlatformProtocol {
   }
 
   var nextFetchCardProductResult: Result<CardProduct, NSError>?
-  private(set) var fetchCardConfigurationCalled = false
-  private(set) var lastFetchCardConfigurationCardProductId: String?
-  private(set) var lastFetchCardConfigurationForceRefresh: Bool?
+  private(set) var fetchCardProductCalled = false
+  private(set) var lastFetchCardProductCardProductId: String?
+  private(set) var lastFetchCardProductForceRefresh: Bool?
   func fetchCardProduct(cardProductId: String, forceRefresh: Bool,
                         callback: @escaping Result<CardProduct, NSError>.Callback) {
-    fetchCardConfigurationCalled = true
-    lastFetchCardConfigurationCardProductId = cardProductId
-    lastFetchCardConfigurationForceRefresh = forceRefresh
+    fetchCardProductCalled = true
+    lastFetchCardProductCardProductId = cardProductId
+    lastFetchCardProductForceRefresh = forceRefresh
     if let result = nextFetchCardProductResult {
       callback(result)
     }
@@ -560,16 +560,46 @@ class AptoPlatformFake: AptoPlatformProtocol {
     }
   }
 
-  var nextCardMonthlySpendingResult: Result<MonthlySpending, NSError>?
-  private(set) var cardMonthlySpendingCalled = false
-  private(set) var lastCardMonthlySpendingCardId: String?
-  private(set) var lastCardMonthlySpendingDate: Date?
   func cardMonthlySpending(_ cardId: String, date: Date,
                            callback: @escaping Result<MonthlySpending, NSError>.Callback) {
-    cardMonthlySpendingCalled = true
-    lastCardMonthlySpendingCardId = cardId
-    lastCardMonthlySpendingDate = date
-    if let result = nextCardMonthlySpendingResult {
+    Swift.fatalError("Deprecated method. Use: fetchMonthlySpending(cardId:month:year:callback:) instead.")
+  }
+
+  var nextFetchMonthlySpendingResult: Result<MonthlySpending, NSError>?
+  private(set) var fetchMonthlySpendingCalled = false
+  private(set) var lastFetchMonthlySpendingCardId: String?
+  private(set) var lastFetchMonthlySpendingMonth: Int?
+  private(set) var lastFetchMonthlySpendingYear: Int?
+  func fetchMonthlySpending(cardId: String, month: Int, year: Int,
+                            callback: @escaping Result<MonthlySpending, NSError>.Callback) {
+    fetchMonthlySpendingCalled = true
+    lastFetchMonthlySpendingCardId = cardId
+    lastFetchMonthlySpendingMonth = month
+    lastFetchMonthlySpendingYear = year
+    if let result = nextFetchMonthlySpendingResult {
+      callback(result)
+    }
+  }
+
+  var nextFetchMonthlyStatementsPeriodResult: Result<MonthlyStatementsPeriod, NSError>?
+  private(set) var fetchMonthlyStatementsPeriodCalled = false
+  func fetchMonthlyStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
+    fetchMonthlyStatementsPeriodCalled = true
+    if let result = nextFetchMonthlyStatementsPeriodResult {
+      callback(result)
+    }
+  }
+
+  var nextFetchMonthlyStatementReportResult: Result<MonthlyStatementReport, NSError>?
+  private(set) var fetchMonthlyStatementReportCalled = false
+  private(set) var lastFetchMonthlyStatementReportMonth: Int?
+  private(set) var lastFetchMonthlyStatementReportYear: Int?
+  func fetchMonthlyStatementReport(month: Int, year: Int,
+                                   callback: @escaping Result<MonthlyStatementReport, NSError>.Callback) {
+    fetchMonthlyStatementReportCalled = true
+    lastFetchMonthlyStatementReportMonth = month
+    lastFetchMonthlyStatementReportYear = year
+    if let result = nextFetchMonthlyStatementReportResult {
       callback(result)
     }
   }

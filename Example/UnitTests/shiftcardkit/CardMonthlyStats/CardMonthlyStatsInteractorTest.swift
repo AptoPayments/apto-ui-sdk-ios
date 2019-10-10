@@ -28,7 +28,7 @@ class CardMonthlyStatsInteractorTest: XCTestCase {
     sut.fetchMonthlySpending(date: Date()) { _ in }
 
     // Then
-    XCTAssertTrue(platform.cardMonthlySpendingCalled)
+    XCTAssertTrue(platform.fetchMonthlySpendingCalled)
   }
 
   func testFetchMonthlySpendingUseAppropriateDate() {
@@ -40,13 +40,14 @@ class CardMonthlyStatsInteractorTest: XCTestCase {
     sut.fetchMonthlySpending(date: date) { _ in }
 
     // Then
-    XCTAssertEqual(date, platform.lastCardMonthlySpendingDate)
+    XCTAssertEqual(1, platform.lastFetchMonthlySpendingMonth)
+    XCTAssertEqual(2019, platform.lastFetchMonthlySpendingYear)
   }
 
   func testFetchingSpendingFailsCallbackFailure() {
     // Given
     var returnedResult: Result<MonthlySpending, NSError>?
-    platform.nextCardMonthlySpendingResult = .failure(BackendError(code: .other))
+    platform.nextFetchMonthlySpendingResult = .failure(BackendError(code: .other))
 
     // When
     sut.fetchMonthlySpending(date: Date()) { result in
@@ -60,7 +61,7 @@ class CardMonthlyStatsInteractorTest: XCTestCase {
   func testFetchingSpendingSucceedCallbackSuccess() {
     // Given
     var returnedResult: Result<MonthlySpending, NSError>?
-    platform.nextCardMonthlySpendingResult = .success(dataProvider.monthlySpending(date: Date()))
+    platform.nextFetchMonthlySpendingResult = .success(dataProvider.monthlySpending(date: Date()))
 
     // When
     sut.fetchMonthlySpending(date: Date()) { result in
@@ -76,7 +77,7 @@ class CardMonthlyStatsInteractorTest: XCTestCase {
     var returnedResult: Result<MonthlySpending, NSError>?
     let components = DateComponents(year: 2019, month: 1, day: 8)
     let date = Calendar.current.date(from: components)! // swiftlint:disable:this force_unwrapping
-    platform.nextCardMonthlySpendingResult = .success(dataProvider.monthlySpending(date: date))
+    platform.nextFetchMonthlySpendingResult = .success(dataProvider.monthlySpending(date: date))
 
     // When
     sut.fetchMonthlySpending(date: date) { result in

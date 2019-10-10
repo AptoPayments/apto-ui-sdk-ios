@@ -108,6 +108,10 @@ open class UIModule: NSObject, UIModuleProtocol {
       controller.configureLeftNavButton(mode: .close, uiConfig: uiConfig)
       controller = newNavigationController
     }
+    if #available(iOS 13.0, *) {
+      controller.isModalInPresentation = true
+      controller.modalPresentationStyle = .fullScreen
+    }
     navigationController?.viewControllers.last?.present(controller, animated: animated) { [weak self] in
       self?.presentedViewController = controller
       completion()
@@ -203,6 +207,10 @@ open class UIModule: NSObject, UIModuleProtocol {
           viewController = initialViewController
         }
         let presenterController = wself.navigationController?.viewControllers.last ?? UIApplication.topViewController()
+        if #available(iOS 13.0, *) {
+          viewController.isModalInPresentation = true
+          viewController.modalPresentationStyle = .fullScreen
+        }
         presenterController?.present(viewController, animated: animated) { [weak self] in
           self?.presentedModule = module
           completion(.success(initialViewController))
@@ -414,6 +422,10 @@ extension UIViewController {
         newNavigationController.navigationBar.setUpWith(uiConfig: uiConfig)
         module.navigationController = newNavigationController
         initialViewController.configureLeftNavButton(mode: leftButtonMode, uiConfig: uiConfig)
+        if #available(iOS 13.0, *) {
+          newNavigationController.isModalInPresentation = true
+          newNavigationController.modalPresentationStyle = .fullScreen
+        }
         self?.present(newNavigationController, animated: animated) {
           completion(.success(initialViewController))
         }

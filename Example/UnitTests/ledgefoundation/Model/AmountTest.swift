@@ -28,7 +28,7 @@ class AmountTest: XCTestCase {
     let text = sut.text
 
     // Then
-    XCTAssertEqual("BCH 0.00", text)
+    XCTAssertEqual("BCH\u{A0}0.00", text)
   }
 
   func testMinusZeroAmountTextIgnoreSign() {
@@ -39,7 +39,7 @@ class AmountTest: XCTestCase {
     let text = sut.text
 
     // Then
-    XCTAssertEqual("BCH 0.00", text)
+    XCTAssertEqual("BCH\u{A0}0.00", text)
   }
 
   func testNormalAmountTextReturnTwoDecimals() {
@@ -72,7 +72,7 @@ class AmountTest: XCTestCase {
     let text = sut.text
 
     // Then
-    XCTAssertEqual("BTC 0.00013", text)
+    XCTAssertEqual("BTC\u{A0}0.00013", text)
   }
 
   func testNegativeAmountTextReturnNegativeValue() {
@@ -105,7 +105,7 @@ class AmountTest: XCTestCase {
     let text = sut.text
 
     // Then
-    XCTAssertEqual("MXN 10.00", text)
+    XCTAssertEqual("MXN\u{A0}10.00", text)
   }
 
   func testAmountExchangeTextReturnExpectedValue() {

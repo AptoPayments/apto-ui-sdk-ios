@@ -51,6 +51,8 @@ protocol ModuleLocatorProtocol {
   func notificationPreferencesModule() -> NotificationPreferencesModuleProtocol
   func setPinModule(card: Card) -> SetPinModuleProtocol
   func voIPModule(card: Card, actionSource: VoIPActionSource) -> VoIPModuleProtocol
+  func monthlyStatementsList() -> MonthlyStatementsListModuleProtocol
+  func monthlyStatementsReportModule(statementReport: MonthlyStatementReport) -> MonthlyStatementsReportModuleProtocol
 
   // MARK: - Physical card activation
   func physicalCardActivationModule(card: Card) -> PhysicalCardActivationModuleProtocol

@@ -32,6 +32,78 @@ class FinancialAccountsStorageTest: XCTestCase {
     sut = FinancialAccountsStorage(transport: transport, cache: cache)
   }
 
+  // MARK: - Fetch monthly spending
+  func testFetchMonthlySpendingCallTransport() {
+    // When
+    sut.fetchMonthlySpending(apiKey, userToken: userToken, accountId: "card_id", month: 2, year: 2019) { _ in }
+
+    // Then
+    XCTAssertTrue(transport.getCalled)
+    XCTAssertNotNil(transport.lastGetURL)
+    XCTAssertNil(transport.lastGetHeaders)
+    XCTAssertNotNil(transport.lastGetAuthorization)
+    XCTAssertNil(transport.lastGetParameters)
+    XCTAssertEqual(true, transport.lastGetFilterInvalidTokenResult)
+  }
+
+  func testFetchMonthlySpendingWithAppropriateURL() {
+    // Given
+    let expectedUrl = JSONRouter.financialAccountMonthlySpending
+
+    // When
+    sut.fetchMonthlySpending(apiKey, userToken: userToken, accountId: "card_id", month: 2, year: 2019) { _ in }
+
+    // Then
+    guard let urlWrapper = transport.lastGetURL as? URLWrapper else {
+      XCTFail("Wrong url type sent to transport")
+      return
+    }
+    XCTAssertEqual(expectedUrl, urlWrapper.url)
+  }
+
+  func testFetchMonthlySpendingRequestFailCallbackFailure() {
+    // Given
+    var returnedResult: Result<MonthlySpending, NSError>?
+    transport.nextGetResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.fetchMonthlySpending(apiKey, userToken: userToken, accountId: "card_id", month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
+  func testFetchMonthlySpendingRequestSucceedCallbackSuccess() {
+    // Given
+    var returnedResult: Result<MonthlySpending, NSError>?
+    transport.nextGetResult = .success(ModelDataProvider.provider.monthlySpendingJSON)
+
+    // When
+    sut.fetchMonthlySpending(apiKey, userToken: userToken, accountId: "card_id", month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isSuccess)
+  }
+
+  func testFetchfetchMonthlySpendingRequestSucceedWithMalformedJSONCallbackFailure() {
+    // Given
+    var returnedResult: Result<MonthlySpending, NSError>?
+    transport.nextGetResult = .success(ModelDataProvider.provider.emptyJSON)
+
+    // When
+    sut.fetchMonthlySpending(apiKey, userToken: userToken, accountId: "card_id", month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
+  // MARK: - Issue card
   func testIssueCardCallTransport() {
     // When
     sut.issueCard(apiKey, userToken: userToken, cardProduct: cardProduct, custodian: custodian, additionalFields: nil,

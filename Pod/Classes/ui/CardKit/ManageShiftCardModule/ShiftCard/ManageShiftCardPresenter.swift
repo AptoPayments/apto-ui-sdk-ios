@@ -263,6 +263,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
     else {
       viewModel.isStatsFeatureEnabled.send(false)
     }
+    viewModel.isAccountSettingsEnabled.send(config.showAccountSettingsButton ?? true)
   }
 
   private func updateViewModelWith(cardDetails: CardDetails) {

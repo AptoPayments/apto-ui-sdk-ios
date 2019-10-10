@@ -88,6 +88,8 @@ let options = CardOptions(features:fontCustomizationOptions:)
 2. `showStatsButton` control if the user can see his monthly consume stats. **Default to false**.
 3. `showNotificationPreferences` control if the user can customize the notification channels. **Default to false**.
 4. `showDetailedCardActivityOption` control if the user can show other transaction types (like declined transactions). **Default to false**.
+5. `showAccountSettingsButton` control if the user can see the account settings screen. **Default to true**.
+6. `showMonthlyStatementsOption` control if the user has access to the monthly statements. **Default to true**.
 
 `fontCustomizationOptions: FontCustomizationOptions` is an optional parameter that specify a custom font to be used in the app. If no font customization options is specified the SDK will use the system font. There are two ways of specifying a custom font:
 

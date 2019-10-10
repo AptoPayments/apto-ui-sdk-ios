@@ -106,6 +106,14 @@ final class PresenterLocator: PresenterLocatorProtocol {
     return VoIPPresenter(voIPCaller: TwilioVoIPClient())
   }
 
+  func monthlyStatementsListPresenter() -> MonthlyStatementsListPresenterProtocol {
+    return MonthlyStatementsListPresenter()
+  }
+
+  func monthlyStatementsReportPresenter() -> MonthlyStatementsReportPresenterProtocol {
+    return MonthlyStatementsReportPresenter()
+  }
+
   // MARK: - Physical card activation
   func physicalCardActivationPresenter() -> PhysicalCardActivationPresenterProtocol {
     return PhysicalCardActivationPresenter()

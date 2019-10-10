@@ -16,6 +16,7 @@ class AptoPlatformTest: XCTestCase {
   private lazy var storageLocator = serviceLocator.storageLocatorFake
   private let delegate = AptoPlatformDelegateSpy()
   private let apiKey = "api_key"
+  private let token = "token"
   private let environment = AptoPlatformEnvironment.production
   private let setupCertPinning = true
   private let dataProvider = ModelDataProvider.provider
@@ -139,6 +140,252 @@ class AptoPlatformTest: XCTestCase {
     XCTAssertEqual(true, returnedResult?.isFailure)
   }
 
+  // MARK: - Fetch monthly spending
+  func testSutNotInitializedFetchMonthlySpendingCallbackFailure() {
+    // Given
+    var returnedResult: Result<MonthlySpending, NSError>?
+
+    // When
+    sut.fetchMonthlySpending(cardId: "card_id", month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+    guard let returnedError = returnedResult?.error as? BackendError else {
+      return XCTFail("Wrong error type returned")
+    }
+    XCTAssertEqual(BackendError.ErrorCodes.invalidSession.rawValue, returnedError.code)
+  }
+
+  func testNoCurrentUserFetchMonthlySpendingCallbackFailure() {
+    // Given
+    givenSutInitialized()
+    var returnedResult: Result<MonthlySpending, NSError>?
+
+    // When
+    sut.fetchMonthlySpending(cardId: "card_id", month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+    guard let returnedError = returnedResult?.error as? BackendError else {
+      return XCTFail("Wrong error type returned")
+    }
+    XCTAssertEqual(BackendError.ErrorCodes.invalidSession.rawValue, returnedError.code)
+  }
+
+  func testFetchMonthlySpendingCallStorage() {
+    // Given
+    givenCurrentUser()
+
+    // When
+    sut.fetchMonthlySpending(cardId: "card_id", month: 2, year: 2019) { _ in }
+
+    // Then
+    let storage = storageLocator.financialAccountsStorageFake
+    XCTAssertTrue(storage.fetchMonthlySpendingCalled)
+    XCTAssertEqual(apiKey, storage.lastFetchMonthlySpendingApiKey)
+    XCTAssertEqual(token, storage.lastFetchMonthlySpendingUserToken)
+    XCTAssertEqual("card_id", storage.lastFetchMonthlySpendingAccountId)
+    XCTAssertEqual(2, storage.lastFetchMonthlySpendingMonth)
+    XCTAssertEqual(2019, storage.lastFetchMonthlySpendingYear)
+  }
+
+  func testFetchMonthlySpendingFailCallbackFailure() {
+    // Given
+    givenCurrentUser()
+    var returnedResult: Result<MonthlySpending, NSError>?
+    storageLocator.financialAccountsStorageFake.nextFetchMonthlySpendingResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.fetchMonthlySpending(cardId: "card_id", month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
+  func testFetchMonthlySpendingSucceedCallbackSuccess() {
+    // Given
+    givenCurrentUser()
+    var returnedResult: Result<MonthlySpending, NSError>?
+    let storage = storageLocator.financialAccountsStorageFake
+    storage.nextFetchMonthlySpendingResult = .success(dataProvider.monthlySpending(date: Date()))
+
+    // When
+    sut.fetchMonthlySpending(cardId: "card_id", month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isSuccess)
+  }
+
+  // MARK: - Fetch monthly statement report
+  func testSutNotInitializedFetchMonthlyStatementsPeriodCallbackFailure() {
+    // Given
+    var returnedResult: Result<MonthlyStatementsPeriod, NSError>?
+
+    // When
+    sut.fetchMonthlyStatementsPeriod { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+    guard let returnedError = returnedResult?.error as? BackendError else {
+      return XCTFail("Wrong error type returned")
+    }
+    XCTAssertEqual(BackendError.ErrorCodes.invalidSession.rawValue, returnedError.code)
+  }
+
+  func testNoCurrentUserFetchMonthlyStatementsPeriodCallbackFailure() {
+    // Given
+    givenSutInitialized()
+    var returnedResult: Result<MonthlyStatementsPeriod, NSError>?
+
+    // When
+    sut.fetchMonthlyStatementsPeriod { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+    guard let returnedError = returnedResult?.error as? BackendError else {
+      return XCTFail("Wrong error type returned")
+    }
+    XCTAssertEqual(BackendError.ErrorCodes.invalidSession.rawValue, returnedError.code)
+  }
+
+  func testFetchMonthlyStatementsPeriodCallStorage() {
+    // Given
+    givenCurrentUser()
+
+    // When
+    sut.fetchMonthlyStatementsPeriod { _ in }
+
+    // Then
+    let storage = storageLocator.userStorageFake
+    XCTAssertTrue(storage.fetchStatementsPeriodCalled)
+    XCTAssertEqual(apiKey, storage.lastFetchStatementsPeriodApiKey)
+    XCTAssertEqual(token, storage.lastFetchStatementsPeriodUserToken)
+  }
+
+  func testFetchMonthlyStatementsPeriodFailCallbackFailure() {
+    // Given
+    givenCurrentUser()
+    var returnedResult: Result<MonthlyStatementsPeriod, NSError>?
+    storageLocator.userStorageFake.nextFetchStatementsPeriodResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.fetchMonthlyStatementsPeriod { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
+  func testFetchMonthlyStatementsPeriodSucceedCallbackSuccess() {
+    // Given
+    givenCurrentUser()
+    var returnedResult: Result<MonthlyStatementsPeriod, NSError>?
+    storageLocator.userStorageFake.nextFetchStatementsPeriodResult = .success(dataProvider.monthlyStatementsPeriod)
+
+    // When
+    sut.fetchMonthlyStatementsPeriod { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isSuccess)
+  }
+
+  // MARK: - Fetch monthly statement report
+  func testSutNotInitializedFetchMonthlyStatementReportCallbackFailure() {
+    // Given
+    var returnedResult: Result<MonthlyStatementReport, NSError>?
+
+    // When
+    sut.fetchMonthlyStatementReport(month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+    guard let returnedError = returnedResult?.error as? BackendError else {
+      return XCTFail("Wrong error type returned")
+    }
+    XCTAssertEqual(BackendError.ErrorCodes.invalidSession.rawValue, returnedError.code)
+  }
+
+  func testNoCurrentUserFetchMonthlyStatementReportCallbackFailure() {
+    // Given
+    givenSutInitialized()
+    var returnedResult: Result<MonthlyStatementReport, NSError>?
+
+    // When
+    sut.fetchMonthlyStatementReport(month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+    guard let returnedError = returnedResult?.error as? BackendError else {
+      return XCTFail("Wrong error type returned")
+    }
+    XCTAssertEqual(BackendError.ErrorCodes.invalidSession.rawValue, returnedError.code)
+  }
+
+  func testFetchMonthlyStatementReportCallStorage() {
+    // Given
+    givenCurrentUser()
+
+    // When
+    sut.fetchMonthlyStatementReport(month: 2, year: 2019) { _ in }
+
+    // Then
+    let storage = storageLocator.userStorageFake
+    XCTAssertTrue(storage.fetchStatementCalled)
+    XCTAssertEqual(apiKey, storage.lastFetchStatementApiKey)
+    XCTAssertEqual(token, storage.lastFetchStatementUserToken)
+    XCTAssertEqual(2, storage.lastFetchStatementMonth)
+    XCTAssertEqual(2019, storage.lastFetchStatementYear)
+  }
+
+  func testFetchMonthlyStatementReportFailCallbackFailure() {
+    // Given
+    givenCurrentUser()
+    var returnedResult: Result<MonthlyStatementReport, NSError>?
+    storageLocator.userStorageFake.nextFetchStatementResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.fetchMonthlyStatementReport(month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
+  func testFetchMonthlyStatementReportSucceedCallbackSuccess() {
+    // Given
+    givenCurrentUser()
+    var returnedResult: Result<MonthlyStatementReport, NSError>?
+    storageLocator.userStorageFake.nextFetchStatementResult = .success(dataProvider.monthlyStatementReport)
+
+    // When
+    sut.fetchMonthlyStatementReport(month: 2, year: 2019) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isSuccess)
+  }
+
   // MARK: - Issue card
   func testSutNotInitializedIssueCardCallbackFailure() {
     // Given
@@ -209,7 +456,7 @@ class AptoPlatformTest: XCTestCase {
     XCTAssertEqual(true, returnedResult?.isFailure)
   }
 
-  func testIssueCardSucceedCallbackSuccees() {
+  func testIssueCardSucceedCallbackSuccess() {
     // Given
     givenCurrentUser()
     var returnedResult: Result<Card, NSError>?
@@ -264,7 +511,7 @@ class AptoPlatformTest: XCTestCase {
 
   private func givenCurrentUser() {
     if !sut.initialized { givenSutInitialized() }
-    storageLocator.userTokenStorageFake.setCurrent(token: "token", withPrimaryCredential: .email,
+    storageLocator.userTokenStorageFake.setCurrent(token: token, withPrimaryCredential: .email,
                                                    andSecondaryCredential: .phoneNumber)
   }
 }

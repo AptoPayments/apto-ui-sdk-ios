@@ -50,6 +50,8 @@ protocol ViewLocatorProtocol {
   func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> ShiftViewController
   func setPinView(presenter: SetPinPresenterProtocol) -> ShiftViewController
   func voIPView(presenter: VoIPPresenterProtocol) -> ShiftViewController
+  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> ShiftViewController
+  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> ShiftViewController
 
   // MARK: - Physical card activation
   func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> ShiftViewController

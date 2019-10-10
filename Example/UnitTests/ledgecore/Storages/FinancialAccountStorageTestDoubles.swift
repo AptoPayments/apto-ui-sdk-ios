@@ -60,8 +60,20 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
                                         callback: @escaping Result<FundingSource, NSError>.Callback) {
   }
 
-  func monthlySpending(_ apiKey: String, userToken: String, accountId: String, date: Date,
-                       callback: @escaping Result<MonthlySpending, NSError>.Callback) {
+  private(set) var fetchMonthlySpendingCalled = false
+  private(set) var lastFetchMonthlySpendingApiKey: String?
+  private(set) var lastFetchMonthlySpendingUserToken: String?
+  private(set) var lastFetchMonthlySpendingAccountId: String?
+  private(set) var lastFetchMonthlySpendingMonth: Int?
+  private(set) var lastFetchMonthlySpendingYear: Int?
+  func fetchMonthlySpending(_ apiKey: String, userToken: String, accountId: String, month: Int, year: Int,
+                            callback: @escaping Result<MonthlySpending, NSError>.Callback) {
+    fetchMonthlySpendingCalled = true
+    lastFetchMonthlySpendingApiKey = apiKey
+    lastFetchMonthlySpendingUserToken = userToken
+    lastFetchMonthlySpendingAccountId = accountId
+    lastFetchMonthlySpendingMonth = month
+    lastFetchMonthlySpendingYear = year
   }
 
   private(set) var issueCardCalled = false
@@ -85,6 +97,16 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
 }
 
 class FinancialAccountsStorageFake: FinancialAccountsStorageSpy {
+  var nextFetchMonthlySpendingResult: Result<MonthlySpending, NSError>?
+  override func fetchMonthlySpending(_ apiKey: String, userToken: String, accountId: String, month: Int, year: Int,
+                                     callback: @escaping Result<MonthlySpending, NSError>.Callback) {
+    super.fetchMonthlySpending(apiKey, userToken: userToken, accountId: accountId, month: month, year: year,
+                               callback: callback)
+    if let result = nextFetchMonthlySpendingResult {
+      callback(result)
+    }
+  }
+
   var nextIssueCardResult: Result<Card, NSError>?
   override func issueCard(_ apiKey: String, userToken: String, cardProduct: CardProduct, custodian: Custodian?,
                           additionalFields: [String: AnyObject]?, initialFundingSourceId: String?,

@@ -197,6 +197,20 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
     return voIPModuleSpy
   }
 
+  lazy var monthlyStatementsListModuleSpy: MonthlyStatementsListModuleSpy = {
+    return MonthlyStatementsListModuleSpy(serviceLocator: serviceLocator)
+  }()
+  func monthlyStatementsList() -> MonthlyStatementsListModuleProtocol {
+    return monthlyStatementsListModuleSpy
+  }
+
+  lazy var monthlyStatementsReportModuleSpy: MonthlyStatementsReportModuleSpy = {
+    return MonthlyStatementsReportModuleSpy(serviceLocator: serviceLocator)
+  }()
+  func monthlyStatementsReportModule(statementReport: MonthlyStatementReport) -> MonthlyStatementsReportModuleProtocol {
+    return monthlyStatementsReportModuleSpy
+  }
+
   // MARK: - Physical card activation
   func physicalCardActivationModule(card: Card) -> PhysicalCardActivationModuleProtocol {
     Swift.fatalError("physicalCardActivationModule(card:) has not been implemented")

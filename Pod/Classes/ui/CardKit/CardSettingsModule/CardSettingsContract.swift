@@ -26,6 +26,7 @@ protocol CardSettingsRouterProtocol: class {
   func isCardInfoVisible() -> Bool
   func cardStateChanged(includingTransactions: Bool)
   func show(content: Content, title: String)
+  func showMonthlyStatements()
 }
 
 extension CardSettingsRouterProtocol {
@@ -51,11 +52,11 @@ protocol CardSettingsInteractorProtocol {
   func setShowDetailedCardActivityEnabled(_ isEnabled: Bool)
 }
 
-public struct LegalDocuments {
-  public let cardHolderAgreement: Content?
-  public let faq: Content?
-  public let termsAndConditions: Content?
-  public let privacyPolicy: Content?
+struct LegalDocuments {
+  let cardHolderAgreement: Content?
+  let faq: Content?
+  let termsAndConditions: Content?
+  let privacyPolicy: Content?
 }
 
 extension LegalDocuments {
@@ -64,15 +65,16 @@ extension LegalDocuments {
   }
 }
 
-open class CardSettingsViewModel {
-  public let locked: Observable<Bool?> = Observable(nil)
-  public let showCardInfo: Observable<Bool?> = Observable(nil)
-  public let legalDocuments: Observable<LegalDocuments> = Observable(LegalDocuments())
-  public let showChangePin: Observable<Bool> = Observable(false)
-  public let showGetPin: Observable<Bool> = Observable(false)
-  public let showIVRSupport: Observable<Bool> = Observable(false)
-  public let showDetailedCardActivity: Observable<Bool> = Observable(false)
-  public let isShowDetailedCardActivityEnabled: Observable<Bool> = Observable(false)
+class CardSettingsViewModel {
+  let locked: Observable<Bool?> = Observable(nil)
+  let showCardInfo: Observable<Bool?> = Observable(nil)
+  let legalDocuments: Observable<LegalDocuments> = Observable(LegalDocuments())
+  let showChangePin: Observable<Bool> = Observable(false)
+  let showGetPin: Observable<Bool> = Observable(false)
+  let showIVRSupport: Observable<Bool> = Observable(false)
+  let showDetailedCardActivity: Observable<Bool> = Observable(false)
+  let isShowDetailedCardActivityEnabled: Observable<Bool> = Observable(false)
+  let showMonthlyStatements: Observable<Bool> = Observable(false)
 }
 
 protocol CardSettingsPresenterProtocol: class {
@@ -96,4 +98,5 @@ protocol CardSettingsPresenterProtocol: class {
   func show(content: Content, title: String)
   func updateCardNewStatus()
   func showDetailedCardActivity(_ newValue: Bool)
+  func monthlyStatementsTapped()
 }

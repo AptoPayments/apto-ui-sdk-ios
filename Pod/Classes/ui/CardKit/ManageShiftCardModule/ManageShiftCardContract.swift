@@ -83,6 +83,7 @@ open class ManageShiftCardViewModel {
   public let cardLoaded: Observable<Bool> = Observable(false)
   public let showPhysicalCardActivationMessage: Observable<Bool> = Observable(true)
   public let isStatsFeatureEnabled: Observable<Bool> = Observable(false)
+  public let isAccountSettingsEnabled: Observable<Bool> = Observable(true)
 }
 
 protocol ManageShiftCardPresenterProtocol: ManageShiftCardEventHandler {
@@ -100,4 +101,5 @@ struct ManageShiftCardPresenterConfig {
   let imageUrl: String?
   let showActivateCardButton: Bool?
   let showStatsButton: Bool?
+  let showAccountSettingsButton: Bool?
 }

@@ -17,7 +17,8 @@ class CardSettingsPresenterTest: XCTestCase {
   private lazy var platform = serviceLocator.platformFake
   private let card = ModelDataProvider.provider.card
   private let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
-                                                   faq: nil, showDetailedCardActivity: true)
+                                                   faq: nil, showDetailedCardActivity: true,
+                                                   showMonthlyStatements: true)
   private let emailRecipients = ["email@aptopayments.com"]
   private let uiConfig = ModelDataProvider.provider.uiConfig
   private let view = CardSettingsViewSpy()
@@ -126,7 +127,7 @@ class CardSettingsPresenterTest: XCTestCase {
   func testViewLoadedWithoutShowDetailedCardActivityDoNotShowDetailedCardActivity() {
     // Given
     let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
-                                             faq: nil, showDetailedCardActivity: false)
+                                             faq: nil, showDetailedCardActivity: false, showMonthlyStatements: true)
     setUpSUT(card: card, config: config)
 
     // When
@@ -134,6 +135,27 @@ class CardSettingsPresenterTest: XCTestCase {
 
     // Then
     XCTAssertFalse(sut.viewModel.showDetailedCardActivity.value)
+  }
+
+  func testViewLoadedWithShowMonthlyStatementsShowMonthlyStatements() {
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(sut.viewModel.showMonthlyStatements.value)
+  }
+
+  func testViewLoadedWithoutShowMonthlyStatementsDoNotShowMonthlyStatements() {
+    // Given
+    let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
+                                             faq: nil, showDetailedCardActivity: false, showMonthlyStatements: false)
+    setUpSUT(card: card, config: config)
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertFalse(sut.viewModel.showMonthlyStatements.value)
   }
 
   func testViewLoadedLoadDetailedCardActivityEnabled() {
@@ -237,6 +259,14 @@ class CardSettingsPresenterTest: XCTestCase {
     // Then
     XCTAssertTrue(router.cardStateChangedCalled)
     XCTAssertEqual(true, router.lastCardStateChangeIncludeTransactions)
+  }
+
+  func testMonthlyStatementsTappedCallRouter() {
+    // When
+    sut.monthlyStatementsTapped()
+
+    // Then
+    XCTAssertTrue(router.showMonthlyStatementsCalled)
   }
 
   // MARK: - Helper methods

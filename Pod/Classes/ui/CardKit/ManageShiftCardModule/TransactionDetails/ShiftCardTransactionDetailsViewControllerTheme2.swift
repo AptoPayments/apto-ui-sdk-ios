@@ -271,8 +271,8 @@ class ShiftCardTransactionDetailsViewControllerTheme2: ShiftViewController, Shif
           amountString = "transaction_details.adjustment.amount.text".podLocalized() + amount
         }
         var feeString: String?
-        if let fee = adjustment.fee?.absText {
-          feeString = "transaction_details.adjustment.fee.text".podLocalized() + fee
+        if let fee = adjustment.fee?.amount.value, abs(fee) > Double(0), let feeText = adjustment.fee?.absText {
+          feeString = "transaction_details.adjustment.fee.text".podLocalized() + feeText
         }
         view.set(title: title,
                  exchangeRate: exchangeRate,
