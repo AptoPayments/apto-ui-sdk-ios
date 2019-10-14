@@ -37,6 +37,14 @@ class CardMonthlyStatsModule: UIModule, CardMonthlyStatsModuleProtocol {
     push(module: module) { _ in }
   }
 
+  func showStatementReport(month: Month) {
+    let module = serviceLocator.moduleLocator.monthlyStatementsReportModule(month: month)
+    module.onClose = { [weak self] _ in
+      self?.popModule {}
+    }
+    push(module: module) { _ in }
+  }
+
   // MARK: - Private methods
   private func buildViewController() -> ShiftViewController {
     let presenter = serviceLocator.presenterLocator.cardMonthlyStatsPresenter()

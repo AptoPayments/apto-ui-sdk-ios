@@ -217,4 +217,17 @@ class CardMonthlyStatsPresenterTest: XCTestCase {
     XCTAssertTrue(analyticsManager.trackCalled)
     XCTAssertEqual(analyticsManager.lastEvent, Event.monthlySpending)
   }
+
+  // MARK: - Monthly statements
+  func testMonthlyStatementsTappedCallInteractor() {
+    // Given
+    let date = Date()
+
+    // When
+    sut.monthlyStatementsTapped(date: date)
+
+    // Then
+    XCTAssertTrue(router.showStatementReportCalled)
+    XCTAssertEqual(Month(from: date), router.lastShowStatementReportMonth)
+  }
 }

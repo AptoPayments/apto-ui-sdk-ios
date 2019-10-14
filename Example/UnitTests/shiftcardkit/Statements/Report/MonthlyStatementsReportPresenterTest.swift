@@ -74,6 +74,7 @@ class MonthlyStatementsReportPresenterTest: XCTestCase {
     // Then
     XCTAssertTrue(router.hideLoadingViewCalled)
     XCTAssertEqual(error, sut.viewModel.error.value)
+    XCTAssertTrue(router.closeCalled)
   }
 
   func testDownloadSucceedUpdateViewModelUrlProperty() {

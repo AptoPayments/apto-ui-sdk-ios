@@ -131,9 +131,9 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
   }
 
   lazy var monthlyStatementsReportInteractorFake = MonthlyStatementsReportInteractorFake()
-  func monthlyStatementsReportInteractor(report: MonthlyStatementReport,
-                                         downloader: FileDownloader) -> MonthlyStatementsReportInteractorProtocol {
-    return monthlyStatementsReportInteractorFake
+  func monthlyStatementsReportInteractor(month: Month, downloaderProvider: FileDownloaderProvider)
+    -> MonthlyStatementsReportInteractorProtocol {
+      return monthlyStatementsReportInteractorFake
   }
 
   // MARK: - Physical card activation

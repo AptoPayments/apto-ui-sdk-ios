@@ -25,16 +25,7 @@ class MonthlyStatementsListPresenter: MonthlyStatementsListPresenterProtocol {
   }
 
   func monthSelected(_ month: Month) {
-    router?.showLoadingView()
-    interactor?.fetchStatement(month: month.month, year: month.year) { [weak self] result in
-      self?.router?.hideLoadingView()
-      switch result {
-      case .failure(let error):
-        self?.viewModel.error.send(error)
-      case .success(let report):
-        self?.processReport(report)
-      }
-    }
+    router?.showStatementReport(month: month)
   }
 
   // MARK: Private methods
@@ -63,13 +54,5 @@ class MonthlyStatementsListPresenter: MonthlyStatementsListPresenterProtocol {
       }
       viewModel.months.appendItem(month, toSection: viewModel.months.numberOfSections - 1)
     }
-  }
-
-  private func processReport(_ report: MonthlyStatementReport) {
-    guard report.downloadUrl != nil else {
-      viewModel.error.send(FetchStatementReportError())
-      return
-    }
-    router?.showStatementReport(report)
   }
 }

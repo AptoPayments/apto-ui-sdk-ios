@@ -52,7 +52,7 @@ protocol ModuleLocatorProtocol {
   func setPinModule(card: Card) -> SetPinModuleProtocol
   func voIPModule(card: Card, actionSource: VoIPActionSource) -> VoIPModuleProtocol
   func monthlyStatementsList() -> MonthlyStatementsListModuleProtocol
-  func monthlyStatementsReportModule(statementReport: MonthlyStatementReport) -> MonthlyStatementsReportModuleProtocol
+  func monthlyStatementsReportModule(month: Month) -> MonthlyStatementsReportModuleProtocol
 
   // MARK: - Physical card activation
   func physicalCardActivationModule(card: Card) -> PhysicalCardActivationModuleProtocol

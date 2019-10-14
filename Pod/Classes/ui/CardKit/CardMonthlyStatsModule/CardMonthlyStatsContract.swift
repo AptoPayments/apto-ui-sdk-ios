@@ -10,6 +10,7 @@ import AptoSDK
 
 protocol CardMonthlyStatsModuleProtocol: UIModuleProtocol {
   func showTransactions(for categorySpending: CategorySpending, startDate: Date, endDate: Date)
+  func showStatementReport(month: Month)
 }
 
 protocol CardMonthlyStatsInteractorProtocol {
@@ -21,6 +22,7 @@ class CardMonthlyStatsViewModel {
   let previousSpendingExists: Observable<Bool> = Observable(true)
   let nextSpendingExists: Observable<Bool> = Observable(true)
   let dataLoaded: Observable<Bool> = Observable(false)
+  let monthlyStatementsAvailable: Observable<Bool> = Observable(true)
 }
 
 protocol CardMonthlyStatsPresenterProtocol: class {
@@ -33,4 +35,5 @@ protocol CardMonthlyStatsPresenterProtocol: class {
   func closeTapped()
   func dateSelected(_ date: Date)
   func categorySpendingSelected(_ categorySpending: CategorySpending, date: Date)
+  func monthlyStatementsTapped(date: Date)
 }

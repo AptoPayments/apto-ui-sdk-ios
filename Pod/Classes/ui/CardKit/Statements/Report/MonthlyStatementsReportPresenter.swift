@@ -41,6 +41,7 @@ class MonthlyStatementsReportPresenter: MonthlyStatementsReportPresenterProtocol
       switch result {
       case .failure(let error):
         self?.viewModel.error.send(error)
+        self?.router?.close()
       case .success(let url):
         self?.viewModel.url.send(url)
       }

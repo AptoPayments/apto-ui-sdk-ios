@@ -9,12 +9,11 @@ import Bond
 import AptoSDK
 
 protocol MonthlyStatementsListModuleProtocol: UIModuleProtocol {
-  func showStatementReport(_ report: MonthlyStatementReport)
+  func showStatementReport(month: Month)
 }
 
 protocol MonthlyStatementsListInteractorProtocol {
   func fetchStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback)
-  func fetchStatement(month: Int, year: Int, callback: @escaping Result<MonthlyStatementReport, NSError>.Callback)
 }
 
 class MonthlyStatementsListViewModel {

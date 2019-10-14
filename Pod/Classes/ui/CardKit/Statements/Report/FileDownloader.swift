@@ -40,13 +40,15 @@ class FileDownloaderImpl: NSObject, FileDownloader {
 extension FileDownloaderImpl: URLSessionDownloadDelegate {
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
     if let error = error as NSError? {
-      callback?(.failure(error))
+      DispatchQueue.main.sync { [weak self] in
+        self?.callback?(.failure(error))
+      }
     }
   }
 
   func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-    DispatchQueue.main.sync { [unowned self] in
-      guard let callback = self.callback else { return }
+    DispatchQueue.main.sync { [weak self] in
+      guard let self = self, let callback = self.callback else { return }
       guard let cacheDirectory = FileDownloaderImpl.cacheDirectoryURL() else {
         callback(.success(location))
         return

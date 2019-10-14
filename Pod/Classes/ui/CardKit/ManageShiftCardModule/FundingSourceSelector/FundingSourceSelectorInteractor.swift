@@ -18,7 +18,7 @@ class FundingSourceSelectorInteractor: FundingSourceSelectorInteractorProtocol {
   }
 
   func loadFundingSources(forceRefresh: Bool, callback: @escaping Result<[FundingSource], NSError>.Callback) {
-    platform.fetchCardFundingSources(card.accountId, page: nil, rows: nil, forceRefresh: forceRefresh,
+    platform.fetchCardFundingSources(card.accountId, page: 0, rows: Int.max, forceRefresh: forceRefresh,
                                      callback: callback)
   }
 

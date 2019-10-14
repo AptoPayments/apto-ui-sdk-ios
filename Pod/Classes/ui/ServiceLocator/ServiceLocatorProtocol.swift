@@ -13,6 +13,7 @@ protocol ServiceLocatorProtocol: class {
   var presenterLocator: PresenterLocatorProtocol { get }
   var interactorLocator: InteractorLocatorProtocol { get }
   var viewLocator: ViewLocatorProtocol { get }
+  var systemServicesLocator: SystemServicesLocatorProtocol { get }
 
   var platform: AptoPlatformProtocol { get }
   var uiConfig: UIConfig! { get set } // swiftlint:disable:this implicitly_unwrapped_optional

@@ -56,4 +56,18 @@ class CardMonthlyStatsModuleTest: XCTestCase {
     // Then
     XCTAssertTrue(transactionListModule.initializeCalled)
   }
+
+  func testShowStatementReportShowMonthlyStatementsReportModule() {
+    // Given
+    let month = ModelDataProvider.provider.month
+    let moduleLocator = serviceLocator.moduleLocatorFake
+    let monthlyStatementsReportModule = moduleLocator.monthlyStatementsReportModuleSpy
+
+    // When
+    sut.showStatementReport(month: month)
+
+    // Then
+    XCTAssertTrue(monthlyStatementsReportModule.initializeCalled)
+    XCTAssertNotNil(monthlyStatementsReportModule.onClose)
+  }
 }

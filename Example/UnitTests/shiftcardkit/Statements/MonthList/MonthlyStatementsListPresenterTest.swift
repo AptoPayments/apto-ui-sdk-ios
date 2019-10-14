@@ -105,47 +105,6 @@ class MonthlyStatementsListPresenterTest: XCTestCase {
     sut.monthSelected(month)
 
     // Then
-    XCTAssertTrue(router.showLoadingViewCalled)
-    XCTAssertTrue(interactor.fetchStatementCalled)
-  }
-
-  func testFetchStatementFailsUpdateError() {
-    // Given
-    let error = BackendError(code: .other)
-    interactor.nextFetchStatementResult = .failure(error)
-    let month = dataProvider.month
-
-    // When
-    sut.monthSelected(month)
-
-    // Then
-    XCTAssertTrue(router.hideLoadingViewCalled)
-    XCTAssertEqual(error, sut.viewModel.error.value)
-  }
-
-  func testFetchStatementSucceedWithoutUrlUpdateError() {
-    // Given
-    interactor.nextFetchStatementResult = .success(dataProvider.monthlyStatementReportWithoutUrl)
-    let month = dataProvider.month
-
-    // When
-    sut.monthSelected(month)
-
-    // Then
-    XCTAssertTrue(router.hideLoadingViewCalled)
-    XCTAssertTrue(sut.viewModel.error.value is FetchStatementReportError)
-  }
-
-  func testFetchStatementSucceedCallRouterToShowReport() {
-    // Given
-    interactor.nextFetchStatementResult = .success(dataProvider.monthlyStatementReport)
-    let month = dataProvider.month
-
-    // When
-    sut.monthSelected(month)
-
-    // Then
-    XCTAssertTrue(router.hideLoadingViewCalled)
     XCTAssertTrue(router.showStatementReportCalled)
   }
 }

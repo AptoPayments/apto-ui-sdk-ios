@@ -9,28 +9,24 @@ import Foundation
 import AptoSDK
 
 class MonthlyStatementsReportModule: UIModule, MonthlyStatementsReportModuleProtocol {
-  private let statementReport: MonthlyStatementReport
+  private let month: Month
   private var presenter: MonthlyStatementsReportPresenterProtocol?
 
-  init(serviceLocator: ServiceLocatorProtocol, statementReport: MonthlyStatementReport) {
-    self.statementReport = statementReport
+  init(serviceLocator: ServiceLocatorProtocol, month: Month) {
+    self.month = month
     super.init(serviceLocator: serviceLocator)
   }
 
   override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
-    guard let stringUrl = statementReport.downloadUrl, let url = URL(string: stringUrl) else {
-      completion(.failure(ServiceError(code: .internalIncosistencyError)))
-      return
-    }
-    let localFilename = "statement-\(statementReport.month)-\(statementReport.year).pdf"
-    let viewController = buildViewController(downloader: FileDownloaderImpl(url: url, localFilename: localFilename))
+    let viewController = buildViewController()
     completion(.success(viewController))
   }
 
-  private func buildViewController(downloader: FileDownloader) -> UIViewController {
+  private func buildViewController() -> UIViewController {
     let presenter = serviceLocator.presenterLocator.monthlyStatementsReportPresenter()
-    let interactor = serviceLocator.interactorLocator.monthlyStatementsReportInteractor(report: statementReport,
-                                                                                        downloader: downloader)
+    let locator = serviceLocator.interactorLocator
+    let interactor = locator.monthlyStatementsReportInteractor(month: month,
+                                                               downloaderProvider: serviceLocator.systemServicesLocator)
     let analyticsManager = serviceLocator.analyticsManager
     presenter.router = self
     presenter.interactor = interactor

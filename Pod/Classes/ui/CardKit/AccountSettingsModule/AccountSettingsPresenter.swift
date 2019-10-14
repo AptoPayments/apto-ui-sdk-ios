@@ -12,7 +12,6 @@ import AptoSDK
 class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
   let viewModel = AccountSettingsViewModel()
   // swiftlint:disable implicitly_unwrapped_optional
-  var view: AccountSettingsViewProtocol!
   var interactor: AccountSettingsInteractorProtocol!
   weak var router: AccountSettingsRouterProtocol!
   // swiftlint:enable implicitly_unwrapped_optional
@@ -25,6 +24,7 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
 
   func viewLoaded() {
     viewModel.showNotificationPreferences.send(config.showNotificationPreferences)
+    viewModel.showMonthlyStatements.send(config.showMonthlyStatements)
     analyticsManager?.track(event: Event.accountSettings)
   }
 
@@ -42,5 +42,9 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
 
   func notificationsTapped() {
     router.notificationsTappedInAccountSettings()
+  }
+
+  func monthlyStatementsTapped() {
+    router.showMonthlyStatements()
   }
 }

@@ -21,6 +21,7 @@ class CardMonthlyStatsViewController: ShiftViewController {
   private let graphSummaryView: CardMonthlyStatsGraphSummaryView
   private let spentListTableView = UITableView(frame: .zero, style: .grouped)
   private let emptyCaseView = UIView()
+  private let monthlyStatementsContainerView = UIView()
   private var spentList = [CategorySpending]()
   private var groupedSpentList = [GraphData]()
   private var selectedSlice: GraphData?
@@ -76,6 +77,9 @@ private extension CardMonthlyStatsViewController {
     }.dispose(in: disposeBag)
     viewModel.nextSpendingExists.observeNext { [weak self] nextSpendingExists in
       self?.monthsView.showNextMonth = nextSpendingExists
+    }.dispose(in: disposeBag)
+    viewModel.monthlyStatementsAvailable.observeNext { [weak self] monthlyStatementsAvailable in
+      self?.monthlyStatementsContainerView.isHidden = !monthlyStatementsAvailable
     }.dispose(in: disposeBag)
   }
 
@@ -311,6 +315,7 @@ private extension CardMonthlyStatsViewController {
     setUpMonthsView()
     setUpGraphContainerView()
     setUpGraphView()
+    setUpMonthlyStatements()
     setUpSpentListTableView()
     setUpEmptyCaseView()
   }
@@ -389,11 +394,29 @@ private extension CardMonthlyStatsViewController {
     }
   }
 
+  func setUpMonthlyStatements() {
+    monthlyStatementsContainerView.backgroundColor = view.backgroundColor
+    view.addSubview(monthlyStatementsContainerView)
+    monthlyStatementsContainerView.snp.makeConstraints { make in
+      make.left.right.equalToSuperview()
+      make.top.equalTo(graphContainerView.snp.bottom)
+      make.height.equalTo(spentListTopMargin)
+    }
+    let title = "stats.monthly_spending.statements_report.view".podLocalized()
+    let button = ComponentCatalog.formTextLinkButtonWith(title: title, uiConfig: uiConfiguration) { [unowned self] in
+      self.presenter.monthlyStatementsTapped(date: self.currentDate)
+    }
+    monthlyStatementsContainerView.addSubview(button)
+    button.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+  }
+
   func setUpSpentListTableView() {
     spentListTableView.backgroundColor = .clear
     view.addSubview(spentListTableView)
     spentListTableView.snp.makeConstraints { make in
-      make.top.equalTo(graphView.snp.bottom).offset(spentListTopMargin)
+      make.top.equalTo(monthlyStatementsContainerView.snp.bottom)
       make.left.right.bottom.equalToSuperview()
     }
     spentListTableView.separatorStyle = .none
@@ -430,9 +453,9 @@ private extension CardMonthlyStatsViewController {
   var spentListTopMargin: CGFloat {
     switch UIDevice.deviceType() {
     case .iPhone5:
-      return 12
+      return 24
     default:
-      return 46
+      return 54
     }
   }
 }

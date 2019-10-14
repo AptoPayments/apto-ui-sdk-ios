@@ -19,6 +19,13 @@ class CardMonthlyStatsModuleSpy: UIModuleSpy, CardMonthlyStatsModuleProtocol {
     lastCategorySpendingStartDate = startDate
     lastCategorySpendingEndDate = endDate
   }
+
+  private(set) var showStatementReportCalled = false
+  private(set) var lastShowStatementReportMonth: Month?
+  func showStatementReport(month: Month) {
+    showStatementReportCalled = true
+    lastShowStatementReportMonth = month
+  }
 }
 
 class CardMonthlyStatsInteractorSpy: CardMonthlyStatsInteractorProtocol {
@@ -73,5 +80,12 @@ class CardMonthlyStatsPresenterSpy: CardMonthlyStatsPresenterProtocol {
     categorySpendingSelectedCalled = true
     lastCategorySpendingSelected = categorySpending
     lastCategorySpendingSelectedDate = date
+  }
+
+  private(set) var monthlyStatementsTappedCalled = false
+  private(set) var lastMonthlyStatementsTappedDate: Date?
+  func monthlyStatementsTapped(date: Date) {
+    monthlyStatementsTappedCalled = true
+    lastMonthlyStatementsTappedDate = date
   }
 }

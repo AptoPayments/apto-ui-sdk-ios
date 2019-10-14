@@ -10,10 +10,10 @@
 
 class MonthlyStatementsListModuleSpy: UIModuleSpy, MonthlyStatementsListModuleProtocol {
   private(set) var showStatementReportCalled = false
-  private(set) var lastShowStatementReport: MonthlyStatementReport?
-  func showStatementReport(_ report: MonthlyStatementReport) {
+  private(set) var lastShowStatementReportMonth: Month?
+  func showStatementReport(month: Month) {
     showStatementReportCalled = true
-    lastShowStatementReport = report
+    lastShowStatementReportMonth = month
   }
 }
 
@@ -22,15 +22,6 @@ class MonthlyStatementsListInteractorSpy: MonthlyStatementsListInteractorProtoco
   func fetchStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
     fetchStatementsPeriodCalled = true
   }
-
-  private(set) var fetchStatementCalled = false
-  private(set) var lastFetchStatementMonth: Int?
-  private(set) var lastFetchStatementYear: Int?
-  func fetchStatement(month: Int, year: Int, callback: @escaping Result<MonthlyStatementReport, NSError>.Callback) {
-    fetchStatementCalled = true
-    lastFetchStatementMonth = month
-    lastFetchStatementYear = year
-  }
 }
 
 class MonthlyStatementsListInteractorFake: MonthlyStatementsListInteractorSpy {
@@ -38,15 +29,6 @@ class MonthlyStatementsListInteractorFake: MonthlyStatementsListInteractorSpy {
   override func fetchStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
     super.fetchStatementsPeriod(callback: callback)
     if let result = nextFetchStatementsPeriodResult {
-      callback(result)
-    }
-  }
-
-  var nextFetchStatementResult: Result<MonthlyStatementReport, NSError>?
-  override func fetchStatement(month: Int, year: Int,
-                               callback: @escaping Result<MonthlyStatementReport, NSError>.Callback) {
-    super.fetchStatement(month: month, year: year, callback: callback)
-    if let result = nextFetchStatementResult {
       callback(result)
     }
   }

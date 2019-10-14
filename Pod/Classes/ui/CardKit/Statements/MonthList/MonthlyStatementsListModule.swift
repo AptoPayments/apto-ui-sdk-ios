@@ -26,15 +26,11 @@ class MonthlyStatementsListModule: UIModule, MonthlyStatementsListModuleProtocol
     return serviceLocator.viewLocator.monthlyStatementsListView(presenter: presenter)
   }
 
-  func showStatementReport(_ report: MonthlyStatementReport) {
-    let module = serviceLocator.moduleLocator.monthlyStatementsReportModule(statementReport: report)
+  func showStatementReport(month: Month) {
+    let module = serviceLocator.moduleLocator.monthlyStatementsReportModule(month: month)
     module.onClose = { [weak self] _ in
       self?.popModule {}
     }
-    push(module: module) { [weak self] result in
-      if let error = result.error, result.isFailure {
-        self?.show(error: error)
-      }
-    }
+    push(module: module) { _ in }
   }
 }

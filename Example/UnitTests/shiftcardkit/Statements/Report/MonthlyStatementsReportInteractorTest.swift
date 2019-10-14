@@ -13,12 +13,16 @@ class MonthlyStatementsReportInteractorTest: XCTestCase {
   private var sut: MonthlyStatementsReportInteractor! // swiftlint:disable:this implicitly_unwrapped_optional
 
   // Collaborators
-  private let report = ModelDataProvider.provider.monthlyStatementReport
-  private let downloader = FileDownloaderFake()
+  private let month = ModelDataProvider.provider.month
+  private let downloaderProvider = SystemServicesLocatorFake()
+  private let platform = AptoPlatformFake()
+  private let dataProvider = ModelDataProvider.provider
+  private lazy var downloader = downloaderProvider.fileDownloaderFake
 
   override func setUp() {
     super.setUp()
-    sut = MonthlyStatementsReportInteractor(report: report, downloader: downloader)
+    sut = MonthlyStatementsReportInteractor(month: month, downloaderProvider: downloaderProvider,
+                                            aptoPlatform: platform)
   }
 
   func testReportDateReturnMonthAndYear() {
@@ -26,14 +30,32 @@ class MonthlyStatementsReportInteractorTest: XCTestCase {
     let reportDate = sut.reportDate()
 
     // Then
-    XCTAssertEqual(report.month, reportDate.month)
-    XCTAssertEqual(report.year, reportDate.year)
+    XCTAssertEqual(month.month, reportDate.month)
+    XCTAssertEqual(month.year, reportDate.year)
   }
 
-  func testDownloadReportWithExpiredDownloadUrlCallbackDownloadURLExpired() {
+  func testDownloadReportCallPlatform() {
+    // When
+    sut.downloadReport { _ in }
+
+    // Then
+    XCTAssertTrue(platform.fetchMonthlyStatementReportCalled)
+  }
+
+  func testFetchReportFailsCallbackFailure() {
     // Given
-    sut = MonthlyStatementsReportInteractor(report: ModelDataProvider.provider.monthlyStatementReportExpired,
-                                            downloader: downloader)
+    platform.nextFetchMonthlyStatementReportResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.downloadReport { result in
+      // Then
+      XCTAssertTrue(result.isFailure)
+    }
+  }
+
+  func testFetchReportReturnReportWithoutUrlCallbackError() {
+    // Given
+    platform.nextFetchMonthlyStatementReportResult = .success(dataProvider.monthlyStatementReportWithoutUrl)
 
     // When
     sut.downloadReport { result in
@@ -43,10 +65,9 @@ class MonthlyStatementsReportInteractorTest: XCTestCase {
     }
   }
 
-  func testDownloadReportWithoutExpirationCallbackDownloadURLExpired() {
+  func testFetchReportReturnReportWithoutExpirationCallbackError() {
     // Given
-    sut = MonthlyStatementsReportInteractor(report: ModelDataProvider.provider.monthlyStatementReportWithoutExpiration,
-                                            downloader: downloader)
+    platform.nextFetchMonthlyStatementReportResult = .success(dataProvider.monthlyStatementReportWithoutExpiration)
 
     // When
     sut.downloadReport { result in
@@ -56,7 +77,21 @@ class MonthlyStatementsReportInteractorTest: XCTestCase {
     }
   }
 
-  func testDownloadReportCallFileDownloader() {
+  func testFetchReportReturnReportExpiredCallbackError() {
+    // Given
+    platform.nextFetchMonthlyStatementReportResult = .success(dataProvider.monthlyStatementReportExpired)
+
+    // When
+    sut.downloadReport { result in
+      // Then
+      XCTAssertTrue(result.isFailure)
+      XCTAssertTrue(result.error is DownloadUrlExpiredError)
+    }
+  }
+
+  func testFetchReportSucceedCallDownloader() {
+    givenFetchStatementReportSucceed()
+
     // When
     sut.downloadReport { _ in }
 
@@ -64,9 +99,22 @@ class MonthlyStatementsReportInteractorTest: XCTestCase {
     XCTAssertTrue(downloader.downloadCalled)
   }
 
-  func testDownloadReportSucceedCallbackSuccess() {
+  func testDownloadFailCallbackFailure() {
     // Given
-    let url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this force_unwrapping
+    givenFetchStatementReportSucceed()
+    downloader.nextDownloadResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.downloadReport { result in
+      // Then
+      XCTAssertTrue(result.isFailure)
+    }
+  }
+
+  func testDownloadSucceedCallbackSuccess() {
+    // Given
+    givenFetchStatementReportSucceed()
+    let url = dataProvider.url
     downloader.nextDownloadResult = .success(url)
 
     // When
@@ -77,16 +125,9 @@ class MonthlyStatementsReportInteractorTest: XCTestCase {
     }
   }
 
-  func testDownloadReportFailsCallbackFailure() {
+  // MARK: - Private helpers
+  private func givenFetchStatementReportSucceed() {
     // Given
-    let error = BackendError(code: .other)
-    downloader.nextDownloadResult = .failure(error)
-
-    // When
-    sut.downloadReport { result in
-      // Then
-      XCTAssertTrue(result.isFailure)
-      XCTAssertEqual(error, result.error)
-    }
+    platform.nextFetchMonthlyStatementReportResult = .success(dataProvider.monthlyStatementReport)
   }
 }

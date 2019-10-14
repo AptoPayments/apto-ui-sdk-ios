@@ -49,12 +49,12 @@ class MonthlyStatementsListModuleTest: XCTestCase {
 
   func testShowStatementReportShowMonthlyStatementsReportModule() {
     // Given
-    let report = dataProvider.monthlyStatementReport
+    let month = dataProvider.month
     let moduleLocator = serviceLocator.moduleLocatorFake
     let monthlyStatementsReportModule = moduleLocator.monthlyStatementsReportModuleSpy
 
     // When
-    sut.showStatementReport(report)
+    sut.showStatementReport(month: month)
 
     // Then
     XCTAssertTrue(monthlyStatementsReportModule.initializeCalled)

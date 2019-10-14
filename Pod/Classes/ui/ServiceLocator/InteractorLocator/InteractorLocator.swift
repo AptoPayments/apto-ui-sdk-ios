@@ -119,9 +119,10 @@ final class InteractorLocator: InteractorLocatorProtocol {
     return MonthlyStatementsListInteractor(platform: serviceLocator.platform)
   }
 
-  func monthlyStatementsReportInteractor(report: MonthlyStatementReport,
-                                         downloader: FileDownloader) -> MonthlyStatementsReportInteractorProtocol {
-    return MonthlyStatementsReportInteractor(report: report, downloader: downloader)
+  func monthlyStatementsReportInteractor(month: Month, downloaderProvider: FileDownloaderProvider)
+    -> MonthlyStatementsReportInteractorProtocol {
+      return MonthlyStatementsReportInteractor(month: month, downloaderProvider: downloaderProvider,
+                                               aptoPlatform: serviceLocator.platform)
   }
 
   // MARK: - Physical card activation

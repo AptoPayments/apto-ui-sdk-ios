@@ -59,6 +59,7 @@
 		3C03E9072338F36C00C565F1 /* MonthlyStatementsListTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDF362267784FD59F03DB /* MonthlyStatementsListTestDoubles.swift */; };
 		3C1074192265C89F0050F8D1 /* PhoneHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDDAA9712890A02CB79BC /* PhoneHelperTest.swift */; };
 		3C1ECAB122D8E33400DBC484 /* TransactionDeclineCodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */; };
+		3C3D1F8A2350D6C6007D39AB /* SystemServicesLocatorFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */; };
 		3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD60A22D2072B3066FE37 /* CustodianSerializerTest.swift */; };
 		3C65E0BA217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */; };
 		3C92D20E2343903F00C48D90 /* MonthTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92D20D2343903F00C48D90 /* MonthTest.swift */; };
@@ -298,6 +299,7 @@
 		2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPhoneScreen.swift; sourceTree = "<group>"; };
 		2FD9B79683F0323F267BEC7B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDeclineCodeTest.swift; sourceTree = "<group>"; };
+		3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServicesLocatorFake.swift; sourceTree = "<group>"; };
 		3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalCardActivationSucceedTestDoubles.swift; sourceTree = "<group>"; };
 		3C92D20D2343903F00C48D90 /* MonthTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthTest.swift; sourceTree = "<group>"; };
 		3C92D20F2343964A00C48D90 /* MonthlyStatementsPeriodTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStatementsPeriodTest.swift; sourceTree = "<group>"; };
@@ -846,6 +848,7 @@
 				D99BDC2FDC2845B7677B51D6 /* NetworkLocatorFake.swift */,
 				D99BD2444FD3D4A30DF44712 /* StorageLocatorFake.swift */,
 				D99BD6317D88070D88438911 /* CoreServiceLocatorFake.swift */,
+				3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */,
 			);
 			path = ServiceLocator;
 			sourceTree = "<group>";
@@ -1680,6 +1683,7 @@
 				D99BD3FC46EB7E2860BE7B34 /* WaitListInteractorTest.swift in Sources */,
 				D99BDD962605FDC27E887E36 /* WaitListPresenterTest.swift in Sources */,
 				D99BDEF95E697662D1BEE92F /* WaitListTestDoubles.swift in Sources */,
+				3C3D1F8A2350D6C6007D39AB /* SystemServicesLocatorFake.swift in Sources */,
 				D99BD7D9DFC6501E146260CE /* WaitListModuleTest.swift in Sources */,
 				D99BDC35F7F3035D0C7C71F0 /* CardWaitListInteractorTest.swift in Sources */,
 				D99BD5648E64479ACA8F7BAF /* CardWaitListPresenterTest.swift in Sources */,

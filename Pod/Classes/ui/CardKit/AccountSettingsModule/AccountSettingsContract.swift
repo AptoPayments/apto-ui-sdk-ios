@@ -13,6 +13,7 @@ protocol AccountSettingsRouterProtocol: class {
   func closeFromAccountSettings()
   func contactTappedInAccountSettings()
   func notificationsTappedInAccountSettings()
+  func showMonthlyStatements()
 }
 
 typealias AccountSettingsViewProtocol = ShiftViewController
@@ -23,15 +24,16 @@ protocol AccountSettingsInteractorProtocol {
 
 class AccountSettingsViewModel {
   let showNotificationPreferences: Observable<Bool> = Observable(false)
+  let showMonthlyStatements: Observable<Bool> = Observable(false)
 }
 
 struct AccountSettingsPresenterConfig {
   let showNotificationPreferences: Bool
+  let showMonthlyStatements: Bool
 }
 
 protocol AccountSettingsPresenterProtocol: class {
   var viewModel: AccountSettingsViewModel { get }
-  var view: AccountSettingsViewProtocol! { get set }
   var interactor: AccountSettingsInteractorProtocol! { get set }
   var router: AccountSettingsRouterProtocol! { get set }
   var analyticsManager: AnalyticsServiceProtocol? { get set }
@@ -41,4 +43,5 @@ protocol AccountSettingsPresenterProtocol: class {
   func logoutTapped()
   func contactTapped()
   func notificationsTapped()
+  func monthlyStatementsTapped()
 }

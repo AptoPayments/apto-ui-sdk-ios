@@ -30,13 +30,14 @@ class AccountSettingsModule: UIModule {
 
   fileprivate func buildAccountSettingsViewController(uiConfig: UIConfig) -> AccountSettingsViewProtocol {
     let isNotificationPreferencesEnabled = platform.isFeatureEnabled(.showNotificationPreferences)
-    let config = AccountSettingsPresenterConfig(showNotificationPreferences: isNotificationPreferencesEnabled)
+    let isMonthlyStatementsEnabled = platform.isFeatureEnabled(.showMonthlyStatementsOption)
+    let config = AccountSettingsPresenterConfig(showNotificationPreferences: isNotificationPreferencesEnabled,
+                                                showMonthlyStatements: isMonthlyStatementsEnabled)
     let presenter = serviceLocator.presenterLocator.accountSettingsPresenter(config: config)
     let interactor = serviceLocator.interactorLocator.accountSettingsInteractor()
     let viewController = serviceLocator.viewLocator.accountsSettingsView(uiConfig: uiConfig, presenter: presenter)
     presenter.router = self
     presenter.interactor = interactor
-    presenter.view = viewController
     presenter.analyticsManager = serviceLocator.analyticsManager
     self.presenter = presenter
     return viewController
@@ -62,6 +63,14 @@ extension AccountSettingsModule: AccountSettingsRouterProtocol {
       self.popModule { self.notificationPreferencesModule = nil }
     }
     self.notificationPreferencesModule = module
+    push(module: module) { _ in }
+  }
+
+  func showMonthlyStatements() {
+    let module = serviceLocator.moduleLocator.monthlyStatementsList()
+    module.onClose = { [unowned self] _ in
+      self.popModule {}
+    }
     push(module: module) { _ in }
   }
 }

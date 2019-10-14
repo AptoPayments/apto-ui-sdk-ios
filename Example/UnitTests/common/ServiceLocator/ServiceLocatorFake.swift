@@ -21,6 +21,9 @@ class ServiceLocatorFake: AptoUISDK.ServiceLocatorProtocol {
 
   lazy var viewLocator: ViewLocatorProtocol = ViewLocatorFake()
 
+  lazy var systemServicesLocator: SystemServicesLocatorProtocol = systemServicesLocatorFake
+  lazy var systemServicesLocatorFake = SystemServicesLocatorFake()
+
   private(set) var platformFake = AptoPlatformFake()
   var platform: AptoPlatformProtocol {
     return platformFake

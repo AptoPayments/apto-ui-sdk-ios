@@ -50,34 +50,4 @@ class MonthlyStatementsListInteractorTest: XCTestCase {
       XCTAssertTrue(result.isFailure)
     }
   }
-
-  func testStatementCallPlatform() {
-    // When
-    sut.fetchStatement(month: 2, year: 2019) { _ in }
-
-    // Then
-    XCTAssertTrue(platform.fetchMonthlyStatementReportCalled)
-  }
-
-  func testFetchStatementReportSucceedCallSuccess() {
-    // Given
-    platform.nextFetchMonthlyStatementReportResult = .success(dataProvider.monthlyStatementReport)
-
-    // When
-    sut.fetchStatement(month: 2, year: 2019) { result in
-      // Then
-      XCTAssertTrue(result.isSuccess)
-    }
-  }
-
-  func testFetchStatementReportFailsCallbackFailure() {
-    // Given
-    platform.nextFetchMonthlyStatementReportResult = .failure(BackendError(code: .other))
-
-    // When
-    sut.fetchStatement(month: 2, year: 2019) { result in
-      // Then
-      XCTAssertTrue(result.isFailure)
-    }
-  }
 }

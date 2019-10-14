@@ -207,7 +207,7 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   lazy var monthlyStatementsReportModuleSpy: MonthlyStatementsReportModuleSpy = {
     return MonthlyStatementsReportModuleSpy(serviceLocator: serviceLocator)
   }()
-  func monthlyStatementsReportModule(statementReport: MonthlyStatementReport) -> MonthlyStatementsReportModuleProtocol {
+  func monthlyStatementsReportModule(month: Month) -> MonthlyStatementsReportModuleProtocol {
     return monthlyStatementsReportModuleSpy
   }
 

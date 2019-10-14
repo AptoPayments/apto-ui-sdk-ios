@@ -67,12 +67,13 @@ extension AccountSettingsViewControllerTheme2: UIScrollViewDelegate {
 private extension AccountSettingsViewControllerTheme2 {
   func setUpViewModelSubscriptions() {
     let viewModel = presenter.viewModel
-    viewModel.showNotificationPreferences.distinctUntilChanged().observeNext { [unowned self] showNotificationPreferences in
-      self.updateUpFormViewContent(showNotificationPreferences: showNotificationPreferences)
+    combineLatest(viewModel.showNotificationPreferences,
+                  viewModel.showMonthlyStatements).observeNext { [unowned self] showNotification, showStatements in
+      self.updateUpFormViewContent(showNotificationPreferences: showNotification, showMonthlyStatements: showStatements)
     }.dispose(in: disposeBag)
   }
 
-  func updateUpFormViewContent(showNotificationPreferences: Bool) {
+  func updateUpFormViewContent(showNotificationPreferences: Bool, showMonthlyStatements: Bool) {
     var rows: [FormRowView] = [FormRowSeparatorView(backgroundColor: .clear, height: 16)]
     if showNotificationPreferences {
       rows += [
@@ -82,9 +83,12 @@ private extension AccountSettingsViewControllerTheme2 {
     }
     rows += [
       self.createSupportTitle(),
-      self.createSupportButton(),
-      self.createLogoutButton()
+      self.createSupportButton()
     ]
+    if showMonthlyStatements {
+      rows += [createStatementsButton()]
+    }
+    rows += [self.createLogoutButton()]
     formView.show(rows: rows)
   }
 }
@@ -166,6 +170,16 @@ private extension AccountSettingsViewControllerTheme2 {
                                    height: 72,
                                    uiConfig: uiConfiguration) { [unowned self] in
       self.presenter.contactTapped()
+    }
+  }
+
+  func createStatementsButton() -> FormRowView {
+    return FormBuilder.linkRowWith(title: "card_settings.help.monthly_statements.title".podLocalized(),
+                                   subtitle: "card_settings.help.monthly_statements.description".podLocalized(),
+                                   leftIcon: nil,
+                                   height: 72,
+                                   uiConfig: uiConfiguration) { [unowned self] in
+      self.presenter.monthlyStatementsTapped()
     }
   }
 

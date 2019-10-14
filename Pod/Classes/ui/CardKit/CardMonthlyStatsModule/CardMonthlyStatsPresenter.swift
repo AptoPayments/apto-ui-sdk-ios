@@ -34,6 +34,10 @@ class CardMonthlyStatsPresenter: CardMonthlyStatsPresenterProtocol {
     router?.showTransactions(for: categorySpending, startDate: startDate, endDate: endDate)
   }
 
+  func monthlyStatementsTapped(date: Date) {
+    router?.showStatementReport(month: Month(from: date))
+  }
+
   // MARK: - Private methods
   private func loadSpending(for date: Date) {
     if let spending = cachedSpending(for: date) {

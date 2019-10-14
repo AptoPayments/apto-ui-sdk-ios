@@ -149,8 +149,8 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return MonthlyStatementsListModule(serviceLocator: serviceLocator)
   }
 
-  func monthlyStatementsReportModule(statementReport: MonthlyStatementReport) -> MonthlyStatementsReportModuleProtocol {
-    return MonthlyStatementsReportModule(serviceLocator: serviceLocator, statementReport: statementReport)
+  func monthlyStatementsReportModule(month: Month) -> MonthlyStatementsReportModuleProtocol {
+    return MonthlyStatementsReportModule(serviceLocator: serviceLocator, month: month)
   }
 
   // MARK: - Physical card activation
