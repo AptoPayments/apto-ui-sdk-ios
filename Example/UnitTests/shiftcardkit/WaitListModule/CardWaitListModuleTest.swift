@@ -17,27 +17,48 @@ class CardWaitListModuleTest: XCTestCase {
   private let card = ModelDataProvider.provider.waitListedCard
   private let cardProduct = ModelDataProvider.provider.cardProduct
   private lazy var presenter = serviceLocator.presenterLocatorFake.cardWaitListPresenterSpy
+  private lazy var platform = serviceLocator.platformFake
 
   override func setUp() {
     super.setUp()
 
-    sut = CardWaitListModule(serviceLocator: serviceLocator, card: card, cardProduct: cardProduct)
+    sut = CardWaitListModule(serviceLocator: serviceLocator, card: card)
   }
 
-  func testInitializeCallbackSuccess() {
+  func testInitializeCallFetchCardProduct() {
+    // When
+    sut.initialize { _ in }
+
+    // Then
+    XCTAssertTrue(platform.fetchCardProductCalled)
+  }
+
+  func testCardProductLoadFailsCallbackFailure() {
     // Given
-    var returnedResult: Result<UIViewController, NSError>?
+    platform.nextFetchCardProductResult = .failure(BackendError(code: .other))
 
     // When
     sut.initialize { result in
-      returnedResult = result
+      // Then
+      XCTAssertTrue(result.isFailure)
     }
+  }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
+  func testCardProductLoadSucceedInitializeCallbackSuccess() {
+    // Given
+    platform.nextFetchCardProductResult = .success(cardProduct)
+
+    // When
+    sut.initialize { result in
+      // Then
+      XCTAssertTrue(result.isSuccess)
+    }
   }
 
   func testInitializeSetUpPresenter() {
+    // Given
+    platform.nextFetchCardProductResult = .success(cardProduct)
+
     // When
     sut.initialize { _ in }
 

@@ -209,9 +209,7 @@ extension ContentPresenterView: TTTAttributedLabelDelegate {
 
 extension ContentPresenterView: WKNavigationDelegate {
   func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-    guard (error as NSError).code != -999 else  {
-      return
-    }
+    guard (error as NSError).code != NSURLErrorCancelled else  { return }
     delegate?.hideLoadingSpinner()
     delegate?.show(error: error)
   }

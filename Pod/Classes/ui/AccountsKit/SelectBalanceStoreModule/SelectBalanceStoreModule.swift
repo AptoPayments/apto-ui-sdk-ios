@@ -33,6 +33,7 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
     externalOAuthModuleConfig = ExternalOAuthModuleConfig(title: title, explanation: explanation,
                                                           callToAction: callToAction, newUserAction: newUserAction,
                                                           allowedBalanceTypes: action.allowedBalanceTypes,
+                                                          assetUrl: action.assetUrl,
                                                           oauthErrorMessageKeys: nil)
     super.init(serviceLocator: serviceLocator)
   }

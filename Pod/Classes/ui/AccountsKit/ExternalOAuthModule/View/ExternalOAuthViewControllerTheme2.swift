@@ -19,6 +19,7 @@ class ExternalOAuthViewControllerTheme2: ShiftViewController {
   private var actionButton: UIButton!
   private var newUserButton: ContentPresenterView!
   // swiftlint:enable implicitly_unwrapped_optional
+  private let imageView = UIImageView()
   private var allowedBalanceTypes = [AllowedBalanceType]()
 
   init(uiConfiguration: UIConfig, eventHandler: ExternalOAuthPresenterProtocol) {
@@ -89,6 +90,15 @@ private extension ExternalOAuthViewControllerTheme2 {
     viewModel.error.ignoreNils().observeNext { [unowned self] error in
       self.show(error: error)
     }.dispose(in: disposeBag)
+
+    viewModel.assetUrl.observeNext {  [unowned self] url in
+      if let url = url {
+        self.imageView.setImageUrl(url)
+      }
+      else {
+        self.imageView.image = nil
+      }
+    }.dispose(in: disposeBag)
   }
 }
 
@@ -102,6 +112,7 @@ private extension ExternalOAuthViewControllerTheme2 {
     setUpExplanationLabel()
     setUpNewUserButton()
     setUpActionButton()
+    setUpImageView()
   }
 
   func setUpNavigationBar() {
@@ -145,6 +156,16 @@ private extension ExternalOAuthViewControllerTheme2 {
     actionButton.snp.makeConstraints { make in
       make.left.right.equalToSuperview().inset(24)
       make.bottom.equalTo(newUserButton.snp.top)
+    }
+  }
+
+  func setUpImageView() {
+    imageView.contentMode = .center
+    view.addSubview(imageView)
+    imageView.snp.makeConstraints { make in
+      make.left.right.equalToSuperview().inset(24)
+      make.top.equalTo(explanationLabel.snp.bottom).offset(24)
+      make.bottom.equalTo(actionButton.snp.top).offset(-24)
     }
   }
 }

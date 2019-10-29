@@ -10,13 +10,13 @@ import AptoSDK
 
 // Extensions do not allow properties, instead of getting crazy with associated objects we create private propeties.
 // This properties are made lazy by the compiler.
-private var _initialModule: UIModuleProtocol? = nil
-private var _uiDelegate: AptoPlatformUIDelegate? = nil
+private var _initialModule: UIModuleProtocol?
+private weak var _uiDelegate: AptoPlatformUIDelegate?
 private let lockingQueue = DispatchQueue(label: "com.aptotpayments.ios.sdk.locking")
 private var isPresentingNetworkNotReachable = false
 private var fontRegistered = false
 private let queue = DispatchQueue(label: "com.aptopayments.sdk.register.fonts")
-private var _googleMapsApiKey: String? = nil
+private var _googleMapsApiKey: String?
 
 extension AptoPlatformProtocol {
   var googleMapsApiKey: String? {
@@ -34,7 +34,7 @@ extension AptoPlatform {
       _initialModule = newValue
     }
   }
-  public var uiDelegate: AptoPlatformUIDelegate? {
+  public weak var uiDelegate: AptoPlatformUIDelegate? {
     get {
       return _uiDelegate
     }
@@ -111,7 +111,7 @@ extension AptoPlatform {
   // MARK: Network connection error
 
   @objc private func didRestoreNetworkConnectionUI() {
-    if uiDelegate?.shouldShowNoNetworkUI?() == false { return }
+    if uiDelegate?.shouldShowNoNetworkUI?() == false || !isPresentingNetworkNotReachable { return }
     dismissNetworkNotReachableError()
   }
 

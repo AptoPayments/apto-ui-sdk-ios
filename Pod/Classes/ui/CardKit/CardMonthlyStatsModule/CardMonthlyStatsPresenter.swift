@@ -15,10 +15,17 @@ class CardMonthlyStatsPresenter: CardMonthlyStatsPresenterProtocol {
   let viewModel = CardMonthlyStatsViewModel()
   var analyticsManager: AnalyticsServiceProtocol?
   private var spendingByMonth = [String: MonthlySpending]()
+  private var monthlyStatementsPeriod: MonthlyStatementsPeriod?
+  private var currentDate: Date? {
+    didSet {
+      updateMonthlyStatementsAvailable()
+    }
+  }
 
   func viewLoaded() {
     loadSpending(for: Date())
     analyticsManager?.track(event: Event.monthlySpending)
+    loadStatementsPeriod()
   }
 
   func closeTapped() {
@@ -39,7 +46,24 @@ class CardMonthlyStatsPresenter: CardMonthlyStatsPresenterProtocol {
   }
 
   // MARK: - Private methods
+  private func loadStatementsPeriod() {
+    interactor?.isStatementsFeatureEnabled(callback: { [weak self] isEnabled in
+      if isEnabled {
+        self?.interactor?.fetchStatementsPeriod(callback: { [weak self] result in
+          self?.monthlyStatementsPeriod = result.value
+          self?.updateMonthlyStatementsAvailable()
+        })
+      }
+    })
+  }
+
+  private func updateMonthlyStatementsAvailable() {
+    guard let period = self.monthlyStatementsPeriod, let currentDate = self.currentDate else { return }
+    viewModel.monthlyStatementsAvailable.send(period.includes(month: Month(from: currentDate)))
+  }
+
   private func loadSpending(for date: Date) {
+    self.currentDate = date
     if let spending = cachedSpending(for: date) {
       updateViewModelWith(spending: spending)
       return

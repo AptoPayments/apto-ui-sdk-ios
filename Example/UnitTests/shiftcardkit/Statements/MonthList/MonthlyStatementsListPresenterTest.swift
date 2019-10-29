@@ -55,6 +55,7 @@ class MonthlyStatementsListPresenterTest: XCTestCase {
 
     // Then
     let months = sut.viewModel.months
+    XCTAssertTrue(sut.viewModel.dataLoaded.value)
     XCTAssertEqual(2, months.numberOfSections)
     XCTAssertEqual(1, months.numberOfItems(inSection: 0))
     XCTAssertEqual(1, months.numberOfItems(inSection: 1))
@@ -87,6 +88,7 @@ class MonthlyStatementsListPresenterTest: XCTestCase {
 
     // Then
     XCTAssertEqual(error, sut.viewModel.error.value)
+    XCTAssertFalse(sut.viewModel.dataLoaded.value)
   }
 
   func testCloseTappedCallClose() {

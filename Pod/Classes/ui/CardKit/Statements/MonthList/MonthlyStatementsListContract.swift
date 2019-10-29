@@ -18,6 +18,7 @@ protocol MonthlyStatementsListInteractorProtocol {
 
 class MonthlyStatementsListViewModel {
   let months: MutableObservable2DArray<String, Month> = MutableObservable2DArray([])
+  let dataLoaded: Observable<Bool> = Observable(false)
   let error: Observable<NSError?> = Observable(nil)
 }
 

@@ -216,6 +216,7 @@ class UIPinEntryTextField: UIView {
 
   /// Reset text values
   func resetText() {
+    currentTextField = nil
     textFields.forEach { $0.text = "" }
   }
 

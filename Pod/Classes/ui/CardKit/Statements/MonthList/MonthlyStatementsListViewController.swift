@@ -15,6 +15,7 @@ class MonthlyStatementsListViewController: ShiftViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: MonthlyStatementsListPresenterProtocol
   private let tableView = UITableView(frame: .zero, style: .grouped)
+  private let emptyCaseView = UIView()
   static private let _dateFormatter = DateFormatter.customLocalizedDateFormatter(dateFormat: "MMMM")
   private lazy var dateFormatter = MonthlyStatementsListViewController._dateFormatter
 
@@ -98,6 +99,10 @@ private extension MonthlyStatementsListViewController {
     viewModel.months.observeNext { [weak self] _ in
       self?.tableView.reloadData()
     }.dispose(in: disposeBag)
+    combineLatest(viewModel.dataLoaded, viewModel.months).observeNext { [weak self] dataLoaded, months in
+      guard dataLoaded else { return }
+      self?.emptyCaseView.isHidden = !months.source.isEmpty
+    }.dispose(in: disposeBag)
   }
 }
 
@@ -108,6 +113,7 @@ private extension MonthlyStatementsListViewController {
     setUpTitle()
     setUpNavigationBar()
     setUpTableView()
+    setUpEmptyCase()
   }
 
   func setUpTitle() {
@@ -116,7 +122,8 @@ private extension MonthlyStatementsListViewController {
 
   func setUpNavigationBar() {
     navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationSecondaryColor,
-                                              tintColor: uiConfiguration.iconTertiaryColor)
+                                              tintColor: uiConfiguration.textTopBarSecondaryColor)
+    navigationItem.leftBarButtonItem?.tintColor = uiConfiguration.textTopBarSecondaryColor
     setNeedsStatusBarAppearanceUpdate()
   }
 
@@ -124,12 +131,32 @@ private extension MonthlyStatementsListViewController {
     tableView.backgroundColor = view.backgroundColor
     view.addSubview(tableView)
     tableView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.top.equalToSuperview().offset(16)
+      make.left.bottom.right.equalToSuperview()
     }
     tableView.separatorStyle = .none
     tableView.rowHeight = 74
     tableView.sectionFooterHeight = 0
     tableView.dataSource = self
     tableView.delegate = self
+  }
+
+  func setUpEmptyCase() {
+    emptyCaseView.isHidden = true
+    view.addSubview(emptyCaseView)
+    emptyCaseView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+    let message = "monthly_statements.list.empty_case.message".podLocalized()
+    let label = ComponentCatalog.sectionTitleLabelWith(text: message,
+                                                       textAlignment: .center,
+                                                       uiConfig: uiConfiguration)
+    label.textColor = uiConfiguration.textTertiaryColor
+    label.numberOfLines = 0
+    emptyCaseView.addSubview(label)
+    label.snp.makeConstraints { make in
+      make.left.right.equalToSuperview().inset(16)
+      make.centerY.equalToSuperview()
+    }
   }
 }

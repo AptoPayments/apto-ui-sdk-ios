@@ -28,4 +28,12 @@ class CardMonthlyStatsInteractor: CardMonthlyStatsInteractorProtocol {
       }
     }
   }
+
+  func isStatementsFeatureEnabled(callback: @escaping (Bool) -> Void) {
+    callback(platform.isFeatureEnabled(.showMonthlyStatementsOption))
+  }
+
+  func fetchStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
+    platform.fetchMonthlyStatementsPeriod(callback: callback)
+  }
 }

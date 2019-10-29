@@ -36,7 +36,7 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
     let newUserAction = "external_auth.login.new_user.title".podLocalized()
     let oauthModuleConfig = ExternalOAuthModuleConfig(title: title, explanation: explanation,
                                                       callToAction: callToAction, newUserAction: newUserAction,
-                                                      allowedBalanceTypes: allowedBalanceTypes,
+                                                      allowedBalanceTypes: allowedBalanceTypes, assetUrl: nil,
                                                       oauthErrorMessageKeys: oauthErrorMessageKeys)
     let externalOAuthModule = ExternalOAuthModule(serviceLocator: serviceLocator,
                                                   config: oauthModuleConfig,

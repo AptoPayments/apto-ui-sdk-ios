@@ -8,6 +8,7 @@
 import XCTest
 @testable import AptoSDK
 @testable import AptoUISDK
+import Bond
 
 class CardMonthlyStatsPresenterTest: XCTestCase {
   var sut: CardMonthlyStatsPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
@@ -229,5 +230,85 @@ class CardMonthlyStatsPresenterTest: XCTestCase {
     // Then
     XCTAssertTrue(router.showStatementReportCalled)
     XCTAssertEqual(Month(from: date), router.lastShowStatementReportMonth)
+  }
+
+  func testViewLoadedCheckIfStatementFeatureIsEnabled() {
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(interactor.isStatementsFeatureEnabledCalled)
+  }
+
+  func testStatementFeatureDisabledDoNotFetchPeriod() {
+    // Given
+    interactor.nextIsStatementsFeatureEnabledResult = false
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertFalse(interactor.fetchStatementsPeriodCalled)
+  }
+
+  func testStatementFeatureEnabledFetchStatementsPeriod() {
+    // Given
+    givenStatementsFeatureEnabled()
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(interactor.fetchStatementsPeriodCalled)
+  }
+
+  func testFetchStatementsPeriodSucceedCurrentMonthInPeriodMonthlyStatementAvailable() {
+    // Given
+    givenStatementPeriodSucceed()
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(sut.viewModel.monthlyStatementsAvailable.value)
+  }
+
+  func testStatementsPeriodLoadedSelectedDateNotInPeriodMonthlyStatementNotAvailable() {
+    // Given
+    givenStatementPeriodSucceed()
+    sut.viewLoaded()
+
+    // When
+    sut.dateSelected(Date.distantFuture)
+
+    // Then
+    XCTAssertFalse(sut.viewModel.monthlyStatementsAvailable.value)
+  }
+
+  func testStatementsPeriodLoadedSelectedDateInPeriodMonthlyStatementAvailable() {
+    // Given
+    givenStatementPeriodSucceed()
+    sut.viewLoaded()
+    sut.viewModel.monthlyStatementsAvailable.send(false)
+
+    // When
+    sut.dateSelected(Date())
+
+    // Then
+    XCTAssertTrue(sut.viewModel.monthlyStatementsAvailable.value)
+  }
+
+  // MARK: - Test helpers
+  private func givenStatementsFeatureEnabled() {
+    interactor.nextIsStatementsFeatureEnabledResult = true
+  }
+
+  private func givenStatementPeriodSucceed() {
+    givenStatementsFeatureEnabled()
+    // swiftlint:disable force_unwrapping
+    let statementsPeriod = MonthlyStatementsPeriod(start: Month(from: Date().add(-2, units: .month)!),
+                                                   end: Month(from: Date().add(2, units: .month)!))
+    // swiftlint:enable force_unwrapping
+    interactor.nextFetchStatementsPeriodResult = .success(statementsPeriod)
   }
 }

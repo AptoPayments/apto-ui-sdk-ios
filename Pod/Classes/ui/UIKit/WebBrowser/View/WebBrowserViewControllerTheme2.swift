@@ -8,9 +8,10 @@
 import UIKit
 import AptoSDK
 import SnapKit
+import WebKit
 
 class WebBrowserViewControllerTheme2: WebBrowserViewControllerProtocol {
-  private let webView = UIWebView()
+  private let webView = WKWebView()
   private unowned let presenter: WebBrowserEventHandlerProtocol
   private let alternativeTitle: String?
 
@@ -36,7 +37,7 @@ class WebBrowserViewControllerTheme2: WebBrowserViewControllerProtocol {
     if let headers = headers {
       request.allHTTPHeaderFields = headers
     }
-    webView.loadRequest(request as URLRequest)
+    webView.load(request as URLRequest)
   }
 
   override func closeTapped() {
@@ -44,33 +45,31 @@ class WebBrowserViewControllerTheme2: WebBrowserViewControllerProtocol {
   }
 }
 
-extension WebBrowserViewControllerTheme2: UIWebViewDelegate {
-  func webViewDidFinishLoad(_ aWebView: UIWebView) {
+extension WebBrowserViewControllerTheme2: WKNavigationDelegate {
+  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     self.hideLoadingSpinner()
-    guard let title = aWebView.stringByEvaluatingJavaScript(from: "document.title"), !title.isEmpty else {
+    guard let title = webView.title, !title.isEmpty else {
       self.title = alternativeTitle
       return
     }
     self.title = title
   }
 
-  func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-    guard (error as NSError).code != -999 else  {
-      return
-    }
-    self.hideLoadingSpinner()
-    self.show(error: error)
+  func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    guard (error as NSError).code != NSURLErrorCancelled else  { return }
+    hideLoadingSpinner()
+    show(error: error)
   }
 
-  func webView(_ webView: UIWebView,
-               shouldStartLoadWith request: URLRequest,
-               navigationType: UIWebView.NavigationType) -> Bool {
-    if let urlString = request.url?.absoluteString, urlString.hasPrefix("shift-sdk://oauth-finish") {
-      defer { closeTapped() }
-      return false
+  func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+               decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    if let urlString = navigationAction.request.url?.absoluteString, urlString.hasPrefix("shift-sdk://oauth-finish") {
+      decisionHandler(.cancel)
+      closeTapped()
     }
-
-    return true
+    else {
+      decisionHandler(.allow)
+    }
   }
 }
 
@@ -91,6 +90,6 @@ private extension WebBrowserViewControllerTheme2 {
     webView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
-    webView.delegate = self
+    webView.navigationDelegate = self
   }
 }

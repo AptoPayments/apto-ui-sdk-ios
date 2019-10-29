@@ -40,6 +40,7 @@ class ExternalOAuthPresenterTest: XCTestCase {
     XCTAssertNotNil(sut.viewModel.callToAction.value)
     XCTAssertNotNil(sut.viewModel.newUserAction.value)
     XCTAssertNotNil(sut.viewModel.allowedBalanceTypes.value)
+    XCTAssertNotNil(sut.viewModel.assetUrl)
     XCTAssertNil(sut.viewModel.error.value)
   }
 

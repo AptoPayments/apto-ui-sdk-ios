@@ -93,6 +93,7 @@ private extension MonthlyStatementsReportViewController {
   func setUpNavigationBar() {
     navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationSecondaryColor,
                                               tintColor: uiConfiguration.textTopBarSecondaryColor)
+    navigationItem.leftBarButtonItem?.tintColor = uiConfiguration.textTopBarSecondaryColor
   }
 
   func setUpShareButton() {

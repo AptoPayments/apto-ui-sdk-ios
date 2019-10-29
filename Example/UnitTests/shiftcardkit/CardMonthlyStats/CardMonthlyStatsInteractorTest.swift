@@ -87,4 +87,68 @@ class CardMonthlyStatsInteractorTest: XCTestCase {
     // Then
     XCTAssertEqual(date, returnedResult?.value?.date)
   }
+
+  func testIsStatementFeatureEnabledCallPlatform() {
+    // When
+    sut.isStatementsFeatureEnabled { _ in }
+
+    // Then
+    XCTAssertTrue(platform.isFeatureEnabledCalled)
+    XCTAssertEqual(FeatureKey.showMonthlyStatementsOption.rawValue, platform.lastIsFeatureEnabledKey?.rawValue)
+  }
+
+  func testStatementsFeatureEnabledCallbackTrue() {
+    // Given
+    platform.nextIsFeatureEnabledResult = true
+
+    // When
+    sut.isStatementsFeatureEnabled { isEnabled in
+      // Then
+      XCTAssertTrue(isEnabled)
+    }
+  }
+
+  func testStatementsFeatureDisabledCallbackFalse() {
+    // Given
+    platform.nextIsFeatureEnabledResult = false
+
+    // When
+    sut.isStatementsFeatureEnabled { isEnabled in
+      // Then
+      XCTAssertFalse(isEnabled)
+    }
+  }
+
+  func testFetchStatementPeriodCallPlatform() {
+    // When
+    sut.fetchStatementsPeriod { _ in }
+
+    // Then
+    XCTAssertTrue(platform.fetchMonthlyStatementsPeriodCalled)
+  }
+
+  func testFetchStatementSucceedCallbackSuccess() {
+    // Given
+    platform.nextFetchMonthlyStatementsPeriodResult = .success(dataProvider.monthlyStatementsPeriod)
+
+    // When
+    sut.fetchStatementsPeriod { [unowned self] result in
+      // Then
+      XCTAssertTrue(result.isSuccess)
+      XCTAssertEqual(self.dataProvider.monthlyStatementsPeriod, result.value)
+    }
+
+    func testFetchStatementFailsCallbackFailure() {
+      // Given
+      let error = BackendError(code: .other)
+      platform.nextFetchMonthlyStatementsPeriodResult = .failure(error)
+
+      // When
+      sut.fetchStatementsPeriod { result in
+        // Then
+        XCTAssertTrue(result.isFailure)
+        XCTAssertEqual(error, result.error)
+      }
+    }
+  }
 }

@@ -15,6 +15,8 @@ protocol CardMonthlyStatsModuleProtocol: UIModuleProtocol {
 
 protocol CardMonthlyStatsInteractorProtocol {
   func fetchMonthlySpending(date: Date, callback: @escaping Result<MonthlySpending, NSError>.Callback)
+  func isStatementsFeatureEnabled(callback: @escaping (_ isEnabled: Bool) -> Void)
+  func fetchStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback)
 }
 
 class CardMonthlyStatsViewModel {
@@ -22,7 +24,7 @@ class CardMonthlyStatsViewModel {
   let previousSpendingExists: Observable<Bool> = Observable(true)
   let nextSpendingExists: Observable<Bool> = Observable(true)
   let dataLoaded: Observable<Bool> = Observable(false)
-  let monthlyStatementsAvailable: Observable<Bool> = Observable(true)
+  let monthlyStatementsAvailable: Observable<Bool> = Observable(false)
 }
 
 protocol CardMonthlyStatsPresenterProtocol: class {

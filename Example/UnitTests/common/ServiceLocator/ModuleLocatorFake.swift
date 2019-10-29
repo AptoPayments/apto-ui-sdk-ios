@@ -113,7 +113,7 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   lazy var cardWaitListModuleSpy: CardWaitListModuleSpy = {
     return CardWaitListModuleSpy(serviceLocator: serviceLocator)
   }()
-  func cardWaitListModule(card: Card, cardProduct: CardProduct) -> CardWaitListModuleProtocol {
+  func cardWaitListModule(card: Card) -> CardWaitListModuleProtocol {
     return cardWaitListModuleSpy
   }
 

@@ -84,8 +84,8 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return WaitListModule(serviceLocator: serviceLocator, cardApplication: application)
   }
 
-  func cardWaitListModule(card: Card, cardProduct: CardProduct) -> CardWaitListModuleProtocol {
-    return CardWaitListModule(serviceLocator: serviceLocator, card: card, cardProduct: cardProduct)
+  func cardWaitListModule(card: Card) -> CardWaitListModuleProtocol {
+    return CardWaitListModule(serviceLocator: serviceLocator, card: card)
   }
 
   // MARK: - Errors

@@ -32,7 +32,7 @@ protocol ModuleLocatorProtocol {
   func verifyDocumentModule(workflowObject: WorkflowObject?) -> VerifyDocumentModule
   func issueCardModule(application: CardApplication) -> UIModuleProtocol
   func waitListModule(application: CardApplication) -> WaitListModuleProtocol
-  func cardWaitListModule(card: Card, cardProduct: CardProduct) -> CardWaitListModuleProtocol
+  func cardWaitListModule(card: Card) -> CardWaitListModuleProtocol
 
   // MARK: - Errors
   func serverMaintenanceErrorModule() -> ServerMaintenanceErrorModuleProtocol

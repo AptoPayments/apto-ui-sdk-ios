@@ -9,25 +9,35 @@ import AptoSDK
 
 class CardWaitListModule: UIModule, CardWaitListModuleProtocol {
   private let card: Card
-  private let cardProduct: CardProduct
   private var presenter: CardWaitListPresenterProtocol?
 
-  init(serviceLocator: ServiceLocatorProtocol, card: Card, cardProduct: CardProduct) {
+  init(serviceLocator: ServiceLocatorProtocol, card: Card) {
     self.card = card
-    self.cardProduct = cardProduct
     super.init(serviceLocator: serviceLocator)
   }
 
   override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
-    let viewController = buildViewController()
-    completion(.success(viewController))
+    guard let cardProductId = card.cardProductId else {
+      completion(.failure(ServiceError(code: .internalIncosistencyError)))
+      return
+    }
+    platform.fetchCardProduct(cardProductId: cardProductId, forceRefresh: false) { [weak self] result  in
+      switch result {
+      case .failure(let error):
+        completion(.failure(error))
+      case .success(let cardProduct):
+        guard let self = self else { return }
+        let viewController = self.buildViewController(cardProduct: cardProduct)
+        completion(.success(viewController))
+      }
+    }
   }
 
   func cardStatusChanged() {
     onFinish?(self)
   }
 
-  private func buildViewController() -> UIViewController {
+  private func buildViewController(cardProduct: CardProduct) -> UIViewController {
     let interactor = serviceLocator.interactorLocator.cardWaitListInteractor(card: card)
     let config = WaitListActionConfiguration(asset: cardProduct.waitListAsset,
                                              backgroundImage: cardProduct.waitListBackgroundImage,

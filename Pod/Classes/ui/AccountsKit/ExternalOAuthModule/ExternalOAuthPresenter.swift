@@ -30,6 +30,7 @@ class ExternalOAuthPresenter: ExternalOAuthPresenterProtocol {
     viewModel.callToAction.send(config.callToAction)
     viewModel.newUserAction.send(config.newUserAction)
     viewModel.allowedBalanceTypes.send(config.allowedBalanceTypes)
+    viewModel.assetUrl.send(config.assetUrl)
     analyticsManager?.track(event: Event.selectBalanceStoreLogin)
   }
 

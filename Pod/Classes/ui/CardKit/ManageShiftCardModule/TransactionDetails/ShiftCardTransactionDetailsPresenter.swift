@@ -60,7 +60,12 @@ class ShiftCardTransactionDetailsPresenter: ShiftCardTransactionDetailsPresenter
     viewModel.mccIcon.send(transaction.merchant?.mcc?.icon)
     viewModel.description.send(transaction.transactionDescription?.capitalized)
     viewModel.fiatAmount.send(transaction.localAmountRepresentation)
-    viewModel.nativeAmount.send(transaction.nativeBalance?.absText)
+    if transaction.localAmount?.currency.value != transaction.nativeBalance?.currency.value {
+      viewModel.nativeAmount.send(transaction.nativeBalance?.absText)
+    }
+    else {
+      viewModel.nativeAmount.send(nil)
+    }
     //address
     viewModel.transactionDate.send(self.format(date: transaction.createdAt))
     viewModel.transactionStatus.send(transaction.state.description())

@@ -9,6 +9,7 @@
 import UIKit
 import AptoSDK
 import TTTAttributedLabel
+import WebKit
 
 protocol ShowGenericMessageEventHandler {
   func viewLoaded()
@@ -22,7 +23,7 @@ class ShowGenericMessageViewController: ShiftViewController, ShowGenericMessageV
 
   var eventHandler: ShowGenericMessageEventHandler
   fileprivate var logoImageView: UIImageView!
-  fileprivate let webView = UIWebView()
+  fileprivate let webView = WKWebView()
   fileprivate var callToActionButton: UIButton!
 
   init(uiConfiguration: UIConfig, eventHandler: ShowGenericMessageEventHandler) {
@@ -74,9 +75,23 @@ class ShowGenericMessageViewController: ShiftViewController, ShowGenericMessageV
     if let text = content?.htmlString(font: self.uiConfiguration.fontProvider.timestampFont,
                                       color: self.uiConfiguration.noteTextColor,
                                       linkColor: self.uiConfiguration.tintColor) {
-      //let cssStyles = UIWebView.markdownStyle
-      //"body { font-family: '-apple-system','HelveticaNeue'; font-size:14; } h1 { font-size:18; } h2 { font-size:16; }"
-      let htmlDoc = "<html><head><style>\(UIWebView.markdownStyle)</style></head><body>\(text)</body></html>"
+      let markdownStyle =
+"""
+body { font-family: '-apple-system','HelveticaNeue'; font-size:14; }
+h1 { font-size:18; }
+h2 { font-size:16; }
+"""
+      let htmlDoc =
+"""
+<html>
+<head>
+  <style>\(markdownStyle)</style>
+</head>
+<body>
+  \(text)
+</body>
+</html>
+"""
       webView.loadHTMLString(htmlDoc, baseURL: nil)
       webView.isHidden = false
     }

@@ -85,8 +85,10 @@ class AptoPlatformFake: AptoPlatformProtocol {
 
   var nextIsFeatureEnabledResult = true
   private(set) var isFeatureEnabledCalled = false
+  private(set) var lastIsFeatureEnabledKey: FeatureKey?
   func isFeatureEnabled(_ featureKey: FeatureKey) -> Bool {
     isFeatureEnabledCalled = true
+    lastIsFeatureEnabledKey = featureKey
     return nextIsFeatureEnabledResult
   }
 

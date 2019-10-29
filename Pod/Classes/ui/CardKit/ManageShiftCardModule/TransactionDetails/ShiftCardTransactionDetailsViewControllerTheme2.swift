@@ -230,7 +230,9 @@ class ShiftCardTransactionDetailsViewControllerTheme2: ShiftViewController, Shif
     if uiConfiguration.transactionDetailsShowDetailsSectionTitle {
       addDetailsTitleRow(to: &rows)
     }
-    showDetails = !uiConfiguration.transactionDetailsShowDetailsSectionTitle
+    else {
+      showDetails = true
+    }
     if showDetails {
       addRowIfHasValue(rows: &rows,
                        title: "transaction_details.basic_info.transaction_status.title".podLocalized(),
@@ -260,6 +262,8 @@ class ShiftCardTransactionDetailsViewControllerTheme2: ShiftViewController, Shif
         default:
           title = ""
         }
+        let accountName = viewModel.fundingSourceName.value ?? ""
+        title = title.replace(["%@": accountName])
         var exchangeRate: String = ""
         if let adjustmentExchangeRate = adjustment.exchangeRate,
           let localCurrency = adjustment.localAmount?.currencySymbol,

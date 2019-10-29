@@ -29,7 +29,8 @@ class ModelDataProvider {
   lazy var amountRangeConfiguration = AmountRangeConfiguration(min: 0, max: 1000, def: 100, inc: 100)
 
   lazy var workflowAction: WorkflowAction = {
-    let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [balanceType])
+    let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [balanceType],
+                                                              assetUrl: nil)
     return WorkflowAction(actionId: nil,
                           name: nil,
                           order: nil,
@@ -452,6 +453,7 @@ class ModelDataProvider {
                                                                  callToAction: "callToAction",
                                                                  newUserAction: "newUserAction",
                                                                  allowedBalanceTypes: [balanceType],
+                                                                 assetUrl: url,
                                                                  oauthErrorMessageKeys: nil)
 
   lazy var custodian = Custodian(custodianType: "custodian", name: "Custodian")

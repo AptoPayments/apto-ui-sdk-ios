@@ -37,6 +37,16 @@ class CardMonthlyStatsInteractorSpy: CardMonthlyStatsInteractorProtocol {
     lastDateToFetchData = date
     fetchMonthlySpendingCallCounter += 1
   }
+
+  private(set) var isStatementsFeatureEnabledCalled = false
+  func isStatementsFeatureEnabled(callback: @escaping (_ isEnabled: Bool) -> Void) {
+    isStatementsFeatureEnabledCalled = true
+  }
+
+  private(set) var fetchStatementsPeriodCalled = false
+  func fetchStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
+    fetchStatementsPeriodCalled = true
+  }
 }
 
 class CardMonthlyStatsInteractorFake: CardMonthlyStatsInteractorSpy {
@@ -45,6 +55,22 @@ class CardMonthlyStatsInteractorFake: CardMonthlyStatsInteractorSpy {
     super.fetchMonthlySpending(date: date, callback: callback)
 
     if let result = nextNextMonthlySpendingResult {
+      callback(result)
+    }
+  }
+
+  var nextIsStatementsFeatureEnabledResult: Bool?
+  override func isStatementsFeatureEnabled(callback: @escaping (_ isEnabled: Bool) -> Void) {
+    super.isStatementsFeatureEnabled(callback: callback)
+    if let result = nextIsStatementsFeatureEnabledResult {
+      callback(result)
+    }
+  }
+
+  var nextFetchStatementsPeriodResult: Result<MonthlyStatementsPeriod, NSError>?
+  override func fetchStatementsPeriod(callback: @escaping Result<MonthlyStatementsPeriod, NSError>.Callback) {
+    super.fetchStatementsPeriod(callback: callback)
+    if let result = nextFetchStatementsPeriodResult {
       callback(result)
     }
   }

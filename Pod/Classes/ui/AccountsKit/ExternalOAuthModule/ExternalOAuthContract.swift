@@ -51,4 +51,5 @@ class ExternalOAuthViewModel {
   let newUserAction: Observable<String?> = Observable(nil)
   let error: Observable<Error?> = Observable(nil)
   let allowedBalanceTypes: Observable<[AllowedBalanceType]?> = Observable(nil)
+  let assetUrl: Observable<URL?> = Observable(nil)
 }

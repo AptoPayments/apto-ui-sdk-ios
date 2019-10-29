@@ -38,10 +38,13 @@ class MonthlyStatementListCell: UITableViewCell {
   func setUIConfig(_ uiConfiguration: UIConfig) {
     guard !self.styleInitialized else { return }
     uiConfig = uiConfiguration
-    contentView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
+    backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
+    contentView.backgroundColor = backgroundColor
+    backgroundView?.backgroundColor = backgroundColor
     label.font = uiConfiguration.fontProvider.mainItemRegularFont
     label.textColor = uiConfiguration.textPrimaryColor
     bottomDividerView.backgroundColor = uiConfiguration.uiTertiaryColor
+    accessoryView?.tintColor = uiConfiguration.uiTertiaryColor
     styleInitialized = true
   }
 
@@ -58,6 +61,7 @@ private extension MonthlyStatementListCell {
   func setUpUI() {
     setUpLabel()
     setUpBottomDivider()
+    setUpAccessoryView()
   }
 
   func setUpLabel() {
@@ -76,5 +80,9 @@ private extension MonthlyStatementListCell {
       make.right.equalToSuperview()
       make.bottom.equalToSuperview()
     }
+  }
+
+  func setUpAccessoryView() {
+    accessoryView = UIImageView(image: UIImage.imageFromPodBundle("row_arrow")?.asTemplate())
   }
 }

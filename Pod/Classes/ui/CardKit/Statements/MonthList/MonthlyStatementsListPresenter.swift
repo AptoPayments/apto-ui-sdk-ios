@@ -30,6 +30,7 @@ class MonthlyStatementsListPresenter: MonthlyStatementsListPresenterProtocol {
 
   // MARK: Private methods
   private func loadStatementsPeriod() {
+    viewModel.dataLoaded.send(false)
     router?.showLoadingView()
     interactor?.fetchStatementsPeriod { [weak self] result in
       self?.router?.hideLoadingView()
@@ -38,6 +39,7 @@ class MonthlyStatementsListPresenter: MonthlyStatementsListPresenterProtocol {
         self?.viewModel.error.send(error)
       case .success(let statementsPeriod):
         self?.updatePeriod(statementsPeriod)
+        self?.viewModel.dataLoaded.send(true)
       }
     }
   }

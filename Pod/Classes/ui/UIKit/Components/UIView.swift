@@ -64,16 +64,25 @@ extension UIView {
             isError: Bool,
             uiConfig: UIConfig,
             tapHandler: (() -> Void)?) {
-    UIApplication.topViewController()?.show(message: message,
-                                            title: title,
-                                            animated: animated,
-                                            isError: isError,
-                                            uiConfig: uiConfig,
-                                            tapHandler: tapHandler)
+    let topViewController = UIApplication.topViewController()
+    guard parentViewController === topViewController else { return }
+    topViewController?.show(message: message, title: title, animated: animated, isError: isError, uiConfig: uiConfig,
+                            tapHandler: tapHandler)
   }
 
   func hideMessage(animated: Bool = true) {
     UIApplication.topViewController()?.dismissToast(animated)
+  }
+
+  private var parentViewController: UIViewController? {
+    var parentResponder: UIResponder? = self
+    while parentResponder != nil {
+      parentResponder = parentResponder?.next
+      if let viewController = parentResponder as? UIViewController {
+        return viewController
+      }
+    }
+    return nil
   }
 }
 
