@@ -23,7 +23,7 @@ extension UIImage {
     image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return newImage!
+    return newImage! // swiftlint:disable:this force_unwrapping
   }
 
   static func imageFromPodBundle(_ imageName: String, uiTheme: UITheme? = nil) -> UIImage? {
@@ -48,7 +48,7 @@ extension UIImage {
     newSize.height = floor(newSize.height)
 
     UIGraphicsBeginImageContextWithOptions(newSize, true, self.scale)
-    let context = UIGraphicsGetCurrentContext()!
+    let context = UIGraphicsGetCurrentContext()! // swiftlint:disable:this force_unwrapping
 
     // Move origin to middle
     context.translateBy(x: newSize.width / 2, y: newSize.height / 2)
@@ -63,11 +63,11 @@ extension UIImage {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
 
-    return newImage!
+    return newImage! // swiftlint:disable:this force_unwrapping
   }
 
   func crop(cropRect: CGRect) -> UIImage {
-    let croppedCGImage: CGImage = (self.cgImage?.cropping(to: cropRect))!
+    let croppedCGImage: CGImage = (self.cgImage?.cropping(to: cropRect))! // swiftlint:disable:this force_unwrapping
     return UIImage(cgImage: croppedCGImage)
   }
 

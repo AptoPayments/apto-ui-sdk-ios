@@ -8,8 +8,7 @@
 
 import Foundation
 
-class ListSeparatorCell : UITableViewCell {
-  
+class ListSeparatorCell: UITableViewCell {
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     self.selectionStyle = .none
@@ -18,5 +17,4 @@ class ListSeparatorCell : UITableViewCell {
   required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
   }
-  
 }

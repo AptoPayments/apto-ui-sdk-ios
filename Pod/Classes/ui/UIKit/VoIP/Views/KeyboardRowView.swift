@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol KeyboardRowViewDelegate {
+protocol KeyboardRowViewDelegate: class {
   func leftButtonTapped(sender: KeyboardButton)
   func centerButtonTapped(sender: KeyboardButton)
   func rightButtonTapped(sender: KeyboardButton)
@@ -19,7 +19,7 @@ class KeyboardRowView: UIView {
   private let centerButton: KeyboardButton
   private let rightButton: KeyboardButton
 
-  var delegate: KeyboardRowViewDelegate?
+  weak var delegate: KeyboardRowViewDelegate?
 
   init(leftButton: KeyboardButton, centerButton: KeyboardButton, rightButton: KeyboardButton) {
     self.leftButton = leftButton

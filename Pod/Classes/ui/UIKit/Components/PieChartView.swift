@@ -55,7 +55,7 @@ protocol PieChartViewDataSource {
   func numberOfSlices() -> Int
 }
 
-@objc protocol PieChartViewDelegate {
+@objc protocol PieChartViewDelegate: class {
   /**
    Triggered when a slice is selected
    :param: index slice index in your data array
@@ -92,8 +92,8 @@ class PieChartView: UIControl {
   private var separatorsArray: [CAShapeLayer] = []
 
   //data source and delegate
-  var dataSource: PieChartViewDataSource!
-  var delegate: PieChartViewDelegate?
+  var dataSource: PieChartViewDataSource! // swiftlint:disable:this implicitly_unwrapped_optional
+  weak var delegate: PieChartViewDelegate?
 
   //saves the selected slice index
   private var selectedIndex: Int = -1
@@ -324,7 +324,7 @@ private extension PieChartView {
   func computeTotal() -> CGFloat {
     var total: CGFloat = 0
     for index in 0..<dataSource.numberOfSlices() {
-      total = total + dataSource.valueForSlice(at: index)
+      total += dataSource.valueForSlice(at: index)
     }
     return total
   }
@@ -372,11 +372,10 @@ private extension PieChartView {
   }
 
   func shouldIgnoreTap(at currentPoint: CGPoint) -> Bool {
-    let dx = currentPoint.x - pieChartCenter.x
-    let dy = currentPoint.y - pieChartCenter.y
-    let sqrRoot = sqrt(dx * dx + dy * dy)
-    return sqrRoot < smallRadius
-      || sqrRoot > (bigRadius + (bigRadius - smallRadius) / 2)
+    let deltaX = currentPoint.x - pieChartCenter.x
+    let deltaY = currentPoint.y - pieChartCenter.y
+    let sqrRoot = sqrt(deltaX * deltaX + deltaY * deltaY)
+    return sqrRoot < smallRadius || sqrRoot > (bigRadius + (bigRadius - smallRadius) / 2)
   }
 
   /**
@@ -429,7 +428,7 @@ private extension PieChartView {
 /**
  *  Stores both BezierPaths, one for the animation and the "real one"
  */
-fileprivate struct DualPath {
+private struct DualPath {
   let bezierPath: UIBezierPath
   let animationBezierPath: UIBezierPath
 }
@@ -437,7 +436,7 @@ fileprivate struct DualPath {
 /**
  *  Stores a slice
  */
-fileprivate struct Slice {
+private struct Slice {
   let paths: DualPath
   let shapeLayer: CAShapeLayer
   let angle: CGFloat

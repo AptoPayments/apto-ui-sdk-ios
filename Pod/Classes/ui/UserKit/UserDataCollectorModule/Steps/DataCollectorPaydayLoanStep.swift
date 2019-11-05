@@ -10,7 +10,7 @@ import Bond
 
 class PaydayLoanStep: DataCollectorBaseStep, DataCollectorStepProtocol {
   var title = "payday-loan-collector.title".podLocalized()
-  fileprivate let paydayLoanDataPoint:PaydayLoan
+  fileprivate let paydayLoanDataPoint: PaydayLoan
 
   init(paydayLoanDataPoint: PaydayLoan, uiConfig: UIConfig) {
     self.paydayLoanDataPoint = paydayLoanDataPoint

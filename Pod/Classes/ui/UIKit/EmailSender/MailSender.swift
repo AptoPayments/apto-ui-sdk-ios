@@ -9,7 +9,6 @@ import UIKit
 import MessageUI
 
 class MailSender: NSObject {
-
   var composer: UIViewController?
 
   func canSendEmail() -> Bool {
@@ -17,7 +16,6 @@ class MailSender: NSObject {
   }
 
   func sendMessageWith(subject: String, message: String, recipients: [String?]) {
-
     guard canSendEmail() else {
       UIApplication.topViewController()?.showMessage("Email client not configured", uiConfig: nil)
       return
@@ -33,16 +31,14 @@ class MailSender: NSObject {
     self.composer = composer
     UIApplication.topViewController()?.present(composer, animated: true, completion: nil)
   }
-
 }
 
 extension MailSender: MFMailComposeViewControllerDelegate {
-
-  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult,
+                             error: Error?) {
     if let composer = self.composer {
       composer.dismiss(animated: true, completion: nil)
       self.composer = nil
     }
   }
-
 }

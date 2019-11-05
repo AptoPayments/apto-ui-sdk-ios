@@ -127,8 +127,9 @@ private extension CardSettingsViewControllerTheme2 {
 
 // MARK: - View model subscriptions
 private extension CardSettingsViewControllerTheme2 {
-  func setupViewModelSubscriptions() {
+  func setupViewModelSubscriptions() { // swiftlint:disable:this function_body_length
     let viewModel = presenter.viewModel
+    // swiftlint:disable closure_parameter_position
     combineLatest(viewModel.showChangePin,
                   viewModel.showGetPin,
                   viewModel.legalDocuments,
@@ -136,6 +137,7 @@ private extension CardSettingsViewControllerTheme2 {
                   viewModel.showDetailedCardActivity,
                   viewModel.showMonthlyStatements).observeNext { [unowned self] showChangePin, showGetPin,
                     legalDocuments, showIvrSupport, showDetailedCardActivity, showMonthlyStatements in
+    // swiftlint:enable closure_parameter_position
       let settingsRows = [
         self.createSettingsTitle(),
         self.createChangePinRow(showButton: showChangePin),
@@ -328,7 +330,7 @@ private extension CardSettingsViewControllerTheme2 {
 
   func createTransactionsTitle(showDetailedCardActivity: Bool) -> FormRowSectionTitleViewTheme2? {
     guard showDetailedCardActivity else { return nil }
-    return FormRowSectionTitleViewTheme2(title: "card_settings.transactions.title".podLocalized(), 
+    return FormRowSectionTitleViewTheme2(title: "card_settings.transactions.title".podLocalized(),
                                          uiConfig: uiConfiguration)
   }
 

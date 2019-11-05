@@ -46,12 +46,12 @@ class FundingSourceSelectorPresenter: FundingSourceSelectorPresenterProtocol {
         guard let self = self else { return }
         self.viewModel.showLoadingSpinner.send(false)
         switch result {
-        case .failure(_):
+        case .failure:
           self.router.show(message: "manage_card.funding_source_selector.error.message".podLocalized(),
                            title: "manage_card.funding_source_selector.error.title".podLocalized(),
                            isError: true)
           self.router.close()
-        case .success(_):
+        case .success:
           self.router.show(message: "manage_card.funding_source_selector.success.message".podLocalized(),
                            title: "manage_card.funding_source_selector.success.title".podLocalized(),
                            isError: false)
@@ -77,7 +77,9 @@ class FundingSourceSelectorPresenter: FundingSourceSelectorPresenterProtocol {
         self.viewModel.showLoadingSpinner.send(false)
         self.router.show(error: error)
       case .success(let fundingSources):
-        let sortedFundingSources = fundingSources.sorted { $0.balance?.amount.value ?? 0 > $1.balance?.amount.value ?? 0 }
+        let sortedFundingSources = fundingSources.sorted {
+          $0.balance?.amount.value ?? 0 > $1.balance?.amount.value ?? 0
+        }
         self.interactor.activeCardFundingSource(forceRefresh: forceRefresh) { [weak self] result in
           guard let self = self else { return }
           self.viewModel.showLoadingSpinner.send(false)
@@ -86,7 +88,9 @@ class FundingSourceSelectorPresenter: FundingSourceSelectorPresenterProtocol {
             self.router.show(error: error)
           case .success(let fundingSource):
             self.viewModel.fundingSources.send(sortedFundingSources)
-            if let idx = sortedFundingSources.firstIndex(where: { $0.fundingSourceId == fundingSource?.fundingSourceId }) {
+            if let idx = sortedFundingSources.firstIndex(where: {
+              $0.fundingSourceId == fundingSource?.fundingSourceId
+            }) {
               self.viewModel.activeFundingSourceIdx.send(idx)
             }
             else {

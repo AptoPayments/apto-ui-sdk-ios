@@ -53,7 +53,7 @@ class ExternalOAuthPresenter: ExternalOAuthPresenterProtocol {
     router.hideLoadingView()
     router.show(url: url) { [weak self] in
       self?.router.showLoadingView()
-      self?.interactor.verifyOauthAttemptStatus() { [weak self] result in
+      self?.interactor.verifyOauthAttemptStatus { [weak self] result in
         self?.router.hideLoadingView()
         guard let self = self else { return }
         self.handleOauthAttemptVerificationResult(result: result)
@@ -67,21 +67,20 @@ class ExternalOAuthPresenter: ExternalOAuthPresenterProtocol {
 
   private func handleOauthAttemptVerificationResult(result: Result<OauthAttempt, NSError>) {
     guard let custodianType = self.custodianType else { return }
-    switch (result) {
+    switch result {
     case .failure(let error):
       self.show(error: error)
     case .success(let attempt):
-      switch (attempt.status) {
+      switch attempt.status {
       case .passed:
         guard let credentials = attempt.credentials else { return }
         let custodian = Custodian(custodianType: custodianType, name: custodianType)
         custodian.externalCredentials = .oauth(credentials)
         self.router.oauthSucceeded(custodian)
       case .failed:
-        let error = NSError(
-          domain: "com.aptopayments.error",
-          code: 1,
-          userInfo: [NSLocalizedDescriptionKey: attempt.errorMessage(errorMessageKeys: config.oauthErrorMessageKeys) ?? ""])
+        let errorMessage = attempt.errorMessage(errorMessageKeys: config.oauthErrorMessageKeys)
+        let userInfo: [String: Any] = [NSLocalizedDescriptionKey: errorMessage ?? ""]
+        let error = NSError(domain: "com.aptopayments.error", code: 1, userInfo: userInfo)
         self.show(error: error)
       case .pending:
         // Nothing to do here
@@ -106,9 +105,9 @@ extension OauthAttempt {
   func errorMessage(errorMessageKeys: [String]? = nil) -> String? {
     guard let error = self.error else { return nil }
     let errorKeys = (errorMessageKeys ?? []) + defaultErrorMessageKeys
-    var errorKey = errorKeys.first(where: { $0.endsWith("\(error).message") })
-    if (errorKey == nil) {
-      errorKey = errorKeys.first(where: { $0.endsWith("\(error).unknown.message") })
+    var errorKey = errorKeys.first { $0.endsWith("\(error).message") }
+    if errorKey == nil {
+      errorKey = errorKeys.first { $0.endsWith("\(error).unknown.message") }
     }
     return errorKey?.podLocalized().replace(["<<ERROR_MESSAGE>>": self.errorMessage ?? ""])
   }

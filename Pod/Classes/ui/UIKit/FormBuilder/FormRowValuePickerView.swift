@@ -11,10 +11,10 @@ import AptoSDK
 import Bond
 
 @objc open class FormValuePickerValue: NSObject {
-  let id: String // swiftlint:disable:this identifier_name
+  let id: String
   let text: String
 
-  public init(id: String, text: String) {  // swiftlint:disable:this identifier_name
+  public init(id: String, text: String) {
     self.id = id
     self.text = text
   }
@@ -123,7 +123,7 @@ extension FormRowValuePickerView: UIPickerViewDelegate {
     guard row <= self.values.count else {
       return
     }
-    var value: String? = nil
+    var value: String?
     if row == 0 {
       self.bndValue.send(nil)
       self.textField.text = nil

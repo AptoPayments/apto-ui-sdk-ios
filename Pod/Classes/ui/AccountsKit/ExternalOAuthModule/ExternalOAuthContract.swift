@@ -31,7 +31,7 @@ protocol ExternalOAuthPresenterProtocol: class {
 protocol ExternalOAuthRouterProtocol: class {
   func backInExternalOAuth(_ animated: Bool)
   func oauthSucceeded(_ custodian: Custodian)
-  func show(url: URL, completion: @escaping () -> ())
+  func show(url: URL, completion: @escaping () -> Void)
   func showLoadingView()
   func hideLoadingView()
 }

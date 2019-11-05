@@ -14,10 +14,17 @@ class UserPreferencesStorageTest: XCTestCase {
   // Collaborators
   private let userDefaultsStorage = InMemoryUserDefaultsStorage()
   private let showDetailedCardActivityKey = "apto.sdk.showDetailedCardActivity"
+  private let notificationHandler = NotificationHandlerFake()
 
   override func setUp() {
     super.setUp()
-    sut = UserPreferencesStorage(userDefaultsStorage: userDefaultsStorage)
+    sut = UserPreferencesStorage(userDefaultsStorage: userDefaultsStorage, notificationHandler: notificationHandler)
+  }
+
+  func testRegisterForNotifications() {
+    // Then
+    XCTAssertTrue(notificationHandler.addObserverCalled)
+    XCTAssertTrue(notificationHandler.lastAddObserverObserver === sut)
   }
 
   func testNoPreferenceSavedShowDetailedCardActivityIsFalse() {

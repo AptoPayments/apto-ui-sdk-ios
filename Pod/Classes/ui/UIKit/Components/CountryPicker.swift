@@ -29,7 +29,7 @@ class CountryPicker: UIView {
       fatalError("At least one country is required")
     }
     self.uiConfig = uiConfig
-    self.allowedCountries = allowedCountries.sorted(by: { $0.name < $1.name })
+    self.allowedCountries = allowedCountries.sorted { $0.name < $1.name }
     self.showFlag = showFlag
     self.showPhoneCode = showPhoneCode
     self.picker = UIPickerView()

@@ -16,8 +16,8 @@ class TopBarButtonItem: UIBarButtonItem {
   private let label = UILabel()
   private let text: String
   private let icon: UIImage?
-  private let tapHandler: () -> ()
-  private var iconView: UIImageView!
+  private let tapHandler: () -> Void
+  private var iconView: UIImageView! // swiftlint:disable:this implicitly_unwrapped_optional
 
   var labelBackgroundColor: UIColor {
     didSet {
@@ -37,7 +37,7 @@ class TopBarButtonItem: UIBarButtonItem {
     }
   }
 
-  init(uiConfig: UIConfig, text: String, icon: UIImage?, tapHandler: @escaping () -> ()) {
+  init(uiConfig: UIConfig, text: String, icon: UIImage?, tapHandler: @escaping () -> Void) {
     self.uiConfig = uiConfig
     self.text = text
     self.icon = icon?.asTemplate()

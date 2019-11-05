@@ -17,7 +17,7 @@ protocol ReturnButtonListenerProtocol {
 }
 
 protocol ValidationResultPresenterProtocol {
-  func presentNonPassedValidationResult(_ reason:String)
+  func presentNonPassedValidationResult(_ reason: String)
   func presentPassedValidationResult()
 }
 
@@ -40,13 +40,14 @@ open class FormRowView: UIControl, FormFocusPresenterProtocol, ValidationResultP
   var showSplitter: Bool {
     didSet {
       if self.showSplitter {
-        self.splitter = UIView()
-        self.addSubview(self.splitter!)
-        self.splitter!.backgroundColor = colorize( 0xefefef, alpha:1.0)
-        self.splitter!.snp.makeConstraints{ make in
-          make.left.right.equalTo(self.contentView);
-          make.bottom.equalTo(self);
-          make.height.equalTo(1);
+        let splitter = UIView()
+        self.splitter = splitter
+        self.addSubview(splitter)
+        splitter.backgroundColor = colorize(0xefefef, alpha: 1.0)
+        splitter.snp.makeConstraints { make in
+          make.left.right.equalTo(self.contentView)
+          make.bottom.equalTo(self)
+          make.height.equalTo(1)
         }
       }
       else {
@@ -64,7 +65,7 @@ open class FormRowView: UIControl, FormFocusPresenterProtocol, ValidationResultP
   }
   var focusedColor = UIColor(red: 0.0, green: 0.45, blue: 0.94, alpha: 1.0)
   var unfocusedColor = UIColor.black
-  var splitter: UIView? = nil
+  var splitter: UIView?
 
   init(showSplitter: Bool,
        padding: UIEdgeInsets = UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 16),
@@ -86,9 +87,9 @@ open class FormRowView: UIControl, FormFocusPresenterProtocol, ValidationResultP
       self.addSubview(splitter)
       splitter.backgroundColor = colorize(0xefefef, alpha: 1.0)
       splitter.snp.makeConstraints { make in
-        make.left.right.equalTo(self.contentView);
-        make.bottom.equalTo(self);
-        make.height.equalTo(1);
+        make.left.right.equalTo(self.contentView)
+        make.bottom.equalTo(self)
+        make.height.equalTo(1)
       }
       self.splitter = splitter
     }
@@ -101,7 +102,7 @@ open class FormRowView: UIControl, FormFocusPresenterProtocol, ValidationResultP
   override open func updateConstraints() {
     super.updateConstraints()
     self.contentView.snp.remakeConstraints { make in
-      make.edges.equalTo(self).inset(self.padding);
+      make.edges.equalTo(self).inset(self.padding)
     }
   }
 

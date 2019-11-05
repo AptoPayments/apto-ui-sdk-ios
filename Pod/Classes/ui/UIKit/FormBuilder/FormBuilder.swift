@@ -11,6 +11,7 @@ import TTTAttributedLabel
 import Bond
 import ReactiveKit
 
+// swiftlint:disable type_body_length
 class FormBuilder {
 
   static func sectionTitleRowWith(text: String,
@@ -139,6 +140,7 @@ class FormBuilder {
     return retVal
   }
 
+  // swiftlint:disable function_parameter_count
   static func addressInputRowWith(label: String,
                                   placeholder: String,
                                   value: String?,
@@ -196,6 +198,7 @@ class FormBuilder {
     retVal.showSplitter = false
     return retVal
   }
+  // swiftlint:enable function_parameter_count
 
   static func datePickerRowWith(label: String?,
                                 placeholder: String,
@@ -206,7 +209,7 @@ class FormBuilder {
                                 firstFormField: Bool = false,
                                 lastFormField: Bool = false,
                                 uiConfig: UIConfig) -> FormRowDatePickerView {
-    var uiLabel: UILabel? = nil
+    var uiLabel: UILabel?
     if let label = label {
       uiLabel = ComponentCatalog.formLabelWith(text: label, uiConfig: uiConfig)
     }
@@ -231,7 +234,7 @@ class FormBuilder {
       retVal.backgroundColor = .white
       retVal.layer.cornerRadius = uiConfig.fieldCornerRadius
       retVal.layer.shadowOffset = CGSize(width: 0, height: 2)
-      retVal.layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:0.12).cgColor
+      retVal.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
       retVal.layer.shadowOpacity = 1
       retVal.layer.shadowRadius = 4
       retVal.textField.textAlignment = .center
@@ -381,7 +384,7 @@ class FormBuilder {
                           uiConfig: UIConfig,
                           clickHandler: @escaping (() -> Void)) -> FormRowLinkView {
     let label = ComponentCatalog.textLinkLabelWith(text: title, uiConfig: uiConfig)
-    var uiImageView: UIImageView? = nil
+    var uiImageView: UIImageView?
     if let leftIcon = leftIcon {
       uiImageView = UIImageView(image: leftIcon)
       uiImageView?.tintColor = uiConfig.uiPrimaryColor
@@ -407,7 +410,7 @@ class FormBuilder {
                                    clickHandler: @escaping (() -> Void)) -> FormRowLinkView {
     let label = ComponentCatalog.mainItemLightLabelWith(text: title, uiConfig: uiConfig)
     label.textColor = uiConfig.textPrimaryColorDisabled
-    var uiImageView: UIImageView? = nil
+    var uiImageView: UIImageView?
     if let leftIcon = leftIcon {
       uiImageView = UIImageView(image: leftIcon)
       uiImageView?.tintColor = uiConfig.uiPrimaryColorDisabled
@@ -687,3 +690,4 @@ class FormBuilder {
     return retVal
   }
 }
+// swiftlint:enable type_body_length

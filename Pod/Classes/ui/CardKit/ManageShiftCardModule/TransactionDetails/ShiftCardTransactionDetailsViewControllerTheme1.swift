@@ -15,7 +15,6 @@ import SnapKit
 import PullToRefreshKit
 
 class ShiftCardTransactionDetailsViewControllerTheme1: ShiftViewController, ShiftCardTransactionDetailsViewProtocol {
-
   private unowned let presenter: ShiftCardTransactionDetailsPresenterProtocol
   private let containerView = UIScrollView()
   private let topView = UIView()
@@ -32,20 +31,20 @@ class ShiftCardTransactionDetailsViewControllerTheme1: ShiftViewController, Shif
   private var iPhoneXSafeAreaHeight: CGFloat = 24.0
   private var basicInfoBarShrinkDelta: CGFloat = 28.0
   private var mapSpan: Double = 0.01
-  private lazy var topViewHeight: CGFloat = { [unowned self] in
+  private lazy var topViewHeight: CGFloat = {
     return (UIDevice.deviceType() == .iPhone5) ? 284.0 : 338.0
   }()
-  private lazy var systemElementsHeight: CGFloat = { [unowned self] in
+  private lazy var systemElementsHeight: CGFloat = {
     var retVal = basicInfoBarHeight + statusBarHeight + navigationBarHeight
     if UIDevice.deviceType() == .iPhoneX {
       retVal += iPhoneXSafeAreaHeight
     }
     return retVal
   }()
-  private lazy var minFormViewHeight: CGFloat = { [unowned self] in
+  private lazy var minFormViewHeight: CGFloat = {
     return view.frame.height - systemElementsHeight + basicInfoBarShrinkDelta
   }()
-  private lazy var contentViewMaxOffset: CGFloat = { [unowned self] in
+  private lazy var contentViewMaxOffset: CGFloat = {
     return topViewHeight - systemElementsHeight + basicInfoBarShrinkDelta
   }()
 

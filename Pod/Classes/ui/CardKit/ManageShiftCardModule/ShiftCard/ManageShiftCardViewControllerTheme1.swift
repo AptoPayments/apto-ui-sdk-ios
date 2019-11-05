@@ -30,6 +30,7 @@ class ManageShiftCardViewControllerTheme1: ManageShiftCardViewControllerProtocol
   private let emptyCaseView = UIView()
   private var shouldShowActivation: Bool? = false
   private let disposeBag = DisposeBag()
+  // swiftlint:disable:next weak_delegate
   private let cardActivationTextFieldDelegate = UITextFieldLengthLimiterDelegate(6)
   private lazy var statsButton: UIBarButtonItem = {
     return buildTopBarButton(iconName: "chart-section-icon", target: self, action: #selector(showStatsTapped))
@@ -89,7 +90,7 @@ extension ManageShiftCardViewControllerTheme1: ManageShiftCardMainViewDelegate, 
     eventHandler.activateCardTapped()
   }
 
-  func needToUpdateUI(action: () -> (), completion: @escaping () -> ()) {
+  func needToUpdateUI(action: () -> Void, completion: @escaping () -> Void) {
     CATransaction.begin()
     CATransaction.setCompletionBlock {
       completion()
@@ -195,8 +196,8 @@ private extension ManageShiftCardViewControllerTheme1 {
 
   func setUpNavigationBarActions(isStatsFeatureEnabled: Bool = false, isAccountSettingsEnabled: Bool = true) {
     var items: [UIBarButtonItem] = navigationItem.rightBarButtonItems ?? []
-    showOrHide(accountSettingsButton, index:0, items: &items, isVisible: isAccountSettingsEnabled)
-    showOrHide(statsButton, index:1, items: &items, isVisible: isStatsFeatureEnabled)
+    showOrHide(accountSettingsButton, index: 0, items: &items, isVisible: isAccountSettingsEnabled)
+    showOrHide(statsButton, index: 1, items: &items, isVisible: isStatsFeatureEnabled)
     navigationItem.rightBarButtonItems = items
   }
 
@@ -244,9 +245,8 @@ private extension ManageShiftCardViewControllerTheme1 {
     emptyCaseView.snp.makeConstraints { make in
       make.left.right.bottom.equalToSuperview()
     }
-    let label = ComponentCatalog.sectionTitleLabelWith(text: "manage_card.transaction_list.empty_case.title".podLocalized(),
-                                                       textAlignment: .center,
-                                                       uiConfig: uiConfiguration)
+    let message = "manage_card.transaction_list.empty_case.title".podLocalized()
+    let label = ComponentCatalog.sectionTitleLabelWith(text: message, textAlignment: .center, uiConfig: uiConfiguration)
     label.textColor = uiConfiguration.textTertiaryColor
     label.numberOfLines = 0
     emptyCaseView.addSubview(label)
@@ -305,7 +305,7 @@ private extension ManageShiftCardViewControllerTheme1 {
 
 // MARK: - View model subscriptions
 private extension ManageShiftCardViewControllerTheme1 {
-  func setupViewModelSubscriptions() {
+  func setupViewModelSubscriptions() { // swiftlint:disable:this function_body_length
     let viewModel = eventHandler.viewModel
 
     viewModel.cardHolder.observeNext { [unowned self] cardHolder in
@@ -385,8 +385,8 @@ private extension ManageShiftCardViewControllerTheme1 {
       self.mainView.set(cardStyle: cardStyle)
     }.dispose(in: disposeBag)
 
-    combineLatest(viewModel.isStatsFeatureEnabled,
-                  viewModel.isAccountSettingsEnabled).observeNext { [unowned self] isStatsFeatureEnabled, isAccountSettingsEnabled in
+    combineLatest(viewModel.isStatsFeatureEnabled, viewModel.isAccountSettingsEnabled)
+        .observeNext { [unowned self] isStatsFeatureEnabled, isAccountSettingsEnabled in
       self.setUpNavigationBarActions(isStatsFeatureEnabled: isStatsFeatureEnabled,
                                      isAccountSettingsEnabled: isAccountSettingsEnabled)
     }.dispose(in: disposeBag)

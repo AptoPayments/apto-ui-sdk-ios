@@ -21,7 +21,7 @@ class ManageShiftCardViewControllerTheme2: ShiftViewController, ManageShiftCardV
   private var mainView: ManageShiftCardMainViewProtocol!
   private var mainViewCellController: ViewWrapperCellController!
   // swiftlint:enable implicitly_unwrapped_optional
-  private lazy var activationButton : UIBarButtonItem = { [unowned self] in
+  private lazy var activationButton: UIBarButtonItem = {
     return buildActivatePhysicalCardButtonItem()
   }()
   private lazy var statsButton: UIBarButtonItem = {
@@ -38,6 +38,7 @@ class ManageShiftCardViewControllerTheme2: ShiftViewController, ManageShiftCardV
   private let emptyCaseView = UIView()
   private var shouldShowActivation: Bool? = false
   private let disposeBag = DisposeBag()
+  // swiftlint:disable:next weak_delegate
   private let cardActivationTextFieldDelegate = UITextFieldLengthLimiterDelegate(6)
   private let navigationBarVisibilityThreshold: CGFloat = 4
   private let refreshTextAlpha: CGFloat = 0.7
@@ -257,8 +258,8 @@ private extension ManageShiftCardViewControllerTheme2 {
 
   func setUpNavigationBarActions(isStatsFeatureEnabled: Bool = false, isAccountSettingsEnabled: Bool = true) {
     var items: [UIBarButtonItem] = navigationItem.rightBarButtonItems ?? []
-    showOrHide(accountSettingsButton, index:0, items: &items, isVisible: isAccountSettingsEnabled)
-    showOrHide(statsButton, index:1, items: &items, isVisible: isStatsFeatureEnabled)
+    showOrHide(accountSettingsButton, index: 0, items: &items, isVisible: isAccountSettingsEnabled)
+    showOrHide(statsButton, index: 1, items: &items, isVisible: isStatsFeatureEnabled)
     navigationItem.rightBarButtonItems = items
   }
 
@@ -333,9 +334,8 @@ private extension ManageShiftCardViewControllerTheme2 {
   func setUpEmptyCaseView() {
     emptyCaseView.subviews.forEach { $0.removeFromSuperview() }
     emptyCaseView.backgroundColor = .clear
-    let label = ComponentCatalog.sectionTitleLabelWith(text: "manage_card.transaction_list.empty_case.title".podLocalized(),
-                                                       textAlignment: .center,
-                                                       uiConfig: uiConfiguration)
+    let message = "manage_card.transaction_list.empty_case.title".podLocalized()
+    let label = ComponentCatalog.sectionTitleLabelWith(text: message, textAlignment: .center, uiConfig: uiConfiguration)
     label.textColor = uiConfiguration.textTertiaryColor
     label.numberOfLines = 0
     emptyCaseView.addSubview(label)
@@ -374,7 +374,7 @@ private extension ManageShiftCardViewControllerTheme2 {
 
 // MARK: - View model subscriptions
 private extension ManageShiftCardViewControllerTheme2 {
-  func setupViewModelSubscriptions() {
+  func setupViewModelSubscriptions() { // swiftlint:disable:this cyclomatic_complexity function_body_length
     let viewModel = presenter.viewModel
 
     combineLatest(viewModel.cardHolder, viewModel.cardLoaded).observeNext { [unowned self] cardHolder, cardLoaded in
@@ -471,8 +471,8 @@ private extension ManageShiftCardViewControllerTheme2 {
       self.balanceView.set(imageURL: cardStyle?.balanceSelectorImage)
     }.dispose(in: disposeBag)
 
-    combineLatest(viewModel.isStatsFeatureEnabled,
-                  viewModel.isAccountSettingsEnabled).observeNext { [unowned self] isStatsFeatureEnabled, isAccountSettingsEnabled in
+    combineLatest(viewModel.isStatsFeatureEnabled, viewModel.isAccountSettingsEnabled)
+        .observeNext { [unowned self] isStatsFeatureEnabled, isAccountSettingsEnabled in
       self.setUpNavigationBarActions(isStatsFeatureEnabled: isStatsFeatureEnabled,
                                      isAccountSettingsEnabled: isAccountSettingsEnabled)
     }.dispose(in: disposeBag)

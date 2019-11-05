@@ -8,13 +8,14 @@
 
 import UIKit
 import SnapKit
+import AptoSDK
 
-private protocol _UITextFieldDelegate {
+private protocol _UITextFieldDelegate: class {
   func deletePressed(_ textField: _UITextField)
 }
 
 private class _UITextField: UITextField {
-  var _delegate: _UITextFieldDelegate?
+  weak var _delegate: _UITextFieldDelegate? // swiftlint:disable:this identifier_name
 
   override func deleteBackward() {
     _delegate?.deletePressed(self)
@@ -38,6 +39,9 @@ class UIPinEntryTextField: UIView {
   private let middleSeparatorView = UIView()
   private var separatorView: UIView {
     return middleSeparatorView.subviews[0]
+  }
+  private var notificationHandler: NotificationHandler {
+    return ServiceLocator.shared.notificationHandler
   }
 
   weak var delegate: UIPinEntryTextFieldDelegate?
@@ -113,6 +117,10 @@ class UIPinEntryTextField: UIView {
     self.setUpStackView()
   }
 
+  deinit {
+    notificationHandler.removeObserver(self)
+  }
+
   /// Generate textfield
   private func createTextFields() {
     // Create textfield based on size
@@ -136,10 +144,8 @@ class UIPinEntryTextField: UIView {
       textField.layer.borderWidth = self.pinBorderWidth
       textField.layer.borderColor = self.pinBorderColor.cgColor
 
-      NotificationCenter.default.addObserver(self,
-                                             selector: #selector(fieldChanged),
-                                             name: UITextField.textDidChangeNotification,
-                                             object: textField)
+      notificationHandler.addObserver(self, selector: #selector(fieldChanged),
+                                      name: UITextField.textDidChangeNotification, object: textField)
 
       textFields.append(textField)
     }
@@ -211,7 +217,7 @@ class UIPinEntryTextField: UIView {
   ///
   /// - Returns: return String Text from all pin textfields
   func getText() -> String {
-    return textFields.compactMap { $0.text }.reduce("", { $0 + $1 })
+    return textFields.compactMap { $0.text }.reduce("", { $0 + $1 }) // swiftlint:disable:this trailing_closure
   }
 
   /// Reset text values

@@ -10,8 +10,7 @@ import Foundation
 import AptoSDK
 
 class ShowGenericMessageModule: UIModule {
-
-  let showGenericMessageAction: WorkflowAction
+  private let showGenericMessageAction: WorkflowAction
   open var onWelcomeScreenContinue: ((_ welcomeScreenModule: ShowGenericMessageModule) -> Void)?
 
   init (serviceLocator: ServiceLocatorProtocol, showGenericMessageAction: WorkflowAction) {
@@ -24,35 +23,28 @@ class ShowGenericMessageModule: UIModule {
     addChild(viewController: viewController, completion: completion)
   }
 
-  func buildWelcomeScreenViewController(_ uiConfig:UIConfig) -> UIViewController {
+  func buildWelcomeScreenViewController(_ uiConfig: UIConfig) -> UIViewController {
     let presenter = ShowGenericMessagePresenter()
-    let interactor = ShowGenericMessageInteractor(showGenericMessageAction: showGenericMessageAction, dataReceiver: presenter)
+    let interactor = ShowGenericMessageInteractor(showGenericMessageAction: showGenericMessageAction,
+                                                  dataReceiver: presenter)
     let viewController = ShowGenericMessageViewController(uiConfiguration: uiConfig, eventHandler: presenter)
     presenter.view = viewController
     presenter.interactor = interactor
     presenter.router = self
     return viewController
   }
-
 }
 
 extension ShowGenericMessageModule: ShowGenericMessageRouterProtocol {
-
   func callToActionTapped() {
-
     // Standard continue callback
     next()
-
     // Specific allback for the welcomescreenmodule
     onWelcomeScreenContinue?(self)
 
   }
 
   func secondaryCallToActionTapped() {
-
     // What do do here?
-
   }
-
 }
-

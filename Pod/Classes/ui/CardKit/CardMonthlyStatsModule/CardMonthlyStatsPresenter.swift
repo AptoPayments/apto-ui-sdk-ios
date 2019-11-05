@@ -47,14 +47,14 @@ class CardMonthlyStatsPresenter: CardMonthlyStatsPresenterProtocol {
 
   // MARK: - Private methods
   private func loadStatementsPeriod() {
-    interactor?.isStatementsFeatureEnabled(callback: { [weak self] isEnabled in
+    interactor?.isStatementsFeatureEnabled { [weak self] isEnabled in
       if isEnabled {
-        self?.interactor?.fetchStatementsPeriod(callback: { [weak self] result in
+        self?.interactor?.fetchStatementsPeriod { [weak self] result in
           self?.monthlyStatementsPeriod = result.value
           self?.updateMonthlyStatementsAvailable()
-        })
+        }
       }
-    })
+    }
   }
 
   private func updateMonthlyStatementsAvailable() {
@@ -83,7 +83,7 @@ class CardMonthlyStatsPresenter: CardMonthlyStatsPresenterProtocol {
 
   private func updateViewModelWith(spending: MonthlySpending) {
     viewModel.dataLoaded.send(true)
-    viewModel.spentList.send(spending.spending.sorted(by: { $0.categoryId.name < $1.categoryId.name }))
+    viewModel.spentList.send(spending.spending.sorted { $0.categoryId.name < $1.categoryId.name })
     viewModel.previousSpendingExists.send(spending.previousSpendingExists)
     viewModel.nextSpendingExists.send(spending.nextSpendingExists)
   }

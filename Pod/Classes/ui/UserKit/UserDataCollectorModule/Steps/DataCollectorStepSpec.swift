@@ -38,7 +38,6 @@ open class DataCollectorBaseStep {
     return []
   }
 
-  // swiftlint:disable identifier_name
   func setupStepValidation() {
     // The default implementation combines all the form rows valid flag added to this step
     // The bond library doesn't support a more generic approach to combine the values, so an
@@ -51,9 +50,8 @@ open class DataCollectorBaseStep {
         return $0.valid.toSignal()
       }
       Signal(combiningLatest: signals) { (arrayOfBool: [Bool]) in
-        arrayOfBool.reduce(true, { $0 && $1 })
+        arrayOfBool.allSatisfy { $0 == true }
       }.bind(to: self.valid).dispose(in: disposeBag)
     }
   }
-  // swiftlint:enable identifier_name
 }

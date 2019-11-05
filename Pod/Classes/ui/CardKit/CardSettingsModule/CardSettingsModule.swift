@@ -131,11 +131,11 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
         self.contentPresenterModule = nil
       }
     }
-    contentPresenterModule =  module
+    contentPresenterModule = module
     present(module: module, leftButtonMode: .close) { _ in }
   }
 
-  func showMonthlyStatements(){
+  func showMonthlyStatements() {
     let module = serviceLocator.moduleLocator.monthlyStatementsList()
     module.onClose = { [weak self] _ in
       self?.popModule {}

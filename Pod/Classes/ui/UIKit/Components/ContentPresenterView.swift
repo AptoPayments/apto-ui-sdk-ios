@@ -16,7 +16,7 @@ struct TappedURL {
   let url: URL
 }
 
-protocol ContentPresenterViewDelegate {
+protocol ContentPresenterViewDelegate: class {
   func linkTapped(url: TappedURL)
   func showMessage(_ message: String)
   func show(error: Error)
@@ -36,7 +36,7 @@ class ContentPresenterView: UIView {
   private let textView = TTTAttributedLabel(frame: CGRect.zero)
   private let waitListView: WaitListView
 
-  var delegate: ContentPresenterViewDelegate?
+  weak var delegate: ContentPresenterViewDelegate?
 
   /// Text alignment for plainText and markdown. For html content this value is ignored.
   var textAlignment: NSTextAlignment {
@@ -208,12 +208,14 @@ extension ContentPresenterView: TTTAttributedLabelDelegate {
 }
 
 extension ContentPresenterView: WKNavigationDelegate {
+  // swiftlint:disable:next implicitly_unwrapped_optional
   func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
     guard (error as NSError).code != NSURLErrorCancelled else  { return }
     delegate?.hideLoadingSpinner()
     delegate?.show(error: error)
   }
 
+  // swiftlint:disable:next implicitly_unwrapped_optional
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     delegate?.hideLoadingSpinner()
     // Wait for a second before verifying if the content loaded fit in the screen or not.
@@ -221,7 +223,8 @@ extension ContentPresenterView: WKNavigationDelegate {
     // and the delegate method is called when it shouldn't. 2) make the user to wait at least for
     // a second before being able to tap the Continue button.
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) { [weak self, unowned webView] in
-      if (webView.scrollView.contentOffset.y >= (webView.scrollView.contentSize.height - webView.scrollView.frame.size.height)) {
+      if webView.scrollView.contentOffset.y >=
+          (webView.scrollView.contentSize.height - webView.scrollView.frame.size.height) {
         // Scroll to bottom
         self?.delegate?.didScrollToBottom()
       }
@@ -231,8 +234,8 @@ extension ContentPresenterView: WKNavigationDelegate {
 
 extension ContentPresenterView: UIScrollViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if (scrollView.contentSize.height > scrollView.frame.size.height) {
-      if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+    if scrollView.contentSize.height > scrollView.frame.size.height {
+      if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
         // Scroll to bottom
         delegate?.didScrollToBottom()
       }

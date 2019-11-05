@@ -38,7 +38,7 @@ class TransactionListPresenter: TransactionListPresenterProtocol {
   }
 
   func loadMoreTransactions(completion: @escaping (_ noMoreTransactions: Bool) -> Void) {
-    fetchTransactions(showLoadingSpinner: false, clearCurrent: false)  { transactionsLoaded in
+    fetchTransactions(showLoadingSpinner: false, clearCurrent: false) { transactionsLoaded in
       completion(transactionsLoaded == 0)
     }
   }

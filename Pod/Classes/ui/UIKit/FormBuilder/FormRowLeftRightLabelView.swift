@@ -25,21 +25,21 @@ class FormRowLeftRightLabelView: FormRowView {
         if let labelWidth = labelWidth {
           make.width.equalTo(labelWidth)
         }
-        make.left.equalTo(self.contentView);
-        make.top.bottom.equalTo(self.contentView);
+        make.left.equalTo(self.contentView)
+        make.top.bottom.equalTo(self.contentView)
       }
     }
     if let rightLabel = self.rightLabel {
       self.contentView.addSubview(rightLabel)
       rightLabel.snp.makeConstraints { make in
         if let leftLabel = self.label {
-          make.left.equalTo(leftLabel.snp.right).offset(15);
+          make.left.equalTo(leftLabel.snp.right).offset(15)
         }
         else {
           make.left.equalTo(self.contentView)
         }
         make.right.equalTo(self.contentView)
-        make.top.bottom.equalTo(self.contentView);
+        make.top.bottom.equalTo(self.contentView)
       }
     }
   }

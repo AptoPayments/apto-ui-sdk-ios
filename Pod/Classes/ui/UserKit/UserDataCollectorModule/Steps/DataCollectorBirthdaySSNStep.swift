@@ -64,7 +64,7 @@ class BirthdaySSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
       createDocumentTypePickerField(),
       createNumberField(),
       setUpOptionalIdDocument(),
-      FormRowSeparatorView(backgroundColor: UIColor.clear, height: CGFloat(20)),
+      FormRowSeparatorView(backgroundColor: UIColor.clear, height: CGFloat(20))
     ].compactMap { return $0 }
   }
 
@@ -105,7 +105,7 @@ private extension BirthdaySSNStep {
   func createCountryPickerField() -> FormRowCountryPickerView? {
     guard showIdDocument == true else { return nil }
 
-    let idDocumentDataPoint = userData.IdDocumentDataPoint
+    let idDocumentDataPoint = userData.idDocumentDataPoint
     guard allowedCountries.count > 1 else {
       idDocumentDataPoint.country.send(allowedCountries.first)
       return nil
@@ -128,7 +128,7 @@ private extension BirthdaySSNStep {
   func createDocumentTypePickerField() -> FormRowIdDocumentTypePickerView? {
     guard showIdDocument == true else { return nil }
 
-    let idDocumentDataPoint = userData.IdDocumentDataPoint
+    let idDocumentDataPoint = userData.idDocumentDataPoint
     let currentCountry = idDocumentDataPoint.country.value ?? allowedCountries[0]
     guard let allowedDocumentTypes = allowedDocuments[currentCountry],
           !allowedDocuments.isEmpty else {
@@ -152,7 +152,7 @@ private extension BirthdaySSNStep {
   func createNumberField() -> FormRowTextInputView? {
     guard showIdDocument == true else { return nil }
 
-    let idDocumentDataPoint = userData.IdDocumentDataPoint
+    let idDocumentDataPoint = userData.idDocumentDataPoint
     let initiallyReadOnly = mode == .updateUser
     let validator = NonEmptyTextValidator(failReasonMessage: "birthday-collector.id-document.invalid".podLocalized())
     let placeholder = "collect_user_data.dob.doc_id.placeholder".podLocalized()
@@ -177,7 +177,7 @@ private extension BirthdaySSNStep {
 
   func setUpOptionalIdDocument() -> FormRowCheckView? {
     guard showOptionalIdDocument == true else { return nil }
-    let idDocumentDataPoint = userData.IdDocumentDataPoint
+    let idDocumentDataPoint = userData.idDocumentDataPoint
     let text = "collect_user_data.dob.doc_id.not-specified.title".podLocalized()
     let label = ComponentCatalog.formListLabelWith(text: text,
                                                    uiConfig: uiConfig)

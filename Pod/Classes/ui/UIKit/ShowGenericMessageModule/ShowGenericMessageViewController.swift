@@ -16,7 +16,7 @@ protocol ShowGenericMessageEventHandler {
   func callToActionTapped()
   func secondaryCallToActionTapped()
   func closeTapped()
-  func linkTapped(_ url:URL)
+  func linkTapped(_ url: URL)
 }
 
 class ShowGenericMessageViewController: ShiftViewController, ShowGenericMessageViewProtocol {
@@ -24,7 +24,7 @@ class ShowGenericMessageViewController: ShiftViewController, ShowGenericMessageV
   var eventHandler: ShowGenericMessageEventHandler
   fileprivate var logoImageView: UIImageView!
   fileprivate let webView = WKWebView()
-  fileprivate var callToActionButton: UIButton!
+  fileprivate var callToActionButton: UIButton! // swiftlint:disable:this implicitly_unwrapped_optional
 
   init(uiConfiguration: UIConfig, eventHandler: ShowGenericMessageEventHandler) {
     self.eventHandler = eventHandler
@@ -36,7 +36,6 @@ class ShowGenericMessageViewController: ShiftViewController, ShowGenericMessageV
   }
 
   override func viewDidLoad() {
-
     super.viewDidLoad()
     self.view.backgroundColor = UIColor.white
     self.title = "disclaimer.title".podLocalized()
@@ -69,7 +68,6 @@ class ShowGenericMessageViewController: ShiftViewController, ShowGenericMessageV
   }
 
   func set(title: String, logo: String?, content: Content?, callToAction: CallToAction?) {
-
     self.title = title
 
     if let text = content?.htmlString(font: self.uiConfiguration.fontProvider.timestampFont,
@@ -112,10 +110,10 @@ h2 { font-size:16; }
   override func closeTapped() {
     self.eventHandler.closeTapped()
   }
-
 }
 
 extension ShowGenericMessageViewController: TTTAttributedLabelDelegate {
+  // swiftlint:disable:next implicitly_unwrapped_optional
   func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
     self.eventHandler.linkTapped(url)
   }

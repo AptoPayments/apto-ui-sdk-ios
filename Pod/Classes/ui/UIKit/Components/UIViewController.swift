@@ -32,6 +32,7 @@ public protocol ViewControllerProtocol {
   func hideNetworkNotReachableError()
   func showServerMaintenanceError()
   func showMessage(_ message: String, uiConfig: UIConfig?)
+  // swiftlint:disable:next function_parameter_count
   func show(message: String, title: String, animated: Bool, isError: Bool, uiConfig: UIConfig,
             tapHandler: (() -> Void)?)
   func showLoadingSpinner(tintColor: UIColor, position: SubviewPosition)
@@ -293,7 +294,7 @@ extension UIViewController: ViewControllerProtocol {
     let toastView = TitleSubtitleToastView(uiConfig: uiConfig)
     let backgroundColor = isError ? uiConfig.uiErrorColor : uiConfig.uiPrimaryColor
     let toast = TitleSubtitleToast(title: uiConfig.showToastTitle ? title : nil, message: message,
-                                   backgroundColor: backgroundColor, duration: tapHandler == nil ? 5 : nil, 
+                                   backgroundColor: backgroundColor, duration: tapHandler == nil ? 5 : nil,
                                    delegate: toastView)
     toastView.tapHandler = tapHandler
     present(toast, withCustomToastView: toastView, animated: animated)
@@ -340,7 +341,7 @@ extension UIViewController: ViewControllerProtocol {
   public func hideLoadingSpinner() {
     for subview in view.subviews.reversed() {
       // The spinner is inside a container
-      if subview.subviews.first is UIActivityIndicatorView {
+      if subview.subviews.first is UIActivityIndicatorView { // swiftlint:disable:this for_where
         subview.removeFromSuperview()
         return
       }
@@ -369,7 +370,7 @@ extension UIViewController: ViewControllerProtocol {
     if let window = UIApplication.shared.keyWindow {
       for subview in window.subviews.reversed() {
         // The spinner is inside a container
-        if subview.subviews.first is UIActivityIndicatorView {
+        if subview.subviews.first is UIActivityIndicatorView { // swiftlint:disable:this for_where
           subview.removeFromSuperview()
           return
         }

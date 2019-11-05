@@ -64,6 +64,7 @@ class TransactionListCellTheme2: UITableViewCell {
     self.styleInitialized = true
   }
 
+  // swiftlint:disable:next function_parameter_count
   func set(mcc: MCC?, amount: String, nativeAmount: String?, transactionDescription: String?, date: Date,
            state: TransactionState) {
     let isDeclinedTransaction = state == .declined

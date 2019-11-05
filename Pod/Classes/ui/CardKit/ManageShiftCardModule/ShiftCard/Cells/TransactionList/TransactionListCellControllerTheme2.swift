@@ -48,4 +48,3 @@ class TransactionListCellControllerTheme2: CellController {
     cell.cellController = self
   }
 }
-

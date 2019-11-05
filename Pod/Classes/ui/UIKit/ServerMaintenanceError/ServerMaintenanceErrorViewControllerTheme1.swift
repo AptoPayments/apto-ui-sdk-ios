@@ -85,7 +85,7 @@ private extension ServerMaintenanceErrorViewControllerTheme1 {
     button.setTitleColor(backgroundColor, for: .normal)
     button.backgroundColor = tintColor
     button.layer.shadowOffset = CGSize(width: 0, height: 16)
-    button.layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:0.16).cgColor
+    button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.16).cgColor
     button.layer.cornerRadius = 8
     button.layer.shadowOpacity = 1
     button.layer.shadowRadius = 16
@@ -100,7 +100,6 @@ private extension ServerMaintenanceErrorViewControllerTheme1 {
   }
 
   private func setUpImageView() {
-    // swiftlint:disable:next force_unwrapping
     let image = UIImage.imageFromPodBundle("error_backend.png")
     let imageView = UIImageView(image: image?.asTemplate())
     view.addSubview(imageView)

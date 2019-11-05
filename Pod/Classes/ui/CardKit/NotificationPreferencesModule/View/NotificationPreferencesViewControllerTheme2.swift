@@ -87,7 +87,7 @@ private extension NotificationPreferencesViewControllerTheme2 {
     if channel1 == .push, let channel2 = channel2, channel2 != .push {
       // Only channel1 = push and channel2 != push supported right now
       let title = channel2 == .email
-        ? "notification_preferences.send_push_email.title".podLocalized() 
+        ? "notification_preferences.send_push_email.title".podLocalized()
         : "notification_preferences.send_push_sms.title".podLocalized()
       channelTitleLabel.updateAttributedText(title)
     }

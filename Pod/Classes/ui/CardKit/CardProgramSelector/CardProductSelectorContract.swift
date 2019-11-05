@@ -9,5 +9,5 @@ import Foundation
 import AptoSDK
 
 protocol CardProductSelectorModuleProtocol: UIModuleProtocol {
-  var onCardProductSelected: ((_ cardProduct: CardProductSummary) -> ())? { get set }
+  var onCardProductSelected: ((_ cardProduct: CardProductSummary) -> Void)? { get set }
 }

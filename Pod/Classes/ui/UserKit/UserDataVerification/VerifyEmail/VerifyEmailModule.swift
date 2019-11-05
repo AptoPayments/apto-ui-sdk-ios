@@ -11,7 +11,7 @@ import AptoSDK
 
 protocol VerifyEmailRouterProtocol: class {
   func closeTappedInVerifyEmail()
-  func nextTappedInVerifyEmailWith(verification:Verification)
+  func nextTappedInVerifyEmailWith(verification: Verification)
 }
 
 protocol VerifyEmailModuleProtocol: UIModuleProtocol {

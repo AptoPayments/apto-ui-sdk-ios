@@ -18,7 +18,7 @@ public enum UIDeviceType {
 
 public extension UIDevice {
   static func deviceType() -> UIDeviceType {
-    if UIDevice().userInterfaceIdiom == .phone {
+    if UIDevice.current.userInterfaceIdiom == .phone {
       switch UIScreen.main.nativeBounds.height {
       case 1136:
         return .iPhone5

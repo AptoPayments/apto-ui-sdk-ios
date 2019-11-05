@@ -191,6 +191,7 @@ class InputDocumentPresenter: InputDocumentEventHandler {
     viewModel.state.send(.checkSelfie(image))
   }
 
+  // swiftlint:disable:next function_parameter_count
   fileprivate func configureTexts(screenTitle: String?,
                                   frameNote: String?,
                                   actionTitle: String?,

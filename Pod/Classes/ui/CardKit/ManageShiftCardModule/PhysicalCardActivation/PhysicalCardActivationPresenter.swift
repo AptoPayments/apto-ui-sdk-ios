@@ -10,14 +10,17 @@ import AptoSDK
 import Bond
 
 class PhysicalCardActivationPresenter: PhysicalCardActivationPresenterProtocol {
+  private let notificationHandler: NotificationHandler
   let viewModel = PhysicalCardActivationViewModel()
   weak var router: PhysicalCardActivationModuleProtocol?
   var interactor: PhysicalCardActivationInteractorProtocol?
   var analyticsManager: AnalyticsServiceProtocol?
   private var card: Card?
+  // swiftlint:disable:next weak_delegate
   private let cardActivationTextFieldDelegate = UITextFieldLengthLimiterDelegate(6)
 
-  init() {
+  init(notificationHandler: NotificationHandler) {
+    self.notificationHandler = notificationHandler
     registerToNotifications()
   }
 
@@ -73,10 +76,8 @@ class PhysicalCardActivationPresenter: PhysicalCardActivationPresenterProtocol {
   }
 
   private func registerToNotifications() {
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(didBecomeActive),
-                                           name: UIApplication.didBecomeActiveNotification,
-                                           object: nil)
+    notificationHandler.addObserver(self, selector: #selector(didBecomeActive),
+                                    name: UIApplication.didBecomeActiveNotification)
   }
 
   private func checkCardStatus() {
@@ -97,7 +98,7 @@ class PhysicalCardActivationPresenter: PhysicalCardActivationPresenterProtocol {
   }
 
   private func unregisterFromNotifications() {
-    NotificationCenter.default.removeObserver(self)
+    notificationHandler.removeObserver(self)
   }
 
   private func updateViewModel(with card: Card) {

@@ -9,25 +9,24 @@
 import Foundation
 
 class ListSeparatorCellController: CellController {
-  
-  let backgroundColor: UIColor
-  let height: CGFloat
-  
-  init(backgroundColor:UIColor, height:CGFloat) {
+  private let backgroundColor: UIColor
+  private let height: CGFloat
+
+  init(backgroundColor: UIColor, height: CGFloat) {
     self.backgroundColor = backgroundColor
     self.height = height
     super.init()
   }
-  
+
   override func cellClass() -> AnyClass? {
     return ListSeparatorCell.classForCoder()
   }
-  
+
   override func reuseIdentificator() -> String? {
     return NSStringFromClass(ListSeparatorCell.classForCoder())
   }
-  
-  override func setupCell(_ cell:UITableViewCell) {
+
+  override func setupCell(_ cell: UITableViewCell) {
     guard let cell = cell as? ListSeparatorCell else {
       return
     }
@@ -37,5 +36,4 @@ class ListSeparatorCellController: CellController {
     cell.backgroundColor = self.backgroundColor
     cell.contentView.backgroundColor = self.backgroundColor
   }
-
 }

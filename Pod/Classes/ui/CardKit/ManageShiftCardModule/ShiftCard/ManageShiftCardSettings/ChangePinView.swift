@@ -23,7 +23,7 @@ class ChangePinView: UIView {
   let backgroundView = UIView()
   var dialogView = UIView()
   weak var delegate: ChangePinViewDelegate?
-  var state =  ChangePinViewState.entryPin
+  var state = ChangePinViewState.entryPin
   private var descriptionLabel = UILabel()
   private var pinEntryView: UIPinEntryTextField! // swiftlint:disable:this implicitly_unwrapped_optional
   private var pin: String = ""
@@ -38,7 +38,7 @@ class ChangePinView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  @objc func didTappedOnBackgroundView(){
+  @objc func didTappedOnBackgroundView() {
     dismiss(animated: true)
   }
 }
@@ -76,7 +76,7 @@ extension ChangePinView: UIPinEntryTextFieldDelegate {
 }
 
 private extension ChangePinView {
-  func initialize(){
+  func initialize() {
     setUpBackgroundView()
     setUpDialogView()
     let titleLabel = setUpTitleLabel()

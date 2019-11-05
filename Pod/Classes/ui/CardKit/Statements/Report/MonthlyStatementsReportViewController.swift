@@ -47,6 +47,7 @@ class MonthlyStatementsReportViewController: ShiftViewController {
 }
 
 extension MonthlyStatementsReportViewController: WKNavigationDelegate {
+  // swiftlint:disable:next implicitly_unwrapped_optional
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     hideLoadingSpinner()
     shareButton.isEnabled = true

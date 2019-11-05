@@ -41,7 +41,7 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
   var view: PINVerificationView!
   // swiftlint:enable implicitly_unwrapped_optional
   let viewModel = PINVerificationViewModel()
-    var countDown: CountDown!
+  var countDown: CountDown! // swiftlint:disable:this implicitly_unwrapped_optional
   var userTriggeredResendPin = false
 
   func viewLoaded() {
@@ -93,7 +93,7 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
     view.hideLoadingSpinner()
     startResendPinCountDown()
     viewModel.pinEntryState.send(.enabled)
-    if (userTriggeredResendPin) { view.showPinResent() }
+    if userTriggeredResendPin { view.showPinResent() }
   }
 
   func pinVerificationSucceeded(_ verification: Verification) {

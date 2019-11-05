@@ -38,13 +38,12 @@ class AccountSettingsViewControllerTheme1: AccountSettingsViewProtocol {
   }
 
   private func logoutTapped() {
+    let cancelTitle = "account_settings.logout.confirm_logout.cancel_button".podLocalized()
     UIAlertController.confirm(title: "account_settings.logout.confirm_logout.title".podLocalized(),
                               message: "account_settings.logout.confirm_logout.message".podLocalized(),
                               okTitle: "account_settings.logout.confirm_logout.ok_button".podLocalized(),
-                              cancelTitle: "account_settings.logout.confirm_logout.cancel_button".podLocalized()) { [unowned self] action in
-      guard action.title != "account_settings.logout.confirm_logout.cancel_button".podLocalized() else {
-        return
-      }
+                              cancelTitle: cancelTitle) { [unowned self] action in
+      guard action.title != cancelTitle else { return }
       self.presenter.logoutTapped()
     }
   }
@@ -53,7 +52,7 @@ class AccountSettingsViewControllerTheme1: AccountSettingsViewProtocol {
 private extension AccountSettingsViewControllerTheme1 {
   func setUpViewModelSubscriptions() {
     let viewModel = presenter.viewModel
-    viewModel.showNotificationPreferences.distinctUntilChanged().observeNext { [unowned self] showNotificationPreferences in
+    viewModel.showNotificationPreferences.removeDuplicates().observeNext { [unowned self] showNotificationPreferences in
       self.updateUpFormViewContent(showNotificationPreferences: showNotificationPreferences)
     }.dispose(in: disposeBag)
   }
@@ -105,10 +104,10 @@ private extension AccountSettingsViewControllerTheme1 {
   }
 
   func createNotificationsButton() -> FormRowView {
+    let icon = UIImage.imageFromPodBundle("theme1ico_settings_notifications")?.asTemplate()
     return FormBuilder.linkRowWith(title: "account_settings.app_settings.notifications.title".podLocalized(),
                                    subtitle: "account_settings.app_settings.notifications.description".podLocalized(),
-                                   leftIcon: UIImage.imageFromPodBundle("theme1ico_settings_notifications")?.asTemplate(),
-                                   uiConfig: uiConfiguration) { [unowned self] in
+                                   leftIcon: icon, uiConfig: uiConfiguration) { [unowned self] in
       self.presenter.notificationsTapped()
     }
   }

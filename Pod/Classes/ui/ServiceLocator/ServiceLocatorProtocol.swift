@@ -18,4 +18,5 @@ protocol ServiceLocatorProtocol: class {
   var platform: AptoPlatformProtocol { get }
   var uiConfig: UIConfig! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
   var analyticsManager: AnalyticsServiceProtocol { get }
+  var notificationHandler: NotificationHandler { get }
 }

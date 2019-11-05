@@ -46,8 +46,8 @@ class FormRowCheckView: FormRowView {
 
   private var _bndValue: Observable<Bool>?
   var bndValue: Observable<Bool> {
-    if let bnd_value = _bndValue {
-      return bnd_value
+    if let bndValue = _bndValue {
+      return bndValue
     }
     else {
       let bndValue = Observable<Bool>(self.checked)

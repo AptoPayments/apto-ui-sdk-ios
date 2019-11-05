@@ -150,6 +150,15 @@ platform :ios do
     # Push repos to cocoapods
     update_objc_cocoapods
   end
+
+  desc "Run linter"
+  lane :linter do |options|
+    if options[:file]
+      sh("find ../../Pod/ -name \"#{options[:file]}.swift\" -exec swiftlint --path {} --config ../.swiftlint.yml --quiet \\;")
+    else
+      sh('find ../../Pod/ -name "*.swift" -exec swiftlint --path {} --config ../.swiftlint.yml --quiet \\;')
+    end
+  end
 end
 
 def current_core_pod_version()

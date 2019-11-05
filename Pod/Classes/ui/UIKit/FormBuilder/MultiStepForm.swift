@@ -7,6 +7,7 @@
 //
 
 import SnapKit
+import AptoSDK
 
 enum MultiStepFormAnimation {
   case none
@@ -52,7 +53,7 @@ open class MultiStepForm: UIScrollView, ReturnButtonListenerProtocol, RowFocusLi
     }
     self.rows = rows
 
-    var prevRow: UIView? = nil
+    var prevRow: UIView?
     for row in self.rows {
       row.returnButtonListener = self
       row.rowFocusListener = self
@@ -205,20 +206,20 @@ open class MultiStepForm: UIScrollView, ReturnButtonListenerProtocol, RowFocusLi
 }
 
 extension MultiStepForm {
+  private var notificationHandler: NotificationHandler {
+    return ServiceLocator.shared.notificationHandler
+  }
+
   private func registerToKeyboardNotifications() {
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(MultiStepForm.keyboardDidShow(_:)),
-                                           name: UIResponder.keyboardDidShowNotification,
-                                           object: nil)
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(MultiStepForm.keyboardWillBeHidden(_:)),
-                                           name: UIResponder.keyboardWillHideNotification,
-                                           object: nil)
+    notificationHandler.addObserver(self, selector: #selector(MultiStepForm.keyboardDidShow(_:)),
+                                    name: UIResponder.keyboardDidShowNotification)
+    notificationHandler.addObserver(self, selector: #selector(MultiStepForm.keyboardWillBeHidden(_:)),
+                                    name: UIResponder.keyboardWillHideNotification)
   }
 
   private func unregisterFromKeyboardNotifications() {
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    notificationHandler.removeObserver(self, name: UIResponder.keyboardDidShowNotification)
+    notificationHandler.removeObserver(self, name: UIResponder.keyboardWillHideNotification)
   }
 
   @objc public func keyboardDidShow(_ notification: Notification) {

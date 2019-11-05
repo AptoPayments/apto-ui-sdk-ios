@@ -26,7 +26,7 @@ class PhysicalCardActivationViewController: ShiftViewController {
     self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: title, uiConfig: uiConfiguration)
     self.cardView = CreditCardView(uiConfiguration: uiConfiguration, cardStyle: nil)
     let addressTitle = "manage_card.activate_physical_card.shipping_address".podLocalized()
-    self.addressTitleLabel  = ComponentCatalog.sectionTitleLabelWith(text: addressTitle, uiConfig: uiConfiguration)
+    self.addressTitleLabel = ComponentCatalog.sectionTitleLabelWith(text: addressTitle, uiConfig: uiConfiguration)
     self.footerLabel = ContentPresenterView(uiConfig: uiConfiguration)
     super.init(uiConfiguration: uiConfiguration)
     let buttonTitle = "manage_card.activate_physical_card.call_to_action.title".podLocalized()

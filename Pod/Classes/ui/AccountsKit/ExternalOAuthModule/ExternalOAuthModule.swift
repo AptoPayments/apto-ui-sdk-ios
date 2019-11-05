@@ -49,7 +49,7 @@ extension ExternalOAuthModule: ExternalOAuthRouterProtocol {
     onOAuthSucceeded?(self, custodian)
   }
 
-  func show(url: URL, completion: @escaping () -> ()) {
+  func show(url: URL, completion: @escaping () -> Void) {
     showExternal(url: url, completion: completion)
   }
 

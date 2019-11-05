@@ -93,9 +93,9 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
   }
 
   private lazy var errorMessageKeys = [
-    "external_auth.login.error_wrong_country.message", 
+    "external_auth.login.error_wrong_country.message",
     "external_auth.login.error_wrong_region.message",
-    "external_auth.login.error_unverified_address.message", 
+    "external_auth.login.error_unverified_address.message",
     "external_auth.login.error_unsupported_currency.message",
     "external_auth.login.error_cant_capture_funds.message",
     "external_auth.login.error_insufficient_funds.message",

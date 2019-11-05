@@ -10,7 +10,6 @@ import Foundation
 import AptoSDK
 
 class UserDataCollectorInteractorExistingUserStrategy: UserDataCollectorInteractorStrategy {
-
   override func shouldShowEmailVerification(userData: DataPointList,
                                             userRequiredData: RequiredDataPointList) -> Bool {
     return false
@@ -28,7 +27,7 @@ class UserDataCollectorInteractorExistingUserStrategy: UserDataCollectorInteract
   override func shouldUpdateUserData(_ userData: DataPointList,
                                      initialUserData: DataPointList) -> DataPointList? {
     let differences = initialUserData.modifiedDataPoints(compareWith: userData)
-    if differences.dataPoints.count > 0 {
+    if !differences.dataPoints.isEmpty {
       return differences
     }
     return nil
@@ -37,5 +36,4 @@ class UserDataCollectorInteractorExistingUserStrategy: UserDataCollectorInteract
   override func shouldCreateNewUser(_ userData: DataPointList) -> Bool {
     return false
   }
-
 }

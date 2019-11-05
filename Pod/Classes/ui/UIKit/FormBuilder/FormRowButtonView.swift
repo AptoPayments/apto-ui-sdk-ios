@@ -16,9 +16,9 @@ open class FormRowButtonView: FormRowView {
     super.init(showSplitter: false)
     self.contentView.addSubview(self.button)
     self.button.snp.makeConstraints { make in
-      make.left.right.equalTo(self.contentView).inset(24);
-      make.top.equalTo(self.contentView).offset(10);
-      make.bottom.equalTo(self.contentView).offset(-10);
+      make.left.right.equalTo(self.contentView).inset(24)
+      make.top.equalTo(self.contentView).offset(10)
+      make.bottom.equalTo(self.contentView).offset(-10)
     }
   }
 

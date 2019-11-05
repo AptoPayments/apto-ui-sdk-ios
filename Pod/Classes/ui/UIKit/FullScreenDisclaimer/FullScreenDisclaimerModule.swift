@@ -11,7 +11,7 @@ import AptoSDK
 
 class FullScreenDisclaimerModule: UIModule, FullScreenDisclaimerModuleProtocol {
   private let disclaimer: Content
-  private var presenter: FullScreenDisclaimerPresenterProtocol!
+  private var presenter: FullScreenDisclaimerPresenterProtocol?
 
   var onDisclaimerAgreed: ((_ fullScreenDisclaimerModule: FullScreenDisclaimerModuleProtocol) -> Void)?
 
@@ -27,13 +27,14 @@ class FullScreenDisclaimerModule: UIModule, FullScreenDisclaimerModuleProtocol {
   }
 
   private func buildFullScreenDisclaimerViewController(_ uiConfig: UIConfig) -> UIViewController {
-    presenter = serviceLocator.presenterLocator.fullScreenDisclaimerPresenter()
+    let presenter = serviceLocator.presenterLocator.fullScreenDisclaimerPresenter()
     let interactor = serviceLocator.interactorLocator.fullScreenDisclaimerInteractor(disclaimer: disclaimer)
     let viewController = serviceLocator.viewLocator.fullScreenDisclaimerView(uiConfig: uiConfig,
                                                                              eventHandler: presenter)
     presenter.interactor = interactor
     presenter.router = self
     presenter.analyticsManager = serviceLocator.analyticsManager
+    self.presenter = presenter
     return viewController
   }
 }

@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 import SnapKit
 
-
 protocol CameraViewDelegate: class {
   func cameraViewSetUpFails()
   func cameraView(imageCaptured image: UIImage)
@@ -79,7 +78,7 @@ class CameraView: UIView {
     }
   }
 
-  func closeCamera() -> ()? {
+  func closeCamera() -> Void? {
     return session?.stopRunning()
   }
 }

@@ -9,22 +9,22 @@ import AptoSDK
 import Bond
 
 class WaitListPresenter: CardApplicationWaitListPresenterProtocol {
+  private let notificationHandler: NotificationHandler
   private let config: WaitListActionConfiguration?
   let viewModel = WaitListViewModel()
   var interactor: WaitListInteractorProtocol?
   weak var router: WaitListModuleProtocol?
   var analyticsManager: AnalyticsServiceProtocol?
 
-  init(config: WaitListActionConfiguration?) {
+  init(config: WaitListActionConfiguration?, notificationHandler: NotificationHandler) {
     self.config = config
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(backgroundRefresh),
-                                           name: UIApplication.didBecomeActiveNotification,
-                                           object: nil)
+    self.notificationHandler = notificationHandler
+    notificationHandler.addObserver(self, selector: #selector(backgroundRefresh),
+                                    name: UIApplication.didBecomeActiveNotification)
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self)
+    notificationHandler.removeObserver(self)
   }
 
   func viewLoaded() {
@@ -39,7 +39,7 @@ class WaitListPresenter: CardApplicationWaitListPresenterProtocol {
       guard let self = self else { return }
       if result.isSuccess, let application = result.value {
         if application.nextAction.actionType != .waitList {
-          NotificationCenter.default.removeObserver(self)
+          self.notificationHandler.removeObserver(self)
           self.router?.applicationStatusChanged()
         }
       }

@@ -103,7 +103,6 @@ private extension NetworkNotReachableErrorViewControllerTheme1 {
       make.bottom.equalTo(titleLabel.snp.top)
     }
 
-    // swiftlint:disable:next force_unwrapping
     let image = UIImage.imageFromPodBundle("error_offline.png")
     let imageView = UIImageView(image: image?.asTemplate())
     container.addSubview(imageView)

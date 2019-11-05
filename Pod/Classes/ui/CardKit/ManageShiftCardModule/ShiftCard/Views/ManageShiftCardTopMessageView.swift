@@ -12,8 +12,8 @@ struct ManageShiftCardTopMessageViewConfig {
   let title: String
   let message: String
   let actionTitle: String
-  let closeHandler: () -> ()
-  let actionHandler: () -> ()
+  let closeHandler: () -> Void
+  let actionHandler: () -> Void
 }
 
 class ManageShiftCardTopMessageView: UIView {

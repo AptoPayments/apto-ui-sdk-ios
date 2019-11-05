@@ -20,6 +20,7 @@ open class LinkHandler: NSObject, TTTAttributedLabelDelegate {
     self.urlHandler = urlHandler
   }
 
+  // swiftlint:disable:next implicitly_unwrapped_optional
   open func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
     urlHandler.showExternal(url: url, headers: nil, useSafari: false, alternativeTitle: nil)
   }

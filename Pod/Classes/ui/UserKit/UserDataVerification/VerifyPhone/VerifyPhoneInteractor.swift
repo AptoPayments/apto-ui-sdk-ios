@@ -92,7 +92,7 @@ class VerifyPhoneInteractor: VerifyPhoneInteractorProtocol {
       case .failure (let error):
         self.dataReceiver.pinVerificationError(error)
       case .success(let verification):
-        switch (verification.status) {
+        switch verification.status {
         case .pending:
           self.dataReceiver.pinVerificationWrongPin()
         case .failed:

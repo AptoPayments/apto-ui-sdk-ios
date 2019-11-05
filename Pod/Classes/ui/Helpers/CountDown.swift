@@ -15,7 +15,7 @@ class CountDown {
     let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
       guard let self = self else { return }
       let pendingSeconds = Int(finishTime.timeIntervalSince(Date()))
-      if (pendingSeconds <= 0) {
+      if pendingSeconds <= 0 {
         self.stop()
         endBlock()
       }

@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol ToastDelegate {
+protocol ToastDelegate: class {
   func toastDidTouchUpInside(_ toast: ToastProtocol)
   func toast(_ toast: ToastProtocol, presentedWith height: CGFloat)
   func toastDismissed(_ toast: ToastProtocol)
@@ -83,7 +83,7 @@ class Toast: ToastProtocol {
 }
 
 class ToastController {
-  // MARK:- Properties
+  // MARK: - Properties
   static var shared = ToastController()
 
   fileprivate var toastView: ToastViewProtocol?
@@ -91,13 +91,13 @@ class ToastController {
   fileprivate var topConstraint: NSLayoutConstraint?
   fileprivate var hideTimer: Timer = Timer()
   fileprivate var currentToast: ToastProtocol = Toast()
-  fileprivate var delegate: ToastDelegate?
+  fileprivate weak var delegate: ToastDelegate?
 
   private init() {
     self.setupToastView(ToastView())
   }
 
-  // MARK:- Setup
+  // MARK: - Setup
   private func setupToastView(_ newToastView: ToastViewProtocol) {
     if let oldToastView = toastView as? UIView {
       oldToastView.removeFromSuperview()
@@ -122,7 +122,7 @@ class ToastController {
       topConstraint = NSLayoutConstraint(item: toastView, attribute: .bottom, relatedBy: .equal, toItem: keyWindow,
                                          attribute: .bottom, multiplier: 1, constant: toastView.frame.size.height)
     }
-
+    // swiftlint:disable:next force_unwrapping
     keyWindow.addConstraints([topConstraint!, leadingConstraint, trailingConstraint, toastViewHeightConstraint!])
     UIApplication.shared.keyWindow?.layoutIfNeeded()
 
@@ -133,20 +133,20 @@ class ToastController {
     }
   }
 
-  // MARK:- Actions
+  // MARK: - Actions
   @objc private func toastViewButtonTouchUpInside(_ sender: UIGestureRecognizer) {
     dismiss(true, completion: nil)
     delegate?.toastDidTouchUpInside(currentToast)
   }
 
-  // MARK:- Customizations
+  // MARK: - Customizations
   func configureConstraint(for presentingToast: Bool) {
     guard let toastView = toastView as? UIView else { return }
     topConstraint?.constant = presentingToast ? 0 : toastView.frame.size.height
     UIApplication.shared.keyWindow?.layoutIfNeeded()
   }
 
-  // MARK:- Public functions
+  // MARK: - Public functions
   func present(_ toast: ToastProtocol, toastView: ToastViewProtocol, animated: Bool) {
     dismiss(animated) {
       // after dismiss if needed, setup toast
@@ -171,7 +171,7 @@ class ToastController {
     }
   }
 
-  // MARK:- Animations
+  // MARK: - Animations
   @objc func hideTimerSelector(_ timer: Timer) {
     let animated = (timer.userInfo as? Bool) ?? false
     dismiss(animated, completion: nil)

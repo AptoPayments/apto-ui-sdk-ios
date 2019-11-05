@@ -42,9 +42,9 @@ open class ShiftCardModule: UIModule {
 
   // MARK: - Module Initialization
   override public func close() {
-    NotificationCenter.default.removeObserver(self, name: .UserTokenSessionExpiredNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: .UserTokenSessionClosedNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: .UserTokenSessionInvalidNotification, object: nil)
+    serviceLocator.notificationHandler.removeObserver(self, name: .UserTokenSessionExpiredNotification)
+    serviceLocator.notificationHandler.removeObserver(self, name: .UserTokenSessionClosedNotification)
+    serviceLocator.notificationHandler.removeObserver(self, name: .UserTokenSessionInvalidNotification)
     super.close()
   }
 
@@ -60,21 +60,15 @@ open class ShiftCardModule: UIModule {
         completion(.failure(error))
         return
       case .success:
-        // Register to the session expired event
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.didReceiveSessionExpiredEvent(_:)),
-                                               name: .UserTokenSessionExpiredNotification,
-                                               object: nil)
-        // Register to the session closed event
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.didReceiveSessionClosedEvent(_:)),
-                                               name: .UserTokenSessionClosedNotification,
-                                               object: nil)
-        // Register to the invalid session event
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.didReceiveSessionClosedEvent(_:)),
-                                               name: .UserTokenSessionInvalidNotification,
-                                               object: nil)
+        self.serviceLocator.notificationHandler.addObserver(self,
+                                                            selector: #selector(self.didReceiveSessionExpiredEvent(_:)),
+                                                            name: .UserTokenSessionExpiredNotification)
+        self.serviceLocator.notificationHandler.addObserver(self,
+                                                            selector: #selector(self.didReceiveSessionClosedEvent(_:)),
+                                                            name: .UserTokenSessionClosedNotification)
+        self.serviceLocator.notificationHandler.addObserver(self,
+                                                            selector: #selector(self.didReceiveSessionClosedEvent(_:)),
+                                                            name: .UserTokenSessionInvalidNotification)
         // Prepare the initial screen
         self.prepareInitialScreen(completion)
       }

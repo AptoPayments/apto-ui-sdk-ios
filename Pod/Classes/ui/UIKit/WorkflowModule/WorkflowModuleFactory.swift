@@ -22,8 +22,8 @@ class WorkflowModuleFactoryImpl: WorkflowModuleFactory {
     self.workflowObject = workflowObject
   }
 
+  // swiftlint:disable:next cyclomatic_complexity
   func getModuleFor(workflowAction: WorkflowAction) -> UIModuleProtocol? {
-
     switch workflowAction.actionType {
     case .showGenericMessage:
       return ShowGenericMessageModule(serviceLocator: serviceLocator, showGenericMessageAction: workflowAction)
@@ -47,7 +47,7 @@ class WorkflowModuleFactoryImpl: WorkflowModuleFactory {
       application.nextAction = workflowAction
       return serviceLocator.moduleLocator.selectBalanceStoreModule(application: application)
     case .showDisclaimer:
-      guard let _ = workflowAction.configuration as? Content else {
+      guard workflowAction.configuration is Content else {
         return nil
       }
       return serviceLocator.moduleLocator.showDisclaimerActionModule(workflowObject: workflowObject,
@@ -68,5 +68,4 @@ class WorkflowModuleFactoryImpl: WorkflowModuleFactory {
   fileprivate func notSupportedActionModule() -> UIModule {
     return UIModule(serviceLocator: serviceLocator)
   }
-
 }

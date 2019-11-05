@@ -22,7 +22,7 @@ class SetPinViewControllerThemeTwo: ShiftViewController {
 
   init(uiConfiguration: UIConfig, presenter: SetPinPresenterProtocol) {
     self.presenter = presenter
-    self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: "manage_card.set_pin.title".podLocalized(), 
+    self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: "manage_card.set_pin.title".podLocalized(),
                                                            multiline: false, uiConfig: uiConfiguration)
     self.explanationLabel = ComponentCatalog.formLabelWith(text: "manage_card.set_pin.explanation".podLocalized(),
                                                            multiline: true, lineSpacing: uiConfiguration.lineSpacing,
@@ -76,7 +76,7 @@ extension SetPinViewControllerThemeTwo: UIPinEntryTextFieldDelegate {
   }
 
   func updateUIForPin() {
-    view.fadeIn(animations: { [unowned self] in
+    view.fadeIn(animations: { [unowned self] in // swiftlint:disable:this trailing_closure
       self.titleLabel.updateAttributedText("manage_card.set_pin.title".podLocalized())
       self.explanationLabel.updateAttributedText("manage_card.set_pin.explanation".podLocalized())
       self.pinEntryView.resetText()
@@ -88,7 +88,7 @@ extension SetPinViewControllerThemeTwo: UIPinEntryTextFieldDelegate {
   }
 
   func updateUIForPinConfirmation() {
-    view.fadeIn(animations: { [unowned self] in
+    view.fadeIn(animations: { [unowned self] in // swiftlint:disable:this trailing_closure
       self.titleLabel.updateAttributedText("manage_card.confirm_pin.title".podLocalized())
       self.explanationLabel.updateAttributedText("manage_card.confirm_pin.explanation".podLocalized())
       self.pinEntryView.resetText()

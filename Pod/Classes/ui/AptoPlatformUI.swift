@@ -77,6 +77,7 @@ extension AptoPlatform {
     }
   }
 
+  // swiftlint:disable:next function_parameter_count
   @objc public func startCardFlow(from: UIViewController, mode: ShiftCardModuleMode,
                                   initialUserData: DataPointList?, options: CardOptions?, googleMapsApiKey: String?,
                                   completion: @escaping (_ module: UIModule?, _ error: NSError?) -> Void) {
@@ -94,18 +95,13 @@ extension AptoPlatform {
   // MARK: Notifications
 
   private func setUpUINotificationObservers() {
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(self.didRestoreNetworkConnectionUI),
-                                           name: .NetworkReachableNotification,
-                                           object: nil)
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(self.didLoseNetworkConnectionUI),
-                                           name: .NetworkNotReachableNotification,
-                                           object: nil)
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(self.didLoseConnectionToServerUI),
-                                           name: .ServerMaintenanceNotification,
-                                           object: nil)
+    let notificationHandler = ServiceLocator.shared.notificationHandler
+    notificationHandler.addObserver(self, selector: #selector(self.didRestoreNetworkConnectionUI),
+                                    name: .NetworkReachableNotification)
+    notificationHandler.addObserver(self, selector: #selector(self.didLoseNetworkConnectionUI),
+                                    name: .NetworkNotReachableNotification)
+    notificationHandler.addObserver(self, selector: #selector(self.didLoseConnectionToServerUI),
+                                    name: .ServerMaintenanceNotification)
   }
 
   // MARK: Network connection error

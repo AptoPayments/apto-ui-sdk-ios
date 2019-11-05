@@ -17,4 +17,6 @@ class CoreServiceLocatorFake: ServiceLocatorProtocol {
   lazy var platform: AptoPlatformProtocol = AptoPlatform(serviceLocator: self)
   lazy var analyticsManagerSpy = AnalyticsManagerSpy()
   lazy var analyticsManager: AnalyticsServiceProtocol = analyticsManagerSpy
+  lazy var notificationHandlerFake = NotificationHandlerFake()
+  lazy var notificationHandler: NotificationHandler = notificationHandlerFake
 }

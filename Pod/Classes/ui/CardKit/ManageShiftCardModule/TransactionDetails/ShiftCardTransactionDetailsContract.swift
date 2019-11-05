@@ -9,6 +9,7 @@ import UIKit
 import AptoSDK
 import Bond
 
+// swiftlint:disable:next line_length
 typealias ShiftCardTransactionDetailsViewControllerProtocol = ShiftViewController & ShiftCardTransactionDetailsViewProtocol
 
 protocol ShiftCardTransactionDetailsPresenterProtocol: class {

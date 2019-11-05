@@ -9,8 +9,8 @@ import Foundation
 import AptoSDK
 
 extension MCCIcon {
-  func image() -> UIImage? {
-    switch (self) {
+  func image() -> UIImage? { // swiftlint:disable:this cyclomatic_complexity
+    switch self {
     case .plane:
       return UIImage.imageFromPodBundle("mcc_flights")
     case .car:

@@ -37,14 +37,12 @@ open class NavigationMenu: NSObject {
     if menuListener.shouldShowRefreshOffersButton() {
       actions.append("navigation-menu.button.refresh-offers".podLocalized())
     }
-    UIAlertController.showMenuInActionSheet(cancelButton:"general.button.cancel".podLocalized(), actions: actions) { [weak self] alertAction in
-      guard let title = alertAction.title else {
-        return
-      }
+    UIAlertController.showMenuInActionSheet(cancelButton: "general.button.cancel".podLocalized(),
+                                            actions: actions) { [weak self] alertAction in
+      guard let title = alertAction.title else { return }
       switch title {
       case "navigation-menu.button.refresh-offers".podLocalized():
         self?.menuListener.refreshOffersTapped()
-        break
       default:
         break
       }

@@ -161,7 +161,7 @@ private extension VoIPViewController {
   }
 
   func toggleKeyboard() {
-    view.animate(animations: { [unowned self] in
+    view.animate(animations: { [unowned self] in // swiftlint:disable:this trailing_closure
       self.actionsView.isHidden.toggle()
       self.hideKeyboardButton.isHidden.toggle()
       self.keyboardView.isHidden.toggle()

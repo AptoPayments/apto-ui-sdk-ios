@@ -10,7 +10,7 @@ import Foundation
 import AptoSDK
 
 class ImageCache {
-  private static var sharedInstance: ImageCache!
+  private static var sharedInstance: ImageCache! // swiftlint:disable:this implicitly_unwrapped_optional
   var cache: [URL: UIImage] = [:]
 
   class func defaultCache() -> ImageCache {
@@ -24,7 +24,7 @@ class ImageCache {
     guard let retVal = cache[url] else {
       let request: URLRequest = URLRequest(url: url)
       let session = URLSession(configuration: .default)
-      let task = session.dataTask(with: request) { [weak self] (data, response, error) -> Void in
+      let task = session.dataTask(with: request) { [weak self] (data, _, error) -> Void in
         guard let self = self else { return }
         if error == nil {
           guard let data = data else {

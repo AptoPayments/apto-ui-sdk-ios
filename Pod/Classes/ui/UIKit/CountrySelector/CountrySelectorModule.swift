@@ -12,7 +12,7 @@ class CountrySelectorModule: UIModule, CountrySelectorModuleProtocol {
   private let countries: [Country]
   private var presenter: CountrySelectorPresenterProtocol?
 
-  var onCountrySelected: ((_ country: Country) -> ())?
+  var onCountrySelected: ((_ country: Country) -> Void)?
 
   init(serviceLocator: ServiceLocatorProtocol, countries: [Country]) {
     self.countries = countries

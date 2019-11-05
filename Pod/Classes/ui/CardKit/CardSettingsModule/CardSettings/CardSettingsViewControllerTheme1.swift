@@ -90,6 +90,7 @@ private extension CardSettingsViewControllerTheme1 {
 private extension CardSettingsViewControllerTheme1 {
   func setupViewModelSubscriptions() {
     let viewModel = presenter.viewModel
+    // swiftlint:disable closure_parameter_position
     combineLatest(viewModel.showChangePin,
                   viewModel.showGetPin,
                   viewModel.legalDocuments,
@@ -97,6 +98,7 @@ private extension CardSettingsViewControllerTheme1 {
                   viewModel.showDetailedCardActivity,
                   viewModel.showMonthlyStatements).observeNext { [unowned self] showChangePin, showGetPin,
                     legalDocuments, showIVRSupport, showDetailedCardActivity, showMonthlyStatements in
+    // swiftlint:enable closure_parameter_position
       let rows = [
         self.createSettingsTitle(),
         self.createChangePinRow(showButton: showChangePin),
@@ -254,8 +256,9 @@ private extension CardSettingsViewControllerTheme1 {
   }
 
   func setUpLockCardRow() -> FormRowSwitchTitleSubtitleView? {
+    let subtitle = "card_settings.settings.lock_card.description".podLocalized()
     lockCardRow = FormBuilder.titleSubtitleSwitchRowWith(title: "card_settings.settings.lock_card.title".podLocalized(),
-                                                         subtitle: "card_settings.settings.lock_card.description".podLocalized(),
+                                                         subtitle: subtitle,
                                                          uiConfig: uiConfiguration) { [unowned self] switcher in
       self.presenter.lockCardChanged(switcher: switcher)
     }
@@ -286,8 +289,9 @@ private extension CardSettingsViewControllerTheme1 {
   }
 
   func setUpShowCardInfoRow() -> FormRowSwitchTitleSubtitleView? {
-    showCardInfoRow = FormBuilder.titleSubtitleSwitchRowWith(title: "card_settings.settings.card_details.title".podLocalized(),
-                                                             subtitle: "card_settings.settings.card_details.description".podLocalized(),
+    let title = "card_settings.settings.card_details.title".podLocalized()
+    let subtitle = "card_settings.settings.card_details.description".podLocalized()
+    showCardInfoRow = FormBuilder.titleSubtitleSwitchRowWith(title: title, subtitle: subtitle,
                                                              uiConfig: uiConfiguration) { [unowned self] switcher in
       self.presenter.showCardInfoChanged(switcher: switcher)
     }

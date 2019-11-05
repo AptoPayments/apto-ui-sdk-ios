@@ -11,6 +11,7 @@ import AptoSDK
 import Bond
 
 class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
+  private let notificationHandler: NotificationHandler
   // swiftlint:disable implicitly_unwrapped_optional
   private var fetchTransactionOperationQueue: FetchTransactionOperationQueue!
   var view: ManageShiftCardViewProtocol!
@@ -31,19 +32,18 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
   private var remoteInfoRetrieved: Bool {
     return cardInfoRetrieved && transactionsInfoRetrieved
   }
-  private var cardInfoDataTimeout: Date? = nil
+  private var cardInfoDataTimeout: Date?
 
-  init(config: ManageShiftCardPresenterConfig) {
+  init(config: ManageShiftCardPresenterConfig, notificationHandler: NotificationHandler) {
     self.config = config
     self.viewModel = ManageShiftCardViewModel()
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(backgroundRefresh),
-                                           name: UIApplication.didBecomeActiveNotification,
-                                           object: nil)
+    self.notificationHandler = notificationHandler
+    notificationHandler.addObserver(self, selector: #selector(backgroundRefresh),
+                                    name: UIApplication.didBecomeActiveNotification)
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self)
+    notificationHandler.removeObserver(self)
   }
 
   func viewLoaded() {
@@ -171,7 +171,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
         self.view.show(error: error)
       case .success(let transactions):
         self.process(newTransactions: transactions)
-        completion(transactions.count == 0)
+        completion(transactions.isEmpty)
       }
     }
   }

@@ -10,7 +10,7 @@ import UIKit
 
 class FormRowLinkView: FormRowLeftLabelView {
 
-  fileprivate let clickHandler: ()->Void
+  fileprivate let clickHandler: () -> Void
 
   init(label: UILabel?,
        leftIcon: UIImageView? = nil,
@@ -24,28 +24,29 @@ class FormRowLinkView: FormRowLeftLabelView {
     super.init(label: label, labelWidth: nil, showSplitter: showSplitter, height: height)
     var rightIcon: UIImageView?
     if showRightIcon {
-      rightIcon = UIImageView(image: UIImage.imageFromPodBundle("top_next_disabled.png"))
-      self.contentView.addSubview(rightIcon!)
-      rightIcon!.snp.makeConstraints { make in
+      let icon = UIImageView(image: UIImage.imageFromPodBundle("top_next_disabled.png"))
+      self.contentView.addSubview(icon)
+      icon.snp.makeConstraints { make in
         make.right.equalTo(self.contentView.snp.right).inset(15)
         make.centerY.equalTo(self.contentView)
       }
+      rightIcon = icon
     }
-    if leftIcon != nil {
-      contentView.addSubview(leftIcon!)
-      leftIcon!.snp.makeConstraints{ make in
+    if let leftIcon = leftIcon {
+      contentView.addSubview(leftIcon)
+      leftIcon.snp.makeConstraints { make in
         make.centerY.equalTo(self.contentView)
         make.left.equalTo(self.contentView).offset(leftIconMargin)
       }
       self.label?.snp.removeConstraints()
-      self.label?.snp.makeConstraints{ make in
-        make.left.equalTo(leftIcon!.snp.right).offset(15)
-        make.centerY.equalTo(self.contentView);
+      self.label?.snp.makeConstraints { make in
+        make.left.equalTo(leftIcon.snp.right).offset(15)
+        make.centerY.equalTo(self.contentView)
       }
     }
-    if shadowedLabel != nil {
-      contentView.addSubview(shadowedLabel!)
-      shadowedLabel!.snp.makeConstraints{ make in
+    if let shadowedLabel = shadowedLabel {
+      contentView.addSubview(shadowedLabel)
+      shadowedLabel.snp.makeConstraints { make in
         make.centerY.equalTo(contentView)
         if let rightIcon = rightIcon {
           make.right.equalTo(rightIcon.snp.left).offset(-15)

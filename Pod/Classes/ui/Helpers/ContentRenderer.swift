@@ -46,7 +46,8 @@ extension Content {
       }
       return nil
     case .externalURL(let value):
-      if let retVal = "<a href='\(value)'>\(value)</a>".formattedHtmlString(font: font, color: color, linkColor: linkColor) {
+      if let retVal = "<a href='\(value)'>\(value)</a>".formattedHtmlString(font: font, color: color,
+                                                                            linkColor: linkColor) {
         return retVal.string
       }
       return nil

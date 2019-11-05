@@ -11,10 +11,7 @@ import UIKit
 open class FormRowLeftLabelView: FormRowView {
   let label: UILabel?
 
-  init(label: UILabel?,
-       labelWidth: CGFloat?,
-       showSplitter: Bool = false,
-       height: CGFloat = 40) {
+  init(label: UILabel?, labelWidth: CGFloat?, showSplitter: Bool = false, height: CGFloat = 40) {
     self.label = label
     super.init(showSplitter: showSplitter, height: height)
     if let label = self.label {
@@ -23,8 +20,8 @@ open class FormRowLeftLabelView: FormRowView {
         if let labelWidth = labelWidth {
           make.width.equalTo(labelWidth)
         }
-        make.left.equalTo(self.contentView);
-        make.top.equalTo(self.contentView).offset(16);
+        make.left.equalTo(self.contentView)
+        make.top.equalTo(self.contentView).offset(16)
       }
     }
   }

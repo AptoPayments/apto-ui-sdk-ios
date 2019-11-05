@@ -66,7 +66,7 @@ class ShowDisclaimerActionModule: UIModule, ShowDisclaimerActionModuleProtocol {
     }
   }
 
-  private func confirmClose(onConfirm: @escaping () -> ()) {
+  private func confirmClose(onConfirm: @escaping () -> Void) {
     analyticsManager?.track(event: Event.disclaimerRejectTap, properties: ["action_id": workflowAction.actionId ?? ""])
     if let cardApplication = self.workflowObject as? CardApplication {
       let cancelTitle = "disclaimer.disclaimer.cancel_action.cancel_button".podLocalized()
@@ -81,8 +81,7 @@ class ShowDisclaimerActionModule: UIModule, ShowDisclaimerActionModuleProtocol {
         self.platform.cancelCardApplication(cardApplication.id) { [unowned self] _ in
           self.hideLoadingSpinner()
           onConfirm()
-          let notification = Notification(name: .UserTokenSessionClosedNotification, object: nil, userInfo: nil)
-          NotificationCenter.default.post(notification)
+          self.serviceLocator.notificationHandler.postNotification(.UserTokenSessionClosedNotification)
         }
       }
     }

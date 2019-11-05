@@ -9,18 +9,15 @@
 import Foundation
 
 extension UIApplication {
-  
-  public class func topViewController(
-    _ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController)
-    -> UIViewController?
-  {
+  class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController)
+      -> UIViewController? {
     if let nav = base as? UINavigationController {
       return self.topViewController(nav.visibleViewController)
     }
-    
+
     if let tab = base as? UITabBarController {
       let moreNavigationController = tab.moreNavigationController
-      
+
       if let top = moreNavigationController.topViewController, top.view.window != nil {
         return self.topViewController(top)
       }
@@ -28,12 +25,11 @@ extension UIApplication {
         return self.topViewController(selected)
       }
     }
-    
+
     if let presented = base?.presentedViewController {
       return self.topViewController(presented)
     }
-    
+
     return base
   }
-  
 }

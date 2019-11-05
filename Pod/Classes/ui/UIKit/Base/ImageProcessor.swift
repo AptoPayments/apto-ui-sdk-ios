@@ -44,14 +44,14 @@ private extension ImageProcessor {
   }
 
   func perspectiveCorrection(rect: CIRectangleFeature, docImage: CIImage) -> CIFilter {
-    let perspectiveCorrection = CIFilter(name: "CIPerspectiveCorrection")!
-    perspectiveCorrection.setValue(CIVector(cgPoint:rect.topLeft),
+    let perspectiveCorrection = CIFilter(name: "CIPerspectiveCorrection")! // swiftlint:disable:this force_unwrapping
+    perspectiveCorrection.setValue(CIVector(cgPoint: rect.topLeft),
                                    forKey: "inputTopLeft")
-    perspectiveCorrection.setValue(CIVector(cgPoint:rect.topRight),
+    perspectiveCorrection.setValue(CIVector(cgPoint: rect.topRight),
                                    forKey: "inputTopRight")
-    perspectiveCorrection.setValue(CIVector(cgPoint:rect.bottomRight),
+    perspectiveCorrection.setValue(CIVector(cgPoint: rect.bottomRight),
                                    forKey: "inputBottomRight")
-    perspectiveCorrection.setValue(CIVector(cgPoint:rect.bottomLeft),
+    perspectiveCorrection.setValue(CIVector(cgPoint: rect.bottomLeft),
                                    forKey: "inputBottomLeft")
     perspectiveCorrection.setValue(docImage,
                                    forKey: kCIInputImageKey)

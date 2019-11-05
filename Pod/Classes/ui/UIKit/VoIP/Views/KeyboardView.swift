@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol KeyboardViewDelegate {
+protocol KeyboardViewDelegate: class {
   func didSelectDigit(_ digit: String)
 }
 
@@ -19,11 +19,11 @@ class KeyboardView: UIView {
   private let symbolsRowView: KeyboardRowView
   private let rowsSpacing = 28
 
-  var delegate: KeyboardViewDelegate?
+  weak var delegate: KeyboardViewDelegate?
 
   init() {
-    self.topRowView = KeyboardRowView(leftButton: KeyboardButton(type: .digit(digit: "1")), 
-                                      centerButton: KeyboardButton(type: .digit(digit: "2")), 
+    self.topRowView = KeyboardRowView(leftButton: KeyboardButton(type: .digit(digit: "1")),
+                                      centerButton: KeyboardButton(type: .digit(digit: "2")),
                                       rightButton: KeyboardButton(type: .digit(digit: "3")))
     self.middleRowView = KeyboardRowView(leftButton: KeyboardButton(type: .digit(digit: "4")),
                                          centerButton: KeyboardButton(type: .digit(digit: "5")),

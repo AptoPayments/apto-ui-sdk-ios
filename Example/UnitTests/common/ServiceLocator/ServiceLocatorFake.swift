@@ -34,6 +34,9 @@ class ServiceLocatorFake: AptoUISDK.ServiceLocatorProtocol {
   var analyticsManager: AnalyticsServiceProtocol {
     return analyticsManagerSpy
   }
+
+  lazy var notificationHandlerFake = NotificationHandlerFake()
+  lazy var notificationHandler: NotificationHandler = notificationHandlerFake
 }
 
 // ShiftSession configuration methods

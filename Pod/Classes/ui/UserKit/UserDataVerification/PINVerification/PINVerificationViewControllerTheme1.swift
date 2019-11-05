@@ -70,13 +70,13 @@ class PINVerificationViewControllerTheme1: PINVerificationViewControllerProtocol
 
   private func set(resendButtonState: ResendButtonState) {
     resendExplanationLabel.isHidden = false
-    switch (resendButtonState) {
+    switch resendButtonState {
     case .enabled:
       resendButton.isHidden = false
       resendCountDownLabel.isHidden = true
     case .waiting(let pendingSeconds):
       let waitTimeDescription = TimeInterval(pendingSeconds).stringFromTimeInterval()
-      let newText = "auth.verify_phone.resent_wait_text".podLocalized().replace(["<<WAIT_TIME>>" : waitTimeDescription])
+      let newText = "auth.verify_phone.resent_wait_text".podLocalized().replace(["<<WAIT_TIME>>": waitTimeDescription])
       resendCountDownLabel.text = newText
       resendButton.isHidden = true
       resendCountDownLabel.isHidden = false
@@ -84,7 +84,7 @@ class PINVerificationViewControllerTheme1: PINVerificationViewControllerProtocol
   }
 
   private func set(pinEntryState: PINEntryState) {
-    switch (pinEntryState) {
+    switch pinEntryState {
     case .enabled:
       expiredPinLabel.isHidden = true
       pinEntryView.isHidden = false

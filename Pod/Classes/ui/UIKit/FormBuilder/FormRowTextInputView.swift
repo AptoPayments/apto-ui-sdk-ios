@@ -19,6 +19,9 @@ open class FormRowTextInputView: FormRowLeftLabelView, UITextFieldDelegate {
   private let firstFormField: Bool
   private let lastFormField: Bool
   private let height: CGFloat
+  private var notificationCenter: NotificationHandler {
+    return ServiceLocator.shared.notificationHandler
+  }
   let toggleSecureEntryState: Bool
   let initiallyReadOnly: Bool
   let uiConfig: UIConfig
@@ -78,6 +81,10 @@ open class FormRowTextInputView: FormRowLeftLabelView, UITextFieldDelegate {
 
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  deinit {
+    notificationCenter.removeObserver(self)
   }
 
   override open func becomeFirstResponder() -> Bool {
@@ -188,18 +195,12 @@ open class FormRowTextInputView: FormRowLeftLabelView, UITextFieldDelegate {
   }
 
   private func setUpTextFieldNotificationObservers() {
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(textFieldDidBeginEditingHandler(_:)),
-                                           name: UITextField.textDidBeginEditingNotification,
-                                           object: textField)
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(textFieldDidEndEditingHandler(_:)),
-                                           name: UITextField.textDidEndEditingNotification,
-                                           object: textField)
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(textFieldDidChangeHandler(_:)),
-                                           name: UITextField.textDidChangeNotification,
-                                           object: textField)
+    notificationCenter.addObserver(self, selector: #selector(textFieldDidBeginEditingHandler(_:)),
+                                   name: UITextField.textDidBeginEditingNotification, object: textField)
+    notificationCenter.addObserver(self, selector: #selector(textFieldDidEndEditingHandler(_:)),
+                                   name: UITextField.textDidEndEditingNotification, object: textField)
+    notificationCenter.addObserver(self, selector: #selector(textFieldDidChangeHandler(_:)),
+                                   name: UITextField.textDidChangeNotification, object: textField)
   }
 
   private func setUpContentView() {

@@ -133,7 +133,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
         }
         else {
           self.view.showLoadingSpinner()
-          self.router.showCardInfo() { [weak self] in
+          self.router.showCardInfo { [weak self] in
             self?.view.hideLoadingSpinner()
             self?.router.closeFromShiftCardSettings()
           }

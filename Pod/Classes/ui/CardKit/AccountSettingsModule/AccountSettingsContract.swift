@@ -34,8 +34,8 @@ struct AccountSettingsPresenterConfig {
 
 protocol AccountSettingsPresenterProtocol: class {
   var viewModel: AccountSettingsViewModel { get }
-  var interactor: AccountSettingsInteractorProtocol! { get set }
-  var router: AccountSettingsRouterProtocol! { get set }
+  var interactor: AccountSettingsInteractorProtocol! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
+  var router: AccountSettingsRouterProtocol! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
   var analyticsManager: AnalyticsServiceProtocol? { get set }
 
   func viewLoaded()

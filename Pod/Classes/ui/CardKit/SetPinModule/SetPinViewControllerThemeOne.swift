@@ -71,7 +71,7 @@ extension SetPinViewControllerThemeOne: UIPinEntryTextFieldDelegate {
   }
 
   func updateUIForPin() {
-    view.fadeIn(animations: { [unowned self] in
+    view.fadeIn(animations: { [unowned self] in // swiftlint:disable:this trailing_closure
       self.title = "manage_card.set_pin.title".podLocalized()
       self.titleLabel.updateAttributedText("manage_card.set_pin.explanation".podLocalized())
       self.pinEntryView.resetText()
@@ -83,7 +83,7 @@ extension SetPinViewControllerThemeOne: UIPinEntryTextFieldDelegate {
   }
 
   func updateUIForPinConfirmation() {
-    view.fadeIn(animations: { [unowned self] in
+    view.fadeIn(animations: { [unowned self] in // swiftlint:disable:this trailing_closure
       self.title = "manage_card.confirm_pin.title".podLocalized()
       self.titleLabel.updateAttributedText("manage_card.confirm_pin.explanation".podLocalized())
       self.pinEntryView.resetText()
@@ -161,4 +161,3 @@ private extension SetPinViewControllerThemeOne {
          title: "manage_card.confirm_pin.error_wrong_code.title".podLocalized(), isError: true)
   }
 }
-

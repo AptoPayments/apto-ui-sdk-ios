@@ -10,7 +10,7 @@ import AptoSDK
 import Bond
 
 protocol CountrySelectorModuleProtocol: UIModuleProtocol {
-  var onCountrySelected: ((_ country: Country) -> ())? { get set }
+  var onCountrySelected: ((_ country: Country) -> Void)? { get set }
 
   func countrySelected(_ country: Country)
 }

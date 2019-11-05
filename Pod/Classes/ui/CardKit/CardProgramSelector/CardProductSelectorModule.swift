@@ -9,7 +9,7 @@ import Foundation
 import AptoSDK
 
 class CardProductSelectorModule: UIModule, CardProductSelectorModuleProtocol {
-  var onCardProductSelected: ((CardProductSummary) -> ())?
+  var onCardProductSelected: ((CardProductSummary) -> Void)?
   private var countries: Set<Country> = []
   private var cardProductsPerCountry: [Country: [CardProductSummary]] = [:]
 

@@ -64,6 +64,7 @@ class StorageLocatorFake: StorageLocatorProtocol {
   }
 
   func userPreferencesStorage() -> UserPreferencesStorageProtocol {
-    return UserPreferencesStorage(userDefaultsStorage: UserDefaultsStorage())
+    return UserPreferencesStorage(userDefaultsStorage: UserDefaultsStorage(),
+                                  notificationHandler: NotificationHandlerFake())
   }
 }

@@ -24,7 +24,7 @@ class SetPinPresenter: SetPinPresenterProtocol {
     viewModel.showLoading.send(true)
     interactor?.changePin(pin) { [weak self] result in
       self?.viewModel.showLoading.send(false)
-      switch(result) {
+      switch result {
       case .failure(let error):
         self?.viewModel.error.send(error)
       case .success:

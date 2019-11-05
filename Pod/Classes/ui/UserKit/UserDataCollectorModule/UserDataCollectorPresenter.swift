@@ -81,6 +81,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
 
   // MARK: UserDataCollectorDataReceiver
 
+  // swiftlint:disable function_parameter_count
   func set(_ userData: DataPointList,
            missingData: RequiredDataPointList,
            requiredData: RequiredDataPointList,
@@ -94,6 +95,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
            primaryCredentialType: DataPointType,
            secondaryCredentialType: DataPointType,
            googleGeocodingAPIKey: String?) {
+    // swiftlint:enable function_parameter_count
     self.userData = userData
     stepVisibility = self.calculateStepVisibility(userData: userData,
                                                   mode: mode,
@@ -425,7 +427,7 @@ private extension UserDataCollectorPresenter {
   }
 
   func birthdaySSNComplete(_ userData: DataPointList) -> Bool {
-    return userData.birthDateDataPoint.complete() && userData.IdDocumentDataPoint.complete()
+    return userData.birthDateDataPoint.complete() && userData.idDocumentDataPoint.complete()
   }
 
   func borrowerDataComplete(_ userData: DataPointList) -> Bool {

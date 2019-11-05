@@ -9,7 +9,7 @@ import UIKit
 import AptoSDK
 import SnapKit
 
-protocol CardMonthlyStatsMonthsViewDelegate {
+protocol CardMonthlyStatsMonthsViewDelegate: class {
   func leftLabelTapped(associatedDate: Date?)
   func centerLabelTapped(associatedDate: Date?)
   func rightLabelTapped(associatedDate: Date?)
@@ -42,7 +42,7 @@ class CardMonthlyStatsMonthsView: UIView {
       set(date: date, animated: true)
     }
   }
-  var delegate: CardMonthlyStatsMonthsViewDelegate?
+  weak var delegate: CardMonthlyStatsMonthsViewDelegate?
 
   init(uiConfig: UIConfig) {
     self.uiConfig = uiConfig
@@ -77,9 +77,10 @@ class CardMonthlyStatsMonthsView: UIView {
                          offset *= -1
                        }
                        self.frame = self.frame.offsetBy(dx: offset, dy: 0)
-                     }) { [unowned self] _ in
-        self.frame = currentFrame
-      }
+                     },
+                     completion: { [unowned self] _ in
+                       self.frame = currentFrame
+      })
     }
     currentMonthDate = date
     previousMonthDate = previousDate

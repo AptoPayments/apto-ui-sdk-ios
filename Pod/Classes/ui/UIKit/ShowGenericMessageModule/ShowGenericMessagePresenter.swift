@@ -11,7 +11,7 @@ import AptoSDK
 
 protocol ShowGenericMessageRouterProtocol {
   func close()
-  func showExternal(url:URL, headers:[String:String]?, useSafari: Bool?, alternativeTitle: String?)
+  func showExternal(url: URL, headers: [String: String]?, useSafari: Bool?, alternativeTitle: String?)
   func callToActionTapped()
   func secondaryCallToActionTapped()
 }
@@ -51,7 +51,7 @@ class ShowGenericMessagePresenter: ShowGenericMessageEventHandler, ShowGenericMe
     router.close()
   }
 
-  func linkTapped(_ url:URL) {
-    router.showExternal(url:url, headers:nil, useSafari: false, alternativeTitle: nil)
+  func linkTapped(_ url: URL) {
+    router.showExternal(url: url, headers: nil, useSafari: false, alternativeTitle: nil)
   }
 }

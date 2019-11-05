@@ -26,9 +26,8 @@ open class VerifyDocumentViewModel {
 }
 
 class VerifyDocumentPresenter: VerifyDocumentEventHandler, VerifyDocumentDataReceiver {
-
-  var interactor: VerifyDocumentInteractorProtocol!
-  var router: VerifyDocumentRouterProtocol!
+  var interactor: VerifyDocumentInteractorProtocol! // swiftlint:disable:this implicitly_unwrapped_optional
+  var router: VerifyDocumentRouterProtocol! // swiftlint:disable:this implicitly_unwrapped_optional
   var viewModel: VerifyDocumentViewModel
   var verification: Verification?
 
@@ -52,13 +51,14 @@ class VerifyDocumentPresenter: VerifyDocumentEventHandler, VerifyDocumentDataRec
     viewModel.state.send(.error("verify_document.explanation.error".podLocalized()))
   }
 
-  func verificationReceived(_ verification:Verification) {
+  func verificationReceived(_ verification: Verification) {
     viewModel.state.send(.processing)
   }
 
-  func verificationSucceeded(_ verification:Verification) {
+  func verificationSucceeded(_ verification: Verification) {
     self.verification = verification
-    guard let documentVerificationResult = verification.documentVerificationResult, documentVerificationResult.docCompletionStatus == .ok else {
+    guard let documentVerificationResult = verification.documentVerificationResult,
+          documentVerificationResult.docCompletionStatus == .ok else {
       viewModel.state.send(.error("Can't verify Document"))
       return
     }
@@ -86,5 +86,4 @@ class VerifyDocumentPresenter: VerifyDocumentEventHandler, VerifyDocumentDataRec
   func retakeSelfieTapped() {
     router.retakeSelfieTappedInVerifyDocument()
   }
-
 }

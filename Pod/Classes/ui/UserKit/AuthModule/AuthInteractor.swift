@@ -124,7 +124,7 @@ class AuthInteractor: AuthInteractorProtocol {
     }
     else {
       // New user.
-      guard let _ = internalUserData.getDataPointsOf(type: config.primaryAuthCredential)?.first else {
+      guard internalUserData.getDataPointsOf(type: config.primaryAuthCredential)?.first != nil else {
         dataReceiver.show(error: ServiceError(code: .internalIncosistencyError,
                                               reason: "Primary Credential not Available"))
         return

@@ -70,7 +70,8 @@ class TransactionAdjustmentViewTheme1: UIView {
 
   }
 
-  func set(title: String?, id: String?, exchangeRate: String?, amount: Amount?, adjustmentType: TransactionAdjustmentType) {
+  func set(title: String?, id: String?, exchangeRate: String?, amount: Amount?,
+           adjustmentType: TransactionAdjustmentType) {
     titleLabel.text = title
     idLabel.text = id
     exchangeRateLabel.text = exchangeRate

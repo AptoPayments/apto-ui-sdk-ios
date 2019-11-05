@@ -11,7 +11,7 @@ import Foundation
 private var imageUrlAssociationKey: UInt8 = 0
 
 public extension UIImageView {
-  var imageUrl: URL! {
+  var imageUrl: URL? {
     get {
       return objc_getAssociatedObject(self, &imageUrlAssociationKey) as? URL
     }

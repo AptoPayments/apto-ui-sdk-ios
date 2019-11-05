@@ -23,11 +23,19 @@ class ManageShiftCardPresenterTest: XCTestCase {
   private let router = ManageShiftCardModuleSpy(serviceLocator: ServiceLocatorFake())
   private let dataProvider = ModelDataProvider.provider
   private let analyticsManager: AnalyticsManagerSpy = AnalyticsManagerSpy()
+  private let notificationHandler = NotificationHandlerFake()
 
   override func setUp() {
     super.setUp()
 
     setUpSUTWith(config: config)
+  }
+
+  func testRegisterForNotifications() {
+    // Then
+    XCTAssertTrue(notificationHandler.addObserverCalled)
+    XCTAssertTrue(notificationHandler.lastAddObserverObserver === sut)
+    XCTAssertEqual(.UIApplicationDidBecomeActive, notificationHandler.lastAddObserverName)
   }
 
   func testViewLoadedCallInteractor() {
@@ -381,7 +389,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
 
   func testWillEnterForegroundNotificationReceivedRefreshDataFromServer() {
     // When
-    NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
     XCTAssertTrue(interactor.reloadCardCalled)
@@ -398,7 +406,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
                                                          dataProvider.transaction])
 
     // When
-    NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
     XCTAssertEqual(2, sut.viewModel.transactions.count)
@@ -410,7 +418,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
     interactor.nextProvideTransactionsResult = .success([dataProvider.transactionWith(transactionId: "other")])
 
     // When
-    NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
     XCTAssertEqual(1, sut.viewModel.transactions.count)
@@ -648,7 +656,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
   }
 
   private func setUpSUTWith(config: ManageShiftCardPresenterConfig) {
-    sut = ManageShiftCardPresenter(config: config)
+    sut = ManageShiftCardPresenter(config: config, notificationHandler: notificationHandler)
     sut.interactor = interactor
     sut.router = router
     sut.view = view

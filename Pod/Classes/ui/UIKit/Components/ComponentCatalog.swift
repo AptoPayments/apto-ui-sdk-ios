@@ -9,6 +9,7 @@ import UIKit
 import AptoSDK
 import PhoneNumberKit
 
+// swiftlint:disable type_body_length
 class ComponentCatalog {
 
   static func amountBigLabelWith(text: String,
@@ -130,13 +131,14 @@ class ComponentCatalog {
                                      value: String?,
                                      accessibilityLabel: String? = nil,
                                      uiConfig: UIConfig) -> UITextField {
-    let retVal = formFieldWith(placeholder: placeholder, value: value, accessibilityLabel: accessibilityLabel, uiConfig: uiConfig)
+    let retVal = formFieldWith(placeholder: placeholder, value: value, accessibilityLabel: accessibilityLabel,
+                               uiConfig: uiConfig)
     retVal.keyboardType = .emailAddress
     retVal.returnKeyType = .done
     retVal.backgroundColor = .white
     retVal.layer.cornerRadius = uiConfig.fieldCornerRadius
     retVal.layer.shadowOffset = CGSize(width: 0, height: 2)
-    retVal.layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:0.12).cgColor
+    retVal.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
     retVal.layer.shadowOpacity = 1
     retVal.layer.shadowRadius = 4
     retVal.leftView = UIView(frame: uiConfig.formFieldInternalPadding)
@@ -566,3 +568,4 @@ class ComponentCatalog {
     return retVal
   }
 }
+// swiftlint:enable type_body_length

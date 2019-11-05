@@ -14,21 +14,19 @@ protocol ShowGenericMessageDataReceiver {
 }
 
 class ShowGenericMessageInteractor: ShowGenericMessageInteractorProtocol {
+  private let showGenericMessageAction: WorkflowAction
+  private let dataReceiver: ShowGenericMessageDataReceiver
 
-  let showGenericMessageAction:WorkflowAction
-  let dataReceiver: ShowGenericMessageDataReceiver
-
-  init(showGenericMessageAction:WorkflowAction, dataReceiver: ShowGenericMessageDataReceiver) {
+  init(showGenericMessageAction: WorkflowAction, dataReceiver: ShowGenericMessageDataReceiver) {
     self.showGenericMessageAction = showGenericMessageAction
     self.dataReceiver = dataReceiver
   }
 
   func provideContent() {
-    guard let showGenericActionConfig = showGenericMessageAction.configuration as? ShowGenericMessageActionConfiguration else {
-      // TODO: This shouldn't happen
+    guard let actionConfig = showGenericMessageAction.configuration as? ShowGenericMessageActionConfiguration else {
+      // This shouldn't happen
       return
     }
-    dataReceiver.set(title: showGenericActionConfig.title, content: showGenericActionConfig.content, callToAction: showGenericActionConfig.callToAction)
+    dataReceiver.set(title: actionConfig.title, content: actionConfig.content, callToAction: actionConfig.callToAction)
   }
-
 }

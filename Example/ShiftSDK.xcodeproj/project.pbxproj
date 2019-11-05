@@ -58,6 +58,7 @@
 		2CFD384E1FA8BA1500ADD20E /* InputPhoneScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */; };
 		3C03E9072338F36C00C565F1 /* MonthlyStatementsListTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDF362267784FD59F03DB /* MonthlyStatementsListTestDoubles.swift */; };
 		3C1074192265C89F0050F8D1 /* PhoneHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDDAA9712890A02CB79BC /* PhoneHelperTest.swift */; };
+		3C1A61E42369AB9200883EC3 /* NotificationHandlerTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1A61E32369AB9200883EC3 /* NotificationHandlerTestDoubles.swift */; };
 		3C1ECAB122D8E33400DBC484 /* TransactionDeclineCodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */; };
 		3C3D1F8A2350D6C6007D39AB /* SystemServicesLocatorFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */; };
 		3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD60A22D2072B3066FE37 /* CustodianSerializerTest.swift */; };
@@ -298,6 +299,7 @@
 		2CFD384B1FA8962E00ADD20E /* LedgeUITestSuite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedgeUITestSuite.swift; sourceTree = "<group>"; };
 		2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPhoneScreen.swift; sourceTree = "<group>"; };
 		2FD9B79683F0323F267BEC7B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		3C1A61E32369AB9200883EC3 /* NotificationHandlerTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandlerTestDoubles.swift; sourceTree = "<group>"; };
 		3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDeclineCodeTest.swift; sourceTree = "<group>"; };
 		3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServicesLocatorFake.swift; sourceTree = "<group>"; };
 		3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalCardActivationSucceedTestDoubles.swift; sourceTree = "<group>"; };
@@ -671,6 +673,14 @@
 			path = Base/Helpers;
 			sourceTree = "<group>";
 		};
+		3C1A61E22369AB4B00883EC3 /* NotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				3C1A61E32369AB9200883EC3 /* NotificationHandlerTestDoubles.swift */,
+			);
+			path = NotificationCenter;
+			sourceTree = "<group>";
+		};
 		3C65E0B8217E1083000207B1 /* PhysicalCardActivationSucceed */ = {
 			isa = PBXGroup;
 			children = (
@@ -856,6 +866,7 @@
 		D99BD30E80C57D148F715B0D /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				3C1A61E22369AB4B00883EC3 /* NotificationCenter */,
 				D99BDE8FA3C180E4E7030125 /* AptoPlatformTestDoubles.swift */,
 			);
 			path = Manager;
@@ -1680,6 +1691,7 @@
 				3CF9F2E6230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift in Sources */,
 				D99BDDA85B3744B65F544481 /* DoubleTest.swift in Sources */,
 				D99BD676A369BA5631FDF6D6 /* AmountTest.swift in Sources */,
+				3C1A61E42369AB9200883EC3 /* NotificationHandlerTestDoubles.swift in Sources */,
 				D99BD3FC46EB7E2860BE7B34 /* WaitListInteractorTest.swift in Sources */,
 				D99BDD962605FDC27E887E36 /* WaitListPresenterTest.swift in Sources */,
 				D99BDEF95E697662D1BEE92F /* WaitListTestDoubles.swift in Sources */,

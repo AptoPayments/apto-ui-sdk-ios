@@ -20,7 +20,8 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
   private var userData: DataPointList?
   private var analyticsManager: AnalyticsServiceProtocol?
 
-  init(serviceLocator: ServiceLocatorProtocol, application: CardApplication, analyticsManager: AnalyticsServiceProtocol?) {
+  init(serviceLocator: ServiceLocatorProtocol, application: CardApplication,
+       analyticsManager: AnalyticsServiceProtocol?) {
     self.application = application
     self.analyticsManager = analyticsManager
     guard let action = application.nextAction.configuration as? SelectBalanceStoreActionConfiguration else {
@@ -84,7 +85,7 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
     module.onFinish = { [unowned self] _ in
       let formatterFactory = DataPointFormatterFactory()
       if let address = self.userData?.getDataPointsOf(type: .address)?.first,
-         let formattedAddress = formatterFactory.formatter(for: address).titleValues.first?.value{
+         let formattedAddress = formatterFactory.formatter(for: address).titleValues.first?.value {
         self.confirm(address: formattedAddress)
       }
       else {
@@ -170,7 +171,7 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
     }
   }
 
-  private func handleError(error: NSError, generalHandler:((NSError) -> Void)? = nil) {
+  private func handleError(error: NSError, generalHandler: ((NSError) -> Void)? = nil) {
     if let backendError = error as? BackendError, backendError.isOauthTokenRevokedError {
       // Pop data confirmation module and ask the user to login again
       popModule { [unowned self] in

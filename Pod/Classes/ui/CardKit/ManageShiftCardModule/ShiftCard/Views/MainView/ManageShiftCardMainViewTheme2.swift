@@ -185,7 +185,7 @@ private extension ManageShiftCardMainViewTheme2 {
     backgroundView.snp.makeConstraints { make in
       make.left.right.equalToSuperview()
       make.top.equalToSuperview()
-      make.height.equalTo(creditCardView).dividedBy(2 + 3*scaleFactor).offset(12)
+      make.height.equalTo(creditCardView).dividedBy(2 + 3 * scaleFactor).offset(12)
     }
   }
 

@@ -15,7 +15,7 @@ protocol DataConfirmationRouter: class {
   func reloadUserData(callback: @escaping Result<DataPointList, NSError>.Callback)
 }
 
-protocol DataConfirmationModuleDelegate {
+protocol DataConfirmationModuleDelegate: class {
   func reloadUserData(callback: @escaping Result<DataPointList, NSError>.Callback)
 }
 

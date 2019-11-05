@@ -16,16 +16,16 @@ protocol ToastViewProtocol: class {
 }
 
 class ToastView: UIView, ToastViewProtocol {
-  // MARK:- Outlets
+  // MARK: - Outlets
   private var messageLabel = UILabel()
 
-  // MARK:- Initializers
+  // MARK: - Initializers
   func nib() -> ToastViewProtocol? {
     setUpUI()
     return self
   }
 
-  // MARK:- Configure
+  // MARK: - Configure
   func configure(with toast: ToastProtocol) {
     guard let toast = toast as? Toast else { return }
     messageLabel.text = toast.text

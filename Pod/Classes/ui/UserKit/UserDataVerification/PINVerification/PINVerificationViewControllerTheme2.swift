@@ -66,13 +66,13 @@ class PINVerificationViewControllerTheme2: PINVerificationViewControllerProtocol
 
   private func set(resendButtonState: ResendButtonState) {
     resendExplanationLabel.isHidden = false
-    switch (resendButtonState) {
+    switch resendButtonState {
     case .enabled:
       resendButton.isHidden = false
       resendCountDownLabel.isHidden = true
     case .waiting(let pendingSeconds):
       let waitTimeDescription = TimeInterval(pendingSeconds).stringFromTimeInterval()
-      let newText = "auth.verify_phone.resent_wait_text".podLocalized().replace(["<<WAIT_TIME>>" : waitTimeDescription])
+      let newText = "auth.verify_phone.resent_wait_text".podLocalized().replace(["<<WAIT_TIME>>": waitTimeDescription])
       resendCountDownLabel.text = newText
       resendButton.isHidden = true
       resendCountDownLabel.isHidden = false
@@ -80,7 +80,7 @@ class PINVerificationViewControllerTheme2: PINVerificationViewControllerProtocol
   }
 
   private func set(pinEntryState: PINEntryState) {
-    switch (pinEntryState) {
+    switch pinEntryState {
     case .enabled:
       expiredPinLabel.isHidden = true
       pinEntryContainerView.isHidden = false
@@ -208,7 +208,7 @@ private extension PINVerificationViewControllerTheme2 {
     containerView.backgroundColor = .white
     containerView.layer.cornerRadius = uiConfiguration.fieldCornerRadius
     containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-    containerView.layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:0.12).cgColor
+    containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
     containerView.layer.shadowOpacity = 1
     containerView.layer.shadowRadius = 4
     view.addSubview(containerView)
@@ -246,8 +246,8 @@ private extension PINVerificationViewControllerTheme2 {
   }
 
   func setUpResendButton() {
-    resendButton = ComponentCatalog.formTextLinkButtonWith(title: "auth.verify_phone.resend_button.title".podLocalized(),
-                                                           uiConfig: uiConfiguration) { [weak self] in
+    let title = "auth.verify_phone.resend_button.title".podLocalized()
+    resendButton = ComponentCatalog.formTextLinkButtonWith(title: title, uiConfig: uiConfiguration) { [weak self] in
       self?.pinEntryView.resetText()
       self?.presenter.resendTapped()
       self?.pinEntryView.focus()

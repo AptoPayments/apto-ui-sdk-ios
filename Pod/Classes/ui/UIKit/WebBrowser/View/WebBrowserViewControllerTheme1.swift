@@ -42,7 +42,7 @@ class WebBrowserViewControllerTheme1: WebBrowserViewControllerProtocol {
 
   // MARK: WebBrowserViewProtocol
 
-  func load(url:URL, headers:[String:String]?) {
+  func load(url: URL, headers: [String: String]?) {
     self.showLoadingSpinner(tintColor: uiConfiguration.uiPrimaryColor)
     let request = NSMutableURLRequest(url: url)
     if let headers = headers {

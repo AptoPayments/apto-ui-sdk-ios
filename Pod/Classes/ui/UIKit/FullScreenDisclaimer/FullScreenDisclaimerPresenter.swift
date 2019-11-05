@@ -12,8 +12,8 @@ import ReactiveKit
 
 class FullScreenDisclaimerPresenter: FullScreenDisclaimerPresenterProtocol {
   let viewModel = FullScreenDisclaimerViewModel()
-  weak var router: FullScreenDisclaimerRouterProtocol!
-  var interactor: FullScreenDisclaimerInteractorProtocol!
+  weak var router: FullScreenDisclaimerRouterProtocol! // swiftlint:disable:this implicitly_unwrapped_optional
+  var interactor: FullScreenDisclaimerInteractorProtocol! // swiftlint:disable:this implicitly_unwrapped_optional
   var analyticsManager: AnalyticsServiceProtocol?
 
   func viewLoaded() {

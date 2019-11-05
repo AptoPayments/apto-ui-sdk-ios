@@ -9,6 +9,12 @@
 import AptoSDK
 
 final class PresenterLocator: PresenterLocatorProtocol {
+  private unowned let serviceLocator: ServiceLocatorProtocol
+
+  init(serviceLocator: ServiceLocatorProtocol) {
+    self.serviceLocator = serviceLocator
+  }
+
   func fullScreenDisclaimerPresenter() -> FullScreenDisclaimerPresenterProtocol {
     return FullScreenDisclaimerPresenter()
   }
@@ -40,11 +46,11 @@ final class PresenterLocator: PresenterLocatorProtocol {
   }
 
   func waitListPresenter(config: WaitListActionConfiguration?) -> CardApplicationWaitListPresenterProtocol {
-    return WaitListPresenter(config: config)
+    return WaitListPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
   }
 
   func cardWaitListPresenter(config: WaitListActionConfiguration?) -> CardWaitListPresenterProtocol {
-    return CardWaitListPresenter(config: config)
+    return CardWaitListPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
   }
 
   func serverMaintenanceErrorPresenter() -> ServerMaintenanceErrorPresenterProtocol {
@@ -69,10 +75,11 @@ final class PresenterLocator: PresenterLocatorProtocol {
 
   // MARK: - Manage card
   func manageCardPresenter(config: ManageShiftCardPresenterConfig) -> ManageShiftCardPresenterProtocol {
-    return ManageShiftCardPresenter(config: config)
+    return ManageShiftCardPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
   }
 
-  func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig) -> FundingSourceSelectorPresenterProtocol {
+  func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig)
+      -> FundingSourceSelectorPresenterProtocol {
     return FundingSourceSelectorPresenter(config: config)
   }
 
@@ -116,7 +123,7 @@ final class PresenterLocator: PresenterLocatorProtocol {
 
   // MARK: - Physical card activation
   func physicalCardActivationPresenter() -> PhysicalCardActivationPresenterProtocol {
-    return PhysicalCardActivationPresenter()
+    return PhysicalCardActivationPresenter(notificationHandler: serviceLocator.notificationHandler)
   }
 
   func physicalCardActivationSucceedPresenter() -> PhysicalCardActivationSucceedPresenterProtocol {

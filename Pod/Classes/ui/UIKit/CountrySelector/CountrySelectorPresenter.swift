@@ -15,7 +15,7 @@ class CountrySelectorPresenter: CountrySelectorPresenterProtocol {
 
   func viewLoaded() {
     if let countries = interactor?.fetchCountries() {
-      viewModel.countries.send(countries.sorted(by: { $0.name < $1.name }))
+      viewModel.countries.send(countries.sorted { $0.name < $1.name })
     }
   }
 

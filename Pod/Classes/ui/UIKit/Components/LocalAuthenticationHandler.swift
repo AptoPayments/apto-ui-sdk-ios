@@ -9,12 +9,7 @@ import AptoSDK
 import LocalAuthentication
 
 class LocalAuthenticationHandler {
-
-  let localAuthenticationContext: LAContext
-
-  init() {
-    self.localAuthenticationContext = LAContext()
-  }
+  private let localAuthenticationContext = LAContext()
 
   func available() -> Bool {
     var authError: NSError?
@@ -25,15 +20,18 @@ class LocalAuthenticationHandler {
     var authError: NSError?
     let reasonString = "Show the card info"
     if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-      localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString) { success, evaluateError in
+      localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                                localizedReason: reasonString) { success, _ in
         completion(.success(success))
       }
-    } else {
+    }
+    else {
       guard let error = authError else {
         completion(.success(false))
         return
       }
-      completion(.failure(ServiceError(code: .internalIncosistencyError, reason: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))))
+      completion(.failure(ServiceError(code: .internalIncosistencyError,
+                                       reason: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))))
     }
   }
 
@@ -44,6 +42,7 @@ class LocalAuthenticationHandler {
       case LAError.biometryNotAvailable.rawValue:
         message = "Authentication could not start because the device does not support biometric authentication."
       case LAError.biometryLockout.rawValue:
+        // swiftlint:disable:next line_length
         message = "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times."
       case LAError.biometryNotEnrolled.rawValue:
         message = "Authentication could not start because the user has not enrolled in biometric authentication."
@@ -62,7 +61,7 @@ class LocalAuthenticationHandler {
         message = "Did not find error code on LAError object"
       }
     }
-    return message;
+    return message
   }
 
   func evaluateAuthenticationPolicyMessageForLA(errorCode: Int) -> String {

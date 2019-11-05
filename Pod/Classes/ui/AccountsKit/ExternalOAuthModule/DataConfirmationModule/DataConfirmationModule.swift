@@ -11,7 +11,7 @@ class DataConfirmationModule: UIModule, DataConfirmationModuleProtocol {
   private var userData: DataPointList
   private var presenter: DataConfirmationPresenterProtocol?
 
-  var delegate: DataConfirmationModuleDelegate?
+  weak var delegate: DataConfirmationModuleDelegate?
 
   init(serviceLocator: ServiceLocatorProtocol, userData: DataPointList) {
     self.userData = userData

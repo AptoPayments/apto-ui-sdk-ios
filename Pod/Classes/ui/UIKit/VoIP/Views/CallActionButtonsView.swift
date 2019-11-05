@@ -9,7 +9,7 @@ import UIKit
 import AptoSDK
 import SnapKit
 
-protocol CallActionButtonsViewDelegate {
+protocol CallActionButtonsViewDelegate: class {
   func speakerButtonTapped(sender: KeyboardButton)
   func muteButtonTapped(sender: KeyboardButton)
   func keypadButtonTapped(sender: KeyboardButton)
@@ -21,7 +21,7 @@ class CallActionButtonsView: UIView {
   private let muteButton: KeyboardSelectableButton
   private let keypadButton: KeyboardButton
 
-  var delegate: CallActionButtonsViewDelegate?
+  weak var delegate: CallActionButtonsViewDelegate?
 
   var isEnabled: Bool = true {
     didSet {
@@ -93,16 +93,16 @@ class CallActionButtonsView: UIView {
   }
 }
 
-fileprivate let selectedColor = UIColor.white
-fileprivate let normalColor = selectedColor.withAlphaComponent(0.1)
+private let selectedColor = UIColor.white
+private let normalColor = selectedColor.withAlphaComponent(0.1)
 
-fileprivate func createSelectableButton(asset: String) -> KeyboardSelectableButton {
+private func createSelectableButton(asset: String) -> KeyboardSelectableButton {
   let normal = KeyboardStateConfig(image: UIImage.imageFromPodBundle("\(asset)-off"), backgroundColor: normalColor)
   let selected = KeyboardStateConfig(image: UIImage.imageFromPodBundle("\(asset)-on"), backgroundColor: selectedColor)
   return KeyboardSelectableButton(normalStateConfig: normal, selectedStateConfig: selected)
 }
 
-fileprivate func createButton(asset: String) -> KeyboardButton {
+private func createButton(asset: String) -> KeyboardButton {
   return KeyboardButton(type: .image(normalStateConfig: KeyboardStateConfig(image: UIImage.imageFromPodBundle(asset),
                                                                             backgroundColor: normalColor)))
 }

@@ -33,7 +33,7 @@ class ManageShiftCardModule: UIModule {
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self)
+    serviceLocator.notificationHandler.removeObserver(self)
   }
 
   override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
@@ -67,10 +67,8 @@ class ManageShiftCardModule: UIModule {
   }
 
   private func registerForNotifications() {
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(self.kycInvalidated),
-                                           name: .KYCNotPassedNotification,
-                                           object: nil)
+    serviceLocator.notificationHandler.addObserver(self, selector: #selector(self.kycInvalidated),
+                                                   name: .KYCNotPassedNotification)
   }
 
   private var isPresentingModalKYC = false
@@ -159,7 +157,6 @@ class ManageShiftCardModule: UIModule {
 
   fileprivate func showManageCardViewController(addChild: Bool = false,
                                                 completion: @escaping Result<UIViewController, NSError>.Callback) {
-    // swiftlint:disable:next force_unwrapping
     let viewController = self.buildManageShiftCardViewController(uiConfig, card: card)
     if addChild {
       self.addChild(viewController: viewController, completion: completion)

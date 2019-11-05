@@ -103,7 +103,7 @@ private extension PhoneTextFieldTheme2 {
     backgroundColor = .white
     layer.cornerRadius = uiConfig.fieldCornerRadius
     layer.shadowOffset = CGSize(width: 0, height: 2)
-    layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:0.12).cgColor
+    layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
     layer.shadowOpacity = 1
     layer.shadowRadius = 4
     addSubview(phoneNumberField)
@@ -129,7 +129,7 @@ private extension PhoneTextFieldTheme2 {
   }
 
   func layoutSeparatorView() {
-    separatorView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.96, alpha:1)
+    separatorView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1)
     separatorView.snp.makeConstraints { make in
       make.width.equalTo(1)
       make.left.equalTo(countryTextField.snp.right)
@@ -216,4 +216,3 @@ extension PhoneTextFieldTheme2: UITextFieldDelegate {
     }
   }
 }
-

@@ -26,7 +26,6 @@ class NotificationPreferencesPresenter: NotificationPreferencesPresenterProtocol
       case .success(let preferences):
         self.preferences = preferences
         self.updateViewModel(with: preferences)
-        break
       }
     }
     analyticsManager?.track(event: Event.accountSettingsNotificationPreferences)
@@ -41,12 +40,9 @@ class NotificationPreferencesPresenter: NotificationPreferencesPresenterProtocol
           let channel2 = viewModel.channel2.value else {
       return
     }
-    for notificationGroup in preferences.preferences {
-      if notificationGroup.groupId.rawValue == row.id {
-        notificationGroup[channel1] = row.isChannel1Active
-        notificationGroup[channel2] = row.isChannel2Active
-        break
-      }
+    for notificationGroup in preferences.preferences.filter({ $0.groupId.rawValue == row.id }) {
+      notificationGroup[channel1] = row.isChannel1Active
+      notificationGroup[channel2] = row.isChannel2Active
     }
     let enabledGroups = preferences.preferences.filter { $0.state == .enabled }
     interactor?.updatePreferences(NotificationPreferences(preferences: enabledGroups)) { [weak self] result in

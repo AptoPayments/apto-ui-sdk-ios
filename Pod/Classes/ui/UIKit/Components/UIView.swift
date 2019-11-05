@@ -46,7 +46,7 @@ extension UIView {
     completion?(true)
   }
 
-  func translate(x: CGFloat, completion: (() -> Void)? = nil) {
+  func translate(x: CGFloat, completion: (() -> Void)? = nil) { // swiftlint:disable:this identifier_name
     let animation = CAKeyframeAnimation()
     animation.keyPath = "position.x"
     animation.values = [x, 0]
@@ -90,9 +90,9 @@ extension UIView {
 
 extension UIView {
   func clearGestureRecognizers() {
-    self.gestureRecognizers?.forEach({ gestureRecognizer in
-      self.removeGestureRecognizer(gestureRecognizer)
-    })
+    gestureRecognizers?.forEach { gestureRecognizer in
+      removeGestureRecognizer(gestureRecognizer)
+    }
   }
 }
 
@@ -163,12 +163,10 @@ extension UIView {
 
 extension UIView {
   func applyHoleSquaredMask(holeRect: CGRect, cornerRadius: CGFloat, backgroundColor: UIColor, alpha: Float) {
-    if self.layer.sublayers != nil {
-      for item in self.layer.sublayers! {
-        if item.name == "shiftHoleMask" {
-          item.removeFromSuperlayer()
-          item.removeAllAnimations()
-        }
+    if let sublayers = layer.sublayers {
+      for item in (sublayers.filter { $0.name == "shiftHoleMask" }) {
+        item.removeFromSuperlayer()
+        item.removeAllAnimations()
       }
     }
     let path = UIBezierPath(roundedRect: CGRect(x: 0,
@@ -189,12 +187,10 @@ extension UIView {
   }
 
   func applyHoleOvalMask(holeRect: CGRect, backgroundColor: UIColor, alpha: Float) {
-    if self.layer.sublayers != nil {
-      for item in self.layer.sublayers! {
-        if item.name == "shiftHoleMask" {
-          item.removeFromSuperlayer()
-          item.removeAllAnimations()
-        }
+    if let sublayers = layer.sublayers {
+      for item in (sublayers.filter { $0.name == "shiftHoleMask" }) {
+        item.removeFromSuperlayer()
+        item.removeAllAnimations()
       }
     }
     let path = UIBezierPath(roundedRect: CGRect(x: 0,

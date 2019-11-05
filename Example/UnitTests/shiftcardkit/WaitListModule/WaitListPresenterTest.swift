@@ -18,11 +18,12 @@ class WaitListPresenterTest: XCTestCase {
   private let dataProvider = ModelDataProvider.provider
   private let config = WaitListActionConfiguration(asset: "asset", backgroundImage: "image", backgroundColor: "color")
   private let analyticsManager: AnalyticsManagerSpy = AnalyticsManagerSpy()
+  private let notificationHandler = NotificationHandlerFake()
 
   override func setUp() {
     super.setUp()
 
-    sut = WaitListPresenter(config: config)
+    sut = WaitListPresenter(config: config, notificationHandler: notificationHandler)
     sut.interactor = interactor
     sut.router = router
     sut.analyticsManager = analyticsManager
@@ -38,9 +39,19 @@ class WaitListPresenterTest: XCTestCase {
     XCTAssertEqual(config.backgroundColor, sut.viewModel.backgroundColor.value)
   }
 
+  func testViewLoadedObserveApplicationDidBecomeActiveNotification() {
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(notificationHandler.addObserverCalled)
+    XCTAssertTrue(notificationHandler.lastAddObserverObserver === sut)
+    XCTAssertEqual(.UIApplicationDidBecomeActive, notificationHandler.lastAddObserverName)
+  }
+
   func testWillEnterForegroundNotificationReceivedRefreshDataFromServer() {
     // When
-    NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
     XCTAssertTrue(interactor.reloadApplicationCalled)
@@ -51,7 +62,7 @@ class WaitListPresenterTest: XCTestCase {
     interactor.nextReloadApplicationResult = .failure(BackendError(code: .other))
 
     // When
-    NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
     XCTAssertFalse(router.applicationStatusChangedCalled)
@@ -62,7 +73,7 @@ class WaitListPresenterTest: XCTestCase {
     interactor.nextReloadApplicationResult = .success(dataProvider.waitListCardApplication)
 
     // When
-    NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
     XCTAssertFalse(router.applicationStatusChangedCalled)
@@ -73,12 +84,14 @@ class WaitListPresenterTest: XCTestCase {
     interactor.nextReloadApplicationResult = .success(dataProvider.cardApplication)
 
     // When
-    NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
     XCTAssertTrue(router.applicationStatusChangedCalled)
+    XCTAssertTrue(notificationHandler.removeObserverCalled)
+    XCTAssertTrue(notificationHandler.lastRemoveObserverObserver === sut)
   }
-  
+
   func testViewLoadedLogWaitlistEvent() {
     // When
     sut.viewLoaded()

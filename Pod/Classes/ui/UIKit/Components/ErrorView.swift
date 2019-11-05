@@ -10,7 +10,7 @@ import AptoSDK
 import SnapKit
 import ReactiveKit
 
-protocol ErrorViewDelegate {
+protocol ErrorViewDelegate: class {
   func linkTapped(url: TappedURL)
 }
 
@@ -21,7 +21,7 @@ struct ErrorViewConfiguration {
   let assetURL: String?
 }
 
-class ErrorView: UIView  {
+class ErrorView: UIView {
   private let assetImageView = UIImageView(frame: .zero)
   private let titleLabel: UILabel
   private let descriptionLabel: UILabel
@@ -31,7 +31,7 @@ class ErrorView: UIView  {
   private let centerView = UIView()
   private let disposeBag = DisposeBag()
   private let config: ErrorViewConfiguration
-  var delegate: ErrorViewDelegate?
+  weak var delegate: ErrorViewDelegate?
   private lazy var assetURL: URL? = {
     guard shouldRenderAsset else { return nil }
     guard let asset = config.assetURL, let url = URL(string: asset) else { return nil }

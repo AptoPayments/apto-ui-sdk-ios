@@ -10,13 +10,13 @@ import Foundation
 import MessageUI
 
 class EmailChannel: NSObject, MessagingManagerChannel {
-  var delegate: MessagingManagerChannelDelegate?
-  
+  weak var delegate: MessagingManagerChannelDelegate?
+
   func channelAvailable() -> Bool {
     return MFMailComposeViewController.canSendMail()
   }
-  
-  func sendMessageWith(subject:String, message:String, url:URL?, recipients:[String]?) {
+
+  func sendMessageWith(subject: String, message: String, url: URL?, recipients: [String]?) {
     guard self.channelAvailable() else {
       self.delegate?.didCancelFor(channel: self)
       return
@@ -31,8 +31,9 @@ class EmailChannel: NSObject, MessagingManagerChannel {
 }
 
 extension EmailChannel: MFMailComposeViewControllerDelegate {
-  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-    switch (result) {
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult,
+                             error: Error?) {
+    switch result {
     case MFMailComposeResult.sent:
       self.delegate?.didSucceededFor(channel: self)
       UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
@@ -47,4 +48,3 @@ extension EmailChannel: MFMailComposeViewControllerDelegate {
     }
   }
 }
-

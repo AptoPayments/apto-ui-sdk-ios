@@ -31,8 +31,9 @@ protocol PresenterLocatorProtocol {
 
   // MARK: - Manage card
   func manageCardPresenter(config: ManageShiftCardPresenterConfig) -> ManageShiftCardPresenterProtocol
-  func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig) -> FundingSourceSelectorPresenterProtocol
-  func cardSettingsPresenter(card: Card, config: CardSettingsPresenterConfig,  emailRecipients: [String?],
+  func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig)
+    -> FundingSourceSelectorPresenterProtocol
+  func cardSettingsPresenter(card: Card, config: CardSettingsPresenterConfig, emailRecipients: [String?],
                              uiConfig: UIConfig) -> CardSettingsPresenterProtocol
   func kycPresenter() -> KYCPresenterProtocol
   func cardMonthlyStatsPresenter() -> CardMonthlyStatsPresenterProtocol

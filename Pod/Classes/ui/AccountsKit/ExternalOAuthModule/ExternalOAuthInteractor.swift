@@ -11,7 +11,7 @@ import AptoSDK
 
 class ExternalOAuthInteractor: ExternalOAuthInteractorProtocol {
   private let platform: AptoPlatformProtocol
-  weak var presenter: ExternalOAuthPresenterProtocol!
+  weak var presenter: ExternalOAuthPresenterProtocol! // swiftlint:disable:this implicitly_unwrapped_optional
 
   private var attempt: OauthAttempt?
 

@@ -51,6 +51,11 @@ Release core and UI SDKs
 fastlane ios release_objc
 ```
 Publish ObjC Wrapper SDK
+### ios linter
+```
+fastlane ios linter
+```
+Run linter
 
 ----
 

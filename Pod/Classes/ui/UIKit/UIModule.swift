@@ -21,20 +21,20 @@ open class UIModule: NSObject, UIModuleProtocol {
   fileprivate weak var parentUIModule: UIModule?
 
   // View Controller and Module presented modally from the current module
-  fileprivate var presentedViewController: UIViewController? = nil
-  fileprivate var presentedModule: UIModuleProtocol? = nil
+  fileprivate var presentedViewController: UIViewController?
+  fileprivate var presentedModule: UIModuleProtocol?
 
   // Current module navigation controller
   fileprivate var _navigationViewController: UINavigationController?
   var navigationController: UINavigationController? {
     get {
-      if let nc = self._navigationViewController {
-        return nc
+      if let navController = self._navigationViewController {
+        return navController
       }
       return parentUIModule?.navigationController
     }
-    set (nc) {
-      self._navigationViewController = nc
+    set (navController) {
+      self._navigationViewController = navController
     }
   }
 
@@ -52,8 +52,8 @@ open class UIModule: NSObject, UIModuleProtocol {
   }
 
   // Callbacks
-  open var onClose:((_ module: UIModuleProtocol)->Void)?
-  open var onNext:((_ module: UIModuleProtocol)->Void)?
+  open var onClose: ((_ module: UIModuleProtocol) -> Void)?
+  open var onNext: ((_ module: UIModuleProtocol) -> Void)?
   open var onFinish: ((_ module: UIModuleProtocol) -> Void)?
 
   // init
@@ -68,7 +68,7 @@ open class UIModule: NSObject, UIModuleProtocol {
   public func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
     // Implement in subclasses
     viewControllers = [UIViewController()]
-    completion(.success(viewControllers.first!))
+    completion(.success(viewControllers[0]))
   }
 
   public func close() {
@@ -148,7 +148,7 @@ open class UIModule: NSObject, UIModuleProtocol {
   }
 
   public func popModule(animated: Bool = true, completion: @escaping (() -> Void)) {
-    if uiModules.count <= 1 && viewControllers.count == 0 {
+    if uiModules.count <= 1 && viewControllers.isEmpty {
       // Last child module to pop. Close the current module instead
       self.close()
       completion()
@@ -289,7 +289,7 @@ open class UIModule: NSObject, UIModuleProtocol {
 
   // MARK: - Web Browser module
   func showExternal(url: URL, headers: [String: String]? = nil, useSafari: Bool? = false,
-                    alternativeTitle: String? = nil, completion: (() -> ())?) {
+                    alternativeTitle: String? = nil, completion: (() -> Void)?) {
     if useSafari == true {
       UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
@@ -316,14 +316,14 @@ open class UIModule: NSObject, UIModuleProtocol {
 
   // MARK: - Private Methods to remove the current module from navigation controller
 
-  fileprivate func removeFromNavigationController(animated:Bool, completion: @escaping (() -> Void)) {
+  fileprivate func removeFromNavigationController(animated: Bool, completion: @escaping (() -> Void)) {
     removeChildModules(animated: animated) { [weak self] in
       if !animated {
         self?.removeViewControllers()
         self?.navigationController?.popViewController(animated, completion: completion)
       }
       else {
-        guard let viewControllers = self?.viewControllers, viewControllers.count > 0 else {
+        guard let viewControllers = self?.viewControllers, !viewControllers.isEmpty else {
           self?.navigationController?.popViewController(animated, completion: completion)
           return
         }
@@ -370,11 +370,11 @@ open class UIModule: NSObject, UIModuleProtocol {
     }
   }
 
-  fileprivate var navigationBarBackgroundImage: UIImage? = nil
-  fileprivate var navigationBarShadowImage: UIImage? = nil
+  fileprivate var navigationBarBackgroundImage: UIImage?
+  fileprivate var navigationBarShadowImage: UIImage?
   fileprivate var navigationBarIsTranslucent: Bool = false
-  fileprivate var navigationBarViewBackgroundColor: UIColor? = nil
-  fileprivate var navigationBarBackgroundColor: UIColor? = nil
+  fileprivate var navigationBarViewBackgroundColor: UIColor?
+  fileprivate var navigationBarBackgroundColor: UIColor?
   fileprivate var navigationBarTransparentStyleApplied = false
 
   func makeNavigationBarTransparent() {
@@ -395,14 +395,13 @@ open class UIModule: NSObject, UIModuleProtocol {
 
   func restoreNavigationBarFromTransparentState() {
     if let navigationController = self.navigationController, self.navigationBarTransparentStyleApplied == true {
-      navigationController.navigationBar.setBackgroundImage(self.navigationBarBackgroundImage, for: UIBarMetrics.default)
+      navigationController.navigationBar.setBackgroundImage(navigationBarBackgroundImage, for: UIBarMetrics.default)
       navigationController.navigationBar.shadowImage = self.navigationBarShadowImage
       navigationController.navigationBar.isTranslucent = self.navigationBarIsTranslucent
       navigationController.view.backgroundColor = self.navigationBarViewBackgroundColor
       navigationController.navigationBar.backgroundColor = self.navigationBarBackgroundColor
     }
   }
-
 }
 
 // MARK: - Smooth push / pop transitions

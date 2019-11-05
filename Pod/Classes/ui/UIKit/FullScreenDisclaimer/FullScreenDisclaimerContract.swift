@@ -10,7 +10,7 @@ import Bond
 
 protocol FullScreenDisclaimerRouterProtocol: class {
   func close()
-  func showExternal(url: URL, headers: [String:String]?, useSafari: Bool?, alternativeTitle: String?)
+  func showExternal(url: URL, headers: [String: String]?, useSafari: Bool?, alternativeTitle: String?)
   func agreeTapped()
 }
 
@@ -31,8 +31,10 @@ protocol FullScreenDisclaimerEventHandler: class {
 }
 
 protocol FullScreenDisclaimerPresenterProtocol: FullScreenDisclaimerEventHandler {
+  // swiftlint:disable implicitly_unwrapped_optional
   var router: FullScreenDisclaimerRouterProtocol! { get set }
   var interactor: FullScreenDisclaimerInteractorProtocol! { get set }
+  // swiftlint:enable implicitly_unwrapped_optional
   var analyticsManager: AnalyticsServiceProtocol? { get set }
 }
 

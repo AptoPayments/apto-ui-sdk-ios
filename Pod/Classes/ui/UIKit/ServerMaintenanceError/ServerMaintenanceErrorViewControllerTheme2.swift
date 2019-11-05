@@ -52,7 +52,6 @@ private extension ServerMaintenanceErrorViewControllerTheme2 {
   }
 
   func setUpImageView() {
-    // swiftlint:disable:next force_unwrapping
     imageView.image = UIImage.imageFromPodBundle("error_maintenance", uiTheme: .theme2)?.asTemplate()
     imageView.tintColor = tintColor
     view.addSubview(imageView)

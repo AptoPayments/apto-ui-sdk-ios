@@ -15,7 +15,6 @@ protocol VerifyEmailInteractorProtocol {
   func submitPin(_ pin: String)
 }
 
-
 class VerifyEmailPresenter: PINVerificationPresenter, VerifyEmailDataReceiver {
 
   // swiftlint:disable implicitly_unwrapped_optional

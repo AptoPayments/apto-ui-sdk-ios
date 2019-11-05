@@ -15,6 +15,7 @@ protocol UserDataCollectorDataReceiver: class {
   func showNextStep()
   func showLoadingView()
   func hideLoadingView()
+  // swiftlint:disable function_parameter_count
   func set(_ userData: DataPointList,
            missingData: RequiredDataPointList,
            requiredData: RequiredDataPointList,
@@ -28,6 +29,7 @@ protocol UserDataCollectorDataReceiver: class {
            primaryCredentialType: DataPointType,
            secondaryCredentialType: DataPointType,
            googleGeocodingAPIKey: String?)
+  // swiftlint:enable function_parameter_count
   func set(maxMonthlyNetIncome: Int)
   func show(error: NSError)
   func userReady(_ user: ShiftUser)

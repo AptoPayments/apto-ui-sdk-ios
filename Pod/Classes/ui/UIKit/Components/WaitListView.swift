@@ -61,7 +61,7 @@ class WaitListView: UIView {
     }
     ImageCache.defaultCache().imageWithUrl(url) { [unowned self] result in
       switch result {
-      case .failure(_):
+      case .failure:
         self.assetImageView.image = nil
       case .success(let image):
         self.assetImageView.image = image
@@ -76,7 +76,7 @@ class WaitListView: UIView {
     }
     ImageCache.defaultCache().imageWithUrl(url) { [unowned self] result in
       switch result {
-      case .failure(_):
+      case .failure:
         self.backgroundImageView.image = nil
       case .success(let image):
         self.backgroundImageView.image = image
