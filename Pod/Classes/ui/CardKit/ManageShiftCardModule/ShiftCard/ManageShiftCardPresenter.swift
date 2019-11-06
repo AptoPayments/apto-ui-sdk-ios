@@ -93,7 +93,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
   }
 
   func transactionSelected(indexPath: IndexPath) {
-    router.showTransactionDetails(transaction: viewModel.transactions.item(at: indexPath))
+    router.showTransactionDetails(transaction: viewModel.transactions[itemAt: indexPath])
   }
 
   func activateCardTapped() {
@@ -302,7 +302,7 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
     else {
       return
     }
-    var sections = viewModel.transactions.sections.map { return $0.metadata }
+    var sections = viewModel.transactions.tree.sections.map { return $0.metadata }
     transactions.forEach { transaction in
       append(transaction: transaction, to: &sections)
     }
@@ -323,17 +323,17 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
 
   private func process(backgroundTransactions transactions: [Transaction]) {
     guard !transactions.isEmpty else { return }
-    guard !viewModel.transactions.isEmpty else {
+    guard viewModel.transactions.numberOfItemsInAllSections != 0 else {
       self.process(newTransactions: transactions)
       return
     }
-    let currentTopTransaction = viewModel.transactions[IndexPath(row: 0, section: 0)]
+    let currentTopTransaction = viewModel.transactions[itemAt: [0, 0]]
     guard let index = transactions.firstIndex(where: { currentTopTransaction.transactionId == $0.transactionId }) else {
       viewModel.transactions.removeAllItemsAndSections()
       self.process(newTransactions: transactions)
       return
     }
-    var sections = viewModel.transactions.sections.map { return $0.metadata }
+    var sections = viewModel.transactions.tree.sections.map { return $0.metadata }
     for idx in (0 ..< index).reversed() {
       append(transaction: transactions[idx], to: &sections, asTopItem: true)
     }
@@ -354,17 +354,17 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
         viewModel.transactions.insert(item: transaction, at: IndexPath(row: 0, section: indexOfSection))
       }
       else {
-        viewModel.transactions.appendItem(transaction, toSection: indexOfSection)
+        viewModel.transactions.appendItem(transaction, toSectionAt: indexOfSection)
       }
     }
     else {
       sections.append(sectionName)
-      let section = Observable2DArraySection<String, Transaction>(metadata: sectionName, items: [transaction])
+      let section = Array2D<String, Transaction>(sectionsWithItems: [(sectionName, [transaction])])
       if asTopItem {
-        viewModel.transactions.insert(section: section, at: 0)
+        viewModel.transactions.insert(section: section[sectionAt: 0], at: 0)
       }
       else {
-        viewModel.transactions.appendSection(section)
+        viewModel.transactions.appendSection(section[sectionAt: 0])
       }
     }
   }

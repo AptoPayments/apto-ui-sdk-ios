@@ -24,7 +24,7 @@ protocol TransactionListInteractorProtocol {
 
 class TransactionListViewModel {
   let title: Observable<String?> = Observable(nil)
-  let transactions: MutableObservable2DArray<String, Transaction> = MutableObservable2DArray([])
+  let transactions: MutableObservableArray2D<String, Transaction> = MutableObservableArray2D(Array2D())
 }
 
 protocol TransactionListPresenterProtocol: class {

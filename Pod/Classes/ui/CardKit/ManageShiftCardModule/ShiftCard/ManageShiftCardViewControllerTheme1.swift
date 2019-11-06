@@ -121,14 +121,14 @@ extension ManageShiftCardViewControllerTheme1: ManageShiftCardMainViewDelegate, 
 
 extension ManageShiftCardViewControllerTheme1: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return eventHandler.viewModel.transactions.numberOfSections + 1
+    return eventHandler.viewModel.transactions.tree.numberOfSections + 1
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if section == 0 {
       return eventHandler.viewModel.cardHolder.value == nil ? 0 : 1
     }
-    return eventHandler.viewModel.transactions.numberOfItems(inSection: section - 1)
+    return eventHandler.viewModel.transactions.tree.numberOfItems(inSection: section - 1)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,7 +136,7 @@ extension ManageShiftCardViewControllerTheme1: UITableViewDataSource {
       return mainViewCellController.cell(tableView)
     }
     let path = IndexPath(item: indexPath.row, section: indexPath.section - 1)
-    let transaction = eventHandler.viewModel.transactions[path]
+    let transaction = eventHandler.viewModel.transactions[itemAt: path]
     let controller = TransactionListCellControllerTheme1(transaction: transaction,
                                                          uiConfiguration: self.uiConfiguration)
     return controller.cell(tableView)
@@ -162,7 +162,7 @@ extension ManageShiftCardViewControllerTheme1: UITableViewDelegate {
     guard section > 0 else {
       return nil
     }
-    let title = eventHandler.viewModel.transactions.sections[section - 1].metadata
+    let title = eventHandler.viewModel.transactions.tree.sections[section - 1].metadata
     return SectionHeaderViewTheme1(text: title, uiConfig: uiConfiguration)
   }
 }
@@ -366,15 +366,10 @@ private extension ManageShiftCardViewControllerTheme1 {
       self.mainView.set(showInfo: visible)
     }.dispose(in: disposeBag)
 
-    viewModel.transactions.observeNext { [unowned self] event in
-      switch event.change {
-      case .reset:
-        break
-      default:
-        self.updateUI()
-        self.transactionsList.switchRefreshHeader(to: .normal(.success, 0.5))
-        self.transactionsList.switchRefreshFooter(to: .normal)
-      }
+    viewModel.transactions.observeNext { [unowned self] _ in
+      self.updateUI()
+      self.transactionsList.switchRefreshHeader(to: .normal(.success, 0.5))
+      self.transactionsList.switchRefreshFooter(to: .normal)
     }.dispose(in: disposeBag)
 
     viewModel.transactionsLoaded.observeNext { [unowned self] _ in
@@ -396,10 +391,10 @@ private extension ManageShiftCardViewControllerTheme1 {
     let viewModel = eventHandler.viewModel
     transactionsList.reloadData()
     activateCardView.isHidden = shouldShowActivation == true ? viewModel.state.value != .created : true
-    footer.isHidden = viewModel.transactions.isEmpty
+    footer.isHidden = viewModel.transactions.numberOfItemsInAllSections == 0
     // Only show the empty case if we are all set
     if viewModel.transactionsLoaded.value == true {
-      emptyCaseView.isHidden = !viewModel.transactions.isEmpty
+      emptyCaseView.isHidden = viewModel.transactions.numberOfItemsInAllSections != 0
     }
   }
 }

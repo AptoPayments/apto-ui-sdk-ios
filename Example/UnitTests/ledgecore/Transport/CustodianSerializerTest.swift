@@ -46,7 +46,7 @@ class CustodianSerializerTest: XCTestCase {
     sut.externalCredentials = ExternalCredential.none
 
     // When
-    var json = sut.asJson
+    let json = sut.asJson
 
     // Then
     XCTAssertEqual(1, json.count)
@@ -68,7 +68,7 @@ class CustodianSerializerTest: XCTestCase {
     ]
 
     // When
-    var json = sut.asJson
+    let json = sut.asJson
 
     // Then
     XCTAssertEqual(1, json.count)

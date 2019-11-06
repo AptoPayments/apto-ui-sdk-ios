@@ -26,8 +26,6 @@ class ModelDataProvider {
 
   lazy var teamConfig = TeamConfiguration(logoUrl: nil, name: "Test team")
 
-  lazy var amountRangeConfiguration = AmountRangeConfiguration(min: 0, max: 1000, def: 100, inc: 100)
-
   lazy var workflowAction: WorkflowAction = {
     let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [balanceType],
                                                               assetUrl: nil)
@@ -93,12 +91,6 @@ class ModelDataProvider {
                                 strictAddressValidation: false,
                                 defaultCountryCode: 1,
                                 products: [.link],
-                                incomeTypes: [IncomeType(incomeTypeId: 1)],
-                                housingTypes: [HousingType(housingTypeId: 1)],
-                                salaryFrequencies: [SalaryFrequency(salaryFrequencyId: 1)],
-                                timeAtAddressOptions: [TimeAtAddressOption(timeAtAddressId: 1)],
-                                creditScoreOptions: [CreditScoreOption(creditScoreId: 1)],
-                                grossIncomeRange: amountRangeConfiguration,
                                 welcomeScreenAction: workflowAction,
                                 supportEmailAddress: nil,
                                 branding: projectBranding,

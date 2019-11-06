@@ -409,7 +409,7 @@ class ManageShiftCardPresenterTest: XCTestCase {
     notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
-    XCTAssertEqual(2, sut.viewModel.transactions.count)
+    XCTAssertEqual(2, sut.viewModel.transactions.numberOfItemsInAllSections)
   }
 
   func testBackgroundRefreshWithoutOverlapSetNewData() {
@@ -421,8 +421,8 @@ class ManageShiftCardPresenterTest: XCTestCase {
     notificationHandler.postNotification(.UIApplicationDidBecomeActive)
 
     // Then
-    XCTAssertEqual(1, sut.viewModel.transactions.count)
-    XCTAssertEqual("other", sut.viewModel.transactions[IndexPath(row: 0, section: 0)].transactionId)
+    XCTAssertEqual(1, sut.viewModel.transactions.numberOfItemsInAllSections)
+    XCTAssertEqual("other", sut.viewModel.transactions[itemAt: [0, 0]].transactionId)
   }
 
   func testReloadTappedNotShowingSpinnerDoNotShowSpinner() {

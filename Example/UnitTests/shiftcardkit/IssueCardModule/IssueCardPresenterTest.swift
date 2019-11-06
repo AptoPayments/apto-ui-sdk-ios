@@ -177,7 +177,7 @@ class IssueCardPresenterTest: XCTestCase {
   
   func testTrackErrorLogIssueCardErrorUnknownError() {
     // Given
-    interactor.nextIssueCardResult = .failure(BackendError(code: .undefinedError))
+    interactor.nextIssueCardResult = .failure(BackendError(code: .undefinedError, reason: "some reason"))
     
     // When
     sut.requestCardTapped()
@@ -185,5 +185,6 @@ class IssueCardPresenterTest: XCTestCase {
     // Then
     XCTAssertTrue(analyticsManager.trackCalled)
     XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardUnknownError)
+    XCTAssertNotNil(analyticsManager.lastProperties)
   }
 }

@@ -51,20 +51,16 @@ class IssueCardPresenter: IssueCardPresenterProtocol {
     router.show(url: url)
   }
 
-  private func trackError(error: BackendError?) {
-    guard let backendError = error else {
-      analyticsManager?.track(event: Event.issueCardUnknownError)
-      return
-    }
-    switch backendError {
-    case _ where backendError.isBalanceInsufficientFundsError:
+  private func trackError(error: BackendError) {
+    switch error {
+    case _ where error.isBalanceInsufficientFundsError:
       analyticsManager?.track(event: Event.issueCardInsufficientFunds)
-    case _ where backendError.isBalanceValidationsInsufficientApplicationLimit:
+    case _ where error.isBalanceValidationsInsufficientApplicationLimit:
       analyticsManager?.track(event: Event.issueCardInsufficientApplicationLimit)
-    case _ where backendError.isBalanceValidationsEmailSendsDisabled:
+    case _ where error.isBalanceValidationsEmailSendsDisabled:
       analyticsManager?.track(event: Event.issueCardEmailSendsDisabled)
     default:
-      analyticsManager?.track(event: Event.issueCardUnknownError)
+      analyticsManager?.track(event: Event.issueCardUnknownError, properties: error.eventInfo)
     }
   }
 
@@ -74,8 +70,8 @@ class IssueCardPresenter: IssueCardPresenterProtocol {
       guard let self = self else { return }
       switch result {
       case .failure(let error):
-        self.trackError(error: error as? BackendError)
         let backendError = (error as? BackendError) ?? BackendError(code: .undefinedError)
+        self.trackError(error: backendError)
         self.viewModel.state.send(IssueCardViewState.error(error: backendError))
       case .success(let card):
         self.viewModel.state.send(.done)

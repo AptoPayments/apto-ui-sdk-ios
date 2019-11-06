@@ -12,7 +12,7 @@ import XCTest
 class DataPointsTests: LinkTestCase {
   func testDataPointInitialization() {
     // Given
-    let type = DataPointType.creditScore
+    let type = DataPointType.email
     let verified = true
 
     // When
@@ -212,7 +212,7 @@ class DataPointListTests: LinkTestCase {
   func testCopyDataPointList() {
     // Given
     let dataPoint1 = PersonalName(firstName: "FIRST_NAME_1", lastName: "LAST_NAME_1")
-    let dataPoint2 = CreditScore(creditRange: 1)
+    let dataPoint2 = BirthDate(date: Date())
 
     // When
     let sut = DataPointList()
@@ -223,7 +223,7 @@ class DataPointListTests: LinkTestCase {
     // Then
     XCTAssertEqual(copiedDataPointList.dataPoints.count, 2)
     let dp1 = copiedDataPointList.getDataPointsOf(type: .personalName)!.first as! PersonalName
-    let dp2 = copiedDataPointList.getDataPointsOf(type: .creditScore)!.first as! CreditScore
+    let dp2 = copiedDataPointList.getDataPointsOf(type: .birthDate)!.first as! BirthDate
     XCTAssertTrue(dp1 == dataPoint1)
     XCTAssertTrue(dp2 == dataPoint2)
   }
@@ -298,14 +298,14 @@ class DataPointListTests: LinkTestCase {
     sut.add(dataPoint: dp2)
 
     let otherDataPointList = DataPointList()
-    let odp1 = DataPoint(type: .creditScore, verified: true)
+    let odp1 = BirthDate(type: .birthDate, verified: true)
     otherDataPointList.add(dataPoint: odp1)
 
     // When
     let modifiedDataPoints = sut.modifiedDataPoints(compareWith: otherDataPointList)
 
     // Then
-    XCTAssertTrue(modifiedDataPoints.getDataPointsOf(type: .creditScore)?.count == 1)
+    XCTAssertTrue(modifiedDataPoints.getDataPointsOf(type: .birthDate)?.count == 1)
   }
 
   func testModifiedDataPointsWithVerificationData() {

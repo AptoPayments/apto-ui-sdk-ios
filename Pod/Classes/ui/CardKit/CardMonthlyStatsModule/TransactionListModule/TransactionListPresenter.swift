@@ -82,7 +82,7 @@ class TransactionListPresenter: TransactionListPresenterProtocol {
     else {
       return
     }
-    var sections = viewModel.transactions.sections.map { return $0.metadata }
+    var sections = viewModel.transactions.tree.sections.map { return $0.metadata }
     transactions.forEach { transaction in
       append(transaction: transaction, to: &sections)
     }
@@ -99,11 +99,11 @@ class TransactionListPresenter: TransactionListPresenterProtocol {
     let isFirstMonthOfTheYearWithTransaction = firstTransactionMonthPerYear[transactionYear] == transactionMonth
     let sectionName = section(for: transaction, includeYearNumber: isFirstMonthOfTheYearWithTransaction)
     if let indexOfSection = sections.firstIndex(of: sectionName) {
-      viewModel.transactions.appendItem(transaction, toSection: indexOfSection)
+      viewModel.transactions.appendItem(transaction, toSectionAt: indexOfSection)
     }
     else {
       sections.append(sectionName)
-      let section = Observable2DArraySection<String, Transaction>(metadata: sectionName, items: [transaction])
+      let section = Array2D<String, Transaction>(sectionsWithItems: [(sectionName, [transaction])])[sectionAt: 0]
       viewModel.transactions.appendSection(section)
     }
   }

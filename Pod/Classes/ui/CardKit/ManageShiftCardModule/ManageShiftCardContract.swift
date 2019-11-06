@@ -77,7 +77,7 @@ open class ManageShiftCardViewModel {
   public let fundingSource: Observable<FundingSource?> = Observable(nil)
   public let spendableToday: Observable<Amount?> = Observable(nil)
   public let nativeSpendableToday: Observable<Amount?> = Observable(nil)
-  public let transactions: MutableObservable2DArray<String, Transaction> = MutableObservable2DArray([])
+  public let transactions: MutableObservableArray2D<String, Transaction> = MutableObservableArray2D(Array2D())
   public let transactionsLoaded: Observable<Bool> = Observable(false)
   public let cardStyle: Observable<CardStyle?> = Observable(nil)
   public let cardLoaded: Observable<Bool> = Observable(false)

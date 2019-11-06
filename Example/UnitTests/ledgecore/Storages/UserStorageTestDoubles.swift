@@ -25,9 +25,8 @@ class UserStorageSpy: UserStorageProtocol {
                  callback: @escaping Result<ShiftUser, NSError>.Callback) {
   }
 
-  func getUserData(_ apiKey: String, userToken: String, availableHousingTypes: [HousingType],
-                   availableIncomeTypes: [IncomeType], availableSalaryFrequencies: [SalaryFrequency],
-                   filterInvalidTokenResult: Bool, callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  func getUserData(_ apiKey: String, userToken: String, filterInvalidTokenResult: Bool,
+                   callback: @escaping Result<ShiftUser, NSError>.Callback) {
   }
 
   func updateUserData(_ apiKey: String, userToken: String, userData: DataPointList,

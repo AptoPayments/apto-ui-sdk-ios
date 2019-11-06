@@ -42,27 +42,27 @@ class MonthlyStatementsListViewController: ShiftViewController {
 
 extension MonthlyStatementsListViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return presenter.viewModel.months.numberOfSections
+    return presenter.viewModel.months.tree.numberOfSections
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return presenter.viewModel.months.numberOfItems(inSection: section)
+    return presenter.viewModel.months.tree.numberOfItems(inSection: section)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let months = presenter.viewModel.months
-    let month = months[indexPath]
+    let month = months[itemAt: indexPath]
     let controller = MonthlyStatementListCellController(month: month, uiConfig: uiConfiguration)
     let cell = controller.cell(tableView)
     controller.shouldDrawBottomDivider = shouldDrawBottomDivider(indexPath: indexPath, months: months)
     return cell
   }
 
-  private func shouldDrawBottomDivider(indexPath: IndexPath, months: MutableObservable2DArray<String, Month>) -> Bool {
-    if indexPath.section == (months.numberOfSections - 1) {
+  private func shouldDrawBottomDivider(indexPath: IndexPath, months: MutableObservableArray2D<String, Month>) -> Bool {
+    if indexPath.section == (months.tree.numberOfSections - 1) {
       return true
     }
-    return indexPath.row != (months.numberOfItems(inSection: indexPath.section) - 1)
+    return indexPath.row != (months.tree.numberOfItems(inSection: indexPath.section) - 1)
   }
 }
 
@@ -74,7 +74,7 @@ extension MonthlyStatementsListViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let containerView = UIView()
     containerView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
-    let contentView = SectionHeaderViewTheme2(text: String(presenter.viewModel.months.sections[section].metadata),
+    let contentView = SectionHeaderViewTheme2(text: String(presenter.viewModel.months.tree.sections[section].metadata),
                                               uiConfig: uiConfiguration)
     containerView.addSubview(contentView)
     contentView.snp.makeConstraints { make in
@@ -85,7 +85,7 @@ extension MonthlyStatementsListViewController: UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let month = presenter.viewModel.months[indexPath]
+    let month = presenter.viewModel.months[itemAt: indexPath]
     presenter.monthSelected(month)
   }
 }
@@ -101,7 +101,7 @@ private extension MonthlyStatementsListViewController {
     }.dispose(in: disposeBag)
     combineLatest(viewModel.dataLoaded, viewModel.months).observeNext { [weak self] dataLoaded, months in
       guard dataLoaded else { return }
-      self?.emptyCaseView.isHidden = !months.source.isEmpty
+      self?.emptyCaseView.isHidden = months.collection.numberOfSections != 0
     }.dispose(in: disposeBag)
   }
 }

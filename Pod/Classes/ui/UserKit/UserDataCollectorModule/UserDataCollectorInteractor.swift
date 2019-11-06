@@ -15,22 +15,14 @@ protocol UserDataCollectorDataReceiver: class {
   func showNextStep()
   func showLoadingView()
   func hideLoadingView()
-  // swiftlint:disable function_parameter_count
   func set(_ userData: DataPointList,
            missingData: RequiredDataPointList,
            requiredData: RequiredDataPointList,
            skipSteps: Bool,
            mode: UserDataCollectorFinalStepMode,
-           availableHousingTypes: [HousingType],
-           availableSalaryFrequencies: [SalaryFrequency],
-           availableIncomeTypes: [IncomeType],
-           availableTimeAtAddressOptions: [TimeAtAddressOption],
-           availableCreditScoreOptions: [CreditScoreOption],
            primaryCredentialType: DataPointType,
            secondaryCredentialType: DataPointType,
            googleGeocodingAPIKey: String?)
-  // swiftlint:enable function_parameter_count
-  func set(maxMonthlyNetIncome: Int)
   func show(error: NSError)
   func userReady(_ user: ShiftUser)
 }
@@ -50,15 +42,6 @@ class UserDataCollectorInteractor: UserDataCollectorInteractorProtocol {
     self.internalUserData = initialUserData.copy() as! DataPointList // swiftlint:disable:this force_cast
     self.dataReceiver = dataReceiver
     self.config = config
-    if let incomeDataPoint = internalUserData.getForcingDataPointOf(type: .income, defaultValue: Income()) as? Income {
-      _ = incomeDataPoint.grossAnnualIncome.observeNext { [weak self] income in
-        guard let income = income else {
-          self?.dataReceiver.set(maxMonthlyNetIncome: 0)
-          return
-        }
-        self?.dataReceiver.set(maxMonthlyNetIncome: income / 12)
-      }
-    }
   }
 
   func provideDataCollectorData() {
@@ -72,11 +55,6 @@ class UserDataCollectorInteractor: UserDataCollectorInteractorProtocol {
                           requiredData: requiredData,
                           skipSteps: config.skipSteps,
                           mode: config.mode,
-                          availableHousingTypes: config.housingTypes,
-                          availableSalaryFrequencies: config.salaryFrequencies,
-                          availableIncomeTypes: config.incomeTypes,
-                          availableTimeAtAddressOptions: config.timeAtAddressOptions,
-                          availableCreditScoreOptions: config.availableCreditScoreOptions,
                           primaryCredentialType: config.primaryAuthCredential,
                           secondaryCredentialType: config.secondaryAuthCredential,
                           googleGeocodingAPIKey: config.googleGeocodingAPIKey)

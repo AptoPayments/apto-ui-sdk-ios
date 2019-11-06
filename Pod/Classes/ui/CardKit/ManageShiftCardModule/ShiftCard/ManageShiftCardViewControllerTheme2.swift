@@ -135,14 +135,14 @@ extension ManageShiftCardViewControllerTheme2: ManageShiftCardMainViewDelegate, 
 
 extension ManageShiftCardViewControllerTheme2: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return presenter.viewModel.transactions.numberOfSections + 1
+    return presenter.viewModel.transactions.tree.numberOfSections + 1
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if section == 0 {
       return presenter.viewModel.cardHolder.value == nil ? 0 : 1
     }
-    return presenter.viewModel.transactions.numberOfItems(inSection: section - 1)
+    return presenter.viewModel.transactions.tree.numberOfItems(inSection: section - 1)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -151,11 +151,12 @@ extension ManageShiftCardViewControllerTheme2: UITableViewDataSource {
     }
     let path = IndexPath(item: indexPath.row, section: indexPath.section - 1)
     let viewModel = presenter.viewModel
-    let transaction = viewModel.transactions[path]
+    let transaction = viewModel.transactions[itemAt: path]
     let controller = TransactionListCellControllerTheme2(transaction: transaction,
                                                          uiConfiguration: self.uiConfiguration)
     let cell = controller.cell(tableView)
-    controller.isLastCellInSection = path.row == (viewModel.transactions.numberOfItems(inSection: path.section) - 1)
+    controller.isLastCellInSection =
+      path.row == (viewModel.transactions.tree.numberOfItems(inSection: path.section) - 1)
     return cell
   }
 }
@@ -181,7 +182,8 @@ extension ManageShiftCardViewControllerTheme2: UITableViewDelegate {
     }
     let containerView = UIView()
     containerView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
-    let contentView = SectionHeaderViewTheme2(text: presenter.viewModel.transactions.sections[section - 1].metadata,
+    let viewModel = presenter.viewModel
+    let contentView = SectionHeaderViewTheme2(text: viewModel.transactions.tree.sections[section - 1].metadata,
                                               uiConfig: uiConfiguration)
     containerView.addSubview(contentView)
     contentView.snp.makeConstraints { make in
@@ -450,15 +452,10 @@ private extension ManageShiftCardViewControllerTheme2 {
       self.mainView.set(showInfo: visible)
     }.dispose(in: disposeBag)
 
-    viewModel.transactions.observeNext { [unowned self] event in
-      switch event.change {
-      case .reset:
-        break
-      default:
-        self.updateUI()
-        self.transactionsList.switchRefreshHeader(to: .normal(.success, 0.5))
-        self.transactionsList.switchRefreshFooter(to: .normal)
-      }
+    viewModel.transactions.observeNext { [unowned self] _ in
+      self.updateUI()
+      self.transactionsList.switchRefreshHeader(to: .normal(.success, 0.5))
+      self.transactionsList.switchRefreshFooter(to: .normal)
     }.dispose(in: disposeBag)
 
     viewModel.transactionsLoaded.observeNext { [unowned self] _ in
@@ -483,10 +480,10 @@ private extension ManageShiftCardViewControllerTheme2 {
     transactionsList.reloadData()
     activateCardView.isHidden = shouldShowActivation == true ? viewModel.state.value != .created : true
     balanceView.alpha = activateCardView.isHidden ? 1 : 0.25
-    footer.isHidden = viewModel.transactions.isEmpty
+    footer.isHidden = viewModel.transactions.numberOfItemsInAllSections == 0
     // Only show the empty case if we are all set
     if viewModel.transactionsLoaded.value == true {
-      let shouldShowEmptyCase = viewModel.transactions.isEmpty
+      let shouldShowEmptyCase = viewModel.transactions.numberOfItemsInAllSections == 0
       emptyCaseView.isHidden = !shouldShowEmptyCase
       if shouldShowEmptyCase {
         view.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor

@@ -291,6 +291,10 @@ extension UIPinEntryTextField: UITextFieldDelegate {
     }
     return true
   }
+
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    currentTextField = textField
+  }
 }
 
 extension UIPinEntryTextField: _UITextFieldDelegate {

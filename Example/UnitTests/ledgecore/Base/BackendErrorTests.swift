@@ -250,4 +250,46 @@ class BackendErrorTest: XCTestCase {
     // Then
     XCTAssertFalse(isNetworkNotAvailable)
   }
+
+  func testErrorInfoReturnsCodeAndDescription() {
+    // Given
+    let error = BackendError(code: .addressInvalid)
+
+    // When
+    let errorInfo = error.eventInfo
+
+    // Then
+    XCTAssertNotNil(errorInfo["code"])
+    XCTAssertNotNil(errorInfo["message"])
+    XCTAssertNil(errorInfo["reason"])
+    XCTAssertNil(errorInfo["raw_code"])
+  }
+
+  func testErrorWithReasonErrorInfoReturnsCodeDescriptionAndReason() {
+    // Given
+    let error = BackendError(code: .addressInvalid, reason: "reason")
+
+    // When
+    let errorInfo = error.eventInfo
+
+    // Then
+    XCTAssertNotNil(errorInfo["code"])
+    XCTAssertNotNil(errorInfo["message"])
+    XCTAssertNotNil(errorInfo["reason"])
+    XCTAssertNil(errorInfo["raw_code"])
+  }
+
+  func testErrorWithRawCodeErrorInfoReturnsCodeDescriptionAndRawCode() {
+    // Given
+    let error = BackendError(code: .addressInvalid, rawCode: 1234, reason: "reason")
+
+    // When
+    let errorInfo = error.eventInfo
+
+    // Then
+    XCTAssertNotNil(errorInfo["code"])
+    XCTAssertNotNil(errorInfo["message"])
+    XCTAssertNotNil(errorInfo["reason"])
+    XCTAssertNotNil(errorInfo["raw_code"])
+  }
 }

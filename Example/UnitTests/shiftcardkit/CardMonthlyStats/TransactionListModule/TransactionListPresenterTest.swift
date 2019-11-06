@@ -74,8 +74,8 @@ class TransactionListPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertEqual(1, sut.viewModel.transactions.numberOfSections)
-    XCTAssertEqual(1, sut.viewModel.transactions.numberOfItems(inSection: 0))
+    XCTAssertEqual(1, sut.viewModel.transactions.tree.numberOfSections)
+    XCTAssertEqual(1, sut.viewModel.transactions.tree.numberOfItems(inSection: 0))
   }
 
   func testViewLoadedSuccessfullyReloadDataUpdateViewModel() {
@@ -87,8 +87,8 @@ class TransactionListPresenterTest: XCTestCase {
     sut.reloadData()
 
     // Then
-    XCTAssertEqual(1, sut.viewModel.transactions.numberOfSections)
-    XCTAssertEqual(1, sut.viewModel.transactions.numberOfItems(inSection: 0))
+    XCTAssertEqual(1, sut.viewModel.transactions.tree.numberOfSections)
+    XCTAssertEqual(1, sut.viewModel.transactions.tree.numberOfItems(inSection: 0))
   }
 
   func testReloadDataDoNotShowSpinner() {
@@ -111,8 +111,8 @@ class TransactionListPresenterTest: XCTestCase {
     sut.loadMoreTransactions { _ in }
 
     // Then
-    XCTAssertEqual(1, sut.viewModel.transactions.numberOfSections)
-    XCTAssertEqual(2, sut.viewModel.transactions.numberOfItems(inSection: 0))
+    XCTAssertEqual(1, sut.viewModel.transactions.tree.numberOfSections)
+    XCTAssertEqual(2, sut.viewModel.transactions.tree.numberOfItems(inSection: 0))
   }
 
   func testLoadMoreTransactionsDoNotShowSpinner() {

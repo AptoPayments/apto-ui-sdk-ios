@@ -46,15 +46,15 @@ class TransactionListViewController: ShiftViewController {
 
 extension TransactionListViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return presenter.viewModel.transactions.numberOfSections
+    return presenter.viewModel.transactions.tree.numberOfSections
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return presenter.viewModel.transactions.numberOfItems(inSection: section)
+    return presenter.viewModel.transactions.tree.numberOfItems(inSection: section)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let transaction = presenter.viewModel.transactions[indexPath]
+    let transaction = presenter.viewModel.transactions[itemAt: indexPath]
     let controller = transactionsListCellController(for: transaction)
     let cell = controller.cell(tableView)
     return cell
@@ -72,7 +72,7 @@ extension TransactionListViewController: UITableViewDataSource {
 
 extension TransactionListViewController: UITableViewDelegate {
   public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let transaction = presenter.viewModel.transactions[indexPath]
+    let transaction = presenter.viewModel.transactions[itemAt: indexPath]
     presenter.transactionSelected(transaction)
   }
 
@@ -81,7 +81,7 @@ extension TransactionListViewController: UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let title = presenter.viewModel.transactions.sections[section].metadata
+    let title = presenter.viewModel.transactions.tree.sections[section].metadata
     return sectionHeaderView(with: title)
   }
 
@@ -110,14 +110,9 @@ private extension TransactionListViewController {
       self?.title = title
     }.dispose(in: disposeBag)
     presenter.viewModel.transactions.observeNext { [weak self] event in
-      switch event.change {
-      case .reset:
-        break
-      default:
-        self?.transactionsList.reloadData()
-        self?.transactionsList.switchRefreshHeader(to: .normal(.success, 0.5))
-        self?.transactionsList.switchRefreshFooter(to: .normal)
-      }
+      self?.transactionsList.reloadData()
+      self?.transactionsList.switchRefreshHeader(to: .normal(.success, 0.5))
+      self?.transactionsList.switchRefreshFooter(to: .normal)
     }.dispose(in: disposeBag)
   }
 }

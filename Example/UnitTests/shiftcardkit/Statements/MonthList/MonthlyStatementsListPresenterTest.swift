@@ -56,13 +56,13 @@ class MonthlyStatementsListPresenterTest: XCTestCase {
     // Then
     let months = sut.viewModel.months
     XCTAssertTrue(sut.viewModel.dataLoaded.value)
-    XCTAssertEqual(2, months.numberOfSections)
-    XCTAssertEqual(1, months.numberOfItems(inSection: 0))
-    XCTAssertEqual(1, months.numberOfItems(inSection: 1))
-    XCTAssertEqual("2019", months.sections[0].metadata)
-    XCTAssertEqual("2018", months.sections[1].metadata)
-    XCTAssertEqual(period.end, months[IndexPath(row: 0, section: 0)])
-    XCTAssertEqual(period.start, months[IndexPath(row: 0, section: 1)])
+    XCTAssertEqual(2, months.tree.numberOfSections)
+    XCTAssertEqual(1, months.tree.numberOfItems(inSection: 0))
+    XCTAssertEqual(1, months.tree.numberOfItems(inSection: 1))
+    XCTAssertEqual("2019", months.tree.sections[0].metadata)
+    XCTAssertEqual("2018", months.tree.sections[1].metadata)
+    XCTAssertEqual(period.end, months[itemAt: [0, 0]])
+    XCTAssertEqual(period.start, months[itemAt: [1, 0]])
   }
 
   func testLoadPeriodSucceedWithEmptyPeriodUpdateViewModelMonths() {
@@ -75,7 +75,7 @@ class MonthlyStatementsListPresenterTest: XCTestCase {
 
     // Then
     let months = sut.viewModel.months
-    XCTAssertEqual(0, months.numberOfSections)
+    XCTAssertEqual(0, months.tree.numberOfSections)
   }
 
   func testLoadPeriodFailsUpdateViewModelError() {

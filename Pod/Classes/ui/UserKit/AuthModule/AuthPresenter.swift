@@ -54,7 +54,7 @@ class AuthPresenter: AuthPresenterProtocol {
     viewController.showCancelButton()
     viewController.showNextButton()
     self.viewController.update(progress: 10)
-    primaryCredentialStep.valid.distinctUntilChanged().observeNext { [weak self] validStep in
+    primaryCredentialStep.valid.removeDuplicates().observeNext { [weak self] validStep in
       if validStep { self?.viewController.activateNextButton() }
       else { self?.viewController.deactivateNextButton() }
     }.dispose(in: disposeBag)

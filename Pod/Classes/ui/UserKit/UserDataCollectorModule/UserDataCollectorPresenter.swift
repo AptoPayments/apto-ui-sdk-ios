@@ -44,14 +44,7 @@ protocol UserDataCollectorViewProtocol: ViewControllerProtocol {
 
 enum DataCollectorStep: Int {
   case info
-  case home
   case address
-  case timeAtAddress
-  case income
-  case monthlyIncome
-  case paydayLoan
-  case memberOfArmedForces
-  case creditScore
   case birthDaySSN
 }
 
@@ -68,7 +61,6 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
   private let uiConfig: UIConfig
   private let config: UserDataCollectorConfig
   private var userData: DataPointList! // swiftlint:disable:this implicitly_unwrapped_optional
-  private var maxMonthlyNetIncome: Int = 0
 
   init(config: UserDataCollectorConfig, uiConfig: UIConfig) {
     self.uiConfig = uiConfig
@@ -81,21 +73,14 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
 
   // MARK: UserDataCollectorDataReceiver
 
-  // swiftlint:disable function_parameter_count
   func set(_ userData: DataPointList,
            missingData: RequiredDataPointList,
            requiredData: RequiredDataPointList,
            skipSteps: Bool,
            mode: UserDataCollectorFinalStepMode,
-           availableHousingTypes: [HousingType],
-           availableSalaryFrequencies: [SalaryFrequency],
-           availableIncomeTypes: [IncomeType],
-           availableTimeAtAddressOptions: [TimeAtAddressOption],
-           availableCreditScoreOptions: [CreditScoreOption],
            primaryCredentialType: DataPointType,
            secondaryCredentialType: DataPointType,
            googleGeocodingAPIKey: String?) {
-    // swiftlint:enable function_parameter_count
     self.userData = userData
     stepVisibility = self.calculateStepVisibility(userData: userData,
                                                   mode: mode,
@@ -105,11 +90,6 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
     let stepFactory = UserDataCollectorStepFactory(requiredData: requiredData,
                                                    userData: userData,
                                                    mode: mode,
-                                                   availableHousingTypes: availableHousingTypes,
-                                                   availableSalaryFrequencies: availableSalaryFrequencies,
-                                                   availableIncomeTypes: availableIncomeTypes,
-                                                   availableTimeAtAddressOptions: availableTimeAtAddressOptions,
-                                                   availableCreditScoreOptions: availableCreditScoreOptions,
                                                    primaryCredentialType: primaryCredentialType,
                                                    secondaryCredentialType: secondaryCredentialType,
                                                    googleGeocodingAPIKey: googleGeocodingAPIKey,
@@ -139,9 +119,6 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
       return
     }
     configureNavigationFor(step: step)
-    if step == .monthlyIncome {
-      updateMaxMonthlyIncome(maxMonthlyNetIncome)
-    }
     let fields = fieldsFor(step: step)
     if stepVisibility.index(of: previousStep) < stepIndex {
       viewController.push(fields: fields)
@@ -154,10 +131,6 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
     }
     viewController.update(progress: 100 * Float(stepIndex + 1) / Float(stepVisibility.count))
     previousStep = step
-  }
-
-  func set(maxMonthlyNetIncome: Int) {
-    self.maxMonthlyNetIncome = maxMonthlyNetIncome
   }
 
   func setDataCollectorError(_ error: NSError) {
@@ -249,13 +222,6 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
     return handler.rows
   }
 
-  fileprivate func updateMaxMonthlyIncome(_ maxMonthlyIncome: Int) {
-    guard let handler = self.stepsDictionary[.monthlyIncome] as? MonthlyIncomeStep else {
-      return
-    }
-    handler.update(maxMonthlyIncome)
-  }
-
   private func firstNonCompleteStep(from currentStep: DataCollectorStep) -> DataCollectorStep {
     let index = stepVisibility.index(of: currentStep)
     return stepVisibility[index + 1] as! DataCollectorStep // swiftlint:disable:this force_cast
@@ -281,7 +247,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
       self.viewController.showNavNextButton(title: "user-data-collector.next-button.title".podLocalized(),
                                             tintColor: self.uiConfig.iconTertiaryColor)
     }
-    self.currentStepObserving = stepHandler.valid.distinctUntilChanged().observeNext { [weak self] validStep in
+    self.currentStepObserving = stepHandler.valid.removeDuplicates().observeNext { [weak self] validStep in
       if validStep {
         self?.viewController.showNavNextButton(title: "user-data-collector.next-button.title".podLocalized(),
                                                tintColor: self?.uiConfig.iconTertiaryColor)
@@ -330,58 +296,21 @@ private extension UserDataCollectorPresenter {
     return retVal
   }
 
-  func removeCompletedSteps(from retVal: NSMutableOrderedSet,
-                            userData: DataPointList) {
+  func removeCompletedSteps(from retVal: NSMutableOrderedSet, userData: DataPointList) {
     if infoComplete(userData) {
       retVal.remove(DataCollectorStep.info)
-    }
-    if homeComplete(userData) {
-      retVal.remove(DataCollectorStep.home)
     }
     if addressComplete(userData) {
       retVal.remove(DataCollectorStep.address)
     }
-    if timeAtAddressComplete(userData) {
-      retVal.remove(DataCollectorStep.timeAtAddress)
-    }
-    if incomeComplete(userData) {
-      retVal.remove(DataCollectorStep.income)
-    }
-    if paydayLoanComplete(userData) {
-      retVal.remove(DataCollectorStep.paydayLoan)
-    }
-    if memberOfArmedForcesComplete(userData) {
-      retVal.remove(DataCollectorStep.memberOfArmedForces)
-    }
-    if monthlyNetIncomeComplete(userData) {
-      retVal.remove(DataCollectorStep.monthlyIncome)
-    }
-    if creditScoreComplete(userData) {
-      retVal.remove(DataCollectorStep.creditScore)
-    }
   }
 
-  // swiftlint:disable:next cyclomatic_complexity
   func dataCollectorSteps(for dataPointType: DataPointType) -> [DataCollectorStep] {
     switch dataPointType {
     case .personalName, .email, .phoneNumber:
       return [.info]
-    case .housing:
-      return [.home]
     case .address:
       return [.address]
-    case .timeAtAddress:
-      return [.timeAtAddress]
-    case .incomeSource:
-      return [.income]
-    case .income:
-      return [.income, .monthlyIncome]
-    case .paydayLoan:
-      return [.paydayLoan]
-    case .memberOfArmedForces:
-      return [.memberOfArmedForces]
-    case .creditScore:
-      return [.creditScore]
     case .birthDate, .idDocument:
       return [.birthDaySSN]
     case .financialAccount:
@@ -393,37 +322,8 @@ private extension UserDataCollectorPresenter {
     return userData.nameDataPoint.complete() && userData.emailDataPoint.complete() && userData.phoneDataPoint.complete()
   }
 
-  func homeComplete(_ userData: DataPointList) -> Bool {
-    return userData.housingDataPoint.complete() &&
-      userData.addressDataPoint.zip.value != nil
-  }
-
   func addressComplete(_ userData: DataPointList) -> Bool {
     return userData.addressDataPoint.complete()
-  }
-
-  func timeAtAddressComplete(_ userData: DataPointList) -> Bool {
-    return userData.timeAtAddressDataPoint.complete()
-  }
-
-  func incomeComplete(_ userData: DataPointList) -> Bool {
-    return userData.incomeDataPoint.grossAnnualIncome.value != nil && userData.incomeSourceDataPoint.complete()
-  }
-
-  func paydayLoanComplete(_ userData: DataPointList) -> Bool {
-    return userData.paydayLoanDataPoint.complete()
-  }
-
-  func memberOfArmedForcesComplete(_ userData: DataPointList) -> Bool {
-    return userData.memberOfArmedForcesDataPoint.complete()
-  }
-
-  func monthlyNetIncomeComplete(_ userData: DataPointList) -> Bool {
-    return userData.incomeDataPoint.netMonthlyIncome.value != nil
-  }
-
-  func creditScoreComplete(_ userData: DataPointList) -> Bool {
-    return userData.creditScoreDataPoint.complete()
   }
 
   func birthdaySSNComplete(_ userData: DataPointList) -> Bool {
@@ -431,11 +331,6 @@ private extension UserDataCollectorPresenter {
   }
 
   func borrowerDataComplete(_ userData: DataPointList) -> Bool {
-    return infoComplete(userData)
-      && addressComplete(userData)
-      && incomeComplete(userData)
-      && monthlyNetIncomeComplete(userData)
-      && creditScoreComplete(userData)
-      && birthdaySSNComplete(userData)
+    return infoComplete(userData) && addressComplete(userData) && birthdaySSNComplete(userData)
   }
 }

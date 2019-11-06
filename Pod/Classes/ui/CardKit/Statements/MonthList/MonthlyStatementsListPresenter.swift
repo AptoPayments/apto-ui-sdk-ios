@@ -52,9 +52,10 @@ class MonthlyStatementsListPresenter: MonthlyStatementsListPresenterProtocol {
     months.forEach { month in
       if month.year != currentYear {
         currentYear = month.year
-        viewModel.months.appendSection(Observable2DArraySection<String, Month>(metadata: "\(currentYear)", items: []))
+        let section = Array2D<String, Month>(sectionsWithItems: [("\(currentYear)", [])])[sectionAt: 0]
+        viewModel.months.appendSection(section)
       }
-      viewModel.months.appendItem(month, toSection: viewModel.months.numberOfSections - 1)
+      viewModel.months.appendItem(month, toSectionAt: viewModel.months.tree.numberOfSections - 1)
     }
   }
 }
