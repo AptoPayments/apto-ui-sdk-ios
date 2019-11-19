@@ -11,7 +11,7 @@ import SwiftyJSON
 @testable import AptoSDK
 
 class JSONTransportSpy: JSONTransport {
-  let environment: JSONTransportEnvironment = .development
+  let environment: JSONTransportEnvironment = .staging
   lazy var baseUrlProvider: BaseURLProvider = environment
 
   private(set) var getCalled = false

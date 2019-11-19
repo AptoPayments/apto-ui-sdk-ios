@@ -29,7 +29,7 @@ class AptoPlatformFake: AptoPlatformProtocol {
   }
 
   func initializeWithApiKey(_ apiKey: String) {
-    initializeWithApiKey(apiKey, environment: .development)
+    initializeWithApiKey(apiKey, environment: .staging)
   }
 
   // MARK: - Configuration handling
