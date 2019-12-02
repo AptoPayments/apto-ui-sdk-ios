@@ -386,6 +386,20 @@ class ComponentCatalog {
     return button
   }
 
+  static func secondaryButtonWith(title: String,
+                                  accessibilityLabel: String? = nil,
+                                  uiConfig: UIConfig,
+                                  tapHandler: @escaping() -> Void) -> UIButton {
+    let button = UIButton()
+    button.backgroundColor = .clear
+    button.accessibilityLabel = accessibilityLabel
+    button.titleLabel?.font = uiConfig.fontProvider.instructionsFont
+    button.setTitle(title, for: UIControl.State())
+    button.setTitleColor(uiConfig.textSecondaryColor, for: UIControl.State())
+    _ = button.reactive.tap.observeNext(with: tapHandler)
+    return button
+  }
+
   static func sectionTitleLabelWith(text: String,
                                     textAlignment: NSTextAlignment = .left,
                                     accessibilityLabel: String? = nil,

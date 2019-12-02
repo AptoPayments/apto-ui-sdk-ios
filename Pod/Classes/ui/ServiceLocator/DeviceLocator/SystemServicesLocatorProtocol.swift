@@ -12,4 +12,7 @@ protocol FileDownloaderProvider {
 }
 
 protocol SystemServicesLocatorProtocol: FileDownloaderProvider {
+  func fileManager(filename: String) -> FileManagerProtocol
+  func dateProvider() -> DateProviderProtocol
+  func authenticationManager() -> AuthenticationManagerProtocol
 }

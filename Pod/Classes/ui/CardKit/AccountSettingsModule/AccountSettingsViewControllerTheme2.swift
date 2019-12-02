@@ -68,13 +68,22 @@ private extension AccountSettingsViewControllerTheme2 {
   func setUpViewModelSubscriptions() {
     let viewModel = presenter.viewModel
     combineLatest(viewModel.showNotificationPreferences,
-                  viewModel.showMonthlyStatements).observeNext { [unowned self] showNotification, showStatements in
-      self.updateUpFormViewContent(showNotificationPreferences: showNotification, showMonthlyStatements: showStatements)
+                  viewModel.showMonthlyStatements,
+                  viewModel.showChangePIN).observeNext { [unowned self] showNotification, showStatements,
+                    showChangePIN in
+      self.updateUpFormViewContent(showNotificationPreferences: showNotification, showMonthlyStatements: showStatements,
+                                   showChangePIN: showChangePIN)
     }.dispose(in: disposeBag)
   }
 
-  func updateUpFormViewContent(showNotificationPreferences: Bool, showMonthlyStatements: Bool) {
+  func updateUpFormViewContent(showNotificationPreferences: Bool, showMonthlyStatements: Bool, showChangePIN: Bool) {
     var rows: [FormRowView] = [FormRowSeparatorView(backgroundColor: .clear, height: 16)]
+    if showChangePIN {
+      rows += [
+        self.createSecuritySettingsTitle(),
+        self.createChangePINButton()
+      ]
+    }
     if showNotificationPreferences {
       rows += [
         self.createAppSettingsTitle(),
@@ -141,6 +150,22 @@ private extension AccountSettingsViewControllerTheme2 {
     formView.backgroundColor = view.backgroundColor
     formView.delegate = self
     view.bringSubviewToFront(titleContainerView) // Make the shadow visible on scrolling
+  }
+
+  func createSecuritySettingsTitle() -> FormRowView {
+    return FormRowSectionTitleViewTheme2(title: "account_settings.security.title".podLocalized(),
+                                         uiConfig: uiConfiguration)
+  }
+
+  func createChangePINButton() -> FormRowView {
+    return FormBuilder.linkRowWith(title: "account_settings.security.change_pin.title".podLocalized(),
+                                   subtitle: "account_settings.security.change_pin.description".podLocalized(),
+                                   leftIcon: nil,
+                                   height: 72,
+                                   showSplitter: false,
+                                   uiConfig: uiConfiguration) { [unowned self] in
+      self.presenter.changePINTapped()
+    }
   }
 
   func createAppSettingsTitle() -> FormRowView {

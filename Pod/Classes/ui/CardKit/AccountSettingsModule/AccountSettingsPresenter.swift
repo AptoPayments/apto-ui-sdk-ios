@@ -25,6 +25,7 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
   func viewLoaded() {
     viewModel.showNotificationPreferences.send(config.showNotificationPreferences)
     viewModel.showMonthlyStatements.send(config.showMonthlyStatements)
+    viewModel.showChangePIN.send(config.showChangePIN)
     analyticsManager?.track(event: Event.accountSettings)
   }
 
@@ -46,5 +47,9 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
 
   func monthlyStatementsTapped() {
     router.showMonthlyStatements()
+  }
+
+  func changePINTapped() {
+    router.showChangePIN()
   }
 }

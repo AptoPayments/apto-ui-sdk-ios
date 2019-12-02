@@ -78,6 +78,15 @@ final class ViewLocator: ViewLocatorProtocol {
     }
   }
 
+  // MARK: - Biometrics
+  func createPINView(presenter: CreatePINPresenterProtocol) -> ShiftViewController {
+    return CreatePINViewController(uiConfiguration: uiConfig, presenter: presenter)
+  }
+
+  func verifyPINView(presenter: VerifyPINPresenterProtocol) -> ShiftViewController {
+    return VerifyPINViewController(uiConfiguration: uiConfig, presenter: presenter)
+  }
+
   func issueCardView(uiConfig: UIConfig, eventHandler: IssueCardPresenterProtocol) -> UIViewController {
     switch uiTheme {
     case .theme1:

@@ -21,8 +21,18 @@ class LocalAuthenticationHandler {
     let reasonString = "Show the card info"
     if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
       localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
-                                                localizedReason: reasonString) { success, _ in
-        completion(.success(success))
+                                                localizedReason: reasonString) { success, error in
+        if success {
+          completion(.success(true))
+        }
+        else {
+          if let error = error {
+            completion(.failure(error as NSError))
+          }
+          else {
+            completion(.success(false))
+          }
+        }
       }
     }
     else {

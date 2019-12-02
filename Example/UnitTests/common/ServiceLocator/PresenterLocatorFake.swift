@@ -38,6 +38,17 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
     return externalOauthPresenterSpy
   }
 
+  // MARK: - Biometrics
+  lazy var createPINPresenterSpy = CreatePINPresenterSpy()
+  func createPINPresenter() -> CreatePINPresenterProtocol {
+    return createPINPresenterSpy
+  }
+
+  lazy var verifyPINPresenterSpy = VerifyPINPresenterSpy()
+  func verifyPINPresenter(config: VerifyPINPresenterConfig) -> VerifyPINPresenterProtocol {
+    return verifyPINPresenterSpy
+  }
+
   lazy var issueCardPresenterSpy = IssueCardPresenterSpy()
   func issueCardPresenter(router: IssueCardRouter,
                           interactor: IssueCardInteractorProtocol,

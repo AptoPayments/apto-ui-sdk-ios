@@ -75,6 +75,10 @@ open class UIModule: NSObject, UIModuleProtocol {
     onClose?(self)
   }
 
+  public func finish() {
+    onFinish?(self)
+  }
+
   public func next() {
     onNext?(self)
   }

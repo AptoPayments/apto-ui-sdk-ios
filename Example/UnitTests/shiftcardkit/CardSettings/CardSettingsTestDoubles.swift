@@ -38,6 +38,7 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
   private(set) var showCardInfoCalled = false
   func showCardInfo(completion: @escaping () -> Void) {
     showCardInfoCalled = true
+    completion()
   }
 
   private(set) var hideCardInfoCalled = false
@@ -70,6 +71,13 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
   private(set) var showMonthlyStatementsCalled = false
   func showMonthlyStatements() {
     showMonthlyStatementsCalled = true
+  }
+
+  private(set) var authenticateCalled = false
+  var nextAuthenticateResult = true
+  func authenticate(completion: @escaping (Bool) -> Void) {
+    authenticateCalled = true
+    completion(nextAuthenticateResult)
   }
 }
 

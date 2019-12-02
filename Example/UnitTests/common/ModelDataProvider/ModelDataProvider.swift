@@ -472,6 +472,8 @@ class ModelDataProvider {
 
   lazy var url = URL(string: "https://shiftpayments.com")! // swiftlint:disable:this implicitly_unwrapped_optional
 
+  lazy var tappedURL = TappedURL(title: "AptoPayments", url: url)
+
   lazy var categorySpending = CategorySpending(categoryId: .food,
                                                spending: Amount(value: 100, currency: "USD"),
                                                difference: 10)

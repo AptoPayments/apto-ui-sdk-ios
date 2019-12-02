@@ -41,6 +41,17 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
     return externalOauthInteractorSpy
   }
 
+  // MARK: - Biometrics
+  lazy var createPINInteractorFake = CreatePINInteractorFake()
+  func createPINInteractor() -> CreatePINInteractorProtocol {
+    return createPINInteractorFake
+  }
+
+  lazy var verifyPINInteractorFake = VerifyPINInteractorFake()
+  func verifyPINInteractor() -> VerifyPINInteractorProtocol {
+    return verifyPINInteractorFake
+  }
+
   lazy var issueCardInteractorFake = IssueCardInteractorFake()
   func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol {
     return issueCardInteractorFake

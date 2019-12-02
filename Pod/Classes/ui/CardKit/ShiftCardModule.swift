@@ -171,31 +171,56 @@ open class ShiftCardModule: UIModule {
     }
   }
 
-  private func showManageCardModule(card: Card, addChild: Bool, pushModule: Bool,
-                                    completion: @escaping Result<UIViewController, NSError>.Callback) {
-    let existingCardModule = serviceLocator.moduleLocator.manageCardModule(card: card, mode: mode)
-    self.existingShiftCardModule = existingCardModule
-    let leftButtonMode: UIViewControllerLeftButtonMode = self.mode == .standalone ? .none : .close
-    if addChild {
-      existingCardModule.onClose = { [unowned self] _ in
-        self.close()
+  private func handleAuthentication(completion: @escaping () -> Void) {
+    let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
+    if authenticationManager.shouldAuthenticateOnStartUp() {
+      authenticationManager.authenticate(from: self) { accessGranted in
+        if accessGranted {
+          completion()
+        }
       }
-      self.addChild(module: existingCardModule, leftButtonMode: leftButtonMode, completion: completion)
+    }
+    else if authenticationManager.shouldCreateCode() {
+      let module = serviceLocator.moduleLocator.createPINModule()
+      module.onFinish = { [unowned self] _ in
+        self.dismissModule {
+          completion()
+        }
+      }
+      present(module: module) { _ in }
     }
     else {
-      if pushModule {
-        existingCardModule.onClose = { [unowned self] _ in
-          self.popModule(animated: false) { [unowned self] in
-            self.close()
-          }
-        }
-        push(module: existingCardModule, animated: true, leftButtonMode: leftButtonMode, completion: completion)
-      }
-      else {
+      completion()
+    }
+  }
+
+  private func showManageCardModule(card: Card, addChild: Bool, pushModule: Bool,
+                                    completion: @escaping Result<UIViewController, NSError>.Callback) {
+    self.handleAuthentication { [unowned self] in
+      let existingCardModule = self.serviceLocator.moduleLocator.manageCardModule(card: card, mode: self.mode)
+      self.existingShiftCardModule = existingCardModule
+      let leftButtonMode: UIViewControllerLeftButtonMode = self.mode == .standalone ? .none : .close
+      if addChild {
         existingCardModule.onClose = { [unowned self] _ in
           self.close()
         }
-        present(module: existingCardModule, animated: true, leftButtonMode: leftButtonMode, completion: completion)
+        self.addChild(module: existingCardModule, leftButtonMode: leftButtonMode, completion: completion)
+      }
+      else {
+        if pushModule {
+          existingCardModule.onClose = { [unowned self] _ in
+            self.popModule(animated: false) { [unowned self] in
+              self.close()
+            }
+          }
+          self.push(module: existingCardModule, animated: true, leftButtonMode: leftButtonMode, completion: completion)
+        }
+        else {
+          existingCardModule.onClose = { [unowned self] _ in
+            self.close()
+          }
+          self.present(module: existingCardModule, leftButtonMode: leftButtonMode, completion: completion)
+        }
       }
     }
   }
@@ -291,12 +316,13 @@ open class ShiftCardModule: UIModule {
   @objc private func didReceiveSessionClosedEvent(_ notification: Notification) {
     self.hideLoadingView()
     self.hideLoadingSpinner()
+    clearUserToken()
     close()
   }
 
   fileprivate func clearUserToken() {
+    serviceLocator.systemServicesLocator.authenticationManager().invalidateCurrentCode()
     FileDownloaderImpl.clearCache()
     AptoPlatform.defaultManager().clearUserToken()
   }
-
 }

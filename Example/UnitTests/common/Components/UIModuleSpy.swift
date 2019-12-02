@@ -23,6 +23,12 @@ class UIModuleSpy: UIModule {
     super.close()
   }
 
+  private(set) var finishCalled = false
+  override func finish() {
+    finishCalled = true
+    super.finish()
+  }
+
   private(set) var nextCalled = false
   override func next() {
     nextCalled = true

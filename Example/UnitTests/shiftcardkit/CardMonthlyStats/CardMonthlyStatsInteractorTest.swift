@@ -99,7 +99,7 @@ class CardMonthlyStatsInteractorTest: XCTestCase {
 
   func testStatementsFeatureEnabledCallbackTrue() {
     // Given
-    platform.nextIsFeatureEnabledResult = true
+    platform.setCardOptions(CardOptions(features: [.showMonthlyStatementsOption: true]))
 
     // When
     sut.isStatementsFeatureEnabled { isEnabled in
@@ -110,7 +110,7 @@ class CardMonthlyStatsInteractorTest: XCTestCase {
 
   func testStatementsFeatureDisabledCallbackFalse() {
     // Given
-    platform.nextIsFeatureEnabledResult = false
+    platform.setCardOptions(CardOptions(features: [.showMonthlyStatementsOption: false]))
 
     // When
     sut.isStatementsFeatureEnabled { isEnabled in

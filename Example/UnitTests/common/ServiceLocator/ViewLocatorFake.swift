@@ -38,6 +38,15 @@ class ViewLocatorFake: ViewLocatorProtocol {
     return ExternalOAuthViewControllerTheme1(uiConfiguration: uiConfiguration, eventHandler: eventHandler)
   }
 
+  // MARK: - Biometrics
+  func createPINView(presenter: CreatePINPresenterProtocol) -> ShiftViewController {
+    return ShiftViewController(uiConfiguration: uiConfig)
+  }
+
+  func verifyPINView(presenter: VerifyPINPresenterProtocol) -> ShiftViewController {
+    return ShiftViewController(uiConfiguration: uiConfig)
+  }
+
   func issueCardView(uiConfig: UIConfig, eventHandler: IssueCardPresenterProtocol) -> UIViewController {
     return IssueCardViewControllerTheme1(uiConfiguration: uiConfig, eventHandler: eventHandler)
   }

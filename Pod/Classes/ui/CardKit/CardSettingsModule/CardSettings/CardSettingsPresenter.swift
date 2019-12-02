@@ -31,7 +31,6 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   private let rowsPerPage = 20
   private let enableCardAction: EnableCardAction
   private let disableCardAction: DisableCardAction
-  private let showCardInfoAction: ShowCardInfoAction
   private let reportLostCardAction: ReportLostCardAction
   private let helpAction: HelpAction
   private let config: CardSettingsPresenterConfig
@@ -49,7 +48,6 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     self.disableCardAction = DisableCardAction(platform: platform, card: self.card, uiConfig: uiConfig)
     self.reportLostCardAction = ReportLostCardAction(platform: platform, card: card, emailRecipients: emailRecipients,
                                                      uiConfig: uiConfig)
-    self.showCardInfoAction = ShowCardInfoAction()
     self.helpAction = HelpAction(emailRecipients: emailRecipients)
     let legalDocuments = LegalDocuments(cardHolderAgreement: config.cardholderAgreement,
                                         faq: config.faq,
@@ -126,7 +124,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
 
   func showCardInfoChanged(switcher: UISwitch) {
     if switcher.isOn {
-      self.showCardInfoAction.run { [weak self] accessGranted in
+      router.authenticate { [weak self] accessGranted in
         guard let self = self else { return }
         if !accessGranted {
           self.viewModel.showCardInfo.send(false)

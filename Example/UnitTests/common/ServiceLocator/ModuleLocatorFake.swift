@@ -45,6 +45,28 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
     return externalOauthModuleFake
   }
 
+  // MARK: - Biometrics
+  lazy var createPINModuleSpy: CreatePINModuleSpy = {
+    return CreatePINModuleSpy(serviceLocator: serviceLocator)
+  }()
+  func createPINModule() -> CreatePINModuleProtocol {
+    return createPINModuleSpy
+  }
+
+  lazy var verifyPINModuleSpy: VerifyPINModuleSpy = {
+    return VerifyPINModuleSpy(serviceLocator: serviceLocator)
+  }()
+  func verifyPINModule() -> VerifyPINModuleProtocol {
+    return verifyPINModuleSpy
+  }
+
+  lazy var changePINModuleSpy: ChangePINModuleSpy = {
+    return ChangePINModuleSpy(serviceLocator: serviceLocator)
+  }()
+  func changePINModule() -> ChangePINModuleProtocol {
+    return changePINModuleSpy
+  }
+
   func cardProductSelectorModule() -> CardProductSelectorModuleProtocol {
     Swift.fatalError("cardProductSelectorModule() has not been implemented")
   }

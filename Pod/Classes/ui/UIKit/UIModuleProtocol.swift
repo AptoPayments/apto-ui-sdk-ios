@@ -23,6 +23,7 @@ public protocol UIModuleProtocol: class {
   /// Module lifecycle
   func initialize(completion: @escaping Result<UIViewController, NSError>.Callback)
   func close()
+  func finish()
   func next()
 
   /// Add or remove content

@@ -45,6 +45,15 @@ final class InteractorLocator: InteractorLocatorProtocol {
     return ExternalOAuthInteractor(platform: serviceLocator.platform)
   }
 
+  // MARK: - Biometrics
+  func createPINInteractor() -> CreatePINInteractorProtocol {
+    return CreatePINInteractor(authenticationManager: serviceLocator.systemServicesLocator.authenticationManager())
+  }
+
+  func verifyPINInteractor() -> VerifyPINInteractorProtocol {
+    return VerifyPINInteractor(authenticationManager: serviceLocator.systemServicesLocator.authenticationManager())
+  }
+
   func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol {
     return IssueCardInteractor(platform: serviceLocator.platform, application: application)
   }

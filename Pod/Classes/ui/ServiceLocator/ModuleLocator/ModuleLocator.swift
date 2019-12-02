@@ -44,6 +44,19 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return ExternalOAuthModule(serviceLocator: serviceLocator, config: config, uiConfig: uiConfig)
   }
 
+  // MARK: - Biometrics
+  func createPINModule() -> CreatePINModuleProtocol {
+    return CreatePINModule(serviceLocator: serviceLocator)
+  }
+
+  func verifyPINModule() -> VerifyPINModuleProtocol {
+    return VerifyPINModule(serviceLocator: serviceLocator)
+  }
+
+  func changePINModule() -> ChangePINModuleProtocol {
+    return ChangePINModule(serviceLocator: serviceLocator)
+  }
+
   func cardProductSelectorModule() -> CardProductSelectorModuleProtocol {
     return CardProductSelectorModule(serviceLocator: serviceLocator)
   }

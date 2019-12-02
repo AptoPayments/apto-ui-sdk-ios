@@ -27,6 +27,7 @@ protocol CardSettingsRouterProtocol: class {
   func cardStateChanged(includingTransactions: Bool)
   func show(content: Content, title: String)
   func showMonthlyStatements()
+  func authenticate(completion: @escaping (Bool) -> Void)
 }
 
 extension CardSettingsRouterProtocol {

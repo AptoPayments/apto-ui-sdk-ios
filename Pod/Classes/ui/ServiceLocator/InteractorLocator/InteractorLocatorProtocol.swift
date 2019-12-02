@@ -21,6 +21,10 @@ protocol InteractorLocatorProtocol {
                                  dataReceiver: VerifyBirthDateDataReceiver) -> VerifyBirthDateInteractorProtocol
   func externalOAuthInteractor() -> ExternalOAuthInteractorProtocol
 
+  // MARK: . Biometrics
+  func createPINInteractor() -> CreatePINInteractorProtocol
+  func verifyPINInteractor() -> VerifyPINInteractorProtocol
+
   func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol
   func waitListInteractor(application: CardApplication) -> WaitListInteractorProtocol
   func cardWaitListInteractor(card: Card) -> CardWaitListInteractorProtocol

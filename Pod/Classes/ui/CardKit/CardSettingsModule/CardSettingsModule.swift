@@ -142,4 +142,9 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
     }
     push(module: module) { _ in }
   }
+
+  func authenticate(completion: @escaping (Bool) -> Void) {
+    let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
+    authenticationManager.authenticate(from: self, completion: completion)
+  }
 }

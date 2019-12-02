@@ -230,6 +230,41 @@ class CardSettingsModuleTest: XCTestCase {
     XCTAssertTrue(monthlyStatementsListModule.initializeCalled)
   }
 
+  func testAuthenticateCallAuthenticationManager() {
+    // Given
+    let authenticationManager = serviceLocator.systemServicesLocatorFake.authenticationManagerFake
+
+    // When
+    sut.authenticate { _ in }
+
+    // Then
+    XCTAssertTrue(authenticationManager.authenticateCalled)
+  }
+
+  func testAuthenticationSucceedCallbackAccessGranted() {
+    // Given
+    let authenticationManager = serviceLocator.systemServicesLocatorFake.authenticationManagerFake
+    authenticationManager.nextAuthenticateResult = true
+
+    // When
+    sut.authenticate { result in
+      // Then
+      XCTAssertTrue(result)
+    }
+  }
+
+  func testAuthenticationFailsCallbackAccessDenied() {
+    // Given
+    let authenticationManager = serviceLocator.systemServicesLocatorFake.authenticationManagerFake
+    authenticationManager.nextAuthenticateResult = false
+
+    // When
+    sut.authenticate { result in
+      // Then
+      XCTAssertFalse(result)
+    }
+  }
+
   // MARK: - Helper methods
   private func givenFetchContextConfigurationSucceed() {
     platform.nextFetchContextConfigurationResult = .success(dataProvider.contextConfiguration)

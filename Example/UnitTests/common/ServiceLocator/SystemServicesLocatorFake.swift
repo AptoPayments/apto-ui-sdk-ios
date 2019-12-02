@@ -13,4 +13,19 @@ class SystemServicesLocatorFake: SystemServicesLocatorProtocol {
   func fileDownloader(url: URL, localFilename: String) -> FileDownloader {
     return fileDownloaderFake
   }
+
+  lazy var fileManagerFake = FileManagerFake()
+  func fileManager(filename: String) -> FileManagerProtocol {
+    return fileManagerFake
+  }
+
+  lazy var dateProviderFake = DateProviderFake()
+  func dateProvider() -> DateProviderProtocol {
+    return dateProviderFake
+  }
+
+  lazy var authenticationManagerFake = AuthenticationManagerFake()
+  func authenticationManager() -> AuthenticationManagerProtocol {
+    return authenticationManagerFake
+  }
 }

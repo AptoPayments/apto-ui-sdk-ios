@@ -39,6 +39,15 @@ final class PresenterLocator: PresenterLocatorProtocol {
     return ExternalOAuthPresenter(config: config)
   }
 
+  // MARK: - Biometrics
+  func createPINPresenter() -> CreatePINPresenterProtocol {
+    return CreatePINPresenter()
+  }
+
+  func verifyPINPresenter(config: VerifyPINPresenterConfig) -> VerifyPINPresenterProtocol {
+    return VerifyPINPresenter(config: config)
+  }
+
   func issueCardPresenter(router: IssueCardRouter,
                           interactor: IssueCardInteractorProtocol,
                           configuration: IssueCardActionConfiguration?) -> IssueCardPresenterProtocol {

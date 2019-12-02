@@ -269,6 +269,61 @@ class CardSettingsPresenterTest: XCTestCase {
     XCTAssertTrue(router.showMonthlyStatementsCalled)
   }
 
+  func testSwitchOffShowCardInfoChangedUpdateViewModel() {
+    // Given
+    let switcher = UISwitch()
+    switcher.isOn = false
+
+    // When
+    sut.showCardInfoChanged(switcher: switcher)
+
+    // Then
+    XCTAssertEqual(false, sut.viewModel.showCardInfo.value)
+    XCTAssertTrue(router.hideCardInfoCalled)
+  }
+
+  func testSwitchOnShowCardInfoChangedCallRouterToAuthenticate() {
+    // Given
+    let switcher = UISwitch()
+    switcher.isOn = true
+
+    // When
+    sut.showCardInfoChanged(switcher: switcher)
+
+    // Then
+    XCTAssertTrue(router.authenticateCalled)
+  }
+
+  func testAuthenticationSucceedAskRouterToShowCardInfoAndClose() {
+    // Given
+    router.nextAuthenticateResult = true
+    let switcher = UISwitch()
+    switcher.isOn = true
+
+    // When
+    sut.showCardInfoChanged(switcher: switcher)
+
+    // Then
+    XCTAssertTrue(view.showLoadingSpinnerCalled)
+    XCTAssertTrue(router.showCardInfoCalled)
+    XCTAssertTrue(view.hideLoadingSpinnerCalled)
+    XCTAssertTrue(router.closeFromShiftCardSettingsCalled)
+  }
+
+  func testAuthenticationFailsUpdateViewModel() {
+    // Given
+    router.nextAuthenticateResult = false
+    let switcher = UISwitch()
+    switcher.isOn = true
+
+    // When
+    sut.showCardInfoChanged(switcher: switcher)
+
+    // Then
+    XCTAssertEqual(false, sut.viewModel.showCardInfo.value)
+    XCTAssertFalse(router.showCardInfoCalled)
+  }
+
   // MARK: - Helper methods
   private func setUpSUT(card: Card, config: CardSettingsPresenterConfig) {
     sut = CardSettingsPresenter(platform: platform, card: card, config: config, emailRecipients: emailRecipients,

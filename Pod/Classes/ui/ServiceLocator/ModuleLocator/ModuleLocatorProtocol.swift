@@ -20,6 +20,11 @@ protocol ModuleLocatorProtocol {
       -> VerifyBirthDateModuleProtocol
   func externalOAuthModule(config: ExternalOAuthModuleConfig, uiConfig: UIConfig) -> ExternalOAuthModuleProtocol
 
+  // MARK: - Biometrics
+  func createPINModule() -> CreatePINModuleProtocol
+  func verifyPINModule() -> VerifyPINModuleProtocol
+  func changePINModule() -> ChangePINModuleProtocol
+
   func cardProductSelectorModule() -> CardProductSelectorModuleProtocol
 
   // MARK: - Data collector

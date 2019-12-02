@@ -14,6 +14,7 @@ protocol AccountSettingsRouterProtocol: class {
   func contactTappedInAccountSettings()
   func notificationsTappedInAccountSettings()
   func showMonthlyStatements()
+  func showChangePIN()
 }
 
 typealias AccountSettingsViewProtocol = ShiftViewController
@@ -25,11 +26,13 @@ protocol AccountSettingsInteractorProtocol {
 class AccountSettingsViewModel {
   let showNotificationPreferences: Observable<Bool> = Observable(false)
   let showMonthlyStatements: Observable<Bool> = Observable(false)
+  let showChangePIN: Observable<Bool> = Observable(false)
 }
 
 struct AccountSettingsPresenterConfig {
   let showNotificationPreferences: Bool
   let showMonthlyStatements: Bool
+  let showChangePIN: Bool
 }
 
 protocol AccountSettingsPresenterProtocol: class {
@@ -44,4 +47,5 @@ protocol AccountSettingsPresenterProtocol: class {
   func contactTapped()
   func notificationsTapped()
   func monthlyStatementsTapped()
+  func changePINTapped()
 }
