@@ -71,13 +71,14 @@ class AuthenticationManager: AuthenticationManagerProtocol {
 
   func shouldAuthenticateOnStartUp() -> Bool {
     guard aptoPlatform.isFeatureEnabled(.authenticateOnStartUp), codeExists() else { return false }
-    guard let lastDate = lastAuthenticationDate else { return true }
-    let currentDate = dateProvider.currentDate()
-    let components = Calendar.current.dateComponents([.second], from: lastDate, to: currentDate)
-    return components.second! > AUTH_REQUEST_TIME_SECONDS // swiftlint:disable:this force_unwrapping
+    return shouldAuthenticate()
   }
 
   func authenticate(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+    guard shouldAuthenticate() else {
+      completion(true)
+      return
+    }
     authenticator.authenticate(from: from) { [unowned self] accessGranted in
       if accessGranted {
         self.lastAuthenticationDate = self.dateProvider.currentDate()
@@ -105,6 +106,13 @@ class AuthenticationManager: AuthenticationManagerProtocol {
   private func isFeatureEnabled() -> Bool {
     return aptoPlatform.isFeatureEnabled(.authenticateOnStartUp) ||
       aptoPlatform.isFeatureEnabled(.authenticateWithPINOnPCI)
+  }
+
+  private func shouldAuthenticate() -> Bool {
+    guard let lastDate = lastAuthenticationDate else { return true }
+    let currentDate = dateProvider.currentDate()
+    let components = Calendar.current.dateComponents([.second], from: lastDate, to: currentDate)
+    return components.second! > AUTH_REQUEST_TIME_SECONDS // swiftlint:disable:this force_unwrapping
   }
 }
 
