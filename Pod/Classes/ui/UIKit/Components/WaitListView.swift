@@ -84,12 +84,20 @@ class WaitListView: UIView {
     }
   }
 
-  func set(backgroundColor: String?) {
+  func set(backgroundColor: String?, darkBackgroundColor: String?) {
     guard let backgroundColor = backgroundColor, let color = UIColor.colorFromHexString(backgroundColor) else {
       self.backgroundColor = uiConfig.uiBackgroundPrimaryColor
       return
     }
-    self.backgroundColor = color
+    guard let darkBackground = darkBackgroundColor, let darkColor = UIColor.colorFromHexString(darkBackground) else {
+      self.backgroundColor = color
+      return
+    }
+    self.backgroundColor = UIColor.dynamicColor(light: color, dark: darkColor)
+  }
+
+  func set(backgroundColor: UIColor?) {
+    self.backgroundColor = backgroundColor
   }
 }
 

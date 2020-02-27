@@ -63,8 +63,8 @@ class StorageLocatorFake: StorageLocatorProtocol {
     return localCacheFileManagerFake
   }
 
+  lazy var userPreferencesStorageFake = UserPreferencesStorageFake()
   func userPreferencesStorage() -> UserPreferencesStorageProtocol {
-    return UserPreferencesStorage(userDefaultsStorage: UserDefaultsStorage(),
-                                  notificationHandler: NotificationHandlerFake())
+    return userPreferencesStorageFake
   }
 }

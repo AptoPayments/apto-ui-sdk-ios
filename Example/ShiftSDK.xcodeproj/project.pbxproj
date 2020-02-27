@@ -57,20 +57,20 @@
 		2CFD384C1FA8962E00ADD20E /* LedgeUITestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFD384B1FA8962E00ADD20E /* LedgeUITestSuite.swift */; };
 		2CFD384E1FA8BA1500ADD20E /* InputPhoneScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */; };
 		3C03E9072338F36C00C565F1 /* MonthlyStatementsListTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDF362267784FD59F03DB /* MonthlyStatementsListTestDoubles.swift */; };
-		3C05CD4C238D24BC00AA7CC9 /* VerifyPINTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD4B238D24BC00AA7CC9 /* VerifyPINTestDoubles.swift */; };
-		3C05CD50238D38BC00AA7CC9 /* VerifyPINInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD4F238D38BC00AA7CC9 /* VerifyPINInteractorTest.swift */; };
-		3C05CD54238D63E800AA7CC9 /* VerifyPINPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD53238D63E800AA7CC9 /* VerifyPINPresenterTest.swift */; };
-		3C05CD5A238D85F600AA7CC9 /* VerifyPINModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD59238D85F600AA7CC9 /* VerifyPINModuleTest.swift */; };
+		3C05CD4C238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD4B238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift */; };
+		3C05CD50238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD4F238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift */; };
+		3C05CD54238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD53238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift */; };
+		3C05CD5A238D85F600AA7CC9 /* VerifyPasscodeModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD59238D85F600AA7CC9 /* VerifyPasscodeModuleTest.swift */; };
 		3C1074192265C89F0050F8D1 /* PhoneHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDDAA9712890A02CB79BC /* PhoneHelperTest.swift */; };
 		3C13E531238FCEF200C9F0D3 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C13E530238FCEF200C9F0D3 /* Authenticator.swift */; };
-		3C13E53923900FEC00C9F0D3 /* ChangePINTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C13E53823900FEC00C9F0D3 /* ChangePINTestDoubles.swift */; };
-		3C13E53B2390103500C9F0D3 /* ChangePINModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C13E53A2390103500C9F0D3 /* ChangePINModuleTest.swift */; };
+		3C13E53923900FEC00C9F0D3 /* ChangePasscodeTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C13E53823900FEC00C9F0D3 /* ChangePasscodeTestDoubles.swift */; };
+		3C13E53B2390103500C9F0D3 /* ChangePasscodeModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C13E53A2390103500C9F0D3 /* ChangePasscodeModuleTest.swift */; };
 		3C1A61E42369AB9200883EC3 /* NotificationHandlerTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1A61E32369AB9200883EC3 /* NotificationHandlerTestDoubles.swift */; };
 		3C1ECAB122D8E33400DBC484 /* TransactionDeclineCodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */; };
 		3C3D1F8A2350D6C6007D39AB /* SystemServicesLocatorFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */; };
-		3C3FB2182386D3B60061025A /* CreatePINModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3FB2172386D3B60061025A /* CreatePINModuleTest.swift */; };
-		3C40FD2623868AFB008FE470 /* CreatePINInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD1ECE8A2750981BFA0B3 /* CreatePINInteractorTest.swift */; };
-		3C40FD2723868D9E008FE470 /* CreatePINTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD9C007A65B05924DF7A9 /* CreatePINTestDoubles.swift */; };
+		3C3FB2182386D3B60061025A /* CreatePasscodeModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3FB2172386D3B60061025A /* CreatePasscodeModuleTest.swift */; };
+		3C40FD2623868AFB008FE470 /* CreatePasscodeInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD1ECE8A2750981BFA0B3 /* CreatePasscodeInteractorTest.swift */; };
+		3C40FD2723868D9E008FE470 /* CreatePasscodeTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD9C007A65B05924DF7A9 /* CreatePasscodeTestDoubles.swift */; };
 		3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD60A22D2072B3066FE37 /* CustodianSerializerTest.swift */; };
 		3C65E0BA217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */; };
 		3C92D20E2343903F00C48D90 /* MonthTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92D20D2343903F00C48D90 /* MonthTest.swift */; };
@@ -80,12 +80,19 @@
 		3C96EB9C238C155000B9C238 /* AuthenticationManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C96EB9B238C155000B9C238 /* AuthenticationManagerTest.swift */; };
 		3C96EBA1238C2D5600B9C238 /* DateProviderFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C96EBA0238C2D5600B9C238 /* DateProviderFake.swift */; };
 		3C96EBA4238C65F500B9C238 /* AuthenticationManagerFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C96EBA3238C65F500B9C238 /* AuthenticationManagerFake.swift */; };
+		3CD2DBDF23F2AB6200C2EDE1 /* BiometricPermissionTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBDE23F2AB6200C2EDE1 /* BiometricPermissionTestDoubles.swift */; };
+		3CD2DBE323F2B37800C2EDE1 /* BiometricPermissionInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBE223F2B37800C2EDE1 /* BiometricPermissionInteractorTest.swift */; };
+		3CD2DBE723F2BC0000C2EDE1 /* BiometricPermissionPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBE623F2BC0000C2EDE1 /* BiometricPermissionPresenterTest.swift */; };
+		3CD2DBED23F2C5EA00C2EDE1 /* BiometricPermissionModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBEC23F2C5EA00C2EDE1 /* BiometricPermissionModuleTest.swift */; };
+		3CD2DBEF23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */; };
+		3CD2DBF323F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBF223F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift */; };
+		3CD2DBF723F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBF623F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift */; };
 		3CD47E74228D640D00DD56FF /* CardProductSelectorModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDA3FDCA41F36733ACF07 /* CardProductSelectorModuleTest.swift */; };
 		3CEBF048215A871500B077BD /* DataConfirmationTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEBF047215A871500B077BD /* DataConfirmationTestDoubles.swift */; };
 		3CEBF04A215A896900B077BD /* DataConfirmationInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEBF049215A896900B077BD /* DataConfirmationInteractorTest.swift */; };
 		3CEBF04E215A908000B077BD /* DataConfirmationPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEBF04D215A908000B077BD /* DataConfirmationPresenterTest.swift */; };
 		3CEBF054215A94D400B077BD /* DataConfirmationModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEBF053215A94D400B077BD /* DataConfirmationModuleTest.swift */; };
-		3CEF43A42386CE6D007537F7 /* CreatePINPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEF43A32386CE6D007537F7 /* CreatePINPresenterTest.swift */; };
+		3CEF43A42386CE6D007537F7 /* CreatePasscodePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEF43A32386CE6D007537F7 /* CreatePasscodePresenterTest.swift */; };
 		3CF7F8EC228B00BB00D0729E /* FeaturesStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD1D9819277323E6E63DA /* FeaturesStorageTest.swift */; };
 		3CF9F2E4230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9F2E3230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift */; };
 		3CF9F2E6230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9F2E5230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift */; };
@@ -314,17 +321,17 @@
 		2CFD384B1FA8962E00ADD20E /* LedgeUITestSuite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedgeUITestSuite.swift; sourceTree = "<group>"; };
 		2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPhoneScreen.swift; sourceTree = "<group>"; };
 		2FD9B79683F0323F267BEC7B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		3C05CD4B238D24BC00AA7CC9 /* VerifyPINTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPINTestDoubles.swift; sourceTree = "<group>"; };
-		3C05CD4F238D38BC00AA7CC9 /* VerifyPINInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPINInteractorTest.swift; sourceTree = "<group>"; };
-		3C05CD53238D63E800AA7CC9 /* VerifyPINPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPINPresenterTest.swift; sourceTree = "<group>"; };
-		3C05CD59238D85F600AA7CC9 /* VerifyPINModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPINModuleTest.swift; sourceTree = "<group>"; };
+		3C05CD4B238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasscodeTestDoubles.swift; sourceTree = "<group>"; };
+		3C05CD4F238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasscodeInteractorTest.swift; sourceTree = "<group>"; };
+		3C05CD53238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasscodePresenterTest.swift; sourceTree = "<group>"; };
+		3C05CD59238D85F600AA7CC9 /* VerifyPasscodeModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasscodeModuleTest.swift; sourceTree = "<group>"; };
 		3C13E530238FCEF200C9F0D3 /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
-		3C13E53823900FEC00C9F0D3 /* ChangePINTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePINTestDoubles.swift; sourceTree = "<group>"; };
-		3C13E53A2390103500C9F0D3 /* ChangePINModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePINModuleTest.swift; sourceTree = "<group>"; };
+		3C13E53823900FEC00C9F0D3 /* ChangePasscodeTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasscodeTestDoubles.swift; sourceTree = "<group>"; };
+		3C13E53A2390103500C9F0D3 /* ChangePasscodeModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasscodeModuleTest.swift; sourceTree = "<group>"; };
 		3C1A61E32369AB9200883EC3 /* NotificationHandlerTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandlerTestDoubles.swift; sourceTree = "<group>"; };
 		3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDeclineCodeTest.swift; sourceTree = "<group>"; };
 		3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServicesLocatorFake.swift; sourceTree = "<group>"; };
-		3C3FB2172386D3B60061025A /* CreatePINModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePINModuleTest.swift; sourceTree = "<group>"; };
+		3C3FB2172386D3B60061025A /* CreatePasscodeModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasscodeModuleTest.swift; sourceTree = "<group>"; };
 		3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalCardActivationSucceedTestDoubles.swift; sourceTree = "<group>"; };
 		3C92D20D2343903F00C48D90 /* MonthTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthTest.swift; sourceTree = "<group>"; };
 		3C92D20F2343964A00C48D90 /* MonthlyStatementsPeriodTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStatementsPeriodTest.swift; sourceTree = "<group>"; };
@@ -334,11 +341,18 @@
 		3C96EBA0238C2D5600B9C238 /* DateProviderFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProviderFake.swift; sourceTree = "<group>"; };
 		3C96EBA3238C65F500B9C238 /* AuthenticationManagerFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerFake.swift; sourceTree = "<group>"; };
 		3CB1E242D7BF2DA7660FAF84 /* Pods-AutomationTests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomationTests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-AutomationTests/Pods-AutomationTests.dev.xcconfig"; sourceTree = "<group>"; };
+		3CD2DBDE23F2AB6200C2EDE1 /* BiometricPermissionTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPermissionTestDoubles.swift; sourceTree = "<group>"; };
+		3CD2DBE223F2B37800C2EDE1 /* BiometricPermissionInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPermissionInteractorTest.swift; sourceTree = "<group>"; };
+		3CD2DBE623F2BC0000C2EDE1 /* BiometricPermissionPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPermissionPresenterTest.swift; sourceTree = "<group>"; };
+		3CD2DBEC23F2C5EA00C2EDE1 /* BiometricPermissionModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricPermissionModuleTest.swift; sourceTree = "<group>"; };
+		3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesStorageTestDoubles.swift; sourceTree = "<group>"; };
+		3CD2DBF223F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasscodeInteractorTest.swift; sourceTree = "<group>"; };
+		3CD2DBF623F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasscodePresenterTest.swift; sourceTree = "<group>"; };
 		3CEBF047215A871500B077BD /* DataConfirmationTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConfirmationTestDoubles.swift; sourceTree = "<group>"; };
 		3CEBF049215A896900B077BD /* DataConfirmationInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConfirmationInteractorTest.swift; sourceTree = "<group>"; };
 		3CEBF04D215A908000B077BD /* DataConfirmationPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConfirmationPresenterTest.swift; sourceTree = "<group>"; };
 		3CEBF053215A94D400B077BD /* DataConfirmationModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConfirmationModuleTest.swift; sourceTree = "<group>"; };
-		3CEF43A32386CE6D007537F7 /* CreatePINPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePINPresenterTest.swift; sourceTree = "<group>"; };
+		3CEF43A32386CE6D007537F7 /* CreatePasscodePresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasscodePresenterTest.swift; sourceTree = "<group>"; };
 		3CF9F2E3230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialAccountsStorageTest.swift; sourceTree = "<group>"; };
 		3CF9F2E5230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialAccountStorageTestDoubles.swift; sourceTree = "<group>"; };
 		3CF9F2E7230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesStorageTestDoubles.swift; sourceTree = "<group>"; };
@@ -380,7 +394,7 @@
 		D99BD1C5C4E36F47B0A52BC5 /* ServerMaintenanceErrorTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerMaintenanceErrorTestDoubles.swift; sourceTree = "<group>"; };
 		D99BD1D89CADC92C409A258E /* VoIPTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoIPTestDoubles.swift; sourceTree = "<group>"; };
 		D99BD1D9819277323E6E63DA /* FeaturesStorageTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturesStorageTest.swift; sourceTree = "<group>"; };
-		D99BD1ECE8A2750981BFA0B3 /* CreatePINInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePINInteractorTest.swift; sourceTree = "<group>"; };
+		D99BD1ECE8A2750981BFA0B3 /* CreatePasscodeInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePasscodeInteractorTest.swift; sourceTree = "<group>"; };
 		D99BD22B8085FFA59A8FE39B /* VerifyEmailTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyEmailTestDoubles.swift; sourceTree = "<group>"; };
 		D99BD22D111AA26CC1D012C3 /* NotificationPreferencesPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesPresenterTest.swift; sourceTree = "<group>"; };
 		D99BD22F5A0E6180A4D3B8F1 /* ContentPresenterPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPresenterPresenterTest.swift; sourceTree = "<group>"; };
@@ -437,7 +451,7 @@
 		D99BD960D51769BD542CBDED /* SetPinModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinModuleTest.swift; sourceTree = "<group>"; };
 		D99BD9671686403020B9C112 /* CountrySelectorModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySelectorModuleTest.swift; sourceTree = "<group>"; };
 		D99BD9A62DB2E14989227464 /* ModuleLocatorFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleLocatorFake.swift; sourceTree = "<group>"; };
-		D99BD9C007A65B05924DF7A9 /* CreatePINTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePINTestDoubles.swift; sourceTree = "<group>"; };
+		D99BD9C007A65B05924DF7A9 /* CreatePasscodeTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePasscodeTestDoubles.swift; sourceTree = "<group>"; };
 		D99BD9C54000963C125F9827 /* CardWaitListPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardWaitListPresenterTest.swift; sourceTree = "<group>"; };
 		D99BD9D0B89C886FF66E9459 /* ActionConfirmerFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionConfirmerFake.swift; sourceTree = "<group>"; };
 		D99BD9D3469334307E1D5A44 /* ResultTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTest.swift; sourceTree = "<group>"; };
@@ -703,24 +717,26 @@
 			path = Base/Helpers;
 			sourceTree = "<group>";
 		};
-		3C05CD4A238D249800AA7CC9 /* VerifyPINModule */ = {
+		3C05CD4A238D249800AA7CC9 /* VerifyPasscodeModule */ = {
 			isa = PBXGroup;
 			children = (
-				3C05CD4B238D24BC00AA7CC9 /* VerifyPINTestDoubles.swift */,
-				3C05CD4F238D38BC00AA7CC9 /* VerifyPINInteractorTest.swift */,
-				3C05CD53238D63E800AA7CC9 /* VerifyPINPresenterTest.swift */,
-				3C05CD59238D85F600AA7CC9 /* VerifyPINModuleTest.swift */,
+				3C05CD4B238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift */,
+				3C05CD4F238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift */,
+				3C05CD53238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift */,
+				3C05CD59238D85F600AA7CC9 /* VerifyPasscodeModuleTest.swift */,
 			);
-			path = VerifyPINModule;
+			path = VerifyPasscodeModule;
 			sourceTree = "<group>";
 		};
-		3C13E53723900FC500C9F0D3 /* ChangePINModule */ = {
+		3C13E53723900FC500C9F0D3 /* ChangePasscodeModule */ = {
 			isa = PBXGroup;
 			children = (
-				3C13E53823900FEC00C9F0D3 /* ChangePINTestDoubles.swift */,
-				3C13E53A2390103500C9F0D3 /* ChangePINModuleTest.swift */,
+				3C13E53823900FEC00C9F0D3 /* ChangePasscodeTestDoubles.swift */,
+				3C13E53A2390103500C9F0D3 /* ChangePasscodeModuleTest.swift */,
+				3CD2DBF223F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift */,
+				3CD2DBF623F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift */,
 			);
-			path = ChangePINModule;
+			path = ChangePasscodeModule;
 			sourceTree = "<group>";
 		};
 		3C1A61E22369AB4B00883EC3 /* NotificationCenter */ = {
@@ -773,6 +789,17 @@
 				3C13E530238FCEF200C9F0D3 /* Authenticator.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		3CD2DBDD23F2AB3A00C2EDE1 /* BiometricPermissionModule */ = {
+			isa = PBXGroup;
+			children = (
+				3CD2DBDE23F2AB6200C2EDE1 /* BiometricPermissionTestDoubles.swift */,
+				3CD2DBE223F2B37800C2EDE1 /* BiometricPermissionInteractorTest.swift */,
+				3CD2DBE623F2BC0000C2EDE1 /* BiometricPermissionPresenterTest.swift */,
+				3CD2DBEC23F2C5EA00C2EDE1 /* BiometricPermissionModuleTest.swift */,
+			);
+			path = BiometricPermissionModule;
 			sourceTree = "<group>";
 		};
 		3CEBF046215A86E900B077BD /* DataConfirmationModule */ = {
@@ -1046,15 +1073,15 @@
 			path = SetPinModule;
 			sourceTree = "<group>";
 		};
-		D99BD6061124EC181F5C7CA9 /* CreatePINModule */ = {
+		D99BD6061124EC181F5C7CA9 /* CreatePasscodeModule */ = {
 			isa = PBXGroup;
 			children = (
-				D99BD9C007A65B05924DF7A9 /* CreatePINTestDoubles.swift */,
-				D99BD1ECE8A2750981BFA0B3 /* CreatePINInteractorTest.swift */,
-				3CEF43A32386CE6D007537F7 /* CreatePINPresenterTest.swift */,
-				3C3FB2172386D3B60061025A /* CreatePINModuleTest.swift */,
+				D99BD9C007A65B05924DF7A9 /* CreatePasscodeTestDoubles.swift */,
+				D99BD1ECE8A2750981BFA0B3 /* CreatePasscodeInteractorTest.swift */,
+				3CEF43A32386CE6D007537F7 /* CreatePasscodePresenterTest.swift */,
+				3C3FB2172386D3B60061025A /* CreatePasscodeModuleTest.swift */,
 			);
-			path = CreatePINModule;
+			path = CreatePasscodeModule;
 			sourceTree = "<group>";
 		};
 		D99BD697BF2DD2865A422C28 /* CountrySelector */ = {
@@ -1268,10 +1295,11 @@
 		D99BDD191E6CB743CF900890 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				3C13E53723900FC500C9F0D3 /* ChangePINModule */,
-				3C05CD4A238D249800AA7CC9 /* VerifyPINModule */,
+				3CD2DBDD23F2AB3A00C2EDE1 /* BiometricPermissionModule */,
+				3C13E53723900FC500C9F0D3 /* ChangePasscodeModule */,
+				3C05CD4A238D249800AA7CC9 /* VerifyPasscodeModule */,
 				3C96EB9A238C150700B9C238 /* Common */,
-				D99BD6061124EC181F5C7CA9 /* CreatePINModule */,
+				D99BD6061124EC181F5C7CA9 /* CreatePasscodeModule */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -1350,6 +1378,7 @@
 				3CF9F2E3230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift */,
 				3CF9F2E5230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift */,
 				3CF9F2E7230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift */,
+				3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -1638,7 +1667,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework",
-				"${PODS_ROOT}/TwilioVoice/TwilioVoice.framework",
+				"${PODS_ROOT}/TwilioVoice/Build/iOS/TwilioVoice.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1729,8 +1758,8 @@
 				D99BD249397C573CA4FD2382 /* InteractorLocatorFake.swift in Sources */,
 				D99BD87CD9142422A2ED7FA4 /* ViewLocatorFake.swift in Sources */,
 				D99BD4119BE5F49FB1D31A51 /* FullScreenDisclaimerInteractorTest.swift in Sources */,
-				3C05CD54238D63E800AA7CC9 /* VerifyPINPresenterTest.swift in Sources */,
-				3C05CD5A238D85F600AA7CC9 /* VerifyPINModuleTest.swift in Sources */,
+				3C05CD54238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift in Sources */,
+				3C05CD5A238D85F600AA7CC9 /* VerifyPasscodeModuleTest.swift in Sources */,
 				3CEBF04E215A908000B077BD /* DataConfirmationPresenterTest.swift in Sources */,
 				D99BD19670282880C2D4670B /* FullScreenDisclaimerTestDoubles.swift in Sources */,
 				D99BD62AFD7D84FCA5EAB0ED /* FullScreenDisclaimerPresenterTest.swift in Sources */,
@@ -1738,6 +1767,7 @@
 				D99BD99B174D90E4B8C97F85 /* FullScreenDisclaimerModuleTest.swift in Sources */,
 				D99BD23C6667DB4E1566431C /* AuthModuleTest.swift in Sources */,
 				3C03E9072338F36C00C565F1 /* MonthlyStatementsListTestDoubles.swift in Sources */,
+				3CD2DBF723F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift in Sources */,
 				D99BD18C7F82C6C36CC05F59 /* ModelDataProvider.swift in Sources */,
 				D99BD6233DCDEC877BB1FCF7 /* AuthModuleTestDoubles.swift in Sources */,
 				D99BD1D9EF9E49B603764E57 /* ViewControllerSpy.swift in Sources */,
@@ -1746,6 +1776,7 @@
 				D99BD2B646DECFF5E8005E4A /* VerifyBirthDateTestDoubles.swift in Sources */,
 				D99BD3F3138B3E161AE38551 /* VerifyPhoneTestDoubles.swift in Sources */,
 				D99BDA8447A9328D3598DAFD /* VerifyEmailTestDoubles.swift in Sources */,
+				3CD2DBED23F2C5EA00C2EDE1 /* BiometricPermissionModuleTest.swift in Sources */,
 				D99BDF2A84167D22586F4DDE /* ShowDisclaimerActionModuleTest.swift in Sources */,
 				D99BD09BF570ED3CE7A53606 /* IssueCardInteractorTest.swift in Sources */,
 				D99BDAF0178946C15015F56F /* IssueCardTestDoubles.swift in Sources */,
@@ -1758,9 +1789,10 @@
 				D99BDA2694F6E9769381BE7D /* ExternalOAuthModuleTest.swift in Sources */,
 				D99BDB56D5589E314E12E900 /* ExternalOAuthInteractorTest.swift in Sources */,
 				3CEBF054215A94D400B077BD /* DataConfirmationModuleTest.swift in Sources */,
-				3C13E53923900FEC00C9F0D3 /* ChangePINTestDoubles.swift in Sources */,
+				3C13E53923900FEC00C9F0D3 /* ChangePasscodeTestDoubles.swift in Sources */,
 				D99BDE1E2A95F86112A63746 /* ExternalOAuthPresenterTest.swift in Sources */,
 				D99BD6D836E171312774F482 /* SelectBalanceStoreModuleTest.swift in Sources */,
+				3CD2DBF323F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift in Sources */,
 				D99BD2137BA65D58FF6DEA55 /* NetworkLocatorFake.swift in Sources */,
 				D99BDD2CCEDB1BFFFA95898B /* ServerMaintenanceErrorInteractorTest.swift in Sources */,
 				D99BDDFA7B0996FB54697F0A /* NetworkManagerSpy.swift in Sources */,
@@ -1798,32 +1830,35 @@
 				D99BDC0DEDE682DBD6CCA310 /* CardMonthlyStatsModuleTest.swift in Sources */,
 				3CF7F8EC228B00BB00D0729E /* FeaturesStorageTest.swift in Sources */,
 				D99BDC0CE6BAACB9344AA5A7 /* TransactionListTestDoubles.swift in Sources */,
+				3CD2DBE723F2BC0000C2EDE1 /* BiometricPermissionPresenterTest.swift in Sources */,
 				D99BD17B86DF3ACFC1477C97 /* TransactionListInteractorTest.swift in Sources */,
 				D99BD388C189F60689FBB01E /* TransactionListPresenterTest.swift in Sources */,
 				D99BD399979026C1946F031D /* TransactionListModuleTest.swift in Sources */,
 				3CF9F2E6230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift in Sources */,
+				3CD2DBEF23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift in Sources */,
 				D99BDDA85B3744B65F544481 /* DoubleTest.swift in Sources */,
 				D99BD676A369BA5631FDF6D6 /* AmountTest.swift in Sources */,
 				3C1A61E42369AB9200883EC3 /* NotificationHandlerTestDoubles.swift in Sources */,
-				3C40FD2623868AFB008FE470 /* CreatePINInteractorTest.swift in Sources */,
+				3C40FD2623868AFB008FE470 /* CreatePasscodeInteractorTest.swift in Sources */,
 				D99BD3FC46EB7E2860BE7B34 /* WaitListInteractorTest.swift in Sources */,
 				D99BDD962605FDC27E887E36 /* WaitListPresenterTest.swift in Sources */,
+				3CD2DBE323F2B37800C2EDE1 /* BiometricPermissionInteractorTest.swift in Sources */,
 				D99BDEF95E697662D1BEE92F /* WaitListTestDoubles.swift in Sources */,
 				3C3D1F8A2350D6C6007D39AB /* SystemServicesLocatorFake.swift in Sources */,
 				D99BD7D9DFC6501E146260CE /* WaitListModuleTest.swift in Sources */,
 				D99BDC35F7F3035D0C7C71F0 /* CardWaitListInteractorTest.swift in Sources */,
 				D99BD5648E64479ACA8F7BAF /* CardWaitListPresenterTest.swift in Sources */,
-				3CEF43A42386CE6D007537F7 /* CreatePINPresenterTest.swift in Sources */,
+				3CEF43A42386CE6D007537F7 /* CreatePasscodePresenterTest.swift in Sources */,
 				3C96EB9C238C155000B9C238 /* AuthenticationManagerTest.swift in Sources */,
 				D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */,
 				D99BD40B54B9F02B27F45C37 /* NotificationGroupTest.swift in Sources */,
 				D99BD656AC57498ABC4E58D7 /* NotificationPreferencesTest.swift in Sources */,
-				3C05CD50238D38BC00AA7CC9 /* VerifyPINInteractorTest.swift in Sources */,
-				3C40FD2723868D9E008FE470 /* CreatePINTestDoubles.swift in Sources */,
+				3C05CD50238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift in Sources */,
+				3C40FD2723868D9E008FE470 /* CreatePasscodeTestDoubles.swift in Sources */,
 				D99BD7BB4B39C6052930873C /* NotificationPreferencesTestDoubles.swift in Sources */,
 				D99BD555F653BD0BC06275D0 /* NotificationPreferencesInteractorTest.swift in Sources */,
 				3CF9F2E8230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift in Sources */,
-				3C3FB2182386D3B60061025A /* CreatePINModuleTest.swift in Sources */,
+				3C3FB2182386D3B60061025A /* CreatePasscodeModuleTest.swift in Sources */,
 				D99BD1507B347900308F233C /* NotificationPreferencesPresenterTest.swift in Sources */,
 				D99BD773E9D60CEE398C9CB9 /* NotificationPreferencesModuleTest.swift in Sources */,
 				D99BD0540AF9361B8B0FEC00 /* CountrySelectorModuleTest.swift in Sources */,
@@ -1845,13 +1880,14 @@
 				3C96EBA4238C65F500B9C238 /* AuthenticationManagerFake.swift in Sources */,
 				D99BD10C4AF529884446BCD4 /* InMemoryUserDefaultsStorage.swift in Sources */,
 				D99BD9977D9A58EDE426D10D /* CardSettingsInteractorTest.swift in Sources */,
-				3C05CD4C238D24BC00AA7CC9 /* VerifyPINTestDoubles.swift in Sources */,
+				3C05CD4C238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift in Sources */,
 				3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */,
 				3C96EBA1238C2D5600B9C238 /* DateProviderFake.swift in Sources */,
 				D99BD84471B327EBEF19578E /* TransactionListFiltersTest.swift in Sources */,
-				3C13E53B2390103500C9F0D3 /* ChangePINModuleTest.swift in Sources */,
+				3C13E53B2390103500C9F0D3 /* ChangePasscodeModuleTest.swift in Sources */,
 				D99BDDC6A3CD3CDE8560A0FB /* ResultTest.swift in Sources */,
 				D99BD6C045406F3BBE6F6540 /* CardStyleTest.swift in Sources */,
+				3CD2DBDF23F2AB6200C2EDE1 /* BiometricPermissionTestDoubles.swift in Sources */,
 				D99BD3C45116293033DB3292 /* AptoPlatformTest.swift in Sources */,
 				D99BDF2DE8FF863B077F6134 /* AptoPlatformUITest.swift in Sources */,
 				D99BD942147A6F566FBDA2C1 /* SelectBalanceStoreResultTest.swift in Sources */,

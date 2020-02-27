@@ -46,25 +46,30 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  lazy var createPINModuleSpy: CreatePINModuleSpy = {
-    return CreatePINModuleSpy(serviceLocator: serviceLocator)
+  lazy var createPasscodeModuleSpy: CreatePasscodeModuleSpy = {
+    return CreatePasscodeModuleSpy(serviceLocator: serviceLocator)
   }()
-  func createPINModule() -> CreatePINModuleProtocol {
-    return createPINModuleSpy
+  func createPasscodeModule() -> CreatePasscodeModuleProtocol {
+    return createPasscodeModuleSpy
   }
 
-  lazy var verifyPINModuleSpy: VerifyPINModuleSpy = {
-    return VerifyPINModuleSpy(serviceLocator: serviceLocator)
+  lazy var verifyPasscodeModuleSpy: VerifyPasscodeModuleSpy = {
+    return VerifyPasscodeModuleSpy(serviceLocator: serviceLocator)
   }()
-  func verifyPINModule() -> VerifyPINModuleProtocol {
-    return verifyPINModuleSpy
+  func verifyPasscodeModule() -> VerifyPasscodeModuleProtocol {
+    return verifyPasscodeModuleSpy
   }
 
-  lazy var changePINModuleSpy: ChangePINModuleSpy = {
-    return ChangePINModuleSpy(serviceLocator: serviceLocator)
+  lazy var changePasscodeModuleSpy: ChangePasscodeModuleSpy = {
+    return ChangePasscodeModuleSpy(serviceLocator: serviceLocator)
   }()
-  func changePINModule() -> ChangePINModuleProtocol {
-    return changePINModuleSpy
+  func changePasscodeModule() -> ChangePasscodeModuleProtocol {
+    return changePasscodeModuleSpy
+  }
+
+  lazy var biometricPermissionModuleFake = BiometricPermissionModuleFake(serviceLocator: serviceLocator)
+  func biometricPermissionModule() -> BiometricPermissionModuleProtocol {
+    return biometricPermissionModuleFake
   }
 
   func cardProductSelectorModule() -> CardProductSelectorModuleProtocol {

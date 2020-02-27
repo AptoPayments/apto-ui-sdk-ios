@@ -11,9 +11,52 @@ import LocalAuthentication
 class LocalAuthenticationHandler {
   private let localAuthenticationContext = LAContext()
 
-  func available() -> Bool {
+  var biometryType: BiometryType {
+    // Even when this value is only used in the else branch we have to make the call in here because
+    // biometryType is only set after canEvaluatePolicy(_, error:) is called.
+    // https://developer.apple.com/documentation/localauthentication/lacontext/2867583-biometrytype
+    let isBiometricSupported = isBiometricSupportedByDevice()
+    if #available(iOS 11, *) {
+      switch localAuthenticationContext.biometryType {
+      case .faceID:
+        return .faceID
+      case .touchID:
+        return .touchID
+      case .none:
+        return .none
+      @unknown default:
+        // How should we handle this scenario?
+        return .none
+      }
+    }
+    else {
+      return isBiometricSupported ? .touchID : .none
+    }
+  }
+
+  private func isBiometricSupportedByDevice() -> Bool {
     var authError: NSError?
-    return localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError)
+    let canEvaluatePolicy = localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                                                         error: &authError)
+    // if the policy can be evaluated biometrics is supported
+    guard canEvaluatePolicy == false else { return true }
+
+    if let error = authError {
+      if #available(iOS 11, macOS 10.13, *) {
+        // biometryNotEnrolled is returned when biometrics is not available in the device
+        return error.code != LAError.biometryNotEnrolled.rawValue
+      }
+      else {
+        // iOS<11 returns touchIDNotEnrolled if the user opt-out using touch id or touchIDNotAvailable if the device
+        // do not support biometrics
+        return (error.code != LAError.touchIDNotEnrolled.rawValue && error.code != LAError.touchIDNotAvailable.rawValue)
+      }
+    }
+    return true
+  }
+
+  func available() -> Bool {
+    return localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
   }
 
   func authenticate(completion: @escaping Result<Bool, NSError>.Callback) {

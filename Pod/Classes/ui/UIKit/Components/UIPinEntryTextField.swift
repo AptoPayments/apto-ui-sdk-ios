@@ -53,9 +53,19 @@ class UIPinEntryTextField: UIView {
   var pinHeight: Int = 44
   var pinCornerRadius: CGFloat = 5
   var pinBorderWidth: CGFloat = 1
+  override var backgroundColor: UIColor? {
+    didSet {
+      textFields.forEach { $0.backgroundColor = self.backgroundColor }
+    }
+  }
   var textColor: UIColor = .black {
     didSet {
       textFields.forEach { $0.textColor = textColor }
+    }
+  }
+  override var tintColor: UIColor? {
+    didSet {
+      textFields.forEach { $0.tintColor = self.tintColor }
     }
   }
   var font: UIFont = UIFont.systemFont(ofSize: 17) {
@@ -91,6 +101,11 @@ class UIPinEntryTextField: UIView {
   var placeholder: String? = nil {
     didSet {
       textFields.forEach { $0.placeholder = placeholder }
+    }
+  }
+  var isSecureTextEntry: Bool = false {
+    didSet {
+      textFields.forEach { $0.isSecureTextEntry = isSecureTextEntry }
     }
   }
 
@@ -134,6 +149,7 @@ class UIPinEntryTextField: UIView {
       textField.tintColor = self.backgroundColor
       textField.textColor = self.textColor
       textField.delegate = self
+      textField.isSecureTextEntry = self.isSecureTextEntry
       textField._delegate = self
       if let accessibilityLabel = self.accessibilityLabel {
         textField.accessibilityLabel = accessibilityLabel + " (" + String(index + 1) + ")"

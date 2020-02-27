@@ -105,6 +105,20 @@ class AptoPlatformFake: AptoPlatformProtocol {
     lastIsSetShowDetailedCardActivityEnabled = isEnabled
   }
 
+  var nextIsBiometricEnabledResult = true
+  private(set) var isBiometricEnabledCalled = false
+  func isBiometricEnabled() -> Bool {
+    isBiometricEnabledCalled = true
+    return nextIsBiometricEnabledResult
+  }
+
+  private(set) var setIsBiometricEnabledCalled = false
+  private(set) var lastIsBiometricEnabled: Bool?
+  func setIsBiometricEnabled(_ isEnabled: Bool) {
+    setIsBiometricEnabledCalled = true
+    lastIsBiometricEnabled = isEnabled
+  }
+
   // MARK: - User tokens handling
 
   var nextCurrentTokenResult: AccessToken?

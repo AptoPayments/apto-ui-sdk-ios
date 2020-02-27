@@ -46,12 +46,21 @@ final class InteractorLocator: InteractorLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  func createPINInteractor() -> CreatePINInteractorProtocol {
-    return CreatePINInteractor(authenticationManager: serviceLocator.systemServicesLocator.authenticationManager())
+  func createPasscodeInteractor() -> CreatePasscodeInteractorProtocol {
+    return CreatePasscodeInteractor(authenticationManager: serviceLocator.systemServicesLocator.authenticationManager())
   }
 
-  func verifyPINInteractor() -> VerifyPINInteractorProtocol {
-    return VerifyPINInteractor(authenticationManager: serviceLocator.systemServicesLocator.authenticationManager())
+  func verifyPasscodeInteractor() -> VerifyPasscodeInteractorProtocol {
+    return VerifyPasscodeInteractor(authenticationManager: serviceLocator.systemServicesLocator.authenticationManager())
+  }
+
+  func changePasscodeInteractor() -> ChangePasscodeInteractorProtocol {
+    return ChangePasscodeInteractor(authenticationManager:
+        serviceLocator.systemServicesLocator.authenticationManager())
+  }
+
+  func biometricPermissionInteractor() -> BiometricPermissionInteractorProtocol {
+    return BiometricPermissionInteractor(platform: serviceLocator.platform)
   }
 
   func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol {

@@ -100,7 +100,7 @@ class PhoneTextFieldTheme2: PhoneTextFieldView {
 // MARK: - Set up UI
 private extension PhoneTextFieldTheme2 {
   func setUpUI() {
-    backgroundColor = .white
+    backgroundColor = uiConfig.uiBackgroundSecondaryColor
     layer.cornerRadius = uiConfig.fieldCornerRadius
     layer.shadowOffset = CGSize(width: 0, height: 2)
     layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor

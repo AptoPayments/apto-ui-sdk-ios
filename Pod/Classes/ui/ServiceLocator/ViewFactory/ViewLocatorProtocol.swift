@@ -27,8 +27,10 @@ protocol ViewLocatorProtocol {
                          eventHandler: ExternalOAuthPresenterProtocol) -> UIViewController
 
   // MARK: - Biometrics
-  func createPINView(presenter: CreatePINPresenterProtocol) -> ShiftViewController
-  func verifyPINView(presenter: VerifyPINPresenterProtocol) -> ShiftViewController
+  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> ShiftViewController
+  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> ShiftViewController
+  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> ShiftViewController
+  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> ShiftViewController
 
   func issueCardView(uiConfig: UIConfig, eventHandler: IssueCardPresenterProtocol) -> UIViewController
   func waitListView(presenter: WaitListPresenterProtocol) -> ShiftViewController

@@ -12,6 +12,7 @@ class WaitListViewModel {
   let asset: Observable<String?> = Observable(nil)
   let backgroundImage: Observable<String?> = Observable(nil)
   let backgroundColor: Observable<String?> = Observable(nil)
+  let darkBackgroundColor: Observable<String?> = Observable(nil)
 }
 
 // Card application wait list

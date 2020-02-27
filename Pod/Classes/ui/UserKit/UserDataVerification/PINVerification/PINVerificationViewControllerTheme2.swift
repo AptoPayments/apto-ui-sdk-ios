@@ -169,13 +169,15 @@ private extension PINVerificationViewControllerTheme2 {
   }
 
   func setUpPinEntryView() {
-    let container = createPinEntryContainer()
+    let container = createPINEntryContainer()
     pinEntryContainerView = container
     pinEntryView = UIPinEntryTextField(size: 6,
                                        frame: CGRect(x: 0, y: 0, width: 252, height: 64),
                                        accessibilityLabel: "PIN Field")
     pinEntryView.delegate = self
     pinEntryView.showMiddleSeparator = false
+    pinEntryView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
+    pinEntryView.tintColor = uiConfiguration.uiPrimaryColor
     pinEntryView.pinBorderWidth = 0
     pinEntryView.pinBorderColor = .clear
     pinEntryView.font = uiConfiguration.fontProvider.formFieldFont
@@ -203,9 +205,9 @@ private extension PINVerificationViewControllerTheme2 {
     }
   }
 
-  func createPinEntryContainer() -> UIView {
+  func createPINEntryContainer() -> UIView {
     let containerView = UIView()
-    containerView.backgroundColor = .white
+    containerView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
     containerView.layer.cornerRadius = uiConfiguration.fieldCornerRadius
     containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
     containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor

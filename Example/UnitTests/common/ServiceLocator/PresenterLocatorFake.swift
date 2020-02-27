@@ -39,14 +39,24 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  lazy var createPINPresenterSpy = CreatePINPresenterSpy()
-  func createPINPresenter() -> CreatePINPresenterProtocol {
-    return createPINPresenterSpy
+  lazy var createPasscodePresenterSpy = CreatePasscodePresenterSpy()
+  func createPasscodePresenter() -> CreatePasscodePresenterProtocol {
+    return createPasscodePresenterSpy
   }
 
-  lazy var verifyPINPresenterSpy = VerifyPINPresenterSpy()
-  func verifyPINPresenter(config: VerifyPINPresenterConfig) -> VerifyPINPresenterProtocol {
-    return verifyPINPresenterSpy
+  lazy var verifyPasscodePresenterSpy = VerifyPasscodePresenterSpy()
+  func verifyPasscodePresenter(config: VerifyPasscodePresenterConfig) -> VerifyPasscodePresenterProtocol {
+    return verifyPasscodePresenterSpy
+  }
+
+  lazy var changePasscodePresenterSpy = ChangePasscodePresenterSpy()
+  func changePasscodePresenter() -> ChangePasscodePresenterProtocol {
+    return changePasscodePresenterSpy
+  }
+
+  lazy var biometricPermissionPresenterSpy = BiometricPermissionPresenterSpy()
+  func biometricPermissionPresenter() -> BiometricPermissionPresenterProtocol {
+    return biometricPermissionPresenterSpy
   }
 
   lazy var issueCardPresenterSpy = IssueCardPresenterSpy()

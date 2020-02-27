@@ -66,9 +66,8 @@ class FullScreenDisclaimerViewControllerTheme2: ShiftViewController {
       setUpContentPresenterView(showTitle: false)
       view.sendSubviewToBack(contentPresenterView)
       navigationView.backgroundColor = .clear
-      if let backgroundColor = nativeContent.backgroundColor, let color = UIColor.colorFromHexString(backgroundColor) {
-        view.backgroundColor = color
-      }
+      view.backgroundColor = nativeContent.dynamicBackgroundColor
+      navigationView.backgroundColor = view.backgroundColor
     }
     else {
       setUpContentPresenterView(showTitle: true)

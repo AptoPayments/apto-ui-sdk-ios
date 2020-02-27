@@ -16,6 +16,14 @@ class AccountSettingsInteractor: AccountSettingsInteractorProtocol {
     self.platform = platform
   }
 
+  func isBiometricEnabled() -> Bool {
+    return platform.isBiometricEnabled()
+  }
+
+  func setIsBiometricEnabled(_ isEnabled: Bool) {
+    platform.setIsBiometricEnabled(isEnabled)
+  }
+
   func logoutCurrentUser() {
     platform.logout()
   }

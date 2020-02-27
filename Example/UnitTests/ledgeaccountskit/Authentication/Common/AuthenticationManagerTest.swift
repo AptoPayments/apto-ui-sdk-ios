@@ -27,6 +27,70 @@ class AuthenticationManagerTest: XCTestCase {
                                 authenticator: authenticator)
   }
 
+  // MARK: - biometry type
+  func testBiometryTypesReturnsAuthenticatorValue() {
+    // Given
+    let allTypes = BiometryType.allCases
+
+    allTypes.forEach { type in
+      // When
+      authenticator.biometryType = type
+
+      // Then
+      XCTAssertEqual(type, sut.biometryType)
+    }
+  }
+
+  // MARK: - should request biometric permission
+  func testIsBiometricEnabledByUserReturnTrue() {
+    // Given
+    aptoPlatform.nextIsBiometricEnabledResult = true
+
+    // When
+    let shouldRequestPermission = sut.shouldRequestBiometricPermission
+
+    // Then
+    XCTAssertFalse(shouldRequestPermission)
+  }
+
+  func testBiometryTypeIsNoneReturnFalse() {
+    // Given
+    aptoPlatform.nextIsBiometricEnabledResult = false
+    authenticator.biometryType = .none
+
+    // When
+    let shouldRequestPermission = sut.shouldRequestBiometricPermission
+
+    // Then
+    XCTAssertFalse(shouldRequestPermission)
+  }
+
+  func testBiometricTypeNotNoneBiometricAvailableReturnsTrue() {
+    // Given
+    aptoPlatform.nextIsBiometricEnabledResult = false
+    authenticator.biometryType = .faceID
+    authenticator.isBiometryAvailable = true
+
+    // When
+    let shouldRequestPermission = sut.shouldRequestBiometricPermission
+
+    // Then
+    XCTAssertTrue(shouldRequestPermission)
+  }
+
+  func testBiometricTypeNotNoneBiometricNotAvailableReturnsFalse() {
+    // Given
+    aptoPlatform.nextIsBiometricEnabledResult = false
+    authenticator.biometryType = .faceID
+    authenticator.isBiometryAvailable = false
+
+    // When
+    let shouldRequestPermission = sut.shouldRequestBiometricPermission
+
+    // Then
+    XCTAssertFalse(shouldRequestPermission)
+  }
+
   // MARK: - Save code
   func testSaveCallFileManager() {
     // When
@@ -355,6 +419,73 @@ class AuthenticationManagerTest: XCTestCase {
       // Then
       XCTAssertFalse(accessGranted)
     }
+  }
+
+  func testAuthenticateCalledTwiceWithDifferentModeCallAuthenticator() {
+    // Given
+    let module = UIModuleSpy(serviceLocator: serviceLocator)
+    sut.authenticate(from: module, mode: .allAvailables) { _ in }
+    authenticator.resetSpies()
+    XCTAssertFalse(authenticator.authenticateCalled)
+
+    // When
+    sut.authenticate(from: module, mode: .biometry) { _ in }
+
+    // Then
+    XCTAssertTrue(authenticator.authenticateCalled)
+  }
+
+  func testAuthenticateCalledTwiceWithSameModeDoNotCallAuthenticatorTwice() {
+    // Given
+    let module = UIModuleSpy(serviceLocator: serviceLocator)
+    sut.authenticate(from: module, mode: .allAvailables) { _ in }
+    authenticator.resetSpies()
+    XCTAssertFalse(authenticator.authenticateCalled)
+
+    // When
+    sut.authenticate(from: module, mode: .allAvailables) { _ in }
+
+    // Then
+    XCTAssertFalse(authenticator.authenticateCalled)
+  }
+
+  func testAuthenticateUsePasscodeIfBiometricIsDisabledByUser() {
+    // Given
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true]))
+    let module = UIModuleSpy(serviceLocator: serviceLocator)
+    aptoPlatform.nextIsBiometricEnabledResult = false
+
+    // When
+    sut.authenticate(from: module, mode: .allAvailables) { _ in }
+
+    // Then
+    XCTAssertEqual(.passcode, authenticator.lastAuthenticationMode)
+  }
+
+  func testAuthenticateUseBiometricIfPasscodeAuthenticationIsDisabled() {
+    // Given
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false,
+                                                       .authenticateWithPINOnPCI: false]))
+    let module = UIModuleSpy(serviceLocator: serviceLocator)
+
+    // When
+    sut.authenticate(from: module, mode: .allAvailables) { _ in }
+
+    // Then
+    XCTAssertEqual(.allAvailables, authenticator.lastAuthenticationMode)
+  }
+
+  func testAuthenticateUseBiometricEvenIfBiometricIsDisabledByUser() {
+    // Given
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true]))
+    let module = UIModuleSpy(serviceLocator: serviceLocator)
+    aptoPlatform.nextIsBiometricEnabledResult = false
+
+    // When
+    sut.authenticate(from: module, mode: .biometry) { _ in }
+
+    // Then
+    XCTAssertEqual(.biometry, authenticator.lastAuthenticationMode)
   }
 
   // MARK: - Invalidate current code

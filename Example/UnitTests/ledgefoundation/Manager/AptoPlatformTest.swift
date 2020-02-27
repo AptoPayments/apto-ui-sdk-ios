@@ -504,6 +504,35 @@ class AptoPlatformTest: XCTestCase {
     XCTAssertEqual(secondaryCredential, storage.lastSetCurrentTokenSecondaryCredential)
   }
 
+  // MARK: - Is biometric enabled
+  func testIsBiometricEnabledReturnsStorageValue() {
+    let storage = storageLocator.userPreferencesStorageFake
+    let storageValues = [true, false]
+
+    for value in storageValues {
+      // Given
+      storage.shouldUseBiometric = value
+
+      // When
+      let isEnabled = sut.isBiometricEnabled()
+
+      // Then
+      XCTAssertEqual(value, isEnabled)
+    }
+  }
+
+  func testSetIsBiometricEnabledUpdatesStorageValue() {
+    let storage = storageLocator.userPreferencesStorageFake
+    let storageValues = [true, false]
+
+    for value in storageValues {
+      sut.setIsBiometricEnabled(value)
+
+      // Then
+      XCTAssertEqual(value, storage.shouldUseBiometric)
+    }
+  }
+
   // MARK: - Helper methods
   private func givenSutInitialized() {
     sut.initializeWithApiKey(apiKey)

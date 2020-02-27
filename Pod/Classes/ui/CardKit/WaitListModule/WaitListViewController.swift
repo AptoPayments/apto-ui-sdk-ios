@@ -45,8 +45,10 @@ private extension WaitListViewController {
     viewModel.backgroundImage.observeNext { [unowned self] backgroundImage in
       self.waitListView.set(backgroundImage: backgroundImage)
     }.dispose(in: disposeBag)
-    viewModel.backgroundColor.observeNext { [unowned self] backgroundColor in
-      self.waitListView.set(backgroundColor: backgroundColor)
+    combineLatest(viewModel.backgroundColor,
+                  viewModel.darkBackgroundColor).observeNext { [unowned self] backgroundColor, darkBackgroundColor in
+      self.waitListView.set(backgroundColor: backgroundColor,
+                            darkBackgroundColor: darkBackgroundColor)
     }.dispose(in: disposeBag)
   }
 }

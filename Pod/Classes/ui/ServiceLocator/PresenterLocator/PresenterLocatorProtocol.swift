@@ -19,8 +19,10 @@ protocol PresenterLocatorProtocol {
   func externalOAuthPresenter(config: ExternalOAuthModuleConfig) -> ExternalOAuthPresenterProtocol
 
   // MARK: - Biometrics
-  func createPINPresenter() -> CreatePINPresenterProtocol
-  func verifyPINPresenter(config: VerifyPINPresenterConfig) -> VerifyPINPresenterProtocol
+  func createPasscodePresenter() -> CreatePasscodePresenterProtocol
+  func verifyPasscodePresenter(config: VerifyPasscodePresenterConfig) -> VerifyPasscodePresenterProtocol
+  func changePasscodePresenter() -> ChangePasscodePresenterProtocol
+  func biometricPermissionPresenter() -> BiometricPermissionPresenterProtocol
 
   func issueCardPresenter(router: IssueCardRouter,
                           interactor: IssueCardInteractorProtocol,

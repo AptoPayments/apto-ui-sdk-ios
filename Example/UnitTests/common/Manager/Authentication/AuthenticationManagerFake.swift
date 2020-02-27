@@ -8,6 +8,9 @@
 @testable import AptoUISDK
 
 class AuthenticationManagerFake: AuthenticationManagerProtocol {
+  var biometryType: BiometryType = .none
+  var shouldRequestBiometricPermission: Bool = false
+
   private(set) var saveCalled = false
   private(set) var lastSaveCode: String?
   var nextSaveResult: Result<Void, NSError> = .failure(NSError(domain: "com.aptopayments", code: 1, userInfo: nil))
@@ -55,9 +58,11 @@ class AuthenticationManagerFake: AuthenticationManagerProtocol {
   }
 
   private(set) var authenticateCalled = false
+  private(set) var lastAuthenticateMode: AuthenticationMode?
   var nextAuthenticateResult = true
-  func authenticate(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+  func authenticate(from: UIModuleProtocol, mode: AuthenticationMode, completion: @escaping (Bool) -> Void) {
     authenticateCalled = true
+    lastAuthenticateMode = mode
     completion(nextAuthenticateResult)
   }
 

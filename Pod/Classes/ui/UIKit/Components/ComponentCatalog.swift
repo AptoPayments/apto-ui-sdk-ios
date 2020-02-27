@@ -293,6 +293,7 @@ class ComponentCatalog {
 
   static func itemDescriptionLabelWith(text: String,
                                        textAlignment: NSTextAlignment = .left,
+                                       multiline: Bool = false,
                                        accessibilityLabel: String? = nil,
                                        uiConfig: UIConfig) -> UILabel {
     let retVal = UILabel()
@@ -301,6 +302,9 @@ class ComponentCatalog {
     retVal.textColor = uiConfig.textTertiaryColor
     retVal.textAlignment = textAlignment
     retVal.accessibilityLabel = accessibilityLabel
+    if multiline {
+      retVal.numberOfLines = 0
+    }
     return retVal
   }
 

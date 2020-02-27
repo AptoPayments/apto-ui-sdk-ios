@@ -25,7 +25,9 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
   func viewLoaded() {
     viewModel.showNotificationPreferences.send(config.showNotificationPreferences)
     viewModel.showMonthlyStatements.send(config.showMonthlyStatements)
-    viewModel.showChangePIN.send(config.showChangePIN)
+    viewModel.showChangePasscode.send(config.showChangePIN)
+    viewModel.isBiometricEnabled.send(interactor.isBiometricEnabled())
+    viewModel.biometryType.send(config.biometryType)
     analyticsManager?.track(event: Event.accountSettings)
   }
 
@@ -49,7 +51,12 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
     router.showMonthlyStatements()
   }
 
-  func changePINTapped() {
-    router.showChangePIN()
+  func changePasscodeTapped() {
+    router.showChangePasscode()
+  }
+
+  func changeShowBiometricTapped(_ isEnabled: Bool) {
+    interactor.setIsBiometricEnabled(isEnabled)
+    viewModel.isBiometricEnabled.send(isEnabled)
   }
 }

@@ -388,7 +388,7 @@ private extension ShiftCardTransactionDetailsViewControllerTheme2 {
   func setUpTransactionDetailsView() {
     detailsArrowImageView.tintColor = uiConfiguration.textSecondaryColor
     containerView.addSubview(formView)
-    formView.backgroundColor = .white
+    formView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
     formView.snp.makeConstraints { make in
       make.top.equalTo(topView.snp.bottom)
       make.left.right.bottom.equalTo(containerView)

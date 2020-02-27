@@ -30,6 +30,7 @@ class CardWaitListPresenter: CardWaitListPresenterProtocol {
   func viewLoaded() {
     viewModel.asset.send(config?.asset)
     viewModel.backgroundColor.send(config?.backgroundColor)
+    viewModel.darkBackgroundColor.send(config?.darkBackgroundColor)
     viewModel.backgroundImage.send(config?.backgroundImage)
     analyticsManager?.track(event: Event.waitlist)
   }

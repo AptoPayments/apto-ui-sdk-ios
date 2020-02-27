@@ -160,7 +160,7 @@ private extension SetPinViewControllerThemeTwo {
   }
 
   func setUpPinEntryContainer() {
-    pinEntryContainerView.backgroundColor = view.backgroundColor
+    pinEntryContainerView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
     pinEntryContainerView.layer.cornerRadius = uiConfiguration.fieldCornerRadius
     pinEntryContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
     pinEntryContainerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
@@ -181,6 +181,8 @@ private extension SetPinViewControllerThemeTwo {
     pinEntryView.pinBorderColor = .clear
     pinEntryView.font = uiConfiguration.fontProvider.formFieldFont
     pinEntryView.textColor = uiConfiguration.textSecondaryColor
+    pinEntryView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
+    pinEntryView.tintColor = uiConfiguration.uiPrimaryColor
     pinEntryView.placeholder = "-"
     pinEntryContainerView.addSubview(pinEntryView)
     pinEntryView.snp.makeConstraints { make in

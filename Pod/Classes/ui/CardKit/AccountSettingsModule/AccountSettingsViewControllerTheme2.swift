@@ -15,6 +15,7 @@ class AccountSettingsViewControllerTheme2: AccountSettingsViewProtocol {
   private unowned let presenter: AccountSettingsPresenterProtocol
   private let titleContainerView = UIView()
   private let formView = MultiStepForm()
+  private var biometricRow: FormRowSwitchTitleSubtitleView?
 
   init(uiConfiguration: UIConfig, presenter: AccountSettingsPresenterProtocol) {
     self.presenter = presenter
@@ -69,20 +70,28 @@ private extension AccountSettingsViewControllerTheme2 {
     let viewModel = presenter.viewModel
     combineLatest(viewModel.showNotificationPreferences,
                   viewModel.showMonthlyStatements,
-                  viewModel.showChangePIN).observeNext { [unowned self] showNotification, showStatements,
-                    showChangePIN in
-      self.updateUpFormViewContent(showNotificationPreferences: showNotification, showMonthlyStatements: showStatements,
-                                   showChangePIN: showChangePIN)
+                  viewModel.showChangePasscode,
+                  viewModel.biometryType).observeNext { [unowned self] showNotification, showStatements,
+                    showChangePasscode, biometryType in
+      self.updateUpFormViewContent(showNotification, showStatements, showChangePasscode, biometryType)
+    }.dispose(in: disposeBag)
+
+    viewModel.isBiometricEnabled.observeNext{ [unowned self] isBiometricEnabled in
+      self.biometricRow?.switcher.isOn = isBiometricEnabled
     }.dispose(in: disposeBag)
   }
 
-  func updateUpFormViewContent(showNotificationPreferences: Bool, showMonthlyStatements: Bool, showChangePIN: Bool) {
+  func updateUpFormViewContent(_ showNotificationPreferences: Bool, _ showMonthlyStatements: Bool,
+                               _ showChangePasscode: Bool, _ biometryType: BiometryType) {
     var rows: [FormRowView] = [FormRowSeparatorView(backgroundColor: .clear, height: 16)]
-    if showChangePIN {
-      rows += [
-        self.createSecuritySettingsTitle(),
-        self.createChangePINButton()
-      ]
+    if showChangePasscode || biometryType != .none {
+      rows += [self.createSecuritySettingsTitle()]
+    }
+    if showChangePasscode {
+      rows += [self.createChangePasscodeButton(showSplitter: biometryType != .none)]
+    }
+    if biometryType != .none {
+      rows += [self.createBiometricButton(biometryType)]
     }
     if showNotificationPreferences {
       rows += [
@@ -97,7 +106,10 @@ private extension AccountSettingsViewControllerTheme2 {
     if showMonthlyStatements {
       rows += [createStatementsButton()]
     }
-    rows += [self.createLogoutButton()]
+    rows += [
+      self.createVersionRow(),
+      self.createLogoutButton()
+    ]
     formView.show(rows: rows)
   }
 }
@@ -157,15 +169,34 @@ private extension AccountSettingsViewControllerTheme2 {
                                          uiConfig: uiConfiguration)
   }
 
-  func createChangePINButton() -> FormRowView {
+  func createChangePasscodeButton(showSplitter: Bool) -> FormRowView {
     return FormBuilder.linkRowWith(title: "account_settings.security.change_pin.title".podLocalized(),
                                    subtitle: "account_settings.security.change_pin.description".podLocalized(),
                                    leftIcon: nil,
                                    height: 72,
-                                   showSplitter: false,
+                                   showSplitter: showSplitter,
                                    uiConfig: uiConfiguration) { [unowned self] in
-      self.presenter.changePINTapped()
+      self.presenter.changePasscodeTapped()
     }
+  }
+
+  func createBiometricButton(_ biometryType: BiometryType) -> FormRowView {
+    let title = biometryType == .faceID
+      ? "account_settings.security.face_id.title".podLocalized()
+      : "account_settings.security.touch_id.title"
+    let subtitle = biometryType == .faceID
+      ? "account_settings.security.face_id.description".podLocalized()
+      : "account_settings.security.touch_id.description".podLocalized()
+    let retVal = FormBuilder.titleSubtitleSwitchRowWith(title: title,
+                                                        subtitle: subtitle,
+                                                        height: 72,
+                                                        leftMargin: 16,
+                                                        uiConfig: uiConfiguration) { [unowned self] switcher in
+      self.presenter.changeShowBiometricTapped(switcher.isOn)
+    }
+    biometricRow = retVal
+    biometricRow?.switcher.isOn = presenter.viewModel.isBiometricEnabled.value
+    return retVal
   }
 
   func createAppSettingsTitle() -> FormRowView {
@@ -206,6 +237,15 @@ private extension AccountSettingsViewControllerTheme2 {
                                    uiConfig: uiConfiguration) { [unowned self] in
       self.presenter.monthlyStatementsTapped()
     }
+  }
+
+  func createVersionRow() -> FormRowView {
+    return FormBuilder.linkRowWith(title: "account_settings.app.version.title".podLocalized(),
+                                   subtitle: ShiftSDK.fullVersion,
+                                   leftIcon: nil,
+                                   height: 72,
+                                   showAccessoryView: false,
+                                   uiConfig: uiConfiguration) {}
   }
 
   func createLogoutButton() -> FormRowView {

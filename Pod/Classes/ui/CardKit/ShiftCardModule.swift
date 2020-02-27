@@ -45,6 +45,7 @@ open class ShiftCardModule: UIModule {
     serviceLocator.notificationHandler.removeObserver(self, name: .UserTokenSessionExpiredNotification)
     serviceLocator.notificationHandler.removeObserver(self, name: .UserTokenSessionClosedNotification)
     serviceLocator.notificationHandler.removeObserver(self, name: .UserTokenSessionInvalidNotification)
+    serviceLocator.notificationHandler.removeObserver(self, name: UIApplication.willEnterForegroundNotification)
     super.close()
   }
 
@@ -171,9 +172,18 @@ open class ShiftCardModule: UIModule {
     }
   }
 
+  @objc private func appDidBecomeActive() {
+    let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
+    if authenticationManager.shouldAuthenticateOnStartUp() {
+      authenticationManager.authenticate(from: self) { _ in }
+    }
+  }
+
   private func handleAuthentication(completion: @escaping () -> Void) {
     let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
     if authenticationManager.shouldAuthenticateOnStartUp() {
+      serviceLocator.notificationHandler.addObserver(self, selector: #selector(appDidBecomeActive),
+                                                     name: UIApplication.willEnterForegroundNotification)
       authenticationManager.authenticate(from: self) { accessGranted in
         if accessGranted {
           completion()
@@ -181,10 +191,14 @@ open class ShiftCardModule: UIModule {
       }
     }
     else if authenticationManager.shouldCreateCode() {
-      let module = serviceLocator.moduleLocator.createPINModule()
+      serviceLocator.notificationHandler.addObserver(self, selector: #selector(appDidBecomeActive),
+                                                     name: UIApplication.willEnterForegroundNotification)
+      let module = serviceLocator.moduleLocator.createPasscodeModule()
       module.onFinish = { [unowned self] _ in
-        self.dismissModule {
-          completion()
+        self.showBiometricPermission(from: module) {
+          self.dismissModule {
+            completion()
+          }
         }
       }
       present(module: module) { _ in }
@@ -192,6 +206,22 @@ open class ShiftCardModule: UIModule {
     else {
       completion()
     }
+  }
+
+  private func showBiometricPermission(from parent: UIModuleProtocol, completion: @escaping () -> Void) {
+    let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
+    guard authenticationManager.shouldRequestBiometricPermission else {
+      completion()
+      return
+    }
+    let module = serviceLocator.moduleLocator.biometricPermissionModule()
+    module.onFinish = { _ in
+      completion()
+    }
+    module.onClose = { _ in
+      completion()
+    }
+    parent.push(module: module) { _ in }
   }
 
   private func showManageCardModule(card: Card, addChild: Bool, pushModule: Bool,
@@ -324,5 +354,6 @@ open class ShiftCardModule: UIModule {
     serviceLocator.systemServicesLocator.authenticationManager().invalidateCurrentCode()
     FileDownloaderImpl.clearCache()
     AptoPlatform.defaultManager().clearUserToken()
+    serviceLocator.notificationHandler.removeObserver(self, name: UIApplication.willEnterForegroundNotification)
   }
 }

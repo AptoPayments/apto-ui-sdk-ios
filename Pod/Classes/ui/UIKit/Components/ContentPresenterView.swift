@@ -178,7 +178,7 @@ private extension ContentPresenterView {
   func show(_ nativeContent: NativeContent) {
     waitListView.set(backgroundImage: nativeContent.backgroundImage)
     waitListView.set(asset: nativeContent.asset)
-    waitListView.set(backgroundColor: nativeContent.backgroundColor)
+    waitListView.set(backgroundColor: nativeContent.dynamicBackgroundColor)
     webView.isHidden = true
     waitListView.isHidden = false
     textView.isHidden = true

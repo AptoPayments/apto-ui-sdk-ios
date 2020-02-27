@@ -16,7 +16,8 @@ class WaitListPresenterTest: XCTestCase {
   private let router = WaitListModuleSpy(serviceLocator: ServiceLocatorFake())
   private let interactor = WaitListInteractorFake()
   private let dataProvider = ModelDataProvider.provider
-  private let config = WaitListActionConfiguration(asset: "asset", backgroundImage: "image", backgroundColor: "color")
+  private let config = WaitListActionConfiguration(asset: "asset", backgroundImage: "image", backgroundColor: "color",
+                                                   darkBackgroundColor: "color")
   private let analyticsManager: AnalyticsManagerSpy = AnalyticsManagerSpy()
   private let notificationHandler = NotificationHandlerFake()
 
@@ -37,6 +38,7 @@ class WaitListPresenterTest: XCTestCase {
     XCTAssertEqual(config.asset, sut.viewModel.asset.value)
     XCTAssertEqual(config.backgroundImage, sut.viewModel.backgroundImage.value)
     XCTAssertEqual(config.backgroundColor, sut.viewModel.backgroundColor.value)
+    XCTAssertEqual(config.darkBackgroundColor, sut.viewModel.darkBackgroundColor.value)
   }
 
   func testViewLoadedObserveApplicationDidBecomeActiveNotification() {

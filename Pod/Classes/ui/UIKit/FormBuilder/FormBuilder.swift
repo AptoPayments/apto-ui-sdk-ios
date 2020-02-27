@@ -231,7 +231,7 @@ class FormBuilder {
     retVal.backgroundColor = uiConfig.uiBackgroundPrimaryColor
     retVal.padding = uiConfig.formRowPadding
     if uiConfig.uiTheme == .theme2 {
-      retVal.backgroundColor = .white
+      retVal.backgroundColor = uiConfig.uiBackgroundSecondaryColor
       retVal.layer.cornerRadius = uiConfig.fieldCornerRadius
       retVal.layer.shadowOffset = CGSize(width: 0, height: 2)
       retVal.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
@@ -431,6 +431,7 @@ class FormBuilder {
                           leftIcon: UIImage?,
                           height: CGFloat = 66,
                           showSplitter: Bool = true,
+                          showAccessoryView: Bool = true,
                           uiConfig: UIConfig,
                           clickHandler: @escaping (() -> Void)) -> FormRowView {
     let titleLabel = ComponentCatalog.mainItemLightLabelWith(text: title, uiConfig: uiConfig)
@@ -451,9 +452,10 @@ class FormBuilder {
                                        height: height,
                                        clickHandler: clickHandler)
     case .theme2:
-      let rightView = UIImageView(image: UIImage.imageFromPodBundle("row_arrow")?.asTemplate())
-      rightView.tintColor = uiConfig.uiTertiaryColor
-      rightView.snp.makeConstraints { make in
+      let rightView =
+        showAccessoryView ? UIImageView(image: UIImage.imageFromPodBundle("row_arrow")?.asTemplate()) : nil
+      rightView?.tintColor = uiConfig.uiTertiaryColor
+      rightView?.snp.makeConstraints { make in
         make.width.equalTo(7)
         make.height.equalTo(12)
       }

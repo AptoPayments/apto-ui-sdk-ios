@@ -39,13 +39,21 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  func createPINView(presenter: CreatePINPresenterProtocol) -> ShiftViewController {
+  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> ShiftViewController {
     return ShiftViewController(uiConfiguration: uiConfig)
   }
 
-  func verifyPINView(presenter: VerifyPINPresenterProtocol) -> ShiftViewController {
+  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> ShiftViewController {
     return ShiftViewController(uiConfiguration: uiConfig)
   }
+
+  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> ShiftViewController {
+    return ShiftViewController(uiConfiguration: uiConfig)
+  }
+
+  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> ShiftViewController {
+    return ShiftViewController(uiConfiguration: uiConfig)
+  } 
 
   func issueCardView(uiConfig: UIConfig, eventHandler: IssueCardPresenterProtocol) -> UIViewController {
     return IssueCardViewControllerTheme1(uiConfiguration: uiConfig, eventHandler: eventHandler)

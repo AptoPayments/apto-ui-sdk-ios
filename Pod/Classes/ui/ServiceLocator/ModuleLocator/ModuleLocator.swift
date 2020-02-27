@@ -45,16 +45,20 @@ final class ModuleLocator: ModuleLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  func createPINModule() -> CreatePINModuleProtocol {
-    return CreatePINModule(serviceLocator: serviceLocator)
+  func createPasscodeModule() -> CreatePasscodeModuleProtocol {
+    return CreatePasscodeModule(serviceLocator: serviceLocator)
   }
 
-  func verifyPINModule() -> VerifyPINModuleProtocol {
-    return VerifyPINModule(serviceLocator: serviceLocator)
+  func verifyPasscodeModule() -> VerifyPasscodeModuleProtocol {
+    return VerifyPasscodeModule(serviceLocator: serviceLocator)
   }
 
-  func changePINModule() -> ChangePINModuleProtocol {
-    return ChangePINModule(serviceLocator: serviceLocator)
+  func changePasscodeModule() -> ChangePasscodeModuleProtocol {
+    return ChangePasscodeModule(serviceLocator: serviceLocator)
+  }
+
+  func biometricPermissionModule() -> BiometricPermissionModuleProtocol {
+    return BiometricPermissionModule(serviceLocator: serviceLocator)
   }
 
   func cardProductSelectorModule() -> CardProductSelectorModuleProtocol {

@@ -174,7 +174,7 @@ class ManageShiftCardModule: UIModule {
     let showStatsButton = platform.isFeatureEnabled(.showStatsButton)
     let showAccountSettingsButton = platform.isFeatureEnabled(.showAccountSettingsButton)
     let config = ManageShiftCardPresenterConfig(name: projectConfiguration.name,
-                                                imageUrl: projectConfiguration.branding.logoUrl,
+                                                imageUrl: projectConfiguration.branding.light.logoUrl,
                                                 showActivateCardButton: showActivateCardButton,
                                                 showStatsButton: showStatsButton,
                                                 showAccountSettingsButton: showAccountSettingsButton)

@@ -38,7 +38,8 @@ class ModelDataProvider {
   }()
 
   lazy var waitListAction: WorkflowAction = {
-    let configuration = WaitListActionConfiguration(asset: "asset", backgroundImage: "image", backgroundColor: "color")
+    let configuration = WaitListActionConfiguration(asset: "asset", backgroundImage: "image", backgroundColor: "color",
+                                                    darkBackgroundColor: "color")
     return WorkflowAction(actionId: nil,
                           name: nil,
                           order: nil,
@@ -81,6 +82,8 @@ class ModelDataProvider {
                            uiTheme: "theme_1")
   }()
 
+  lazy var branding: Branding = Branding(light: projectBranding, dark: projectBranding)
+
   lazy var projectConfiguration: ProjectConfiguration = {
     return ProjectConfiguration(name: "Test project",
                                 summary: nil,
@@ -93,7 +96,7 @@ class ModelDataProvider {
                                 products: [.link],
                                 welcomeScreenAction: workflowAction,
                                 supportEmailAddress: nil,
-                                branding: projectBranding,
+                                branding: branding,
                                 allowedCountries: [Country(isoCode: "US", name: "United States")],
                                 isTrackerActive: false,
                                 trackerAccessToken: nil)
@@ -527,6 +530,7 @@ class ModelDataProvider {
                                      cardIssuer: "Shift",
                                      waitListBackgroundImage: "image",
                                      waitListBackgroundColor: "color",
+                                     waitListDarkBackgroundColor: "color",
                                      waitListAsset: "asset")
   lazy var paymentSuccessfulGroup = NotificationGroup(groupId: .paymentSuccessful,
                                                       category: .cardActivity,

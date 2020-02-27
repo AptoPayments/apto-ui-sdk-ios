@@ -18,7 +18,7 @@ def runtimepods
   pod 'TrustKit', '~> 1.6'
   pod 'Down', '~> 0.8'
   pod 'PullToRefreshKit', '~> 0.8'
-  pod 'Mixpanel-swift', '~> 2.6'
+  pod 'Mixpanel-swift', '~> 2.7'
   pod 'TwilioVoice', '~> 3.0'
 end
 

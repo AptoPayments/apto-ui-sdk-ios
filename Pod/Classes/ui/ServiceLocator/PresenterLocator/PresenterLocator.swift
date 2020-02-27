@@ -40,12 +40,20 @@ final class PresenterLocator: PresenterLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  func createPINPresenter() -> CreatePINPresenterProtocol {
-    return CreatePINPresenter()
+  func createPasscodePresenter() -> CreatePasscodePresenterProtocol {
+    return CreatePasscodePresenter()
   }
 
-  func verifyPINPresenter(config: VerifyPINPresenterConfig) -> VerifyPINPresenterProtocol {
-    return VerifyPINPresenter(config: config)
+  func verifyPasscodePresenter(config: VerifyPasscodePresenterConfig) -> VerifyPasscodePresenterProtocol {
+    return VerifyPasscodePresenter(config: config)
+  }
+
+  func changePasscodePresenter() -> ChangePasscodePresenterProtocol {
+    return ChangePasscodePresenter()
+  }
+
+  func biometricPermissionPresenter() -> BiometricPermissionPresenterProtocol {
+    return BiometricPermissionPresenter()
   }
 
   func issueCardPresenter(router: IssueCardRouter,

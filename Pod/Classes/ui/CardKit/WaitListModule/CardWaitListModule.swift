@@ -41,7 +41,8 @@ class CardWaitListModule: UIModule, CardWaitListModuleProtocol {
     let interactor = serviceLocator.interactorLocator.cardWaitListInteractor(card: card)
     let config = WaitListActionConfiguration(asset: cardProduct.waitListAsset,
                                              backgroundImage: cardProduct.waitListBackgroundImage,
-                                             backgroundColor: cardProduct.waitListBackgroundColor)
+                                             backgroundColor: cardProduct.waitListBackgroundColor,
+                                             darkBackgroundColor: cardProduct.waitListDarkBackgroundColor)
     let presenter = serviceLocator.presenterLocator.cardWaitListPresenter(config: config)
     presenter.interactor = interactor
     presenter.router = self
