@@ -12,6 +12,8 @@ import AptoSDK
 
 private protocol _UITextFieldDelegate: class {
   func deletePressed(_ textField: _UITextField)
+  func shouldBecomeFirstResponder(_ textField: _UITextField) -> Bool
+  func selectFirstResponder()
 }
 
 private class _UITextField: UITextField {
@@ -20,6 +22,20 @@ private class _UITextField: UITextField {
   override func deleteBackward() {
     _delegate?.deletePressed(self)
     super.deleteBackward()
+  }
+
+  func forceBecomeFirstResponder() -> Bool {
+    return super.becomeFirstResponder()
+  }
+
+  override func becomeFirstResponder() -> Bool {
+    switch _delegate?.shouldBecomeFirstResponder(self) {
+    case .none, .some(true):
+      return forceBecomeFirstResponder()
+    case .some(false):
+      _delegate?.selectFirstResponder()
+      return false
+    }
   }
 }
 
@@ -31,7 +47,7 @@ private class _UITextField: UITextField {
 class UIPinEntryTextField: UIView {
   // Variables
   private let stackView = UIStackView()
-  private var textFields = [UITextField]()
+  private var textFields = [_UITextField]()
   private var keyboardType: UIKeyboardType = .numberPad
   private var pinViewWidth: Int {
     return (pinWidth * pinCount) + (pinSpacing * pinCount)
@@ -209,24 +225,24 @@ class UIPinEntryTextField: UIView {
   /// Move forward to textfield
   ///
   /// - Parameter textField: textField Current textfield
-  private func moveFrom(currentTextField textField: UITextField) {
+  private func moveFrom(currentTextField textField: _UITextField) {
     guard let index = textFields.firstIndex(of: textField), index < (pinCount - 1) else { return }
     if let current = currentTextField, current != textField { return }
     currentTextField = textFields[index + 1]
     textFields[index + 1].text = ""
-    textFields[index + 1].becomeFirstResponder()
+    _ = textFields[index + 1].forceBecomeFirstResponder()
   }
 
   /// Move backward from textfield
   ///
   /// - Parameter textField: textField Current textfield
-  private func moveBackwardFrom(currentTextField textField: UITextField) {
+  private func moveBackwardFrom(currentTextField textField: _UITextField) {
     guard let index = textFields.firstIndex(of: textField), index > 0 else { return }
     if let current = currentTextField, current != textField { return }
     currentTextField = textFields[index - 1]
     textFields[index].text = ""
     textFields[index - 1].text = ""
-    textFields[index - 1].becomeFirstResponder()
+    _ = textFields[index - 1].forceBecomeFirstResponder()
   }
 
   /// Get text from all pin textfields
@@ -244,7 +260,7 @@ class UIPinEntryTextField: UIView {
 
   /// Make the first textfield become first responder
   func focus() {
-    textFields[0].becomeFirstResponder()
+    _ = textFields[0].forceBecomeFirstResponder()
   }
 
   override func resignFirstResponder() -> Bool {
@@ -264,13 +280,14 @@ class UIPinEntryTextField: UIView {
       }
     }
   }
-  private var currentTextField: UITextField?
+  private var currentTextField: _UITextField?
 }
 
 extension UIPinEntryTextField: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
+    guard let textField = textField as? _UITextField else { return true }
     let char = string.cString(using: String.Encoding.utf8)! // swiftlint:disable:this force_unwrapping
     let isBackSpace = strcmp(char, "\\b")
 
@@ -309,7 +326,7 @@ extension UIPinEntryTextField: UITextFieldDelegate {
   }
 
   func textFieldDidBeginEditing(_ textField: UITextField) {
-    currentTextField = textField
+    currentTextField = textField as? _UITextField
   }
 }
 
@@ -318,5 +335,13 @@ extension UIPinEntryTextField: _UITextFieldDelegate {
     if textField.text?.isEmpty == true {
       moveBackwardFrom(currentTextField: textField)
     }
+  }
+
+  fileprivate func shouldBecomeFirstResponder(_ textField: _UITextField) -> Bool {
+    return (textField.text?.count ?? 0 > 0) || (textField === textFields[getText().count])
+  }
+
+  fileprivate func selectFirstResponder() {
+    _ = textFields[getText().count].forceBecomeFirstResponder()
   }
 }

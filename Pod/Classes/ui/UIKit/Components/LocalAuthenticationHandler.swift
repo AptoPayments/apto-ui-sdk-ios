@@ -9,13 +9,12 @@ import AptoSDK
 import LocalAuthentication
 
 class LocalAuthenticationHandler {
-  private let localAuthenticationContext = LAContext()
-
   var biometryType: BiometryType {
+    let localAuthenticationContext = LAContext()
     // Even when this value is only used in the else branch we have to make the call in here because
     // biometryType is only set after canEvaluatePolicy(_, error:) is called.
     // https://developer.apple.com/documentation/localauthentication/lacontext/2867583-biometrytype
-    let isBiometricSupported = isBiometricSupportedByDevice()
+    let isBiometricSupported = isBiometricSupportedByDevice(context: localAuthenticationContext)
     if #available(iOS 11, *) {
       switch localAuthenticationContext.biometryType {
       case .faceID:
@@ -34,10 +33,9 @@ class LocalAuthenticationHandler {
     }
   }
 
-  private func isBiometricSupportedByDevice() -> Bool {
+  private func isBiometricSupportedByDevice(context: LAContext) -> Bool {
     var authError: NSError?
-    let canEvaluatePolicy = localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
-                                                                         error: &authError)
+    let canEvaluatePolicy = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError)
     // if the policy can be evaluated biometrics is supported
     guard canEvaluatePolicy == false else { return true }
 
@@ -56,12 +54,14 @@ class LocalAuthenticationHandler {
   }
 
   func available() -> Bool {
+    let localAuthenticationContext = LAContext()
     return localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
   }
 
   func authenticate(completion: @escaping Result<Bool, NSError>.Callback) {
     var authError: NSError?
     let reasonString = "Show the card info"
+    let localAuthenticationContext = LAContext()
     if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
       localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
                                                 localizedReason: reasonString) { success, error in

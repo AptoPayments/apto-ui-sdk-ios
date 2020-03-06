@@ -104,6 +104,13 @@ private extension BiometricPermissionViewController {
     navigationController?.navigationBar.hideShadow()
     navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationPrimaryColor,
                                               tintColor: uiConfiguration.textTopBarPrimaryColor)
+    setUpSkipButton()
+  }
+
+  func setUpSkipButton() {
+    installNavRightButton(nil, tintColor: uiConfiguration.textTopBarPrimaryColor,
+                          title: "biometric.permission.skip.title".podLocalized(), target: self,
+                          action: #selector(closeTapped))
   }
 
   func setUpTitleLabel() {
