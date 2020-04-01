@@ -74,15 +74,4 @@ class CreatePasscodePresenterTest: XCTestCase {
     // Then
     XCTAssertNotNil(sut.viewModel.error.value)
   }
-
-  func testShowURLCallRouter() {
-    // Given
-    let url = ModelDataProvider.provider.tappedURL
-
-    // When
-    sut.show(url: url)
-
-    // Then
-    XCTAssertTrue(router.showURLCalled)
-  }
 }

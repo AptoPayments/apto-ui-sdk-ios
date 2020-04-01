@@ -164,12 +164,6 @@ private extension CreatePasscodeViewController {
   }
 }
 
-extension CreatePasscodeViewController: ContentPresenterViewDelegate {
-  func linkTapped(url: TappedURL) {
-    presenter.show(url: url)
-  }
-}
-
 extension CreatePasscodeViewController: UIPinEntryTextFieldDelegate {
   func pinEntryTextField(didFinishInput frPinView: UIPinEntryTextField) {
     let pin = frPinView.getText()

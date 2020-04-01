@@ -72,6 +72,8 @@
 		3C40FD2623868AFB008FE470 /* CreatePasscodeInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD1ECE8A2750981BFA0B3 /* CreatePasscodeInteractorTest.swift */; };
 		3C40FD2723868D9E008FE470 /* CreatePasscodeTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD9C007A65B05924DF7A9 /* CreatePasscodeTestDoubles.swift */; };
 		3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD60A22D2072B3066FE37 /* CustodianSerializerTest.swift */; };
+		3C58BF35242A688500175697 /* InMemoryKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C58BF34242A688500175697 /* InMemoryKeychain.swift */; };
+		3C58BF37242A6A9300175697 /* UserTokenStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C58BF36242A6A9300175697 /* UserTokenStorageTest.swift */; };
 		3C65E0BA217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */; };
 		3C92D20E2343903F00C48D90 /* MonthTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92D20D2343903F00C48D90 /* MonthTest.swift */; };
 		3C92D2102343964A00C48D90 /* MonthlyStatementsPeriodTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92D20F2343964A00C48D90 /* MonthlyStatementsPeriodTest.swift */; };
@@ -87,6 +89,7 @@
 		3CD2DBEF23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */; };
 		3CD2DBF323F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBF223F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift */; };
 		3CD2DBF723F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2DBF623F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift */; };
+		3CD3CF6C2417D44C00906AE1 /* CardDetailsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD3CF6B2417D44C00906AE1 /* CardDetailsTest.swift */; };
 		3CD47E74228D640D00DD56FF /* CardProductSelectorModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDA3FDCA41F36733ACF07 /* CardProductSelectorModuleTest.swift */; };
 		3CEBF048215A871500B077BD /* DataConfirmationTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEBF047215A871500B077BD /* DataConfirmationTestDoubles.swift */; };
 		3CEBF04A215A896900B077BD /* DataConfirmationInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEBF049215A896900B077BD /* DataConfirmationInteractorTest.swift */; };
@@ -332,6 +335,8 @@
 		3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDeclineCodeTest.swift; sourceTree = "<group>"; };
 		3C3D1F892350D6C6007D39AB /* SystemServicesLocatorFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemServicesLocatorFake.swift; sourceTree = "<group>"; };
 		3C3FB2172386D3B60061025A /* CreatePasscodeModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasscodeModuleTest.swift; sourceTree = "<group>"; };
+		3C58BF34242A688500175697 /* InMemoryKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryKeychain.swift; sourceTree = "<group>"; };
+		3C58BF36242A6A9300175697 /* UserTokenStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTokenStorageTest.swift; sourceTree = "<group>"; };
 		3C65E0B9217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalCardActivationSucceedTestDoubles.swift; sourceTree = "<group>"; };
 		3C92D20D2343903F00C48D90 /* MonthTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthTest.swift; sourceTree = "<group>"; };
 		3C92D20F2343964A00C48D90 /* MonthlyStatementsPeriodTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStatementsPeriodTest.swift; sourceTree = "<group>"; };
@@ -348,6 +353,7 @@
 		3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesStorageTestDoubles.swift; sourceTree = "<group>"; };
 		3CD2DBF223F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasscodeInteractorTest.swift; sourceTree = "<group>"; };
 		3CD2DBF623F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasscodePresenterTest.swift; sourceTree = "<group>"; };
+		3CD3CF6B2417D44C00906AE1 /* CardDetailsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsTest.swift; sourceTree = "<group>"; };
 		3CEBF047215A871500B077BD /* DataConfirmationTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConfirmationTestDoubles.swift; sourceTree = "<group>"; };
 		3CEBF049215A896900B077BD /* DataConfirmationInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConfirmationInteractorTest.swift; sourceTree = "<group>"; };
 		3CEBF04D215A908000B077BD /* DataConfirmationPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConfirmationPresenterTest.swift; sourceTree = "<group>"; };
@@ -619,6 +625,7 @@
 				D99BD4B82FD5A06D0959306D /* NotificationPreferencesTest.swift */,
 				D99BD0BD4D675A0EBFD070EB /* CardStyleTest.swift */,
 				3C1ECAB022D8E33400DBC484 /* TransactionDeclineCodeTest.swift */,
+				3CD3CF6B2417D44C00906AE1 /* CardDetailsTest.swift */,
 			);
 			name = Model;
 			path = UnitTests/ledgefoundation/Model;
@@ -745,6 +752,14 @@
 				3C1A61E32369AB9200883EC3 /* NotificationHandlerTestDoubles.swift */,
 			);
 			path = NotificationCenter;
+			sourceTree = "<group>";
+		};
+		3C58BF33242A686500175697 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				3C58BF34242A688500175697 /* InMemoryKeychain.swift */,
+			);
+			path = Keychain;
 			sourceTree = "<group>";
 		};
 		3C65E0B8217E1083000207B1 /* PhysicalCardActivationSucceed */ = {
@@ -976,6 +991,7 @@
 		D99BD30E80C57D148F715B0D /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				3C58BF33242A686500175697 /* Keychain */,
 				3C96EBA2238C65DC00B9C238 /* Authentication */,
 				3C96EB9F238C2D3700B9C238 /* DateProvider */,
 				3C96EB97238C0BE300B9C238 /* FileManager */,
@@ -1379,6 +1395,7 @@
 				3CF9F2E5230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift */,
 				3CF9F2E7230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift */,
 				3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */,
+				3C58BF36242A6A9300175697 /* UserTokenStorageTest.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -1667,7 +1684,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework",
-				"${PODS_ROOT}/TwilioVoice/Build/iOS/TwilioVoice.framework",
+				"${PODS_ROOT}/TwilioVoice/TwilioVoice.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1797,6 +1814,7 @@
 				D99BDD2CCEDB1BFFFA95898B /* ServerMaintenanceErrorInteractorTest.swift in Sources */,
 				D99BDDFA7B0996FB54697F0A /* NetworkManagerSpy.swift in Sources */,
 				D99BD4706AFF825E65A1784D /* ServerMaintenanceErrorTestDoubles.swift in Sources */,
+				3C58BF37242A6A9300175697 /* UserTokenStorageTest.swift in Sources */,
 				D99BD4B1C65D30B428CA97DD /* ServerMaintenanceErrorPresenterTest.swift in Sources */,
 				D99BD5DE2B51A91002A694EB /* ServerMaintenanceErrorModuleTest.swift in Sources */,
 				D99BD687B765050BE2C7F994 /* StorageLocatorFake.swift in Sources */,
@@ -1850,6 +1868,7 @@
 				D99BD5648E64479ACA8F7BAF /* CardWaitListPresenterTest.swift in Sources */,
 				3CEF43A42386CE6D007537F7 /* CreatePasscodePresenterTest.swift in Sources */,
 				3C96EB9C238C155000B9C238 /* AuthenticationManagerTest.swift in Sources */,
+				3CD3CF6C2417D44C00906AE1 /* CardDetailsTest.swift in Sources */,
 				D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */,
 				D99BD40B54B9F02B27F45C37 /* NotificationGroupTest.swift in Sources */,
 				D99BD656AC57498ABC4E58D7 /* NotificationPreferencesTest.swift in Sources */,
@@ -1873,6 +1892,7 @@
 				D99BD5DBCBBD701D3AADDC49 /* VoIPInteractorTest.swift in Sources */,
 				D99BD6F7C750B8A7DEE09ABD /* VoIPPresenterTest.swift in Sources */,
 				D99BDE2A95E69E64A6A6DC37 /* VoIPCallTestDoubles.swift in Sources */,
+				3C58BF35242A688500175697 /* InMemoryKeychain.swift in Sources */,
 				D99BD0AE38A93FD6A99C6C96 /* VoIPModuleTest.swift in Sources */,
 				D99BD0FA5F61BF9AEA515941 /* CardSettingsTestDoubles.swift in Sources */,
 				D99BD2C71CBA9DD1E9272D80 /* CardSettingsPresenterTest.swift in Sources */,

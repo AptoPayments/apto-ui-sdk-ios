@@ -9,12 +9,6 @@ import AptoSDK
 @testable import AptoUISDK
 
 class CreatePasscodeModuleSpy: UIModuleSpy, CreatePasscodeModuleProtocol {
-  private(set) var showURLCalled = false
-  private(set) var lastShowURL: TappedURL?
-  func show(url: TappedURL) {
-    showURLCalled = true
-    lastShowURL = url
-  }
 }
 
 class CreatePasscodeInteractorSpy: CreatePasscodeInteractorProtocol {
@@ -57,12 +51,5 @@ class CreatePasscodePresenterSpy: CreatePasscodePresenterProtocol {
   func pinEntered(_ code: String) {
     pinEnteredCalled = true
     lastPinEnteredCode = code
-  }
-
-  private(set) var showURLCalled = false
-  private(set) var lastShowURL: TappedURL?
-  func show(url: TappedURL) {
-    showURLCalled = true
-    lastShowURL = url
   }
 }

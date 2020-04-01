@@ -269,12 +269,8 @@ class ManageShiftCardPresenter: ManageShiftCardPresenterProtocol {
   private func updateViewModelWith(cardDetails: CardDetails) {
     viewModel.pan.send(cardDetails.pan)
     viewModel.cvv.send(cardDetails.cvv)
-    let expirationComponents = cardDetails.expiration.split(separator: "-")
-    if var year = UInt(expirationComponents[0]), let month = UInt(expirationComponents[1]) {
-      if year > 99 { year = year - 2000 }
-      viewModel.expirationMonth.send(month)
-      viewModel.expirationYear.send(year)
-    }
+    viewModel.expirationMonth.send(cardDetails.month)
+    viewModel.expirationYear.send(cardDetails.year)
   }
 
   fileprivate func refreshTransactions(forceRefresh: Bool = true,

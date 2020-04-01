@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "AptoUISDK"
-  s.version          = "2.4.1"
+  s.version          = "2.4.2"
   s.summary          = "The Apto UI platform iOS SDK."
   s.description      = <<-DESC
                         Apto iOS UI SDK provides a UI flow that allows to easily integrate the platform in your app.
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/AptoPayments/apto-ui-sdk-ios.git"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.authors          = { "Ivan Oliver" => "ivan@aptopayments.com", "Takeichi Kanzaki" => "takeichi@aptopayments.com" }
-  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.4.1" }
+  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.4.2" }
 
   s.platform = :ios
   s.ios.deployment_target = '10.0'

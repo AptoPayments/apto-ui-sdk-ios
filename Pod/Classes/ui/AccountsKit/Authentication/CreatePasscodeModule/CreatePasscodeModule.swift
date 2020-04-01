@@ -26,8 +26,4 @@ class CreatePasscodeModule: UIModule, CreatePasscodeModuleProtocol {
     self.presenter = presenter
     return serviceLocator.viewLocator.createPasscodeView(presenter: presenter)
   }
-
-  func show(url: TappedURL) {
-    showExternal(url: url.url, alternativeTitle: url.title)
-  }
 }

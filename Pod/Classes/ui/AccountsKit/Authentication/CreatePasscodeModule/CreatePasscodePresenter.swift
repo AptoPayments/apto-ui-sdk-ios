@@ -32,8 +32,4 @@ class CreatePasscodePresenter: CreatePasscodePresenterProtocol {
       }
     }
   }
-
-  func show(url: TappedURL) {
-    router?.show(url: url)
-  }
 }

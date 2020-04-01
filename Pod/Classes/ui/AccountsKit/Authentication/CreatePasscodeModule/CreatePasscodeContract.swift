@@ -9,7 +9,6 @@ import AptoSDK
 import Bond
 
 protocol CreatePasscodeModuleProtocol: UIModuleProtocol {
-  func show(url: TappedURL)
 }
 
 protocol CreatePasscodeInteractorProtocol {
@@ -29,5 +28,4 @@ protocol CreatePasscodePresenterProtocol: class {
   func viewLoaded()
   func closeTapped()
   func pinEntered(_ code: String)
-  func show(url: TappedURL)
 }
