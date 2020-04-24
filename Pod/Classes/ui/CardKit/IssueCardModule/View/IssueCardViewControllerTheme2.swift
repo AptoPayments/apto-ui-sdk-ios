@@ -151,13 +151,13 @@ private extension IssueCardViewControllerTheme2 {
     setNeedsStatusBarAppearanceUpdate()
   }
 
-  func showErrorState(error: BackendError?) {
+  func showErrorState(error: BackendError) {
     errorViewContainer.isHidden = false
     setNeedsStatusBarAppearanceUpdate()
     showErrorView(error: error)
   }
 
-  func showErrorView(error: BackendError?) {
+  func showErrorView(error: BackendError) {
     navigationController?.isNavigationBarHidden = true
     let errorView = ErrorView(config: errorViewConfigFor(error: error), uiConfig: uiConfiguration)
     errorView.delegate = self
@@ -169,22 +169,38 @@ private extension IssueCardViewControllerTheme2 {
     }
     updateRetryButtonTitleFor(error: error)
   }
-
-  func errorViewConfigFor(error: BackendError?) -> ErrorViewConfiguration {
-    let title: String
-    let description: String
-    let secondary: String
-    if error?.isBalanceInsufficientFundsError == true {
-      title = "issue_card.issue_card.error_insufficient_funds.title".podLocalized()
-      description = "issue_card.issue_card.error_insufficient_funds.description".podLocalized()
-      secondary = "issue_card.issue_card.error_insufficient_funds.secondary_cta".podLocalized()
+ 
+  func errorViewConfigFor(error: BackendError) -> ErrorViewConfiguration {
+    switch error {
+    case _ where error.isBalanceInsufficientFundsError:
+      return ErrorViewConfiguration(
+        title: "issue_card.issue_card.error_insufficient_funds.title".podLocalized(),
+        description: "issue_card.issue_card.error_insufficient_funds.description".podLocalized(),
+        secondaryCTA: "issue_card.issue_card.error_insufficient_funds.secondary_cta".podLocalized(),
+        assetURL: errorAsset
+      )
+    case _ where error.isBalanceValidationsInsufficientApplicationLimit:
+      return ErrorViewConfiguration(
+        title: "issue_card.issue_card.error_insufficient_application_limit.title".podLocalized(),
+        description: "issue_card.issue_card.error_insufficient_application_limit.description".podLocalized(),
+        secondaryCTA: "issue_card.issue_card.error_insufficient_application_limit.secondary_cta".podLocalized(),
+        assetURL: errorAsset
+      )
+    case _ where error.isBalanceValidationsEmailSendsDisabled:
+      return ErrorViewConfiguration(
+        title: "issue_card.issue_card.error_email_sends_disabled.title".podLocalized(),
+        description: "issue_card.issue_card.error_email_sends_disabled.description".podLocalized(),
+        secondaryCTA: "issue_card.issue_card.error_email_sends_disabled.secondary_cta".podLocalized(),
+        assetURL: errorAsset
+      )
+    default:
+      return ErrorViewConfiguration(
+        title: "issue_card.issue_card.generic_error.title".podLocalized(),
+        description: "issue_card.issue_card.generic_error.description".podLocalized(),
+        secondaryCTA: "issue_card.issue_card.generic_error.secondary_cta".podLocalized(),
+        assetURL: errorAsset
+      )
     }
-    else {
-      title = "issue_card.issue_card.generic_error.title".podLocalized()
-      description = "issue_card.issue_card.generic_error.description".podLocalized()
-      secondary = "issue_card.issue_card.generic_error.secondary_cta".podLocalized()
-    }
-    return ErrorViewConfiguration(title: title, description: description, secondaryCTA: secondary, assetURL: errorAsset)
   }
 
   func hideErrorState() {
@@ -226,10 +242,15 @@ private extension IssueCardViewControllerTheme2 {
 
   func updateRetryButtonTitleFor(error: BackendError?) {
     let title: String
-    if error?.isBalanceInsufficientFundsError == true {
+    
+    switch error {
+    case _ where error?.isBalanceInsufficientFundsError == true:
       title = "issue_card.issue_card.error_insufficient_funds.primary_cta".podLocalized()
-    }
-    else {
+    case _ where error?.isBalanceValidationsInsufficientApplicationLimit == true:
+      title = "issue_card.issue_card.error_insufficient_application_limit.primary_cta".podLocalized()
+    case _ where error?.isBalanceValidationsEmailSendsDisabled == true:
+      title = "issue_card.issue_card.error_email_sends_disabled.primary_cta".podLocalized()
+    default:
       title = "issue_card.issue_card.generic_error.primary_cta".podLocalized()
     }
     retryButton.updateAttributedTitle(title, for: .normal)
