@@ -63,21 +63,13 @@ class FormBuilder {
                                   uiConfig: UIConfig,
                                   linkHandler: LinkHandler?) -> FormRowRichTextLabelView {
     let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
-    switch uiConfig.uiTheme {
-    case .theme1:
-      attributedLabel.linkAttributes = [
-        NSAttributedString.Key.foregroundColor: uiConfig.tintColor,
-        kCTUnderlineStyleAttributeName as AnyHashable: false
-      ]
-    case .theme2:
-      attributedLabel.linkAttributes = [
-        NSAttributedString.Key.foregroundColor: uiConfig.textLinkColor,
-        NSAttributedString.Key.font: uiConfig.fontProvider.formTextLink
-      ]
-      if uiConfig.underlineLinks {
-        attributedLabel.linkAttributes[NSAttributedString.Key.underlineColor] = uiConfig.textLinkColor
-        attributedLabel.linkAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
-      }
+    attributedLabel.linkAttributes = [
+      NSAttributedString.Key.foregroundColor: uiConfig.textLinkColor,
+      NSAttributedString.Key.font: uiConfig.fontProvider.formTextLink
+    ]
+    if uiConfig.underlineLinks {
+      attributedLabel.linkAttributes[NSAttributedString.Key.underlineColor] = uiConfig.textLinkColor
+      attributedLabel.linkAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
     }
     let label = FormRowRichTextLabelView(label: attributedLabel,
                                          showSplitter: false,
@@ -88,14 +80,8 @@ class FormBuilder {
     }
     attributedLabel.enabledTextCheckingTypes = NSTextCheckingAllTypes
     attributedLabel.setText(text)
-    switch uiConfig.uiTheme {
-    case .theme1:
-      label.label.backgroundColor = uiConfig.noteBackgroundColor
-      label.backgroundColor = uiConfig.noteBackgroundColor
-    case .theme2:
-      label.backgroundColor = uiConfig.uiBackgroundPrimaryColor
-      label.label.backgroundColor = uiConfig.uiBackgroundPrimaryColor
-    }
+    label.backgroundColor = uiConfig.uiBackgroundPrimaryColor
+    label.label.backgroundColor = uiConfig.uiBackgroundPrimaryColor
     label.padding = uiConfig.formRowPadding
     return label
   }
@@ -230,17 +216,15 @@ class FormBuilder {
     retVal.focusedColor = uiConfig.textPrimaryColor
     retVal.backgroundColor = uiConfig.uiBackgroundPrimaryColor
     retVal.padding = uiConfig.formRowPadding
-    if uiConfig.uiTheme == .theme2 {
-      retVal.backgroundColor = uiConfig.uiBackgroundSecondaryColor
-      retVal.layer.cornerRadius = uiConfig.fieldCornerRadius
-      retVal.layer.shadowOffset = CGSize(width: 0, height: 2)
-      retVal.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
-      retVal.layer.shadowOpacity = 1
-      retVal.layer.shadowRadius = 4
-      retVal.textField.textAlignment = .center
-      retVal.textField.snp.updateConstraints { make in
-        make.height.equalTo(uiConfig.formRowHeight)
-      }
+    retVal.backgroundColor = uiConfig.uiBackgroundSecondaryColor
+    retVal.layer.cornerRadius = uiConfig.fieldCornerRadius
+    retVal.layer.shadowOffset = CGSize(width: 0, height: 2)
+    retVal.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
+    retVal.layer.shadowOpacity = 1
+    retVal.layer.shadowRadius = 4
+    retVal.textField.textAlignment = .center
+    retVal.textField.snp.updateConstraints { make in
+      make.height.equalTo(uiConfig.formRowHeight)
     }
     return retVal
   }
@@ -444,29 +428,20 @@ class FormBuilder {
     else {
       imageView = nil
     }
-    switch uiConfig.uiTheme {
-    case .theme1:
-      return FormRowTopBottomLabelView(titleLabel: titleLabel,
-                                       subtitleLabel: subtitleLabel,
-                                       leftImageView: imageView,
-                                       height: height,
-                                       clickHandler: clickHandler)
-    case .theme2:
-      let rightView =
-        showAccessoryView ? UIImageView(image: UIImage.imageFromPodBundle("row_arrow")?.asTemplate()) : nil
-      rightView?.tintColor = uiConfig.uiTertiaryColor
-      rightView?.snp.makeConstraints { make in
-        make.width.equalTo(7)
-        make.height.equalTo(12)
-      }
-      return FormRowTopBottomLabelViewTheme2(titleLabel: titleLabel,
-                                             subtitleLabel: subtitle.isEmpty ? nil : subtitleLabel,
-                                             leftImageView: imageView,
-                                             rightView: rightView,
-                                             height: height,
-                                             showSplitter: showSplitter,
-                                             clickHandler: clickHandler)
+    let rightView =
+      showAccessoryView ? UIImageView(image: UIImage.imageFromPodBundle("row_arrow")?.asTemplate()) : nil
+    rightView?.tintColor = uiConfig.uiTertiaryColor
+    rightView?.snp.makeConstraints { make in
+      make.width.equalTo(7)
+      make.height.equalTo(12)
     }
+    return FormRowTopBottomLabelViewTheme2(titleLabel: titleLabel,
+                                           subtitleLabel: subtitle.isEmpty ? nil : subtitleLabel,
+                                           leftImageView: imageView,
+                                           rightView: rightView,
+                                           height: height,
+                                           showSplitter: showSplitter,
+                                           clickHandler: clickHandler)
   }
 
   static func checkboxRowWith(text: String,
@@ -498,24 +473,13 @@ class FormBuilder {
   static func balanceRadioRowWith(balances: [FormRowBalanceRadioViewValue],
                                   values: [Int],
                                   uiConfig: UIConfig) -> FormRowBalanceRadioViewProtocol {
-    switch uiConfig.uiTheme {
-    case .theme1:
-      let retVal = FormRowBalanceRadioView(items: balances,
-                                           values: values,
-                                           flashColor: uiConfig.uiPrimaryColor,
-                                           uiConfig: uiConfig)
-      retVal.tickImageView.tintColor = uiConfig.iconPrimaryColor
-      retVal.backgroundColor = uiConfig.uiBackgroundPrimaryColor
-      return retVal
-    case .theme2:
-      let retVal = FormRowBalanceRadioViewTheme2(items: balances,
-                                                 values: values,
-                                                 flashColor: uiConfig.uiPrimaryColor,
-                                                 uiConfig: uiConfig)
-      retVal.tickImageView.tintColor = uiConfig.uiPrimaryColor
-      retVal.backgroundColor = uiConfig.uiBackgroundSecondaryColor
-      return retVal
-    }
+    let retVal = FormRowBalanceRadioViewTheme2(items: balances,
+                                               values: values,
+                                               flashColor: uiConfig.uiPrimaryColor,
+                                               uiConfig: uiConfig)
+    retVal.tickImageView.tintColor = uiConfig.uiPrimaryColor
+    retVal.backgroundColor = uiConfig.uiBackgroundSecondaryColor
+    return retVal
   }
 
   static func valuePickerRow(title: String,
@@ -678,12 +642,7 @@ class FormBuilder {
                                 uiConfig: UIConfig) -> FormRowMultilineLabelView {
     let label = UILabel()
     label.text = text
-    switch uiConfig.uiTheme {
-    case .theme1:
-      label.textColor = uiConfig.textSecondaryColor
-    case .theme2:
-      label.textColor = uiConfig.textPrimaryColor
-    }
+    label.textColor = uiConfig.textPrimaryColor
     label.font = uiConfig.fontProvider.formFieldFont
     label.numberOfLines = 0
     label.textAlignment = .left

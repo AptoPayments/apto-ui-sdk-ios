@@ -29,7 +29,7 @@ class ManageShiftCardMainViewTheme2: UIView, CardPresentationProtocol {
       shouldUpdateTopMessageView = oldValue != topMessageViewType
     }
   }
-  private let gearView = UIImageView(image: UIImage.imageFromPodBundle("btn_card_settings", uiTheme: .theme2))
+  private let gearView = UIImageView(image: UIImage.imageFromPodBundle("btn_card_settings"))
   private let creditCardView: CreditCardView
   private let backgroundView = UIView()
   private unowned let delegate: ManageShiftCardMainViewDelegate

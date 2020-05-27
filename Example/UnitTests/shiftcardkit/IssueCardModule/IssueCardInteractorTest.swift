@@ -18,11 +18,16 @@ class IssueCardInteractorTest: XCTestCase {
   private lazy var platform = serviceLocator.platformFake
   private lazy var dataProvider = ModelDataProvider.provider
   private lazy var application: CardApplication = dataProvider.cardApplication
-
+  private lazy var cardAdditionalFieldsSpy = CardAdditionalFieldsSpy()
+  
   override func setUp() {
     super.setUp()
 
-    sut = IssueCardInteractor(platform: platform, application: application)
+    sut = IssueCardInteractor(
+      platform: platform,
+      application: application,
+      cardAdditionalFields: cardAdditionalFieldsSpy
+    )
   }
 
   func testIssueCardCalledCallSessionToIssueCard() {
@@ -32,6 +37,14 @@ class IssueCardInteractorTest: XCTestCase {
     // Then
     XCTAssertTrue(platform.issueCardCalled)
     XCTAssertEqual(platform.lastIssueCardApplicationId, application.id)
+  }
+  
+  func testGetStoredAdditionalFieldsWhenIssueCard() {
+    // When
+    sut.issueCard { _ in }
+    
+    // Then
+    XCTAssertTrue(cardAdditionalFieldsSpy.getCalled)
   }
 
   func testIssueCardFailureCallbackError() {

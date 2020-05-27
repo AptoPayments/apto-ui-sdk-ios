@@ -76,7 +76,7 @@ class AuthViewControllerTheme2: AuthViewControllerProtocol {
   }
 
   func showCancelButton() {
-    showNavPreviousButton(uiConfiguration.textTopBarPrimaryColor, uiTheme: .theme2)
+    showNavPreviousButton(uiConfiguration.textTopBarPrimaryColor)
   }
 
   func show(error: NSError) {

@@ -435,13 +435,17 @@ class AptoPlatformFake: AptoPlatformProtocol {
   private(set) var issueCardCalled = false
   private(set) var lastIssueCardApplicationId: String?
   func issueCard(applicationId: String, callback: @escaping Result<Card, NSError>.Callback) {
+    self.issueCard(applicationId: applicationId, additionalFields: nil, callback: callback)
+  }
+
+  func issueCard(applicationId: String, additionalFields: [String : AnyObject]?, callback: @escaping Result<Card, NSError>.Callback) {
     issueCardCalled = true
     lastIssueCardApplicationId = applicationId
     if let result = nextIssueCardResult {
       callback(result)
     }
   }
-
+  
   private(set) var issueCardWithCustodianCalled = false
   private(set) var lastIssueCardCardProduct: CardProduct?
   private(set) var lastIssueCardCustodian: Custodian?
@@ -456,7 +460,7 @@ class AptoPlatformFake: AptoPlatformProtocol {
       callback(result)
     }
   }
-
+ 
   // MARK: - Card handling
 
   var nextFetchCardsResult: Result<[Card], NSError>?

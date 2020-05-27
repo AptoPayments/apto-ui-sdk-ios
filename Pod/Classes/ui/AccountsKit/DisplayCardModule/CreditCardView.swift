@@ -14,7 +14,7 @@ import UIKit
 let cardAspectRatio = 1.585772508336421
 let nameOnCardMaxLength = 23
 
-class CreditCardView: UIView {
+public class CreditCardView: UIView {
   private let uiConfiguration: UIConfig
   private var cardStyle: CardStyle?
   // Container View
@@ -60,14 +60,14 @@ class CreditCardView: UIView {
   private var cardNetwork: CardNetwork?
   private var hasValidFundingSource = true
 
-  var textColor: UIColor = .white {
+  public var textColor: UIColor = .white {
     didSet {
       updateLabelsFontColor()
     }
   }
 
   // MARK: - Lifecycle
-  init(uiConfiguration: UIConfig, cardStyle: CardStyle?) {
+  public init(uiConfiguration: UIConfig, cardStyle: CardStyle?) {
     self.uiConfiguration = uiConfiguration
     self.cardStyle = cardStyle
     super.init(frame: .zero)
@@ -78,59 +78,59 @@ class CreditCardView: UIView {
     setupBackView()
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Public methods
 
-  func set(cardHolder: String?) {
+  public func set(cardHolder: String?) {
     cardHolderText = cardHolder?.uppercased()
     updateCard()
   }
 
-  func set(cardNumber: String?) {
+  public func set(cardNumber: String?) {
     cardNumberText = cardNumber
     updateCard()
   }
 
-  func set(lastFour: String?) {
+  public func set(lastFour: String?) {
     lastFourText = lastFour
     updateCard()
   }
 
-  func set(expirationMonth: UInt, expirationYear: UInt) {
+  public func set(expirationMonth: UInt, expirationYear: UInt) {
     self.expirationMonth = expirationMonth
     self.expirationYear = expirationYear
     updateCard()
   }
 
-  func set(cvc: String?) {
+  public func set(cvc: String?) {
     cvvText = cvc
     updateCard()
   }
 
-  func set(cardState: FinancialAccountState) {
+  public func set(cardState: FinancialAccountState) {
     self.cardState = cardState
     updateCard()
   }
 
-  func set(showInfo: Bool) {
+  public func set(showInfo: Bool) {
     self.cardInfoShown = showInfo
     updateCard()
   }
 
-  func set(cardNetwork: CardNetwork?) {
+  public func set(cardNetwork: CardNetwork?) {
     self.cardNetwork = cardNetwork
     updateCard()
   }
 
-  func set(validFundingSource: Bool) {
+  public func set(validFundingSource: Bool) {
     self.hasValidFundingSource = validFundingSource
     updateCardEnabledState()
   }
 
-  func set(cardStyle: CardStyle?) {
+  public func set(cardStyle: CardStyle?) {
     self.cardStyle = cardStyle
     updateCardStyle()
   }
@@ -175,11 +175,11 @@ class CreditCardView: UIView {
 // MARK: - Setup UI
 private extension CreditCardView {
   func setUpShadow() {
-    let height = uiConfiguration.uiTheme == .theme1 ? 16 : 4
+    let height = 4
     layer.shadowOffset = CGSize(width: 0, height: height)
     layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.16).cgColor
     layer.shadowOpacity = 1
-    layer.shadowRadius = uiConfiguration.uiTheme == .theme1 ? 16 : 8
+    layer.shadowRadius = 8
   }
 
   func setupFrontView() {

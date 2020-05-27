@@ -17,9 +17,11 @@ class TransactionListPresenter: TransactionListPresenterProtocol {
   weak var router: TransactionListModuleProtocol?
   var interactor: TransactionListInteractorProtocol?
   var analyticsManager: AnalyticsServiceProtocol?
-
-  init(config: TransactionListModuleConfig) {
+  private let transactionListEvents: TransactionListEvents?
+  
+  init(config: TransactionListModuleConfig, transactionListEvents: TransactionListEvents? = nil) {
     self.config = config
+    self.transactionListEvents = transactionListEvents
   }
 
   func viewLoaded() {
@@ -44,6 +46,7 @@ class TransactionListPresenter: TransactionListPresenterProtocol {
   }
 
   func transactionSelected(_ transaction: Transaction) {
+    transactionListEvents?.onTapOnTransaction?(transaction)
     router?.showDetails(of: transaction)
   }
 

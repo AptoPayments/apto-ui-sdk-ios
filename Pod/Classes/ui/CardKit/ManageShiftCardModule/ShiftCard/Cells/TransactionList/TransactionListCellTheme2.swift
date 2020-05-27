@@ -174,3 +174,39 @@ private extension TransactionListCellTheme2 {
     }
   }
 }
+
+private var mccIconsCacheAssociationKey: UInt8 = 63
+
+extension MCC {
+  var iconsCache: [String: UIImage] {
+    get {
+      guard let retVal = objc_getAssociatedObject(self, &mccIconsCacheAssociationKey) as? [String: UIImage] else {
+        let iconsCacheData: [String: UIImage] = [:]
+        objc_setAssociatedObject(self,
+                                 &mccIconsCacheAssociationKey,
+                                 iconsCacheData,
+                                 objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        return iconsCacheData
+      }
+      return retVal
+    }
+    set(newValue) {
+      objc_setAssociatedObject(self,
+                               &mccIconsCacheAssociationKey,
+                               newValue,
+                               objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+    }
+  }
+
+  public func iconTemplate() -> UIImage? {
+    var iconsCache = self.iconsCache
+    if let iconTemplate = self.iconsCache[self.icon.rawValue] {
+      return iconTemplate
+    }
+    else {
+      let iconTemplate = self.image()?.asTemplate()
+      iconsCache[self.icon.rawValue] = iconTemplate
+      return iconTemplate
+    }
+  }
+}

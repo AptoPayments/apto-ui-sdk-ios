@@ -14,7 +14,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
 
   func fullScreenDisclaimerView(uiConfig: UIConfig,
                                 eventHandler: FullScreenDisclaimerEventHandler) -> UIViewController {
-    return FullScreenDisclaimerViewControllerTheme1(uiConfiguration: uiConfig, eventHandler: eventHandler)
+    return FullScreenDisclaimerViewControllerTheme2(uiConfiguration: uiConfig, eventHandler: eventHandler)
   }
 
   func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController {
@@ -22,7 +22,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   func authView(uiConfig: UIConfig, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol {
-    return AuthViewControllerTheme1(uiConfiguration: uiConfig, eventHandler: eventHandler)
+    return AuthViewControllerTheme2(uiConfiguration: uiConfig, eventHandler: eventHandler)
   }
 
   func pinVerificationView(presenter: PINVerificationPresenter) -> PINVerificationViewControllerProtocol {
@@ -35,7 +35,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
 
   func externalOAuthView(uiConfiguration: UIConfig,
                          eventHandler: ExternalOAuthPresenterProtocol) -> UIViewController {
-    return ExternalOAuthViewControllerTheme1(uiConfiguration: uiConfiguration, eventHandler: eventHandler)
+    return ExternalOAuthViewControllerTheme2(uiConfiguration: uiConfiguration, eventHandler: eventHandler)
   }
 
   // MARK: - Biometrics
@@ -56,7 +56,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
   } 
 
   func issueCardView(uiConfig: UIConfig, eventHandler: IssueCardPresenterProtocol) -> UIViewController {
-    return IssueCardViewControllerTheme1(uiConfiguration: uiConfig, eventHandler: eventHandler)
+    return IssueCardViewControllerTheme2(uiConfiguration: uiConfig, presenter: eventHandler)
   }
 
   func waitListView(presenter: WaitListPresenterProtocol) -> ShiftViewController {
@@ -65,7 +65,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
 
   func serverMaintenanceErrorView(uiConfig: UIConfig?,
                                   eventHandler: ServerMaintenanceErrorEventHandler) -> UIViewController {
-    return ServerMaintenanceErrorViewControllerTheme1(uiConfig: uiConfig, eventHandler: eventHandler)
+    return ServerMaintenanceErrorViewControllerTheme2(uiConfig: uiConfig, eventHandler: eventHandler)
   }
 
   func accountsSettingsView(uiConfig: UIConfig,
@@ -80,14 +80,14 @@ class ViewLocatorFake: ViewLocatorProtocol {
 
   func dataConfirmationView(uiConfig: UIConfig,
                             presenter: DataConfirmationPresenterProtocol) -> ShiftViewController {
-    return DataConfirmationViewControllerTheme1(uiConfiguration: uiConfig, presenter: presenter)
+    return DataConfirmationViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
   func webBrowserView(alternativeTitle: String?,
                       eventHandler: WebBrowserEventHandlerProtocol) -> WebBrowserViewControllerProtocol {
-    return WebBrowserViewControllerTheme1(alternativeTitle: alternativeTitle,
+    return WebBrowserViewControllerTheme2(alternativeTitle: alternativeTitle,
                                           uiConfiguration: uiConfig,
-                                          eventHandler: eventHandler)
+                                          presenter: eventHandler)
   }
 
   // MARK: - Manage card
@@ -144,7 +144,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
   func physicalCardActivationSucceedView(uiConfig: UIConfig,
                                          presenter: PhysicalCardActivationSucceedPresenterProtocol)
     -> PhysicalCardActivationSucceedViewControllerProtocol {
-      return PhysicalCardActivationSucceedViewControllerTheme1(uiConfiguration: uiConfig, presenter: presenter)
+      return PhysicalCardActivationSucceedViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
   // MARK: - Transaction Details

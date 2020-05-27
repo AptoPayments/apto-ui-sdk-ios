@@ -26,6 +26,10 @@ class SystemServicesLocator: SystemServicesLocatorProtocol {
     return DateProvider()
   }
 
+  func cardAdditionalFields() -> CardAdditionalFieldsProtocol {
+    CardAdditionalFields.shared
+  }
+  
   private var _authenticationManager: AuthenticationManagerProtocol?
   func authenticationManager() -> AuthenticationManagerProtocol {
     if let manager = _authenticationManager {

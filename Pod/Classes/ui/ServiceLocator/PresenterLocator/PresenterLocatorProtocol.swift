@@ -44,6 +44,7 @@ protocol PresenterLocatorProtocol {
   func kycPresenter() -> KYCPresenterProtocol
   func cardMonthlyStatsPresenter() -> CardMonthlyStatsPresenterProtocol
   func transactionListPresenter(config: TransactionListModuleConfig) -> TransactionListPresenterProtocol
+  func transactionListPresenter(config: TransactionListModuleConfig, transactionListEvents: TransactionListEvents?) -> TransactionListPresenterProtocol
   func notificationPreferencesPresenter() -> NotificationPreferencesPresenterProtocol
   func setPinPresenter() -> SetPinPresenterProtocol
   func voIPPresenter() -> VoIPPresenterProtocol

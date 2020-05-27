@@ -47,7 +47,7 @@ private extension NetworkNotReachableErrorViewControllerTheme2 {
   }
 
   func setUpImageView() {
-    imageView.image = UIImage.imageFromPodBundle("error_internet", uiTheme: .theme2)?.asTemplate()
+    imageView.image = UIImage.imageFromPodBundle("error_internet")?.asTemplate()
     imageView.tintColor = tintColor
     view.addSubview(imageView)
     imageView.snp.makeConstraints { make in

@@ -19,6 +19,11 @@ class SystemServicesLocatorFake: SystemServicesLocatorProtocol {
     return fileManagerFake
   }
 
+  lazy var additionalFieldsSpy = CardAdditionalFieldsSpy()
+  func cardAdditionalFields() -> CardAdditionalFieldsProtocol {
+    additionalFieldsSpy
+  }
+  
   lazy var dateProviderFake = DateProviderFake()
   func dateProvider() -> DateProviderProtocol {
     return dateProviderFake

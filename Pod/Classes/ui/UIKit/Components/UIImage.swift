@@ -26,12 +26,10 @@ extension UIImage {
     return newImage! // swiftlint:disable:this force_unwrapping
   }
 
-  static func imageFromPodBundle(_ imageName: String, uiTheme: UITheme? = nil) -> UIImage? {
-    var imageName = imageName
-    if let uiTheme = uiTheme, uiTheme == .theme2 {
-      imageName = uiTheme.rawValue + imageName
-    }
-    return UIImage(named: imageName, in: PodBundle.bundle(), compatibleWith: nil)
+  static func imageFromPodBundle(_ imageName: String) -> UIImage? {
+    let themeImage = UIImage(named: "theme_2\(imageName)", in: PodBundle.bundle(), compatibleWith: nil)
+    let regularImage = UIImage(named: imageName, in: PodBundle.bundle(), compatibleWith: nil)
+    return themeImage ?? regularImage
   }
 
   func asTemplate() -> UIImage {

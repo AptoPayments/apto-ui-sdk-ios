@@ -61,12 +61,7 @@ extension TransactionListViewController: UITableViewDataSource {
   }
 
   private func transactionsListCellController(for transaction: Transaction) -> CellController {
-    switch uiConfiguration.uiTheme {
-    case .theme1:
-      return TransactionListCellControllerTheme1(transaction: transaction, uiConfiguration: uiConfiguration)
-    case .theme2:
-      return TransactionListCellControllerTheme2(transaction: transaction, uiConfiguration: uiConfiguration)
-    }
+     return TransactionListCellControllerTheme2(transaction: transaction, uiConfiguration: uiConfiguration)
   }
 }
 
@@ -86,20 +81,15 @@ extension TransactionListViewController: UITableViewDelegate {
   }
 
   private func sectionHeaderView(with title: String) -> UIView {
-    switch uiConfiguration.uiTheme {
-    case .theme1:
-      return SectionHeaderViewTheme1(text: title, uiConfig: uiConfiguration)
-    case .theme2:
-      let containerView = UIView()
-      containerView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
-      let contentView = SectionHeaderViewTheme2(text: title, uiConfig: uiConfiguration)
-      containerView.addSubview(contentView)
-      contentView.snp.makeConstraints { make in
-        make.top.bottom.equalToSuperview()
-        make.left.right.equalToSuperview().inset(20)
-      }
-      return containerView
+    let containerView = UIView()
+    containerView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
+    let contentView = SectionHeaderViewTheme2(text: title, uiConfig: uiConfiguration)
+    containerView.addSubview(contentView)
+    contentView.snp.makeConstraints { make in
+      make.top.bottom.equalToSuperview()
+      make.left.right.equalToSuperview().inset(20)
     }
+    return containerView
   }
 }
 
@@ -136,13 +126,10 @@ private extension TransactionListViewController {
     navigationBar.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
     navigationBar.layer.shadowOpacity = 1
     navigationBar.layer.shadowRadius = 8
-    switch uiConfiguration.uiTheme {
-    case .theme1:
-      navigationBar.setUpWith(uiConfig: uiConfiguration)
-    case .theme2:
-      navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationSecondaryColor,
-                          tintColor: uiConfiguration.iconTertiaryColor)
-    }
+    navigationBar.setUp(
+      barTintColor: uiConfiguration.uiNavigationSecondaryColor,
+      tintColor: uiConfiguration.iconTertiaryColor
+    )
     navigationItem.leftBarButtonItem?.tintColor = uiConfiguration.iconTertiaryColor
     setNeedsStatusBarAppearanceUpdate()
   }

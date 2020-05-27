@@ -10,6 +10,7 @@ import AptoSDK
 @testable import AptoUISDK
 
 class PresenterLocatorFake: PresenterLocatorProtocol {
+   
   lazy var fullScreenDisclaimerPresenterSpy = FullScreenDisclaimerPresenterSpy()
   func fullScreenDisclaimerPresenter() -> FullScreenDisclaimerPresenterProtocol {
     return fullScreenDisclaimerPresenterSpy
@@ -126,6 +127,12 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
 
   lazy var transactionListPresenterSpy = TransactionListPresenterSpy()
   func transactionListPresenter(config: TransactionListModuleConfig) -> TransactionListPresenterProtocol {
+    transactionListPresenterSpy
+  }
+  
+  func transactionListPresenter(
+    config: TransactionListModuleConfig,
+    transactionListEvents: TransactionListEvents?) -> TransactionListPresenterProtocol {
     return transactionListPresenterSpy
   }
 

@@ -19,12 +19,12 @@ public enum SubviewPosition {
 
 public protocol ViewControllerProtocol {
   func set(title: String)
-  func showNavPreviousButton(_ tintColor: UIColor?, uiTheme: UITheme?)
+  func showNavPreviousButton(_ tintColor: UIColor?)
   func showNavNextButton(title: String, tintColor: UIColor?)
   func showNavNextButton(icon: UIImage, tintColor: UIColor?)
   func showNavNextButton(tintColor: UIColor?)
   func hideNavNextButton()
-  func showNavCancelButton(_ tintColor: UIColor?, uiTheme: UITheme?)
+  func showNavCancelButton(_ tintColor: UIColor?)
   func activateNavNextButton(_ tintColor: UIColor?)
   func deactivateNavNextButton(_ deactivatedTintColor: UIColor?)
   func show(error: Error, uiConfig: UIConfig?)
@@ -49,12 +49,12 @@ public extension ViewControllerProtocol {
     showLoadingSpinner(tintColor: tintColor, position: position)
   }
 
-  func showNavPreviousButton(_ tintColor: UIColor?, uiTheme: UITheme? = nil) {
-    showNavPreviousButton(tintColor, uiTheme: uiTheme)
+  func showNavPreviousButton(_ tintColor: UIColor?) {
+    showNavPreviousButton(tintColor)
   }
 
-  func showNavCancelButton(_ tintColor: UIColor?, uiTheme: UITheme? = nil) {
-    showNavCancelButton(tintColor, uiTheme: uiTheme)
+  func showNavCancelButton(_ tintColor: UIColor?) {
+    showNavCancelButton(tintColor)
   }
 }
 
@@ -90,8 +90,8 @@ extension ShiftViewController {
 
 extension UIViewController: ViewControllerProtocol {
 
-  public func showNavPreviousButton(_ tintColor: UIColor? = nil, uiTheme: UITheme?) {
-    self.installNavLeftButton(UIImage.imageFromPodBundle("top_back_default", uiTheme: uiTheme),
+  public func showNavPreviousButton(_ tintColor: UIColor? = nil) {
+    self.installNavLeftButton(UIImage.imageFromPodBundle("top_back_default"),
                               tintColor: tintColor,
                               accessibilityLabel: "Navigation Previous Button",
                               target: self,
@@ -125,8 +125,8 @@ extension UIViewController: ViewControllerProtocol {
                                action: #selector(UIViewController.nextTapped))
   }
 
-  public func showNavCancelButton(_ tintColor: UIColor? = nil, uiTheme: UITheme? = nil) {
-    self.installNavLeftButton(UIImage.imageFromPodBundle("top_close_default", uiTheme: uiTheme),
+  public func showNavCancelButton(_ tintColor: UIColor? = nil) {
+    self.installNavLeftButton(UIImage.imageFromPodBundle("top_close_default"),
                               tintColor: tintColor,
                               accessibilityLabel: "Navigation Close Button",
                               target: self,
@@ -244,18 +244,7 @@ extension UIViewController: ViewControllerProtocol {
   }
 
   public func showNetworkNotReachableError(_ uiConfig: UIConfig?) {
-    let viewController: UIViewController
-    if let uiConfig = uiConfig {
-      switch uiConfig.uiTheme {
-      case .theme1:
-        viewController = NetworkNotReachableErrorViewControllerTheme1(uiConfig: uiConfig)
-      case .theme2:
-        viewController = NetworkNotReachableErrorViewControllerTheme2(uiConfig: uiConfig)
-      }
-    }
-    else {
-      viewController = NetworkNotReachableErrorViewControllerTheme1(uiConfig: uiConfig)
-    }
+    let viewController = NetworkNotReachableErrorViewControllerTheme2(uiConfig: uiConfig)
     present(viewController, animated: true)
   }
 

@@ -94,7 +94,7 @@ extension SetPinViewControllerThemeTwo: UIPinEntryTextFieldDelegate {
       self.pinEntryView.resetText()
       self.pinEntryView.focus()
       self.navigationItem.leftBarButtonItem = nil
-      self.showNavPreviousButton(uiTheme: .theme2)
+      self.showNavPreviousButton()
     })
   }
 }

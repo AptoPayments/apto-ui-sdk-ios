@@ -68,7 +68,7 @@ private extension DataConfirmationViewControllerTheme2 {
     navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationPrimaryColor,
                                               tintColor: uiConfiguration.textTopBarPrimaryColor)
     navigationController?.navigationBar.isTranslucent = true
-    showNavPreviousButton(uiTheme: .theme2)
+    showNavPreviousButton()
     setUpRefreshButton()
   }
 

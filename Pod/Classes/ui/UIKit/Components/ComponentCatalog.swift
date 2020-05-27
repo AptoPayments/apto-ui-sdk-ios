@@ -59,7 +59,7 @@ class ComponentCatalog {
                             accessibilityLabel: String? = nil,
                             uiConfig: UIConfig) -> UILabel {
     let retVal = UILabel()
-    let textColor = uiConfig.uiTheme == .theme1 ? uiConfig.textPrimaryColor : uiConfig.textSecondaryColor
+    let textColor = uiConfig.textSecondaryColor
     if let lineSpacing = lineSpacing {
       let paragraphStyle = NSMutableParagraphStyle()
       paragraphStyle.alignment = textAlignment
@@ -201,20 +201,11 @@ class ComponentCatalog {
                                  allowedCountries: [Country],
                                  accessibilityLabel: String? = nil,
                                  uiConfig: UIConfig) -> PhoneTextFieldView {
-    switch uiConfig.uiTheme {
-    case .theme1:
-      return PhoneTextField(allowedCountries: allowedCountries,
-                            placeholder: placeholder,
-                            value: value,
-                            accessibilityLabel: accessibilityLabel,
-                            uiConfig: uiConfig)
-    case .theme2:
-      return PhoneTextFieldTheme2(allowedCountries: allowedCountries,
-                                  placeholder: placeholder,
-                                  value: value,
-                                  accessibilityLabel: accessibilityLabel,
-                                  uiConfig: uiConfig)
-    }
+    return PhoneTextFieldTheme2(allowedCountries: allowedCountries,
+                                placeholder: placeholder,
+                                value: value,
+                                accessibilityLabel: accessibilityLabel,
+                                uiConfig: uiConfig)
   }
 
   static func formTextLinkButtonWith(title: String,
@@ -265,12 +256,7 @@ class ComponentCatalog {
     let retVal = UILabel()
     retVal.text = text
     retVal.font = uiConfig.fontProvider.instructionsFont
-    switch uiConfig.uiTheme {
-    case .theme1:
-      retVal.textColor = uiConfig.textTertiaryColor
-    case .theme2:
-      retVal.textColor = uiConfig.textSecondaryColor
-    }
+    retVal.textColor = uiConfig.textSecondaryColor
     retVal.textAlignment = textAlignment
     retVal.accessibilityLabel = accessibilityLabel
     retVal.numberOfLines = 0

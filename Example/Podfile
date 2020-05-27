@@ -11,21 +11,26 @@ def runtimepods
   pod 'FTLinearActivityIndicator', '1.2.1'
   pod 'SwiftyJSON', '~> 5.0'
   pod 'SnapKit', '~> 5.0'
-  pod 'Bond', '~> 7.6'
-  pod 'GoogleKit', '0.3.2'
-  pod 'PhoneNumberKit', '~> 2.6'
-  pod 'TTTAttributedLabel', '2.0.0'
+  pod 'Bond', '~> 7.6', :inhibit_warnings => true
+  pod 'GoogleKit', '0.3.2', :inhibit_warnings => true
+  pod 'PhoneNumberKit', '~> 3.2'
+  pod 'TTTAttributedLabel', '2.0.0', :inhibit_warnings => true
   pod 'TrustKit', '~> 1.6'
   pod 'Down', '~> 0.8'
-  pod 'PullToRefreshKit', '~> 0.8'
-  pod 'Mixpanel-swift', '~> 2.7'
+  pod 'PullToRefreshKit', '~> 0.8', :inhibit_warnings => true
+  pod 'Mixpanel-swift', '~> 2.7', :inhibit_warnings => true
   pod 'TwilioVoice', '~> 3.0'
+  pod 'Branch', '~> 0.33.1'
 end
 
 target :Demo do
   runtimepods
   target 'UnitTests' do
     inherit! :search_paths
+  end
+  target 'SnapshotTests' do
+    inherit! :search_paths
+    pod 'SnapshotTesting', '~> 1.7.2'
   end
   target 'AutomationTests' do
     inherit! :search_paths

@@ -90,6 +90,9 @@ let options = CardOptions(features:fontCustomizationOptions:)
 4. `showDetailedCardActivityOption` control if the user can show other transaction types (like declined transactions). **Default to false**.
 5. `showAccountSettingsButton` control if the user can see the account settings screen. **Default to true**.
 6. `showMonthlyStatementsOption` control if the user has access to the monthly statements. **Default to true**.
+7. `authenticateOnStartup` control if the user has to authenticate on startup (with Passcode or Biometrics) of the app after going to background and returning **Default to false**.
+8. `authenticateWithPINOnPCI` control if the user has to authenticate with passcode when tries to show full card data **Default to false**.
+9. `supportDarkMode` control if dark theme is enabled or not on devices with android 10+. **Default to false**.
 
 `fontCustomizationOptions: FontCustomizationOptions` is an optional parameter that specify a custom font to be used in the app. If no font customization options is specified the SDK will use the system font. There are two ways of specifying a custom font:
 

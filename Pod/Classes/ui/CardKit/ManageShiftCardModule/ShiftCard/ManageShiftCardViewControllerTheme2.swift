@@ -28,7 +28,7 @@ class ManageShiftCardViewControllerTheme2: ShiftViewController, ManageShiftCardV
     return buildTopBarButton(iconName: "chart-section-icon", target: self, action: #selector(showStatsTapped))
   }()
   private lazy var accountSettingsButton: UIBarButtonItem = {
-    return buildTopBarButton(iconName: "top_profile", target: self, action: #selector(nextTapped), theme: .theme2)
+    return buildTopBarButton(iconName: "top_profile", target: self, action: #selector(nextTapped))
   }()
   private let activateCardView: ActivateCardView
   private let balanceView: BalanceViewProtocol
@@ -246,7 +246,7 @@ private extension ManageShiftCardViewControllerTheme2 {
       hideNavBarBackButton()
     }
     else {
-      showNavCancelButton(uiConfiguration.iconTertiaryColor, uiTheme: .theme2)
+      showNavCancelButton(uiConfiguration.iconTertiaryColor)
     }
     setNeedsStatusBarAppearanceUpdate()
   }
@@ -513,7 +513,7 @@ private extension ManageShiftCardViewControllerTheme2 {
     let topBarButtonItem = TopBarButtonItem(
       uiConfig: uiConfiguration,
       text: "manage_card.activate_physical_card.top_bar_item.title".podLocalized(),
-      icon: UIImage.imageFromPodBundle("activate_physical_card", uiTheme: .theme2)) {
+      icon: UIImage.imageFromPodBundle("activate_physical_card")) {
         self.activatePhysicalCardTapped()
     }
     return topBarButtonItem

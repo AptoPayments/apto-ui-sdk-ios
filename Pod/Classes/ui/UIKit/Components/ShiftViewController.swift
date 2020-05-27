@@ -74,8 +74,8 @@ class ShiftViewController: UIViewController {
     }
   }
 
-  func buildTopBarButton(iconName: String, target: Any, action: Selector, theme: UITheme? = nil) -> UIBarButtonItem {
-    let barButtonItem = UIBarButtonItem(image: UIImage.imageFromPodBundle(iconName, uiTheme: theme)?.asTemplate(),
+  func buildTopBarButton(iconName: String, target: Any, action: Selector) -> UIBarButtonItem {
+    let barButtonItem = UIBarButtonItem(image: UIImage.imageFromPodBundle(iconName)?.asTemplate(),
                                         style: .plain,
                                         target: target,
                                         action: action)

@@ -156,7 +156,7 @@ private extension SecretPasscodeView {
   }
 
   func createBackspaceButton() -> UIButton {
-    let image = UIImage.imageFromPodBundle("top_back_default", uiTheme: uiConfig.uiTheme)?.asTemplate()
+    let image = UIImage.imageFromPodBundle("top_back_default")?.asTemplate()
     let button = UIButton()
     button.tintColor = uiConfig.textSecondaryColor
     button.setImage(image, for: .normal)

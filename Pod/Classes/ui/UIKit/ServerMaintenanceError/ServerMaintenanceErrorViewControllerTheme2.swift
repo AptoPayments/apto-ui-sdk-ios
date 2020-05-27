@@ -52,7 +52,7 @@ private extension ServerMaintenanceErrorViewControllerTheme2 {
   }
 
   func setUpImageView() {
-    imageView.image = UIImage.imageFromPodBundle("error_maintenance", uiTheme: .theme2)?.asTemplate()
+    imageView.image = UIImage.imageFromPodBundle("error_maintenance")?.asTemplate()
     imageView.tintColor = tintColor
     view.addSubview(imageView)
     imageView.snp.makeConstraints { make in

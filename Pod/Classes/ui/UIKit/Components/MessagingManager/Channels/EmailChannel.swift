@@ -45,6 +45,8 @@ extension EmailChannel: MFMailComposeViewControllerDelegate {
       UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
     case MFMailComposeResult.failed:
       self.delegate?.didReceiveErrorFor(channel: self)
+    @unknown default:
+      self.delegate?.didCancelFor(channel: self)
     }
   }
 }

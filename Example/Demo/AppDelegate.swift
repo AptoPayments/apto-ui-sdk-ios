@@ -9,36 +9,34 @@
 import UIKit
 import AptoSDK
 import UserNotifications
+import Branch
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-
+ 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    
+    Branch.setBranchKey("<< BRANCH API KEY>>")
+    Branch.useTestBranchKey()
+    
+    let configurationResolver = ConfigurationResolver()
+    configurationResolver.resolve(launchOptions: launchOptions) { configuration in
+      
+      // SDK initialization
+      // Check Configuration.swift for API Key & Environment
+      
+      AptoPlatform.defaultManager().initializeWithApiKey(
+        configuration.apiKey,
+        environment: configuration.environment
+      )
 
-    // SDK initialization
-    AptoPlatform.defaultManager().initializeWithApiKey("<Api Key>",
-                                                        environment: .production)
-
-    AptoPlatform.defaultManager().initializePushNotifications()
-    AptoPlatform.defaultManager().handle(launchOptions:launchOptions)
+      AptoPlatform.defaultManager().initializePushNotifications()
+      AptoPlatform.defaultManager().handle(launchOptions:launchOptions)
+    }
 
     return true
-  }
-
-  func applicationWillResignActive(_ application: UIApplication) {}
-
-  func applicationDidEnterBackground(_ application: UIApplication) {}
-
-  func applicationWillEnterForeground(_ application: UIApplication) {}
-
-  func applicationDidBecomeActive(_ application: UIApplication) {}
-
-  func applicationWillTerminate(_ application: UIApplication) {}
-
-  func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-    return false
   }
 
   func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -52,5 +50,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
     AptoPlatform.defaultManager().didReceiveRemoteNotificationWith(userInfo: userInfo, completionHandler: completionHandler)
   }
-
 }

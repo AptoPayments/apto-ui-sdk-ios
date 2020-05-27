@@ -47,8 +47,7 @@ class ShiftCardTransactionDetailsViewControllerTheme2: ShiftViewController, Shif
     return topViewHeight - systemElementsHeight + basicInfoBarShrinkDelta
   }()
   private var showDetails = false
-  private let detailsArrowImageView = UIImageView(image: UIImage.imageFromPodBundle("transaction-details-dropdown",
-                                                                                    uiTheme: .theme2)?.asTemplate())
+  private let detailsArrowImageView = UIImageView(image: UIImage.imageFromPodBundle("transaction-details-dropdown")?.asTemplate())
 
   init(uiConfiguration: UIConfig, presenter: ShiftCardTransactionDetailsPresenterProtocol) {
     self.presenter = presenter

@@ -24,15 +24,8 @@ class AuthPhoneStep: DataCollectorBaseStep, DataCollectorStepProtocol {
 
   override func setupRows() -> [FormRowView] {
     var retVal: [FormRowView] = []
-
-    var label: String?
-    if uiConfig.uiTheme == .theme1 {
-      retVal.append(FormRowSeparatorView(backgroundColor: UIColor.clear, height: 124))
-      label = "auth.input_phone.explanation".podLocalized()
-    }
-
     let phoneDataPoint = userData.phoneDataPoint
-    let phoneField = FormBuilder.phoneTextFieldRow(label: label,
+    let phoneField = FormBuilder.phoneTextFieldRow(label: nil,
                                                    allowedCountries: allowedCountries,
                                                    placeholder: "phone-collector.phone.placeholder".podLocalized(),
                                                    value: nil,

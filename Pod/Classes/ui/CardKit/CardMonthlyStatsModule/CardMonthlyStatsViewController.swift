@@ -326,13 +326,10 @@ private extension CardMonthlyStatsViewController {
   }
 
   func setUpNavigationBar() {
-    switch uiConfiguration.uiTheme {
-    case .theme1:
-      navigationController?.navigationBar.setUpWith(uiConfig: uiConfiguration)
-    case .theme2:
-      navigationController?.navigationBar.setUp(barTintColor: uiConfiguration.uiNavigationSecondaryColor,
-                                                tintColor: uiConfiguration.iconTertiaryColor)
-    }
+    navigationController?.navigationBar.setUp(
+      barTintColor: uiConfiguration.uiNavigationSecondaryColor,
+      tintColor: uiConfiguration.iconTertiaryColor
+    )
     navigationItem.leftBarButtonItem?.tintColor = uiConfiguration.iconTertiaryColor
     setNeedsStatusBarAppearanceUpdate()
   }

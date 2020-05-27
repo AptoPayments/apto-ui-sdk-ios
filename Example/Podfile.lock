@@ -12,8 +12,9 @@ PODS:
     - Bond (~> 7.6)
     - FTLinearActivityIndicator (= 1.2.1)
     - GoogleKit (~> 0.3)
+    - LaunchDarkly (~> 4.5.0)
     - Mixpanel-swift (~> 2.7)
-    - PhoneNumberKit (~> 2.6)
+    - PhoneNumberKit (~> 3.2)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
   - AptoUISDK (2.4.2):
@@ -21,7 +22,7 @@ PODS:
     - Bond (~> 7.6)
     - Down (~> 0.8.0)
     - GoogleKit (~> 0.3)
-    - PhoneNumberKit (~> 2.6)
+    - PhoneNumberKit (~> 3.2)
     - PullToRefreshKit (~> 0.8)
     - SnapKit (~> 5.0)
     - TrustKit (~> 1.6)
@@ -30,6 +31,10 @@ PODS:
   - Bond (7.6.6):
     - Differ (~> 1.4)
     - ReactiveKit (~> 3.14)
+  - Branch (0.33.1):
+    - Branch/Core (= 0.33.1)
+  - Branch/Core (0.33.1)
+  - DarklyEventSource (4.1.0)
   - Differ (1.4.5)
   - Down (0.8.6)
   - FTLinearActivityIndicator (1.2.1)
@@ -37,18 +42,23 @@ PODS:
   - KIF (3.6.0):
     - KIF/Core (= 3.6.0)
   - KIF/Core (3.6.0)
+  - LaunchDarkly (4.5.0):
+    - LaunchDarkly/Core (= 4.5.0)
+  - LaunchDarkly/Core (4.5.0):
+    - DarklyEventSource (~> 4.1.0)
   - Mixpanel-swift (2.7.0):
     - Mixpanel-swift/Complete (= 2.7.0)
   - Mixpanel-swift/Complete (2.7.0)
-  - PhoneNumberKit (2.6.0):
-    - PhoneNumberKit/PhoneNumberKitCore (= 2.6.0)
-    - PhoneNumberKit/UIKit (= 2.6.0)
-  - PhoneNumberKit/PhoneNumberKitCore (2.6.0)
-  - PhoneNumberKit/UIKit (2.6.0):
+  - PhoneNumberKit (3.2.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.2.0)
+    - PhoneNumberKit/UIKit (= 3.2.0)
+  - PhoneNumberKit/PhoneNumberKitCore (3.2.0)
+  - PhoneNumberKit/UIKit (3.2.0):
     - PhoneNumberKit/PhoneNumberKitCore
   - PullToRefreshKit (0.8.8)
   - ReactiveKit (3.17.0)
   - SnapKit (5.0.1)
+  - SnapshotTesting (1.7.2)
   - SwiftyJSON (5.0.0)
   - TrustKit (1.6.5)
   - TTTAttributedLabel (2.0.0)
@@ -62,14 +72,16 @@ DEPENDENCIES:
   - AptoSDK (from `../`)
   - AptoUISDK (from `../`)
   - Bond (~> 7.6)
+  - Branch (~> 0.33.1)
   - Down (~> 0.8)
   - FTLinearActivityIndicator (= 1.2.1)
   - GoogleKit (= 0.3.2)
   - KIF (= 3.6.0)
   - Mixpanel-swift (~> 2.7)
-  - PhoneNumberKit (~> 2.6)
+  - PhoneNumberKit (~> 3.2)
   - PullToRefreshKit (~> 0.8)
   - SnapKit (~> 5.0)
+  - SnapshotTesting (~> 1.7.2)
   - SwiftyJSON (~> 5.0)
   - TrustKit (~> 1.6)
   - TTTAttributedLabel (= 2.0.0)
@@ -81,16 +93,20 @@ SPEC REPOS:
     - Alamofire-Synchronous
     - AlamofireNetworkActivityIndicator
     - Bond
+    - Branch
+    - DarklyEventSource
     - Differ
     - Down
     - FTLinearActivityIndicator
     - GoogleKit
     - KIF
+    - LaunchDarkly
     - Mixpanel-swift
     - PhoneNumberKit
     - PullToRefreshKit
     - ReactiveKit
     - SnapKit
+    - SnapshotTesting
     - SwiftyJSON
     - TrustKit
     - TTTAttributedLabel
@@ -109,24 +125,28 @@ SPEC CHECKSUMS:
   Alamofire-Synchronous: eedf1e6e961c3795a63c74990b3f7d9fbfac7e50
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   AptoObjCSDK: 818ed46d0b6328d9ec76f32ab39e51d8ed8dffb1
-  AptoSDK: 21696d192d2b2bb61fd0f718275f50c3dbe971c6
-  AptoUISDK: c21a60bd7cf48f31f7580519d638a3325f5c451b
+  AptoSDK: a9a5bd16d67bc0b7ba534e4f28971208594dea06
+  AptoUISDK: 7bb72d6413ca86c40e606ffa87c2060e9e3c28ad
   Bond: 9e7d901cf4ed825b6004a93dd0a7f1c7479e2834
+  Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
+  DarklyEventSource: 71645100c07b7b6f57c4d62227bca3cf3a9b7796
   Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
   FTLinearActivityIndicator: a3ef57034bd05bc80c1a7c62c8797c0361fa7bee
   GoogleKit: c4b00706a0b1091b295e59920bbd46fd30f74243
   KIF: bd770edd8ce49bc7308501e4871e58a02d137be3
+  LaunchDarkly: c2863e664fe089665dc9e68b7084488011fee54a
   Mixpanel-swift: af074beb44bdac38ab611e1d575a073bbb3d6780
-  PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
+  PhoneNumberKit: df411d46177d1492da84e10b6c093846dd861452
   PullToRefreshKit: 7cc53e720e69f135cffa1a57784dfb534f0222ab
   ReactiveKit: b13f4b2211c9e55f5973e587e42726ac8ba09b5d
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SnapshotTesting: 8caa6661fea7c8019d5b46de77c16bab99c36c5c
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   TwilioVoice: 92845cbc7dd725b64fdae027bb9e78b985d32ed7
 
-PODFILE CHECKSUM: 4fd43dd5dc8d65ec5923a3b17880813fbf132a99
+PODFILE CHECKSUM: bf96f4279bcfbaaa25518d1aa986c6f154ccc5a7
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.2

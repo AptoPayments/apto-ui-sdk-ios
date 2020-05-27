@@ -64,7 +64,11 @@ final class InteractorLocator: InteractorLocatorProtocol {
   }
 
   func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol {
-    return IssueCardInteractor(platform: serviceLocator.platform, application: application)
+    return IssueCardInteractor(
+      platform: serviceLocator.platform,
+      application: application,
+      cardAdditionalFields: serviceLocator.systemServicesLocator.cardAdditionalFields()
+    )
   }
 
   func waitListInteractor(application: CardApplication) -> WaitListInteractorProtocol {

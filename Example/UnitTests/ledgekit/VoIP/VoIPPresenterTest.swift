@@ -150,34 +150,34 @@ class VoIPPresenterTest: XCTestCase {
       self?.sut.hangupCallTapped()
       expectation.fulfill()
     }.dispose(in: disposeBag)
-
+    
     // When
     sut.viewLoaded()
-
+    
     // Then
     wait(for: [expectation], timeout: 2)
   }
-
+  
   func testTimeElapsedLongerThanAMinuteFormatTimeElapsedAccordingly() {
     // Given
     interactor.nextFetchVoIPTokenResult = .success(ModelDataProvider.provider.voIPToken)
     voIPCallFake.nextCallResult = .success(Void())
-    voIPCallFake.timeElapsed = 75
+    voIPCallFake.timeElapsed = 65
     let expectation = XCTestExpectation(description: "VoIP presenter timer expectation")
     sut.viewModel.timeElapsed.ignoreNils().observeNext { [weak self] timeElapsed in
       guard timeElapsed != "00:00" else { return } // ignore first value
-      XCTAssertEqual("01:15", timeElapsed)
+      XCTAssertEqual("01:05", timeElapsed)
       self?.sut.hangupCallTapped()
       expectation.fulfill()
     }.dispose(in: disposeBag)
-
+    
     // When
     sut.viewLoaded()
-
+    
     // Then
-    wait(for: [expectation], timeout: 2)
+    wait(for: [expectation], timeout: 5)
   }
-
+  
   func testKeyboardDigitsTappedSendDigits() {
     // Given
     let digit = "1"

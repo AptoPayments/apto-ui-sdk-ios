@@ -21,10 +21,6 @@ class AuthEmailStep: DataCollectorBaseStep, DataCollectorStepProtocol {
 
   override func setupRows() -> [FormRowView] {
     var retVal: [FormRowView] = []
-    if uiConfig.uiTheme == .theme1 {
-      retVal.append(FormRowSeparatorView(backgroundColor: UIColor.clear, height: 124))
-    }
-
     let emailDataPoint = userData.emailDataPoint
     let emailField = FormBuilder.emailRowWith(label: nil,
                                               placeholder: "email-collector.placeholder".podLocalized(),

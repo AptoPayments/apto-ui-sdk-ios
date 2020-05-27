@@ -9,6 +9,20 @@
 import AptoSDK
 @testable import AptoUISDK
 
+final class CardAdditionalFieldsSpy: CardAdditionalFieldsProtocol {
+  
+  private(set) public var setCalled = false
+  func set(_ additionalFields: AdditionalFields) {
+    setCalled = true
+  }
+  
+  private(set) public var getCalled = false
+  func get() -> AdditionalFields? {
+    getCalled = true
+    return nil
+  }
+}
+
 class IssueCardPresenterSpy: IssueCardPresenterProtocol {
   let viewModel = IssueCardViewModel(state: .loading, errorAsset: nil)
   var analyticsManager: AnalyticsServiceProtocol?

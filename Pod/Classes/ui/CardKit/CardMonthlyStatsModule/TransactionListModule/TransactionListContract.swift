@@ -8,10 +8,16 @@
 import Bond
 import AptoSDK
 
-struct TransactionListModuleConfig {
-  let startDate: Date?
-  let endDate: Date?
-  let categoryId: MCCIcon?
+public struct TransactionListModuleConfig {
+  public let startDate: Date?
+  public let endDate: Date?
+  public let categoryId: MCCIcon?
+  
+  public init(startDate: Date?, endDate: Date?, categoryId: MCCIcon?) {
+    self.startDate = startDate
+    self.endDate = endDate
+    self.categoryId = categoryId
+  }
 }
 
 protocol TransactionListModuleProtocol: UIModuleProtocol {

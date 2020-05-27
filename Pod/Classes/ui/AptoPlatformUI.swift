@@ -17,6 +17,7 @@ private var isPresentingNetworkNotReachable = false
 private var fontRegistered = false
 private let queue = DispatchQueue(label: "com.aptopayments.sdk.register.fonts")
 private var _googleMapsApiKey: String?
+private let serviceLocator: ServiceLocatorProtocol = ServiceLocator.shared
 
 extension AptoPlatformProtocol {
   var googleMapsApiKey: String? {
@@ -42,7 +43,7 @@ extension AptoPlatform {
       _uiDelegate = newValue
     }
   }
-
+ 
   public func startCardFlow(from: UIViewController, mode: ShiftCardModuleMode, initialUserData: DataPointList? = nil,
                             options: CardOptions? = nil, googleMapsApiKey: String? = nil,
                             completion: @escaping (Result<UIModule, NSError>.Callback)) {
@@ -88,6 +89,23 @@ extension AptoPlatform {
         completion(nil, error)
       case .success(let module):
         completion(module, nil)
+      }
+    }
+  }
+  
+  /// Set extra metadata parameters when issuing a card
+  /// - Parameter fields: extra metadata fields
+  public func setCardIssueAdditional(fields: [String: AnyObject]) {
+    serviceLocator.systemServicesLocator.cardAdditionalFields().set(fields)
+  }
+
+  public func configure(_ completion: @escaping (Result<Bool, NSError>.Callback)) {
+    fetchContextConfiguration { result in
+      switch result {
+      case .success:
+        completion(.success(true))
+      case .failure(let error):
+        completion(.failure(error))
       }
     }
   }
@@ -148,11 +166,10 @@ extension AptoPlatform {
 
   // MARK: - Initialize fonts
 
-  func registerCustomFonts() {
+  func registerCustomFonts(for bundle: Bundle = PodBundle.bundle()) {
     queue.sync {
       guard !fontRegistered else { return }
       fontRegistered = true
-      let bundle = PodBundle.bundle()
       guard let url = bundle.url(forResource: "ocraextended", withExtension: "ttf"),
             let fontDataProvider = CGDataProvider(url: url as CFURL),
             let font = CGFont(fontDataProvider) else {

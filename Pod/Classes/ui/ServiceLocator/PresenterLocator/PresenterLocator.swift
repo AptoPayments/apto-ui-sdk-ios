@@ -115,7 +115,11 @@ final class PresenterLocator: PresenterLocatorProtocol {
   }
 
   func transactionListPresenter(config: TransactionListModuleConfig) -> TransactionListPresenterProtocol {
-    return TransactionListPresenter(config: config)
+    transactionListPresenter(config: config, transactionListEvents: nil)
+  }
+  
+  func transactionListPresenter(config: TransactionListModuleConfig, transactionListEvents: TransactionListEvents?) -> TransactionListPresenterProtocol {
+    return TransactionListPresenter(config: config, transactionListEvents: transactionListEvents)
   }
 
   func notificationPreferencesPresenter() -> NotificationPreferencesPresenterProtocol {
