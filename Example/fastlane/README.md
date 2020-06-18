@@ -56,6 +56,16 @@ Publish ObjC Wrapper SDK
 fastlane ios linter
 ```
 Run linter
+### ios documentation
+```
+fastlane ios documentation
+```
+Generate documentation
+### ios update_documentation
+```
+fastlane ios update_documentation
+```
+Update remote documentation
 
 ----
 

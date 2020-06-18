@@ -6,7 +6,7 @@ PODS:
     - Alamofire (~> 4.7)
   - AptoObjCSDK (1.1.0):
     - AptoSDK
-  - AptoSDK (2.6.2):
+  - AptoSDK (2.6.4):
     - Alamofire (~> 4.8)
     - AlamofireNetworkActivityIndicator (~> 2.2)
     - Bond (~> 7.6)
@@ -125,7 +125,7 @@ SPEC CHECKSUMS:
   Alamofire-Synchronous: eedf1e6e961c3795a63c74990b3f7d9fbfac7e50
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   AptoObjCSDK: 818ed46d0b6328d9ec76f32ab39e51d8ed8dffb1
-  AptoSDK: a9a5bd16d67bc0b7ba534e4f28971208594dea06
+  AptoSDK: ce81595f48942dac5f98dd7a54ce0daa80b95401
   AptoUISDK: 7bb72d6413ca86c40e606ffa87c2060e9e3c28ad
   Bond: 9e7d901cf4ed825b6004a93dd0a7f1c7479e2834
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a

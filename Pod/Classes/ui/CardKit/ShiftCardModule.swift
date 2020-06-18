@@ -119,7 +119,7 @@ open class ShiftCardModule: UIModule {
   fileprivate func showAuthModule(addChild: Bool = false,
                                   completion: @escaping Result<UIViewController, NSError>.Callback) {
     // Prepare the current user's data
-    let authModuleConfig = AuthModuleConfig(projectConfiguration: projectConfiguration)
+    let authModuleConfig = AuthModuleConfig(projectConfiguration: projectConfiguration, mode: mode)
     let authModule = serviceLocator.moduleLocator.authModule(authConfig: authModuleConfig,
                                                              initialUserData: userDataPoints)
     authModule.onExistingUser = { [weak self] module, user in

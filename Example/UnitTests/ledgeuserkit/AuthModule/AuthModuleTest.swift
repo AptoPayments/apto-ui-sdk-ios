@@ -18,7 +18,7 @@ class AuthModuleTest: XCTestCase {
   private let dataProvider: ModelDataProvider = ModelDataProvider.provider
   private lazy var authModuleConfig: AuthModuleConfig = AuthModuleConfig(primaryAuthCredential: .phoneNumber,
                                                                          secondaryAuthCredential: .email,
-                                                                         allowedCountries: [dataProvider.usa])
+                                                                         allowedCountries: [dataProvider.usa], mode: .embedded)
   private lazy var uiConfig: UIConfig = dataProvider.uiConfig
   private lazy var initialUserData: DataPointList = dataProvider.phoneNumberDataPointList
 

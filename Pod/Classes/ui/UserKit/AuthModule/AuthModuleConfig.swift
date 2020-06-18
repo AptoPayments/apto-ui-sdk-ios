@@ -12,20 +12,24 @@ import AptoSDK
   public let primaryAuthCredential: DataPointType
   public let secondaryAuthCredential: DataPointType
   public let allowedCountries: [Country]
+  public let mode: ShiftCardModuleMode
 
   public init(defaultCountryCode: Int = 1,
               primaryAuthCredential: DataPointType,
               secondaryAuthCredential: DataPointType,
-              allowedCountries: [Country]) {
+              allowedCountries: [Country],
+              mode: ShiftCardModuleMode) {
     self.defaultCountryCode = defaultCountryCode
     self.primaryAuthCredential = primaryAuthCredential
     self.secondaryAuthCredential = secondaryAuthCredential
     self.allowedCountries = allowedCountries
+    self.mode = mode
   }
 
-  public convenience init(projectConfiguration: ProjectConfiguration) {
+  public convenience init(projectConfiguration: ProjectConfiguration, mode: ShiftCardModuleMode) {
     self.init(primaryAuthCredential: projectConfiguration.primaryAuthCredential,
               secondaryAuthCredential: projectConfiguration.secondaryAuthCredential,
-              allowedCountries: projectConfiguration.allowedCountries)
+              allowedCountries: projectConfiguration.allowedCountries,
+              mode: mode)
   }
 }

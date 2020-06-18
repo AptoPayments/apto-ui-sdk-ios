@@ -4,29 +4,23 @@ internal struct AptoTransactionScreenProvider: TransactionScreenProvider {
   
   private let serviceLocator: ServiceLocatorProtocol
 
-  init(serviceLocator: ServiceLocatorProtocol = ServiceLocator.shared,
-       uiConfig: UIConfig)
-  {
+  init(serviceLocator: ServiceLocatorProtocol = ServiceLocator.shared) {
     self.serviceLocator = serviceLocator
-    self.serviceLocator.uiConfig = uiConfig
   }
   
-  func details(with transaction: Transaction,
-               screenEvents: TransactionScreenEvents) -> UIViewController
-  {
-    build(with: transaction, screenEvents: screenEvents)
-  }
-  
-  func details(with transaction: Transaction) -> UIViewController {
-    build(with: transaction)
+  func details(with options: TransactionDetailOptions) -> UIViewController {
+    build(with: options.transaction, screenEvents: options.events)
   }
   
   private func build(with transaction: Transaction,
-                     screenEvents: TransactionScreenEvents? = nil) -> UIViewController
+                     screenEvents: TransactionScreenEvents? = nil,
+                     uiConfig: UIConfig = .default) -> UIViewController
   {
     let presenter = serviceLocator.presenterLocator.transactionDetailsPresenter()
     let interactor = serviceLocator.interactorLocator.transactionDetailsInteractor(transaction: transaction)
     let viewController = serviceLocator.viewLocator.transactionDetailsView(presenter: presenter)
+    
+    serviceLocator.uiConfig = AptoPlatform.defaultManager().fetchUIConfig() ?? uiConfig
     
     presenter.interactor = interactor
     presenter.router = TransactionDetailRouter(

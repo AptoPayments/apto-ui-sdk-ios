@@ -11,14 +11,16 @@ import SnapKit
 
 class AuthViewControllerTheme2: AuthViewControllerProtocol {
   private unowned let eventHandler: AuthEventHandler
+  private let mode: ShiftCardModuleMode
   private let formView: MultiStepForm
   private let titleLabel: UILabel
   private let explanationLabel: UILabel
   private var continueButton: UIButton! // swiftlint:disable:this implicitly_unwrapped_optional
   private var shouldBecomeFirstResponder = true
 
-  init(uiConfiguration: UIConfig, eventHandler: AuthEventHandler) {
+  init(uiConfiguration: UIConfig, mode: ShiftCardModuleMode, eventHandler: AuthEventHandler) {
     self.formView = MultiStepForm()
+    self.mode = mode
     self.eventHandler = eventHandler
     self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: "", multiline: false, uiConfig: uiConfiguration)
     self.explanationLabel = ComponentCatalog.formLabelWith(text: "auth.input_phone.explanation".podLocalized(),
@@ -76,7 +78,11 @@ class AuthViewControllerTheme2: AuthViewControllerProtocol {
   }
 
   func showCancelButton() {
-    showNavPreviousButton(uiConfiguration.textTopBarPrimaryColor)
+    if mode == .embedded {
+      showNavCancelButton(uiConfiguration.textTopBarPrimaryColor)
+    } else {
+      showNavPreviousButton(uiConfiguration.textTopBarPrimaryColor)
+    }
   }
 
   func show(error: NSError) {

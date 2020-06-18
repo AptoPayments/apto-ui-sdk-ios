@@ -21,8 +21,8 @@ class ViewLocatorFake: ViewLocatorProtocol {
     return CountrySelectorViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func authView(uiConfig: UIConfig, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol {
-    return AuthViewControllerTheme2(uiConfiguration: uiConfig, eventHandler: eventHandler)
+  func authView(uiConfig: UIConfig, mode: ShiftCardModuleMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol {
+    return AuthViewControllerTheme2(uiConfiguration: uiConfig, mode: mode, eventHandler: eventHandler)
   }
 
   func pinVerificationView(presenter: PINVerificationPresenter) -> PINVerificationViewControllerProtocol {

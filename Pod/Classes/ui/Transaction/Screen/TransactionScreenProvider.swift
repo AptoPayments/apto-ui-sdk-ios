@@ -1,6 +1,14 @@
 import AptoSDK
 
 public protocol TransactionScreenProvider {
-  func details(with transaction: Transaction, screenEvents: TransactionScreenEvents) -> UIViewController
-  func details(with transaction: Transaction) -> UIViewController
+  /**
+   Create a TransactionDetail view controller configured with extra parameters from `TransactionDetailOptions`
+   
+   ```
+   let apto = AptoPlatform.defaultManager()
+   let options = TransactionDetailOptions(...)
+   let transactionDetail = apto.transaction.screen.details(with: options)
+   ```
+   */
+  func details(with options: TransactionDetailOptions) -> UIViewController
 }

@@ -19,7 +19,8 @@ class AuthInteractorTest: XCTestCase {
   private let dataProvider: ModelDataProvider = ModelDataProvider.provider
   private lazy var authConfig: AuthModuleConfig = AuthModuleConfig(primaryAuthCredential: .phoneNumber,
                                                                    secondaryAuthCredential: .email,
-                                                                   allowedCountries: [dataProvider.usa])
+                                                                   allowedCountries: [dataProvider.usa],
+                                                                   mode: .embedded)
   private let dataReceiver: AuthDataReceiverSpy = AuthDataReceiverSpy()
 
   override func setUp() {
@@ -407,7 +408,7 @@ private extension AuthInteractorTest {
   func givenEmailPrimaryCredential() {
     sut = AuthInteractor(platform: platform, initialUserData: dataProvider.emailDataPointList,
                          config: AuthModuleConfig(primaryAuthCredential: .email, secondaryAuthCredential: .phoneNumber,
-                                                  allowedCountries: [dataProvider.usa]),
+                                                  allowedCountries: [dataProvider.usa], mode: .embedded),
                          dataReceiver: dataReceiver)
   }
 
@@ -415,7 +416,7 @@ private extension AuthInteractorTest {
     sut = AuthInteractor(platform: platform, initialUserData: dataProvider.birthDateDataPointList,
                          config: AuthModuleConfig(primaryAuthCredential: .birthDate,
                                                   secondaryAuthCredential: .email,
-                                                  allowedCountries: [dataProvider.usa]),
+                                                  allowedCountries: [dataProvider.usa], mode: .embedded),
                          dataReceiver: dataReceiver)
   }
 
@@ -423,7 +424,7 @@ private extension AuthInteractorTest {
     sut = AuthInteractor(platform: platform, initialUserData: dataProvider.birthDateDataPointList,
                          config: AuthModuleConfig(primaryAuthCredential: .email,
                                                   secondaryAuthCredential: .birthDate,
-                                                  allowedCountries: [dataProvider.usa]),
+                                                  allowedCountries: [dataProvider.usa], mode: .embedded),
                          dataReceiver: dataReceiver)
   }
 
@@ -431,7 +432,7 @@ private extension AuthInteractorTest {
     sut = AuthInteractor(platform: platform, initialUserData: dataProvider.ssnDataPointList,
                          config: AuthModuleConfig(primaryAuthCredential: .idDocument,
                                                   secondaryAuthCredential: .email,
-                                                  allowedCountries: [dataProvider.usa]),
+                                                  allowedCountries: [dataProvider.usa], mode: .embedded),
                          dataReceiver: dataReceiver)
   }
 }

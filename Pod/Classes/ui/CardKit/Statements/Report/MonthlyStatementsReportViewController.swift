@@ -17,7 +17,7 @@ class MonthlyStatementsReportViewController: ShiftViewController {
   private unowned let presenter: MonthlyStatementsReportPresenterProtocol
   private var url: URL?
   private let webView = WKWebView(frame: .zero)
-  private let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+  private lazy var shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
 
   init(uiConfiguration: UIConfig, presenter: MonthlyStatementsReportPresenterProtocol) {
     self.presenter = presenter

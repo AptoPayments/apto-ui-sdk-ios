@@ -20,7 +20,7 @@ protocol ViewLocatorProtocol {
   func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController
 
   // MARK: - Auth
-  func authView(uiConfig: UIConfig, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol
+  func authView(uiConfig: UIConfig, mode: ShiftCardModuleMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol
   func pinVerificationView(presenter: PINVerificationPresenter) -> PINVerificationViewControllerProtocol
   func verifyBirthDateView(presenter: VerifyBirthDateEventHandler) -> VerifyBirthDateViewControllerProtocol
   func externalOAuthView(uiConfiguration: UIConfig,

@@ -17,7 +17,7 @@ class AuthPresenterTest: XCTestCase {
   private lazy var dataProvider: ModelDataProvider = ModelDataProvider.provider
   private lazy var authConfig: AuthModuleConfig = AuthModuleConfig(primaryAuthCredential: .email,
                                                                    secondaryAuthCredential: .phoneNumber,
-                                                                   allowedCountries: [dataProvider.usa])
+                                                                   allowedCountries: [dataProvider.usa], mode: .embedded)
   private lazy var uiConfig: UIConfig = dataProvider.uiConfig
   private let viewController: AuthViewControllerSpy = AuthViewControllerSpy()
   private let interactor: AuthInteractorSpy = AuthInteractorSpy()

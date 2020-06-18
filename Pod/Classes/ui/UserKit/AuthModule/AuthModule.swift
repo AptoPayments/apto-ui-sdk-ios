@@ -42,7 +42,7 @@ class AuthModule: UIModule, AuthModuleProtocol {
     let presenter = serviceLocator.presenterLocator.authPresenter(authConfig: config, uiConfig: uiConfig)
     let interactor = serviceLocator.interactorLocator.authInteractor(initialUserData: initialUserData,
                                                                      authConfig: config, dataReceiver: presenter)
-    let viewController = serviceLocator.viewLocator.authView(uiConfig: uiConfig, eventHandler: presenter)
+    let viewController = serviceLocator.viewLocator.authView(uiConfig: uiConfig, mode: config.mode, eventHandler: presenter)
 
     presenter.viewController = viewController
     presenter.interactor = interactor

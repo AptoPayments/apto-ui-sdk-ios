@@ -1,3 +1,5 @@
+require 'tmpdir' 
+
 default_platform(:ios)
 
 WORKSPACE = "ShiftSDK.xcworkspace"
@@ -8,8 +10,12 @@ SCHEME = {
 PUBLIC_REPOS = {
   :core => "../../../apto-sdk-ios",
   :ui => "../../../apto-ui-sdk-ios",
-  :objc => "../../../apto-objc-sdk-ios"
+  :objc => "../../../apto-objc-sdk-ios",
+  :docs => "/static"
 }
+APTO_BOT_CREDENTIALS = ENV["USER_TOKEN"].to_s
+APTO_DEVELOPER_DOCS_GIT = "https://" + APTO_BOT_CREDENTIALS + "@github.com/AptoPayments/apto-developer-docs.git"
+
 POD_SPECS = {
   :core => "../../AptoSDK.podspec",
   :ui => "../../AptoUISDK.podspec",
@@ -159,6 +165,17 @@ platform :ios do
       sh('find ../../Pod/ -name "*.swift" -exec swiftlint --path {} --config ../.swiftlint.yml --quiet \\;')
     end
   end
+  
+  desc "Generate documentation"
+  lane :documentation do
+   generate_documentation
+  end
+
+  desc "Update remote documentation"
+  lane :update_documentation do
+    generate_documentation
+    update_core_documentation
+  end
 end
 
 def current_core_pod_version()
@@ -202,6 +219,38 @@ def update_objc_pod_version(version)
   new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
   File.open(POD_SPECS[:objc], "w") {|file| file.puts new_contents }
 end
+ 
+def update_core_documentation
+  repo = PUBLIC_REPOS[:docs]
+ 
+  # Clone developer docs into temporary dir
+  Dir.mktmpdir do |dir|
+    sh("open #{dir}")
+    sh("git clone #{APTO_DEVELOPER_DOCS_GIT} #{dir}")
+
+    docs_ios = "#{dir}/static/ios"
+ 
+    # Remove current content
+    sh("rm -rf #{docs_ios} | true")
+    sh("mkdir -p #{docs_ios}")
+
+    # Copy new content
+    sh("cp -r ../../docs/ #{docs_ios}")
+
+    # Commit
+    Dir.chdir(docs_ios) do
+      sh("git add .")
+      sh("git commit -m \"Update iOS documentation\"")
+      sh("git push -u")
+    end
+  end 
+end
+
+def generate_documentation 
+  Dir.chdir("../") do
+    jazzy(config: ".jazzy.yaml")
+  end
+end 
 
 def update_core_repo
   repo = PUBLIC_REPOS[:core]
@@ -287,7 +336,7 @@ def validate_objc_pod
     sh("pod lib lint AptoObjCSDK.podspec --allow-warnings --no-subspecs --skip-tests --silent")
   end
 end
-
+ 
 def update_private_repo_core(version)
   sh("git add #{POD_SPECS[:core]}")
   sh("git commit -m \"bump core SDK podspec version to #{version}\"")
