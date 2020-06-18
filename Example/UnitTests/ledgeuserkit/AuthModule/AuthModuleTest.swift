@@ -12,7 +12,6 @@ import XCTest
 
 class AuthModuleTest: XCTestCase {
   private var sut: AuthModule! // swiftlint:disable:this implicitly_unwrapped_optional
-
   // Collaborators
   private let serviceLocator: ServiceLocatorFake = ServiceLocatorFake()
   private let dataProvider: ModelDataProvider = ModelDataProvider.provider
