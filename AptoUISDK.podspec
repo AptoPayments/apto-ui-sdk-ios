@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
   s.dependency 'GoogleKit', '~> 0.3'
   s.dependency 'PhoneNumberKit', '~> 3.2'
   s.dependency 'TTTAttributedLabel', '~> 2.0'
-  s.dependency 'TrustKit', '~> 1.6'
+  s.dependency 'TrustKit', '~> 1.6.0'
   s.dependency 'Down', '~> 0.8.0'
   s.dependency 'PullToRefreshKit', '~> 0.8'
   s.dependency 'TwilioVoice', '~> 3.0'
