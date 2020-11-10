@@ -24,7 +24,7 @@ class VoIPModule: UIModule, VoIPModuleProtocol {
   }
 
   func callFinished() {
-    onFinish?(self)
+    finish()
   }
 
   private func buildViewController() -> UIViewController {

@@ -8,6 +8,11 @@
 
 import AptoSDK
 
+public struct UIModuleResult {
+  let module: UIModuleProtocol
+  let result: Any?
+}
+
 public protocol UIModuleProtocol: class {
   /// UI Configuration
   var uiConfig: UIConfig { get }
@@ -18,12 +23,12 @@ public protocol UIModuleProtocol: class {
   /// Callbacks
   var onClose:((_ module: UIModuleProtocol) -> Void)? { get set }
   var onNext:((_ module: UIModuleProtocol) -> Void)? { get set }
-  var onFinish: ((_ module: UIModuleProtocol) -> Void)? { get set }
+  var onFinish: ((_ result: UIModuleResult) -> Void)? { get set }
 
   /// Module lifecycle
   func initialize(completion: @escaping Result<UIViewController, NSError>.Callback)
   func close()
-  func finish()
+  func finish(result: Any?)
   func next()
 
   /// Add or remove content

@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '12.0'
 source 'https://cdn.cocoapods.org/'
 use_frameworks!
 
@@ -21,6 +21,7 @@ def runtimepods
   pod 'Mixpanel-swift', '~> 2.7', :inhibit_warnings => true
   pod 'TwilioVoice', '~> 3.0'
   pod 'Branch', '~> 0.33.1'
+  pod 'AlamofireNetworkActivityLogger', '~> 2.0'
 end
 
 target :Demo do
@@ -43,6 +44,7 @@ post_install do |installer_representation|
   installer_representation.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] = '$(inherited), PodsDummy_Pods=SomeOtherNamePodsDummy_Pods'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
       if config.name == 'Local'
         config.build_settings['ENABLE_TESTABILITY'] = 'YES'
         config.build_settings['GCC_GENERATE_DEBUGGING_SYMBOLS'] = 'YES'

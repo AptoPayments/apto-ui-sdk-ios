@@ -25,8 +25,11 @@ final class InteractorLocator: InteractorLocatorProtocol {
 
   func authInteractor(initialUserData: DataPointList, authConfig: AuthModuleConfig,
                       dataReceiver: AuthDataReceiver) -> AuthInteractorProtocol {
-    return AuthInteractor(platform: serviceLocator.platform, initialUserData: initialUserData, config: authConfig,
-                          dataReceiver: dataReceiver)
+    return AuthInteractor(platform: serviceLocator.platform,
+                          initialUserData: initialUserData,
+                          config: authConfig,
+                          dataReceiver: dataReceiver,
+                          userMetadata: serviceLocator.systemServicesLocator.userMetadata())
   }
 
   func verifyPhoneInteractor(verificationType: VerificationParams<PhoneNumber, Verification>,
@@ -67,7 +70,8 @@ final class InteractorLocator: InteractorLocatorProtocol {
     return IssueCardInteractor(
       platform: serviceLocator.platform,
       application: application,
-      cardAdditionalFields: serviceLocator.systemServicesLocator.cardAdditionalFields()
+      cardAdditionalFields: serviceLocator.systemServicesLocator.cardAdditionalFields(),
+      cardMetadata: serviceLocator.systemServicesLocator.cardMetadata()
     )
   }
 
@@ -101,8 +105,8 @@ final class InteractorLocator: InteractorLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardInteractor(card: Card) -> ManageShiftCardInteractorProtocol {
-    return ManageShiftCardInteractor(platform: serviceLocator.platform, card: card)
+  func manageCardInteractor(card: Card) -> ManageCardInteractorProtocol {
+    return ManageCardInteractor(platform: serviceLocator.platform, card: card)
   }
 
   func fundingSourceSelector(card: Card) -> FundingSourceSelectorInteractorProtocol {

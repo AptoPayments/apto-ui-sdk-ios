@@ -45,7 +45,7 @@ struct ConfigurationResolver {
   }
   
   private func extract(from environment: String) -> AptoPlatformEnvironment {
-    switch environment {
+    switch environment.uppercased() {
     case "PRD":
       return .production
     case "STG":

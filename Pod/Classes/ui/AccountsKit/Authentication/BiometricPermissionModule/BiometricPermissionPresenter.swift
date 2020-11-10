@@ -24,7 +24,7 @@ class BiometricPermissionPresenter: BiometricPermissionPresenterProtocol {
       guard let self = self else { return }
       self.interactor?.setBiometricPermissionEnabled(granted)
       if granted {
-        self.router?.finish()
+        self.router?.finish(result: nil)
       }
       else {
         self.router?.close()

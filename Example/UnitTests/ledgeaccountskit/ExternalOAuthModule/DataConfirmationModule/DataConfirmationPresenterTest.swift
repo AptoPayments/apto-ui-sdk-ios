@@ -65,7 +65,7 @@ class DataConfirmationPresenterTest: XCTestCase {
 
   func testShowURLNotifyRouter() {
     // Given
-    let url = URL(string: "https://shiftpayments.com")! // swiftlint:disable:this force_unwrapping
+    let url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this force_unwrapping
 
     // When
     sut.show(url: url)

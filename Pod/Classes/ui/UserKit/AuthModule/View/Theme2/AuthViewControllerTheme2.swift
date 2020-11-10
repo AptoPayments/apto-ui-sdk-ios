@@ -11,14 +11,14 @@ import SnapKit
 
 class AuthViewControllerTheme2: AuthViewControllerProtocol {
   private unowned let eventHandler: AuthEventHandler
-  private let mode: ShiftCardModuleMode
+  private let mode: AptoUISDKMode
   private let formView: MultiStepForm
   private let titleLabel: UILabel
   private let explanationLabel: UILabel
   private var continueButton: UIButton! // swiftlint:disable:this implicitly_unwrapped_optional
   private var shouldBecomeFirstResponder = true
 
-  init(uiConfiguration: UIConfig, mode: ShiftCardModuleMode, eventHandler: AuthEventHandler) {
+  init(uiConfiguration: UIConfig, mode: AptoUISDKMode, eventHandler: AuthEventHandler) {
     self.formView = MultiStepForm()
     self.mode = mode
     self.eventHandler = eventHandler

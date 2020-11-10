@@ -50,9 +50,11 @@ class AuthModuleTest: XCTestCase {
     sut.onExistingUser = { _, userData in
       returnedUserData = userData
     }
-    let user = ShiftUser(userId: "userId", accessToken: AccessToken(token: "token",
-                                                                    primaryCredential: .phoneNumber,
-                                                                    secondaryCredential: .email))
+    let user = ShiftUser(userId: "userId",
+                         metadata: "metadata",
+                         accessToken: AccessToken(token: "token",
+                                                  primaryCredential: .phoneNumber,
+                                                  secondaryCredential: .email))
 
     // When
     sut.returnExistingUser(user)

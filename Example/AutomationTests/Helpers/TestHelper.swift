@@ -81,7 +81,7 @@ class TestHelper {
                          projectKey: String? = nil,
                          countryCode: Int = 1,
                          phoneNumber: String = "9366669999",
-                         email: String = "test@shiftpayments.com",
+                         email: String = "test@aptopayments.com",
                          verifiedPhone: Bool = false) -> ShiftUser? {
 
     let userJSON = testProvisioner.provisionRandomTestUser(teamKey:teamKey,

@@ -90,6 +90,6 @@ extension VerifyDocumentModule: VerifyDocumentRouterProtocol {
   func nextTappedInVerifyDocumentWith(verification: Verification) {
     self.restoreNavigationBarFromTransparentState()
     onVerificationPassed?(self, verification.documentVerificationResult!) // swiftlint:disable:this force_unwrapping
-    onFinish?(self)
+    finish()
   }
 }

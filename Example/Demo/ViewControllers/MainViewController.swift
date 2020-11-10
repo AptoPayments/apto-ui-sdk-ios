@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
     super.viewDidLoad()
 
     launchCardFlowButton = self.buttonWith(title: "launcher.launch-card-flow-button.title".localized(),
-                                           tintColor: colorize(0x17a94f))
+                                           tintColor: colorize(0x0667D0))
     self.bottomView.addSubview(launchCardFlowButton)
     launchCardFlowButton.snp.makeConstraints { make in
       make.left.right.bottom.equalTo(self.bottomView).inset(20)
@@ -57,8 +57,8 @@ class MainViewController: UIViewController {
       buildType = ""
     }
 
-    self.explanationLabel.text = "Shift SDK Demo App"
-    self.versionLabel.text = "Shift SDK Demo App (\(buildType))\nversion \(BuildInformation.version!), build \(BuildInformation.build!)"
+    self.explanationLabel.text = "Apto SDK Demo App"
+    self.versionLabel.text = "Apto SDK Demo App (\(buildType))\nversion \(BuildInformation.version!), build \(BuildInformation.build!)"
 
     AptoPlatform.defaultManager().delegate = self
   }
@@ -88,6 +88,9 @@ class MainViewController: UIViewController {
   }
 
   fileprivate func showCardSDK() {
+    guard AptoPlatform.defaultManager().initialized else {
+      return
+    }
     // Launch Card Flow
     self.showLoadingSpinner(tintColor: .white, position: .bottomCenter)
     let options = CardOptions(features: [
@@ -111,7 +114,7 @@ class MainViewController: UIViewController {
 extension MainViewController: AptoPlatformDelegate {
 
   func sdkInitialized(apiKey: String) {
-    print ("shiftSDKInitialized")
+    print ("sdkInitialized")
   }
 
   func sdkDeprecated() {

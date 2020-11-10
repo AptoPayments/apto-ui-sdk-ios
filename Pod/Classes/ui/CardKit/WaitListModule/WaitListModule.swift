@@ -22,7 +22,7 @@ class WaitListModule: UIModule, WaitListModuleProtocol {
   }
 
   func applicationStatusChanged() {
-    onFinish?(self)
+    finish()
   }
 
   private func buildViewController() -> UIViewController {

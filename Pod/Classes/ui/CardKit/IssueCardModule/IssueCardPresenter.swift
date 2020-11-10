@@ -26,7 +26,7 @@ class IssueCardPresenter: IssueCardPresenterProtocol {
     if let errorAsset = configuration?.errorAsset {
       viewModel.errorAsset.send(errorAsset)
     }
-    if let legalNotice = configuration?.legalNotice {
+    if let legalNotice = configuration?.legalNotice, !legalNotice.isEmpty {
       viewModel.state.send(IssueCardViewState.showLegalNotice(content: legalNotice))
     }
     else {

@@ -150,6 +150,6 @@ extension UserDataCollectorModule: UserDataCollectorRouterProtocol {
 
   func userDataCollected(_ user: ShiftUser) {
     onUserDataCollected?(self, user)
-    onFinish?(self)
+    finish()
   }
 }

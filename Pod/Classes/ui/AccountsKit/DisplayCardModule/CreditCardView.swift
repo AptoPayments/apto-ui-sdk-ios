@@ -10,7 +10,8 @@ import Foundation
 import AptoSDK
 import SnapKit
 import UIKit
-
+import AptoPCISDK
+ 
 let cardAspectRatio = 1.585772508336421
 let nameOnCardMaxLength = 23
 
@@ -29,15 +30,10 @@ public class CreditCardView: UIView {
   // MARK: - Front View
   private let frontView = UIImageView()
   private let imageView = UIImageView()
-  private let cardNumber = UIFormattedLabel()
-  private let cardHolder = UILabel()
-  private let expireDate = UIFormattedLabel()
-  private let expireDateText = UILabel()
-  private let frontCvv = UIFormattedLabel()
-  private let frontCvvText = UILabel()
   private let lockedView = UIView()
   private let lockImageView = UIImageView(image: UIImage.imageFromPodBundle("card-locked-icon"))
-
+  private let pciView = PCIView()
+  
   // MARK: - Back View
   private let backView = UIView()
   private let backImage = UIImageView()
@@ -46,23 +42,13 @@ public class CreditCardView: UIView {
 
   // MARK: - State
   private var cardState: FinancialAccountState = .active
-  private var cardInfoShown = false {
-    didSet {
-      cardNumber.isUserInteractionEnabled = cardInfoShown
-    }
-  }
-  private var cardNumberText: String?
-  private var lastFourText: String?
-  private var cardHolderText: String?
-  private var expirationMonth: UInt?
-  private var expirationYear: UInt?
-  private var cvvText: String?
   private var cardNetwork: CardNetwork?
+  private var cardInfoShown = false
   private var hasValidFundingSource = true
 
   public var textColor: UIColor = .white {
     didSet {
-      updateLabelsFontColor()
+      imageView.tintColor = textColor
     }
   }
 
@@ -83,31 +69,34 @@ public class CreditCardView: UIView {
   }
 
   // MARK: - Public methods
+  
+  func configure(with pciConfiguration: PCIConfiguration) {
+    addSubview(pciView)
+    pciView.snp.makeConstraints { constraints in
+      constraints.edges.equalToSuperview()
+    }
 
-  public func set(cardHolder: String?) {
-    cardHolderText = cardHolder?.uppercased()
-    updateCard()
-  }
 
-  public func set(cardNumber: String?) {
-    cardNumberText = cardNumber
-    updateCard()
-  }
+    let configAuth = PCIConfigAuth(cardId: pciConfiguration.cardId,
+                                   apiKey: pciConfiguration.apiKey,
+                                   userToken: pciConfiguration.userToken,
+                                   environment: pciConfiguration.environment.pciEnvironment())
+    let configCard = PCIConfigCard(lastFour: pciConfiguration.lastFour,
+                                   nameOnCard: pciConfiguration.name)
+    let config = PCIConfig(configAuth: configAuth,
+                           configCard: configCard,
+                           theme: "light")
+    pciView.initialise(config: config)
 
-  public func set(lastFour: String?) {
-    lastFourText = lastFour
-    updateCard()
-  }
-
-  public func set(expirationMonth: UInt, expirationYear: UInt) {
-    self.expirationMonth = expirationMonth
-    self.expirationYear = expirationYear
-    updateCard()
-  }
-
-  public func set(cvc: String?) {
-    cvvText = cvc
-    updateCard()
+    pciView.alertTexts = [
+      "inputCode.message": "credit_card_view.input_code.message".podLocalized(),
+      "inputCode.okAction": "credit_card_view.input_code.ok_action".podLocalized(),
+      "inputCode.cancelAction": "credit_card_view.input_code.cancel_action".podLocalized(),
+      "wrongCode.message": "credit_card_view.wrong_code.message".podLocalized(),
+      "wrongCode.okAction": "credit_card_view.wrong_code.ok_action".podLocalized()
+    ]
+    let configStyle = PCIConfigStyle(theme: "light", textColor:  "#\(textColor.toHex ?? "ffffff")")
+    pciView.setStyle(style: configStyle)
   }
 
   public func set(cardState: FinancialAccountState) {
@@ -192,12 +181,6 @@ private extension CreditCardView {
       make.top.bottom.left.right.equalTo(self)
     }
     setUpImageView()
-    setUpExpireDateText()
-    setUpExpireDate()
-    setUpFrontCVVText()
-    setUpFrontCVV()
-    setUpCardHolderView()
-    setUpCardNumberView()
     setUpLockView()
   }
 
@@ -210,89 +193,6 @@ private extension CreditCardView {
       make.height.equalTo(40)
       make.right.equalTo(frontView).inset(20)
       make.bottom.equalTo(frontView).inset(16)
-    }
-  }
-
-  func setUpExpireDateText() {
-    expireDateText.translatesAutoresizingMaskIntoConstraints = false
-    expireDateText.font = uiConfiguration.fontProvider.cardLabelFont
-    expireDateText.text = "EXP"
-    expireDateText.textColor = textColor.withAlphaComponent(0.7)
-    frontView.addSubview(expireDateText)
-    expireDateText.snp.makeConstraints { make in
-      make.bottom.equalTo(frontView).inset(16)
-      make.left.equalTo(frontView).offset(20)
-    }
-  }
-
-  func setUpExpireDate() {
-    expireDate.translatesAutoresizingMaskIntoConstraints = false
-    expireDate.font = uiConfiguration.fontProvider.cardSmallValueFont
-    expireDate.formattingPattern = "**/****"
-    expireDate.textColor = textColor
-    frontView.addSubview(expireDate)
-    expireDate.snp.makeConstraints { make in
-      make.bottom.equalTo(expireDateText)
-      make.left.equalTo(expireDateText.snp.right).offset(4)
-    }
-  }
-
-  func setUpFrontCVVText() {
-    frontCvvText.translatesAutoresizingMaskIntoConstraints = false
-    frontCvvText.font = uiConfiguration.fontProvider.cardLabelFont
-    frontCvvText.text = "CVV"
-    frontCvvText.textColor = textColor.withAlphaComponent(0.7)
-    frontView.addSubview(frontCvvText)
-    frontCvvText.snp.makeConstraints { make in
-      make.bottom.equalTo(expireDate)
-      make.left.equalTo(expireDate.snp.right).offset(20)
-    }
-  }
-
-  func setUpFrontCVV() {
-    frontCvv.translatesAutoresizingMaskIntoConstraints = false
-    frontCvv.font = uiConfiguration.fontProvider.cardSmallValueFont
-    frontCvv.formattingPattern = "***"
-    frontCvv.textColor = textColor
-    frontView.addSubview(frontCvv)
-    frontCvv.snp.makeConstraints { make in
-      make.bottom.equalTo(frontCvvText)
-      make.left.equalTo(frontCvvText.snp.right).offset(4)
-    }
-  }
-
-  func setUpCardHolderView() {
-    cardHolder.translatesAutoresizingMaskIntoConstraints = false
-    cardHolder.font = uiConfiguration.fontProvider.cardSmallValueFont
-    cardHolder.text = ""
-    cardHolder.textColor = textColor
-    cardHolder.adjustsFontSizeToFitWidth = false
-    cardHolder.lineBreakMode = .byCharWrapping
-    frontView.addSubview(cardHolder)
-    cardHolder.snp.makeConstraints { make in
-      make.bottom.equalTo(expireDate.snp.top).offset(-12)
-      make.left.equalToSuperview().inset(20)
-      make.right.equalToSuperview().inset(80)
-    }
-  }
-
-  func setUpCardNumberView() {
-    cardNumber.translatesAutoresizingMaskIntoConstraints = false
-    cardNumber.formattingPattern = "**** **** **** ****"
-    cardNumber.textColor = textColor
-    cardNumber.textAlignment = .center
-    cardNumber.font = uiConfiguration.fontProvider.cardLargeValueFont
-    cardNumber.adjustsFontSizeToFitWidth = true
-    cardNumber.isUserInteractionEnabled = false
-    cardNumber.addTapGestureRecognizer { [unowned self] in
-      UIPasteboard.general.string = self.cardNumberText
-      UIApplication.topViewController()?.showMessage("credit.card-number-copied".podLocalized(),
-                                                     uiConfig: self.uiConfiguration)
-    }
-    addSubview(cardNumber)
-    cardNumber.snp.makeConstraints { make in
-      make.centerY.equalToSuperview()
-      make.left.right.equalToSuperview().inset(16)
     }
   }
 
@@ -355,22 +255,11 @@ private extension CreditCardView {
       make.right.equalTo(backView).inset(10)
     }
   }
-
-  func updateLabelsFontColor() {
-    cardNumber.textColor = textColor
-    cardHolder.textColor = textColor
-    expireDateText.textColor = textColor.withAlphaComponent(0.7)
-    expireDate.textColor = textColor
-    frontCvvText.textColor = textColor.withAlphaComponent(0.7)
-    frontCvv.textColor = textColor
-    imageView.tintColor = textColor
-  }
 }
 
 // MARK: - Update card info
 private extension CreditCardView {
   func updateCard() {
-    cardHolder.text = self.cardHolderText?.prefixOf(nameOnCardMaxLength)
     updateCardInfo()
     updateCardEnabledState()
     updateCardNetwork()
@@ -386,32 +275,11 @@ private extension CreditCardView {
   }
 
   func hideCardInfo() {
-    if let lastFourText = lastFourText {
-      cardNumber.text = "**** **** **** \(lastFourText)"
-    }
-    else {
-      cardNumber.text = "**** **** **** ****"
-    }
-    expireDate.text = "**/**"
-    frontCvv.text = "***"
+    pciView.hidePCIData()
   }
 
   func showCardInfo() {
-    if let cardNumberText = self.cardNumberText {
-      cardNumber.text = cardNumberText
-    }
-    else {
-      cardNumber.text = ""
-    }
-    if let expirationMonth = expirationMonth, let expirationYear = expirationYear {
-      expireDate.text = String(format: "%02ld", expirationMonth) + "/\(expirationYear)"
-    }
-    else {
-      expireDate.text = "MM/YY"
-    }
-    if let cvv = self.cvvText {
-      frontCvv.text = cvv
-    }
+    pciView.showPCIData()
   }
 
   func updateCardEnabledState() {
@@ -439,6 +307,7 @@ private extension CreditCardView {
       }
       if let rawColor = cardStyle.textColor, let color = UIColor.colorFromHexString(rawColor) {
         self?.textColor = color
+        self?.pciView.setStyle(style: PCIConfigStyle(theme: "light", textColor: "#\(rawColor)"))
       }
     }
   }
@@ -469,6 +338,17 @@ private extension CreditCardView {
     let enabled = cardState == .active
     if let cardNetwork = cardNetwork {
       self.set(cardNetwork: cardNetwork, enabled: enabled, alpha: 1)
+    }
+  }
+}
+
+private extension AptoPlatformEnvironment {
+  func pciEnvironment() -> PCIEnvironment {
+    switch self {
+    case .production: return .prd
+    case .sandbox: return .sbx
+    case .staging: return .stg
+    case .local: return .stg
     }
   }
 }

@@ -33,6 +33,6 @@ class SetPinModule: UIModule, SetPinModuleProtocol {
   }
 
   func pinChanged() {
-    onFinish?(self)
+    finish()
   }
 }

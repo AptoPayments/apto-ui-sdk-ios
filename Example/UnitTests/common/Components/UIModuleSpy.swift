@@ -24,8 +24,10 @@ class UIModuleSpy: UIModule {
   }
 
   private(set) var finishCalled = false
-  override func finish() {
+  private(set) var lastFinishResult: Any?
+  override func finish(result: Any?) {
     finishCalled = true
+    lastFinishResult = result
     super.finish()
   }
 

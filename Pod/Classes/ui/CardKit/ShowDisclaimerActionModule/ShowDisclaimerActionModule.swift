@@ -61,7 +61,7 @@ class ShowDisclaimerActionModule: UIModule, ShowDisclaimerActionModuleProtocol {
       case .failure(let error):
         self.show(error: error)
       case .success:
-        self.onFinish?(self)
+        self.finish()
       }
     }
   }

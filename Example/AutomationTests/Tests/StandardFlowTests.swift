@@ -25,7 +25,7 @@ class StandardFlowTests: ShiftUITest {
     let loanPurpose = "Bills"
     let firstName = "User"
     let lastName = "Test"
-    let email = "test@shiftpayments.com"
+    let email = "test@aptopayments.com"
     let phoneNumber = "9366665555"
     let address = "1310 Fillmore St."
     let zipCode = "94115"

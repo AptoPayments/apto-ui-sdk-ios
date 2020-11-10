@@ -30,10 +30,14 @@
 		2C526ADB1DD5FE5D00537C86 /* BuildInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C526ACD1DD5FE5D00537C86 /* BuildInformation.swift */; };
 		2C526ADC1DD5FE5D00537C86 /* PreProcessorMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C526AD01DD5FE5D00537C86 /* PreProcessorMacros.m */; };
 		2C526ADD1DD5FE5D00537C86 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C526AD21DD5FE5D00537C86 /* MainViewController.swift */; };
+		2C61F4C32551DDA700A0707E /* ManageCardPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C61F4C02551DDA700A0707E /* ManageCardPresenterTest.swift */; };
+		2C61F4C42551DDA700A0707E /* ManageCardTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C61F4C12551DDA700A0707E /* ManageCardTestDoubles.swift */; };
+		2C61F4C52551DDA700A0707E /* ManageCardInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C61F4C22551DDA700A0707E /* ManageCardInteractorTest.swift */; };
 		2C8F9B8521DC1285000D650C /* TransactionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F9B8421DC1285000D650C /* TransactionTest.swift */; };
 		2C9357441F444DD300E95F40 /* XCTestCase+ProgrammerAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF426011E7FF47900ABAB94 /* XCTestCase+ProgrammerAssertions.swift */; };
 		2CA355BB1C5D5020000479DC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C22177A1C5CE33F00558F0F /* CoreLocation.framework */; };
 		2CBD0C6C1FB1D4B6004FE5F2 /* ApplicationSummaryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBD0C6B1FB1D4B6004FE5F2 /* ApplicationSummaryScreen.swift */; };
+		2CBD246E25543DA600691D1E /* ExpirationDateValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBD246D25543DA600691D1E /* ExpirationDateValidatorTest.swift */; };
 		2CCEE8CD202A129F00F7A628 /* DisclaimerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCEE8CC202A129F00F7A628 /* DisclaimerScreen.swift */; };
 		2CD2B87D1F45F40D005B85D0 /* LedgeUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2B87C1F45F40D005B85D0 /* LedgeUITestCase.swift */; };
 		2CD2B8841F4609EA005B85D0 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2B8831F4609EA005B85D0 /* LoginTests.swift */; };
@@ -66,6 +70,9 @@
 		33871199244EE37100823377 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33871198244EE37100823377 /* Configuration.swift */; };
 		3387119B244EE40300823377 /* ConfigurationResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3387119A244EE40300823377 /* ConfigurationResolver.swift */; };
 		3387119D244F347600823377 /* TestEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3387119C244F347600823377 /* TestEnvironment.swift */; };
+		338E36F424B887F30072C7CE /* CardInputViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338E36F324B887F30072C7CE /* CardInputViewTest.swift */; };
+		338E36F824B88C220072C7CE /* CardDetectorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338E36F724B88C220072C7CE /* CardDetectorTest.swift */; };
+		33BC263F24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BC263E24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift */; };
 		33F840CC246A930B00D9DCB8 /* DataPointFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F840CB246A930B00D9DCB8 /* DataPointFormatterTest.swift */; };
 		3C03E9072338F36C00C565F1 /* MonthlyStatementsListTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDF362267784FD59F03DB /* MonthlyStatementsListTestDoubles.swift */; };
 		3C05CD4C238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05CD4B238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift */; };
@@ -117,7 +124,6 @@
 		D99BD0540AF9361B8B0FEC00 /* CountrySelectorModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD9671686403020B9C112 /* CountrySelectorModuleTest.swift */; };
 		D99BD058DF3974DAFDD8063F /* VoIPTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD1D89CADC92C409A258E /* VoIPTestDoubles.swift */; };
 		D99BD060761F786F67492C76 /* IssueCardPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD340218337FFF291E14D /* IssueCardPresenterTest.swift */; };
-		D99BD081A219A7CB2656A6E0 /* ManageShiftCardTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDC9720C4867D6F3C2DF9 /* ManageShiftCardTestDoubles.swift */; };
 		D99BD09BF570ED3CE7A53606 /* IssueCardInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDCF7398ED5703351D598 /* IssueCardInteractorTest.swift */; };
 		D99BD0AE38A93FD6A99C6C96 /* VoIPModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD00B83C53D45044B1FA1 /* VoIPModuleTest.swift */; };
 		D99BD0C95CE9E838E24A3C30 /* WebBrowserTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDB8C13937EEAD8C14217 /* WebBrowserTestDoubles.swift */; };
@@ -152,7 +158,6 @@
 		D99BD40B54B9F02B27F45C37 /* NotificationGroupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD77551BFF53E5C5F5EBE /* NotificationGroupTest.swift */; };
 		D99BD4119BE5F49FB1D31A51 /* FullScreenDisclaimerInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD56190C5C4551B635532 /* FullScreenDisclaimerInteractorTest.swift */; };
 		D99BD439EEED95737B310293 /* MonthlyStatementsReportPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD3611DBD52D5666FDEF6 /* MonthlyStatementsReportPresenterTest.swift */; };
-		D99BD442A1EA03E07CF47611 /* ManageShiftCardInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDB329550D080F898DD71 /* ManageShiftCardInteractorTest.swift */; };
 		D99BD466641EDE6E07ABF939 /* ContentPresenterInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD5E15145A4AE8EB03459 /* ContentPresenterInteractorTest.swift */; };
 		D99BD4706AFF825E65A1784D /* ServerMaintenanceErrorTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD1C5C4E36F47B0A52BC5 /* ServerMaintenanceErrorTestDoubles.swift */; };
 		D99BD4A4D9B91A49FB0E498F /* UIModuleSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD8FBB7EC375FF455E37A /* UIModuleSpy.swift */; };
@@ -221,7 +226,6 @@
 		D99BDE1E2A95F86112A63746 /* ExternalOAuthPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD6B194BF7F5FD9BD6B87 /* ExternalOAuthPresenterTest.swift */; };
 		D99BDE2A95E69E64A6A6DC37 /* VoIPCallTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDA2B92AB1FAB3D1D7B1C /* VoIPCallTestDoubles.swift */; };
 		D99BDE4FF2BB737432F8C774 /* MonthlyStatementsReportInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDC8CE5CEED1B0674ACD6 /* MonthlyStatementsReportInteractorTest.swift */; };
-		D99BDE987A50FFA4277C6A69 /* ManageShiftCardPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD08F1BC1BA3779ECA526 /* ManageShiftCardPresenterTest.swift */; };
 		D99BDE9FFB16559DDC2A9CBD /* SetPinTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD0715668ED8618BD82EE /* SetPinTestDoubles.swift */; };
 		D99BDEDD6BCCD184AB185BDD /* WebBrowserModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD383C506D53A55B5167F /* WebBrowserModuleTest.swift */; };
 		D99BDEF95E697662D1BEE92F /* WaitListTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDB763CCFE2B6663B024C /* WaitListTestDoubles.swift */; };
@@ -310,10 +314,14 @@
 		2C526ACF1DD5FE5D00537C86 /* PreProcessorMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreProcessorMacros.h; sourceTree = "<group>"; };
 		2C526AD01DD5FE5D00537C86 /* PreProcessorMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreProcessorMacros.m; sourceTree = "<group>"; };
 		2C526AD21DD5FE5D00537C86 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		2C61F4C02551DDA700A0707E /* ManageCardPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCardPresenterTest.swift; sourceTree = "<group>"; };
+		2C61F4C12551DDA700A0707E /* ManageCardTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCardTestDoubles.swift; sourceTree = "<group>"; };
+		2C61F4C22551DDA700A0707E /* ManageCardInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCardInteractorTest.swift; sourceTree = "<group>"; };
 		2C8F9B8421DC1285000D650C /* TransactionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTest.swift; sourceTree = "<group>"; };
 		2CB71FB5205AAECB00DC072B /* ShiftSDK.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ShiftSDK.podspec; path = ../ShiftSDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2CB71FB9205AAFE800DC072B /* Pods_Link.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Link.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBD0C6B1FB1D4B6004FE5F2 /* ApplicationSummaryScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationSummaryScreen.swift; sourceTree = "<group>"; };
+		2CBD246D25543DA600691D1E /* ExpirationDateValidatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirationDateValidatorTest.swift; sourceTree = "<group>"; };
 		2CCEE8CC202A129F00F7A628 /* DisclaimerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerScreen.swift; sourceTree = "<group>"; };
 		2CD2B86E1F45E6BF005B85D0 /* AutomationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD2B8721F45E6C0005B85D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -353,6 +361,9 @@
 		33871198244EE37100823377 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		3387119A244EE40300823377 /* ConfigurationResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationResolver.swift; sourceTree = "<group>"; };
 		3387119C244F347600823377 /* TestEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnvironment.swift; sourceTree = "<group>"; };
+		338E36F324B887F30072C7CE /* CardInputViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInputViewTest.swift; sourceTree = "<group>"; };
+		338E36F724B88C220072C7CE /* CardDetectorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetectorTest.swift; sourceTree = "<group>"; };
+		33BC263E24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSourcesStorageTestDoubles.swift; sourceTree = "<group>"; };
 		33F840CB246A930B00D9DCB8 /* DataPointFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPointFormatterTest.swift; sourceTree = "<group>"; };
 		3C05CD4B238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasscodeTestDoubles.swift; sourceTree = "<group>"; };
 		3C05CD4F238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasscodeInteractorTest.swift; sourceTree = "<group>"; };
@@ -419,7 +430,6 @@
 		D99BD011C1A46F756FF8093B /* FullScreenDisclaimerModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenDisclaimerModuleTest.swift; sourceTree = "<group>"; };
 		D99BD042115A0913247DF648 /* IssueCardModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCardModuleTest.swift; sourceTree = "<group>"; };
 		D99BD0715668ED8618BD82EE /* SetPinTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinTestDoubles.swift; sourceTree = "<group>"; };
-		D99BD08F1BC1BA3779ECA526 /* ManageShiftCardPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageShiftCardPresenterTest.swift; sourceTree = "<group>"; };
 		D99BD0BD4D675A0EBFD070EB /* CardStyleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStyleTest.swift; sourceTree = "<group>"; };
 		D99BD0DA5FA928609BBAC94F /* TransactionListPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListPresenterTest.swift; sourceTree = "<group>"; };
 		D99BD0EA8C02AA98A3D2F1DE /* TransactionListModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListModuleTest.swift; sourceTree = "<group>"; };
@@ -504,7 +514,6 @@
 		D99BDA8B88C9D5375834E9D4 /* ViewControllerSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSpy.swift; sourceTree = "<group>"; };
 		D99BDAD6274ACA8C47D46970 /* ServerMaintenanceErrorModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerMaintenanceErrorModuleTest.swift; sourceTree = "<group>"; };
 		D99BDAE61D1F3A573D3CD7B7 /* CardWaitListInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardWaitListInteractorTest.swift; sourceTree = "<group>"; };
-		D99BDB329550D080F898DD71 /* ManageShiftCardInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageShiftCardInteractorTest.swift; sourceTree = "<group>"; };
 		D99BDB763CCFE2B6663B024C /* WaitListTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitListTestDoubles.swift; sourceTree = "<group>"; };
 		D99BDB8C13937EEAD8C14217 /* WebBrowserTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebBrowserTestDoubles.swift; sourceTree = "<group>"; };
 		D99BDBE15959AC21F856D8CD /* MonthlyStatementReportTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyStatementReportTest.swift; sourceTree = "<group>"; };
@@ -512,7 +521,6 @@
 		D99BDC0B3A3D17A6E28B3F3D /* AuthModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModuleTest.swift; sourceTree = "<group>"; };
 		D99BDC2FDC2845B7677B51D6 /* NetworkLocatorFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLocatorFake.swift; sourceTree = "<group>"; };
 		D99BDC8CE5CEED1B0674ACD6 /* MonthlyStatementsReportInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyStatementsReportInteractorTest.swift; sourceTree = "<group>"; };
-		D99BDC9720C4867D6F3C2DF9 /* ManageShiftCardTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageShiftCardTestDoubles.swift; sourceTree = "<group>"; };
 		D99BDCC0B321CDE36B8C93E5 /* CardSettingsTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSettingsTestDoubles.swift; sourceTree = "<group>"; };
 		D99BDCC5BAA1213D5F668BE3 /* AptoPlatformTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AptoPlatformTest.swift; sourceTree = "<group>"; };
 		D99BDCE6644036FFBFDFD9FF /* ContentPresenterModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPresenterModuleTest.swift; sourceTree = "<group>"; };
@@ -586,6 +594,7 @@
 		2C0CEEF71E6EFD1D0095DA3A /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				338E36F524B88C030072C7CE /* Features */,
 				2CF425F91E7FF1BB00ABAB94 /* ledgecore */,
 				2C0CEEF81E6EFD1D0095DA3A /* LinkTests.swift */,
 				2C0CEEFA1E6EFD1D0095DA3A /* Info.plist */,
@@ -659,6 +668,24 @@
 				2C526AD21DD5FE5D00537C86 /* MainViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2C61F4BE2551DDA700A0707E /* ManageCardModule */ = {
+			isa = PBXGroup;
+			children = (
+				2C61F4BF2551DDA700A0707E /* ManageCard */,
+			);
+			path = ManageCardModule;
+			sourceTree = "<group>";
+		};
+		2C61F4BF2551DDA700A0707E /* ManageCard */ = {
+			isa = PBXGroup;
+			children = (
+				2C61F4C02551DDA700A0707E /* ManageCardPresenterTest.swift */,
+				2C61F4C12551DDA700A0707E /* ManageCardTestDoubles.swift */,
+				2C61F4C22551DDA700A0707E /* ManageCardInteractorTest.swift */,
+			);
+			path = ManageCard;
 			sourceTree = "<group>";
 		};
 		2C8F9B8321DC1285000D650C /* Model */ = {
@@ -783,6 +810,7 @@
 		334E132D2464606100BADC89 /* SnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
+				338E36F124B887D30072C7CE /* Features */,
 				334E13392464613700BADC89 /* DisplayCardModule */,
 				334E133D2464629C00BADC89 /* Resources */,
 				334E13302464606100BADC89 /* Info.plist */,
@@ -830,6 +858,39 @@
 				3387119A244EE40300823377 /* ConfigurationResolver.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		338E36F124B887D30072C7CE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				338E36F224B887DC0072C7CE /* Add Card */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		338E36F224B887DC0072C7CE /* Add Card */ = {
+			isa = PBXGroup;
+			children = (
+				338E36F324B887F30072C7CE /* CardInputViewTest.swift */,
+			);
+			path = "Add Card";
+			sourceTree = "<group>";
+		};
+		338E36F524B88C030072C7CE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				338E36F624B88C090072C7CE /* Payments */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		338E36F624B88C090072C7CE /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				338E36F724B88C220072C7CE /* CardDetectorTest.swift */,
+				2CBD246D25543DA600691D1E /* ExpirationDateValidatorTest.swift */,
+			);
+			path = Payments;
 			sourceTree = "<group>";
 		};
 		33F840CA246A92F700D9DCB8 /* Formatter */ = {
@@ -1140,16 +1201,6 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		D99BD40B8DD70EDE35227E35 /* ShiftCard */ = {
-			isa = PBXGroup;
-			children = (
-				D99BDC9720C4867D6F3C2DF9 /* ManageShiftCardTestDoubles.swift */,
-				D99BD08F1BC1BA3779ECA526 /* ManageShiftCardPresenterTest.swift */,
-				D99BDB329550D080F898DD71 /* ManageShiftCardInteractorTest.swift */,
-			);
-			path = ShiftCard;
-			sourceTree = "<group>";
-		};
 		D99BD448EB7241FEE7D26E1F /* Transport */ = {
 			isa = PBXGroup;
 			children = (
@@ -1414,14 +1465,6 @@
 			path = ContentPresenter;
 			sourceTree = "<group>";
 		};
-		D99BDC217A8E09D10E0FE35F /* ManageShiftCardModule */ = {
-			isa = PBXGroup;
-			children = (
-				D99BD40B8DD70EDE35227E35 /* ShiftCard */,
-			);
-			path = ManageShiftCardModule;
-			sourceTree = "<group>";
-		};
 		D99BDCA9ED15BB20C3BD366B /* ShowDisclaimerActionModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -1471,10 +1514,10 @@
 		D99BDE7810FD4CC74825371B /* shiftcardkit */ = {
 			isa = PBXGroup;
 			children = (
+				2C61F4BE2551DDA700A0707E /* ManageCardModule */,
 				3C65E0B8217E1083000207B1 /* PhysicalCardActivationSucceed */,
 				D99BDCA9ED15BB20C3BD366B /* ShowDisclaimerActionModule */,
 				D99BD0CB375DFF6344BECB10 /* IssueCardModule */,
-				D99BDC217A8E09D10E0FE35F /* ManageShiftCardModule */,
 				D99BDB13D84D77B629D014BB /* CardMonthlyStats */,
 				D99BDFC6D1261BC749829121 /* WaitListModule */,
 				D99BD12889996B39EB4619D4 /* NotificationPreferences */,
@@ -1519,6 +1562,7 @@
 				3CF9F2E5230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift */,
 				3CF9F2E7230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift */,
 				3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */,
+				33BC263E24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift */,
 				3C58BF36242A6A9300175697 /* UserTokenStorageTest.swift */,
 			);
 			path = Storages;
@@ -1641,7 +1685,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					2C0CEEF51E6EFD1D0095DA3A = {
@@ -1827,7 +1871,9 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityLogger/AlamofireNetworkActivityLogger.framework",
 				"${BUILT_PRODUCTS_DIR}/AptoObjCSDK/AptoObjCSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/AptoPCI/AptoPCISDK.framework",
 				"${BUILT_PRODUCTS_DIR}/AptoSDK/AptoSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/AptoUISDK/AptoUISDK.framework",
 				"${BUILT_PRODUCTS_DIR}/Bond/Bond.framework",
@@ -1852,7 +1898,9 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityLogger.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AptoObjCSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AptoPCISDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AptoSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AptoUISDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bond.framework",
@@ -1980,10 +2028,13 @@
 				D99BD249397C573CA4FD2382 /* InteractorLocatorFake.swift in Sources */,
 				D99BD87CD9142422A2ED7FA4 /* ViewLocatorFake.swift in Sources */,
 				D99BD4119BE5F49FB1D31A51 /* FullScreenDisclaimerInteractorTest.swift in Sources */,
+				338E36F824B88C220072C7CE /* CardDetectorTest.swift in Sources */,
 				3C05CD54238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift in Sources */,
 				3C05CD5A238D85F600AA7CC9 /* VerifyPasscodeModuleTest.swift in Sources */,
+				33BC263F24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift in Sources */,
 				3CEBF04E215A908000B077BD /* DataConfirmationPresenterTest.swift in Sources */,
 				D99BD19670282880C2D4670B /* FullScreenDisclaimerTestDoubles.swift in Sources */,
+				2C61F4C42551DDA700A0707E /* ManageCardTestDoubles.swift in Sources */,
 				D99BD62AFD7D84FCA5EAB0ED /* FullScreenDisclaimerPresenterTest.swift in Sources */,
 				3C65E0BA217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift in Sources */,
 				D99BD99B174D90E4B8C97F85 /* FullScreenDisclaimerModuleTest.swift in Sources */,
@@ -2030,6 +2081,7 @@
 				9A75992422410BFB00E87E72 /* AnalyticsManagerSpy.swift in Sources */,
 				D99BD6F54655FC463A608CDA /* ContentPresenterPresenterTest.swift in Sources */,
 				3C1ECAB122D8E33400DBC484 /* TransactionDeclineCodeTest.swift in Sources */,
+				2C61F4C32551DDA700A0707E /* ManageCardPresenterTest.swift in Sources */,
 				D99BDF698B2C2D89446637E1 /* ContentPresenterModuleTest.swift in Sources */,
 				3CF9F2E4230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift in Sources */,
 				D99BD88CD4E3FD4D66193BA8 /* ActionConfirmerFake.swift in Sources */,
@@ -2044,9 +2096,6 @@
 				D99BDEDD6BCCD184AB185BDD /* WebBrowserModuleTest.swift in Sources */,
 				D99BD26FF1FD4D34B94FDA67 /* SelectBalanceStoreTestDoubles.swift in Sources */,
 				D99BDF76F660A45FCC1CFD3A /* ShowDisclaimerActionTestDoubles.swift in Sources */,
-				D99BD081A219A7CB2656A6E0 /* ManageShiftCardTestDoubles.swift in Sources */,
-				D99BDE987A50FFA4277C6A69 /* ManageShiftCardPresenterTest.swift in Sources */,
-				D99BD442A1EA03E07CF47611 /* ManageShiftCardInteractorTest.swift in Sources */,
 				D99BD707B6C9DAE8DACEE39B /* CardMonthlyStatsTestDoubles.swift in Sources */,
 				D99BD68B9F302FB06D638D1F /* CardMonthlyStatsPresenterTest.swift in Sources */,
 				D99BDBEDD079F7A2F4E61F1C /* CardMonthlyStatsInteractorTest.swift in Sources */,
@@ -2095,6 +2144,7 @@
 				D99BD65D17206BD083AAAB41 /* SetPinPresenterTest.swift in Sources */,
 				D99BDAF4F0A593DEEF908090 /* SetPinModuleTest.swift in Sources */,
 				D99BD058DF3974DAFDD8063F /* VoIPTestDoubles.swift in Sources */,
+				2C61F4C52551DDA700A0707E /* ManageCardInteractorTest.swift in Sources */,
 				D99BD5DBCBBD701D3AADDC49 /* VoIPInteractorTest.swift in Sources */,
 				D99BD6F7C750B8A7DEE09ABD /* VoIPPresenterTest.swift in Sources */,
 				D99BDE2A95E69E64A6A6DC37 /* VoIPCallTestDoubles.swift in Sources */,
@@ -2105,6 +2155,7 @@
 				D99BD8ABD809C4D124541F0C /* UserPreferencesStorageTest.swift in Sources */,
 				3C96EBA4238C65F500B9C238 /* AuthenticationManagerFake.swift in Sources */,
 				D99BD10C4AF529884446BCD4 /* InMemoryUserDefaultsStorage.swift in Sources */,
+				2CBD246E25543DA600691D1E /* ExpirationDateValidatorTest.swift in Sources */,
 				D99BD9977D9A58EDE426D10D /* CardSettingsInteractorTest.swift in Sources */,
 				3C05CD4C238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift in Sources */,
 				3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */,
@@ -2196,6 +2247,7 @@
 				334E13432464644300BADC89 /* Bundle+Snapshot.swift in Sources */,
 				334E133B2464614D00BADC89 /* CreditCardViewTest.swift in Sources */,
 				334E133C246461D500BADC89 /* ModelDataProvider.swift in Sources */,
+				338E36F424B887F30072C7CE /* CardInputViewTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2272,7 +2324,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2319,7 +2371,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LinkTests;
@@ -2365,7 +2417,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LinkTests;
@@ -2411,7 +2463,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LinkTests;
@@ -2457,7 +2509,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LinkTests;
@@ -2484,12 +2536,13 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2531,6 +2584,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2557,7 +2611,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "";
@@ -2580,12 +2634,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2628,6 +2683,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2654,7 +2710,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "";
@@ -2677,12 +2733,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2725,6 +2782,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2751,7 +2809,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "";
@@ -2774,12 +2832,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2821,6 +2880,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2847,7 +2907,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "";
@@ -2870,12 +2930,13 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2939,7 +3000,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = AutomationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2992,7 +3053,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = AutomationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LedgeAutomationTests;
@@ -3044,7 +3105,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = AutomationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LedgeAutomationTests;
@@ -3096,7 +3157,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = AutomationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LedgeAutomationTests;
@@ -3148,7 +3209,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = AutomationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ledge.link.LedgeAutomationTests;
@@ -3512,6 +3573,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3538,7 +3600,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "";

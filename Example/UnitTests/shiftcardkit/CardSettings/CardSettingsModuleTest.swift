@@ -166,7 +166,7 @@ class CardSettingsModuleTest: XCTestCase {
 
   func testShowCardInfoNotifyDelegate() {
     // When
-    sut.showCardInfo {}
+    sut.showCardInfo()
 
     // Then
     XCTAssertTrue(delegate.showCardInfoCalled)
@@ -178,25 +178,6 @@ class CardSettingsModuleTest: XCTestCase {
 
     // Then
     XCTAssertTrue(delegate.hideCardInfoCalled)
-  }
-
-  func testIsCardInfoVisibleNotifyDelegate() {
-    // When
-    _ = sut.isCardInfoVisible()
-
-    // Then
-    XCTAssertTrue(delegate.isCardInfoVisibleCalled)
-  }
-
-  func testIsCardInfoVisibleDelegateNotSetReturnFalse() {
-    // Given
-    sut.delegate = nil
-
-    // When
-    let isCardInfoVisible = sut.isCardInfoVisible()
-
-    // Then
-    XCTAssertFalse(isCardInfoVisible)
   }
 
   func testCardStateChangedNotifyDelegate() {

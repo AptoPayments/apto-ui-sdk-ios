@@ -104,7 +104,7 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardInteractor(card: Card) -> ManageShiftCardInteractorProtocol {
+  func manageCardInteractor(card: Card) -> ManageCardInteractorProtocol {
     Swift.fatalError("manageCardInteractor(card:) has not been implemented")
   }
 

@@ -38,7 +38,7 @@ class ContentPresenterPresenterTest: XCTestCase {
 
   func testLinkTappedCallRouterToShowURL() {
     // Given
-    let url = URL(string: "https://shiftpayments.com")! // swiftlint:disable:this force_unwrapping
+    let url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this force_unwrapping
 
     // When
     sut.linkTapped(url)

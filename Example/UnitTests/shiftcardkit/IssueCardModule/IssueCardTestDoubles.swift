@@ -23,6 +23,44 @@ final class CardAdditionalFieldsSpy: CardAdditionalFieldsProtocol {
   }
 }
 
+final class CardMetadataSpy: CardMetadataProtocol {
+
+  private(set) public var setCalled = false
+  func set(_ metadata: String) {
+    setCalled = true
+  }
+
+  private(set) public var getCalled = false
+  func get() -> String? {
+    getCalled = true
+    return nil
+  }
+
+  private(set) public var clearCalled = false
+  func clear() {
+    clearCalled = true
+  }
+}
+
+final class UserMetadataSpy: UserMetadataProtocol {
+
+  private(set) public var setCalled = false
+  func set(_ metadata: String) {
+    setCalled = true
+  }
+
+  private(set) public var getCalled = false
+  func get() -> String? {
+    getCalled = true
+    return nil
+  }
+
+  private(set) public var clearCalled = false
+  func clear() {
+    clearCalled = true
+  }
+}
+
 class IssueCardPresenterSpy: IssueCardPresenterProtocol {
   let viewModel = IssueCardViewModel(state: .loading, errorAsset: nil)
   var analyticsManager: AnalyticsServiceProtocol?

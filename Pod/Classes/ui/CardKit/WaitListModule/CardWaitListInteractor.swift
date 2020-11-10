@@ -17,7 +17,7 @@ class CardWaitListInteractor: CardWaitListInteractorProtocol {
   }
 
   func reloadCard(completion: @escaping Result<Card, NSError>.Callback) {
-    platform.fetchFinancialAccount(card.accountId, forceRefresh: true) { result in
+    platform.fetchCard(card.accountId, forceRefresh: true) { result in
       switch result {
       case .failure(let error):
         completion(.failure(error))

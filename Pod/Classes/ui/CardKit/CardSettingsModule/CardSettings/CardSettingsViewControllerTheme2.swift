@@ -17,7 +17,6 @@ class CardSettingsViewControllerTheme2: ShiftViewController, CardSettingsViewPro
   private let titleContainerView = UIView()
   private let formView = MultiStepForm()
   private var lockCardRow: FormRowSwitchTitleSubtitleView?
-  private var showCardInfoRow: FormRowSwitchTitleSubtitleView?
 
   init(uiConfiguration: UIConfig, presenter: CardSettingsPresenterProtocol) {
     self.presenter = presenter
@@ -42,10 +41,6 @@ class CardSettingsViewControllerTheme2: ShiftViewController, CardSettingsViewPro
 
   private func set(lockedSwitch: Bool) {
     self.lockCardRow?.switcher.isOn = lockedSwitch
-  }
-
-  private func set(showCardInfoSwitch: Bool) {
-    self.showCardInfoRow?.switcher.isOn = showCardInfoSwitch
   }
 
   func showClosedCardErrorAlert(title: String) {
@@ -143,6 +138,7 @@ private extension CardSettingsViewControllerTheme2 {
         self.createChangePinRow(showButton: showChangePin),
         self.createGetPinRow(showButton: showGetPin),
         self.setUpShowCardInfoRow(),
+        self.setUpAddFundsRow(),
         self.setUpLockCardRow()
       ].compactMap { return $0 }
       let transactionsRows = [
@@ -179,12 +175,6 @@ private extension CardSettingsViewControllerTheme2 {
     viewModel.locked.observeNext { [unowned self] locked in
       if let locked = locked {
         self.set(lockedSwitch: locked)
-      }
-    }.dispose(in: disposeBag)
-
-    viewModel.showCardInfo.observeNext { [unowned self] showInfo in
-      if let showInfo = showInfo {
-        self.set(showCardInfoSwitch: showInfo)
       }
     }.dispose(in: disposeBag)
   }
@@ -347,20 +337,33 @@ private extension CardSettingsViewControllerTheme2 {
     return row
   }
 
-  func setUpShowCardInfoRow() -> FormRowSwitchTitleSubtitleView? {
-    let title = "card_settings.settings.card_details.title".podLocalized()
-    let subtitle = "card_settings.settings.card_details.description".podLocalized()
-    showCardInfoRow = FormBuilder.titleSubtitleSwitchRowWith(title: title,
-                                                             subtitle: subtitle,
-                                                             height: 72,
-                                                             leftMargin: 16,
-                                                             uiConfig: uiConfiguration) { [unowned self] switcher in
-      self.presenter.showCardInfoChanged(switcher: switcher)
+  
+  func setUpAddFundsRow() -> FormRowView? {
+    guard presenter.viewModel.showAddFundsFeature.value else {
+      return nil
     }
-    if let showInfo = presenter.viewModel.showCardInfo.value {
-      set(showCardInfoSwitch: showInfo)
+    
+    let addFundsRow = FormBuilder.linkRowWith(
+      title: "card_settings.settings.card_add_funds.title".podLocalized(),
+      subtitle: "card_settings.settings.card_add_funds.description".podLocalized(),
+      leftIcon: nil,
+      height: 72,
+      uiConfig: uiConfiguration) { [weak self] in
+        self?.presenter.didTapOnLoadFunds()
     }
-    showCardInfoRow?.showSplitter = true
+    return addFundsRow
+  }
+
+  func setUpShowCardInfoRow() -> FormRowView? {
+    let showCardInfoRow = FormBuilder.linkRowWith(
+      title: "card_settings.settings.card_details.title".podLocalized(),
+      subtitle: "card_settings.settings.card_details.description".podLocalized(),
+      leftIcon: nil,
+      height: 72,
+      uiConfig: uiConfiguration) { [weak self] in
+        self?.presenter.didTapOnShowCardInfo()
+    }
     return showCardInfoRow
   }
+
 }

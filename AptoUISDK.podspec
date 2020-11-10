@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "AptoUISDK"
-  s.version          = "2.4.5"
+  s.version          = "2.5.0"
   s.summary          = "The Apto UI platform iOS SDK."
   s.description      = <<-DESC
                         Apto iOS UI SDK provides a UI flow that allows to easily integrate the platform in your app.
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/AptoPayments/apto-ui-sdk-ios.git"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.authors          = { "Ivan Oliver" => "ivan@aptopayments.com", "Takeichi Kanzaki" => "takeichi@aptopayments.com" }
-  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.4.5" }
+  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.5.0" }
 
   s.platform = :ios
   s.ios.deployment_target = '10.0'
@@ -29,12 +29,13 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'UIKit', 'CoreLocation', 'Accelerate', 'AudioToolbox', 'AVFoundation', 'CoreGraphics', 'CoreMedia', 'CoreVideo', 'Foundation', 'MobileCoreServices', 'OpenGLES', 'QuartzCore', 'Security', 'LocalAuthentication', 'CallKit'
   s.dependency 'AptoSDK'
+  s.dependency 'AptoPCI', '2.0.0'
   s.dependency 'SnapKit', '~> 5.0'
   s.dependency 'Bond', '~> 7.6'
   s.dependency 'GoogleKit', '~> 0.3'
   s.dependency 'PhoneNumberKit', '~> 3.2'
   s.dependency 'TTTAttributedLabel', '~> 2.0'
-  s.dependency 'TrustKit', '~> 1.6'
+  s.dependency 'TrustKit', '~> 1.6.0'
   s.dependency 'Down', '~> 0.8.0'
   s.dependency 'PullToRefreshKit', '~> 0.8'
   s.dependency 'TwilioVoice', '~> 3.0'

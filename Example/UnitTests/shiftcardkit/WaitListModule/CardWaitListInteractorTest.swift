@@ -27,13 +27,13 @@ class CardWaitListInteractorTest: XCTestCase {
     sut.reloadCard { _ in }
 
     // Then
-    XCTAssertTrue(platform.fetchFinancialAccountCalled)
+    XCTAssertTrue(platform.fetchCardCalled)
   }
 
   func testApplicationStatusFailCallbackFailure() {
     // Given
     var returnedResult: Result<Card, NSError>?
-    platform.nextFetchFinancialAccountResult = .failure(BackendError(code: .other))
+    platform.nextFetchCardResult = .failure(BackendError(code: .other))
 
     // When
     sut.reloadCard { result in
@@ -47,7 +47,7 @@ class CardWaitListInteractorTest: XCTestCase {
   func testApplicationStatusSucceedCallbackSuccess() {
     // Given
     var returnedResult: Result<Card, NSError>?
-    platform.nextFetchFinancialAccountResult = .success(card)
+    platform.nextFetchCardResult = .success(card)
 
     // When
     sut.reloadCard { result in

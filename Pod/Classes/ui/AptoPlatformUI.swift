@@ -43,47 +43,145 @@ extension AptoPlatform {
       _uiDelegate = newValue
     }
   }
- 
-  public func startCardFlow(from: UIViewController, mode: ShiftCardModuleMode, initialUserData: DataPointList? = nil,
-                            options: CardOptions? = nil, googleMapsApiKey: String? = nil,
+
+  /// Launch the full Apto UI SDK.
+  /// - Parameter from: the view controller from which the Apto UI SDK will be launched.
+  /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
+  /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
+  /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
+  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
+  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
+  public func startCardFlow(from: UIViewController,
+                            mode: AptoUISDKMode,
+                            options: CardOptions? = nil,
+                            initialUserData: DataPointList? = nil,
+                            userMetadata: String? = nil,
+                            cardMetadata: String? = nil,
+                            googleMapsApiKey: String? = nil,
                             completion: @escaping (Result<UIModule, NSError>.Callback)) {
-    _googleMapsApiKey = googleMapsApiKey
-    setUpUINotificationObservers()
-    setCardOptions(options)
-    registerCustomFonts()
-    fetchContextConfiguration { [weak self] result in
-      guard let self = self else { return }
+    let launchOptions = CardModuleLaunchOptions(mode: mode,
+                                                initialUserData: initialUserData,
+                                                userMetadata: userMetadata,
+                                                cardMetadata: cardMetadata,
+                                                googleMapsApiKey: googleMapsApiKey,
+                                                cardOptions: options,
+                                                initialFlow: .fullSDK)
+    launchCardFlow(from: from,
+                   launchOptions: launchOptions,
+                   completion: completion)
+  }
+
+  /// Launch the full Apto UI SDK.
+  /// - Parameter from: the view controller from which the Apto UI SDK will be launched.
+  /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
+  /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
+  /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
+  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
+  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
+  @objc public func startCardFlow(from: UIViewController,
+                                  mode: AptoUISDKMode,
+                                  options: CardOptions?,
+                                  initialUserData: DataPointList?,
+                                  userMetadata: String? = nil,
+                                  cardMetadata: String? = nil,
+                                  googleMapsApiKey: String?,
+                                  completion: @escaping (_ module: UIModule?, _ error: NSError?) -> Void) {
+    startCardFlow(from: from, mode: mode, options: options, initialUserData: initialUserData,
+                  userMetadata: userMetadata, cardMetadata: cardMetadata, googleMapsApiKey: googleMapsApiKey) { result in
       switch result {
       case .failure(let error):
-        completion(.failure(error))
-      case .success(let contextConfiguration):
-        let shiftCardModule = ShiftCardModule(mode: mode, initialUserData: initialUserData, options: options)
-        self.initialModule = shiftCardModule
-        shiftCardModule.onClose = { [weak self, unowned from] module in
-          from.dismiss(animated: true) {}
-          self?.initialModule = nil
-        }
-        let uiConfig = UIConfig(projectConfiguration: contextConfiguration.projectConfiguration,
-                                fontCustomizationOptions: options?.fontCustomizationOptions)
-        shiftCardModule.serviceLocator.uiConfig = uiConfig
-        from.present(module: shiftCardModule, animated: true, leftButtonMode: .close, uiConfig: uiConfig) { result in
-          switch result {
-          case .failure(let error):
-            completion(.failure(error))
-          case .success:
-            completion(.success(shiftCardModule))
-          }
-        }
+        completion(nil, error)
+      case .success(let module):
+        completion(module, nil)
       }
     }
   }
 
+  /// Launch the Card issuance flow.
+  /// - Parameter from: the view controller from which the Apto UI SDK will be launched.
+  /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
+  /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
+  /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
+  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
+  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
+  public func startNewCardApplicationFlow(from: UIViewController,
+                                          mode: AptoUISDKMode,
+                                          options: CardOptions? = nil,
+                                          initialUserData: DataPointList? = nil,
+                                          userMetadata: String? = nil,
+                                          cardMetadata: String? = nil,
+                                          googleMapsApiKey: String? = nil,
+                                          completion: @escaping (Result<UIModule, NSError>.Callback)) {
+    let launchOptions = CardModuleLaunchOptions(mode: mode,
+                                                initialUserData: initialUserData,
+                                                userMetadata: userMetadata,
+                                                cardMetadata: cardMetadata,
+                                                googleMapsApiKey: googleMapsApiKey,
+                                                cardOptions: options,
+                                                initialFlow: .newCardApplication)
+    launchCardFlow(from: from,
+                   launchOptions: launchOptions,
+                   completion: completion)
+  }
+
+  /// Launch the Card issuance flow.
+  /// - Parameter from: the view controller from which the Apto UI SDK will be launched.
+  /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
+  /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
+  /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
+  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
+  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
+  @objc public func startNewCardApplicationFlow(from: UIViewController,
+                                                mode: AptoUISDKMode,
+                                                options: CardOptions?,
+                                                initialUserData: DataPointList?,
+                                                userMetadata: String? = nil,
+                                                cardMetadata: String? = nil,
+                                                googleMapsApiKey: String?,
+                                                completion: @escaping (_ module: UIModule?, _ error: NSError?) -> Void) {
+    startNewCardApplicationFlow(from: from, mode: mode, options: options, initialUserData: initialUserData,
+                                userMetadata: userMetadata, cardMetadata: cardMetadata,
+                                googleMapsApiKey: googleMapsApiKey) { result in
+      switch result {
+      case .failure(let error):
+        completion(nil, error)
+      case .success(let module):
+        completion(module, nil)
+      }
+    }
+  }
+
+  public func startManageCardFlow(from: UIViewController,
+                                  cardId: String,
+                                  mode: AptoUISDKMode,
+                                  options: CardOptions? = nil,
+                                  googleMapsApiKey: String? = nil,
+                                  completion: @escaping (Result<UIModule, NSError>.Callback)) {
+    let launchOptions = CardModuleLaunchOptions(mode: mode,
+                                                initialUserData: nil,
+                                                userMetadata: nil,
+                                                cardMetadata: nil,
+                                                googleMapsApiKey: googleMapsApiKey,
+                                                cardOptions: options,
+                                                initialFlow: .manageCard(cardId: cardId))
+    launchCardFlow(from: from,
+                   launchOptions: launchOptions,
+                   completion: completion)
+  }
+
   // swiftlint:disable:next function_parameter_count
-  @objc public func startCardFlow(from: UIViewController, mode: ShiftCardModuleMode,
-                                  initialUserData: DataPointList?, options: CardOptions?, googleMapsApiKey: String?,
-                                  completion: @escaping (_ module: UIModule?, _ error: NSError?) -> Void) {
-    startCardFlow(from: from, mode: mode, initialUserData: initialUserData, options: options,
-                  googleMapsApiKey: googleMapsApiKey) { result in
+  @objc public func startManageCardFlow(from: UIViewController,
+                                        cardId: String,
+                                        mode: AptoUISDKMode,
+                                        options: CardOptions?,
+                                        googleMapsApiKey: String?,
+                                        completion: @escaping (_ module: UIModule?, _ error: NSError?) -> Void) {
+    startManageCardFlow(from: from, cardId: cardId, mode: mode, options: options,
+                        googleMapsApiKey: googleMapsApiKey) { result in
       switch result {
       case .failure(let error):
         completion(nil, error)
@@ -93,8 +191,7 @@ extension AptoPlatform {
     }
   }
   
-  /// Set extra metadata parameters when issuing a card
-  /// - Parameter fields: extra metadata fields
+  @available(*, deprecated, message: "Use the cardMetadata parameter when launching the SDK.")
   public func setCardIssueAdditional(fields: [String: AnyObject]) {
     serviceLocator.systemServicesLocator.cardAdditionalFields().set(fields)
   }
@@ -164,9 +261,51 @@ extension AptoPlatform {
     UIApplication.topViewController()?.showServerMaintenanceError()
   }
 
+  // MARK: - Launch Card Flow
+
+  private func launchCardFlow(from: UIViewController,
+                              launchOptions: CardModuleLaunchOptions,
+                              completion: @escaping (Result<UIModule, NSError>.Callback)) {
+    _googleMapsApiKey = launchOptions.googleMapsApiKey
+    setUpUINotificationObservers()
+    setCardOptions(launchOptions.cardOptions)
+    if let userMetadata = launchOptions.userMetadata {
+      serviceLocator.systemServicesLocator.userMetadata().set(userMetadata)
+    }
+    if let cardMetadata = launchOptions.cardMetadata {
+      serviceLocator.systemServicesLocator.cardMetadata().set(cardMetadata)
+    }
+    registerCustomFonts()
+    fetchContextConfiguration { [weak self] result in
+      guard let self = self else { return }
+      switch result {
+      case .failure(let error):
+        completion(.failure(error))
+      case .success(let contextConfiguration):
+        let cardModule = CardModule(launchOptions: launchOptions)
+        self.initialModule = cardModule
+        cardModule.onClose = { [weak self, unowned from] module in
+          from.dismiss(animated: true) {}
+          self?.initialModule = nil
+        }
+        let uiConfig = UIConfig(projectConfiguration: contextConfiguration.projectConfiguration,
+                                fontCustomizationOptions: launchOptions.cardOptions?.fontCustomizationOptions)
+        cardModule.serviceLocator.uiConfig = uiConfig
+        from.present(module: cardModule, animated: true, leftButtonMode: .close, uiConfig: uiConfig) { result in
+          switch result {
+          case .failure(let error):
+            completion(.failure(error))
+          case .success:
+            completion(.success(cardModule))
+          }
+        }
+      }
+    }
+  }
+
   // MARK: - Initialize fonts
 
-  func registerCustomFonts(for bundle: Bundle = PodBundle.bundle()) {
+  private func registerCustomFonts(for bundle: Bundle = PodBundle.bundle()) {
     queue.sync {
       guard !fontRegistered else { return }
       fontRegistered = true

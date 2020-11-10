@@ -10,6 +10,7 @@ import UIKit
 import AptoSDK
 import UserNotifications
 import Branch
+import AlamofireNetworkActivityLogger
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -34,8 +35,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
       AptoPlatform.defaultManager().initializePushNotifications()
       AptoPlatform.defaultManager().handle(launchOptions:launchOptions)
+    
     }
-
+    #if DEBUG
+        NetworkActivityLogger.shared.level = .debug
+        NetworkActivityLogger.shared.startLogging()
+    #endif
+    
     return true
   }
 

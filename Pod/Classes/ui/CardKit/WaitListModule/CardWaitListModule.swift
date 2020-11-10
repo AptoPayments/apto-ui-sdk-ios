@@ -34,7 +34,7 @@ class CardWaitListModule: UIModule, CardWaitListModuleProtocol {
   }
 
   func cardStatusChanged() {
-    onFinish?(self)
+    finish()
   }
 
   private func buildViewController(cardProduct: CardProduct) -> UIViewController {

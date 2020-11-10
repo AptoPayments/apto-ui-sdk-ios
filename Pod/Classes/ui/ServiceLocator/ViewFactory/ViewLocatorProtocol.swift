@@ -20,7 +20,7 @@ protocol ViewLocatorProtocol {
   func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController
 
   // MARK: - Auth
-  func authView(uiConfig: UIConfig, mode: ShiftCardModuleMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol
+  func authView(uiConfig: UIConfig, mode: AptoUISDKMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol
   func pinVerificationView(presenter: PINVerificationPresenter) -> PINVerificationViewControllerProtocol
   func verifyBirthDateView(presenter: VerifyBirthDateEventHandler) -> VerifyBirthDateViewControllerProtocol
   func externalOAuthView(uiConfiguration: UIConfig,
@@ -46,8 +46,7 @@ protocol ViewLocatorProtocol {
                       eventHandler: WebBrowserEventHandlerProtocol) -> WebBrowserViewControllerProtocol
 
   // MARK: - Manage card
-  func manageCardView(mode: ShiftCardModuleMode,
-                      presenter: ManageShiftCardEventHandler) -> ManageShiftCardViewControllerProtocol
+  func manageCardView(mode: AptoUISDKMode, presenter: ManageCardEventHandler) -> ManageCardViewControllerProtocol
   func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> ShiftViewController
   func cardSettingsView(presenter: CardSettingsPresenterProtocol) -> CardSettingsViewControllerProtocol
   func kycView(presenter: KYCPresenterProtocol) -> KYCViewControllerProtocol

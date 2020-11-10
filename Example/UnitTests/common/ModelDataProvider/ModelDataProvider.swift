@@ -18,9 +18,11 @@ class ModelDataProvider {
 
   lazy var emptyJSON = JSON()
 
-  lazy var user = ShiftUser(userId: "userId", accessToken: AccessToken(token: "AccessToken",
-                                                                       primaryCredential: .email,
-                                                                       secondaryCredential: .phoneNumber))
+  lazy var user = ShiftUser(userId: "userId",
+                            metadata: nil,
+                            accessToken: AccessToken(token: "AccessToken",
+                                                     primaryCredential: .email,
+                                                     secondaryCredential: .phoneNumber))
 
   lazy var userJSON = JSON(dictionaryLiteral: ("user_id", "user_id"), ("user_token", "user_token"))
 
@@ -216,7 +218,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -243,7 +245,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
                                 getPin: FeatureAction(source: .voIP, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -270,7 +272,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .api, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -297,7 +299,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -324,7 +326,7 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
                                 getPin: FeatureAction(source: .unknown, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -473,7 +475,7 @@ class ModelDataProvider {
 
   lazy var balanceType = AllowedBalanceType(type: "custodian", baseUri: "baseUri")
 
-  lazy var url = URL(string: "https://shiftpayments.com")! // swiftlint:disable:this implicitly_unwrapped_optional
+  lazy var url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this implicitly_unwrapped_optional
 
   lazy var tappedURL = TappedURL(title: "AptoPayments", url: url)
 

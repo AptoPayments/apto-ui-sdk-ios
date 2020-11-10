@@ -177,7 +177,7 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardModule(card: Card, mode: ShiftCardModuleMode) -> UIModuleProtocol {
+  func manageCardModule(card: Card, mode: AptoUISDKMode) -> UIModuleProtocol {
     Swift.fatalError("manageCardModule(card:mode:) has not been implemented")
   }
 

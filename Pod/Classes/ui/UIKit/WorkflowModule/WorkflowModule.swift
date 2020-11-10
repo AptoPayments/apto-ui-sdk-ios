@@ -13,6 +13,7 @@ class WorkflowModule: UIModule {
   let workflowObjectStatusRequester: WorkflowObjectStatusRequester
   let workflowObject: WorkflowObject
   let workflowModuleFactory: WorkflowModuleFactory
+  var lastResult: Any?
 
   // MARK: - Initializers
 
@@ -48,7 +49,8 @@ class WorkflowModule: UIModule {
     module.onNext = { [unowned self] _ in
       self.handleNextAction()
     }
-    module.onFinish = { [unowned self] _ in
+    module.onFinish = { [unowned self] moduleResult in
+      self.lastResult = moduleResult.result
       self.handleNextAction()
     }
 
@@ -77,7 +79,8 @@ class WorkflowModule: UIModule {
       case .success(let nextAction):
         if let module = self.moduleFor(workflowAction: nextAction) {
           if let configuration = nextAction.configuration, configuration.presentationMode == .modal {
-            module.onFinish = { [unowned self] _ in
+            module.onFinish = { [unowned self] moduleResult in
+              self.lastResult = moduleResult.result
               self.dismissModule { self.handleNextAction() }
             }
             module.onClose = { [unowned self] _ in

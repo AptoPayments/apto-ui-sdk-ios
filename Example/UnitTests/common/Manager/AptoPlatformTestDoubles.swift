@@ -9,6 +9,7 @@
 @testable import AptoSDK
 
 class AptoPlatformFake: AptoPlatformProtocol {
+ 
   var delegate: AptoPlatformDelegate?
 
   // MARK: - SDK Initialization
@@ -154,12 +155,14 @@ class AptoPlatformFake: AptoPlatformProtocol {
   var nextCreateUserResult: Result<ShiftUser, NSError>?
   private(set) var createUserCalled = false
   private(set) var lastCreateUserUserData: DataPointList?
+  private(set) var lastCreateUserMetadata: String?
   private(set) var lastCreateUserCustodianUid: String?
-  func createUser(userData: DataPointList, custodianUid: String?,
+  func createUser(userData: DataPointList, custodianUid: String?, metadata: String?,
                   callback: @escaping Result<ShiftUser, NSError>.Callback) {
     createUserCalled = true
     lastCreateUserUserData = userData
     lastCreateUserCustodianUid = custodianUid
+    lastCreateUserMetadata = metadata
     if let result = nextCreateUserResult {
       callback(result)
     }
@@ -434,11 +437,8 @@ class AptoPlatformFake: AptoPlatformProtocol {
   var nextIssueCardResult: Result<Card, NSError>?
   private(set) var issueCardCalled = false
   private(set) var lastIssueCardApplicationId: String?
-  func issueCard(applicationId: String, callback: @escaping Result<Card, NSError>.Callback) {
-    self.issueCard(applicationId: applicationId, additionalFields: nil, callback: callback)
-  }
-
-  func issueCard(applicationId: String, additionalFields: [String : AnyObject]?, callback: @escaping Result<Card, NSError>.Callback) {
+  func issueCard(applicationId: String, additionalFields: [String : AnyObject]?, metadata: String?,
+                 callback: @escaping Result<Card, NSError>.Callback) {
     issueCardCalled = true
     lastIssueCardApplicationId = applicationId
     if let result = nextIssueCardResult {
@@ -476,18 +476,34 @@ class AptoPlatformFake: AptoPlatformProtocol {
     }
   }
 
-  var nextFetchFinancialAccountResult: Result<FinancialAccount, NSError>?
-  private(set) var fetchFinancialAccountCalled = false
-  private(set) var lastFetchFinancialAccountAccountId: String?
-  private(set) var lastFetchFinancialAccountForceRefresh: Bool?
-  private(set) var lastFetchFinancialAccountRetrieveBalances: Bool?
+  var nextFetchCardResult: Result<Card, NSError>?
+  private(set) var fetchCardCalled = false
+  private(set) var lastFetchCardCardId: String?
+  private(set) var lastFetchCardForceRefresh: Bool?
+  private(set) var lastFetchCardRetrieveBalances: Bool?
+  func fetchCard(_ cardId: String, forceRefresh: Bool, retrieveBalances: Bool,
+                 callback: @escaping Result<Card, NSError>.Callback) {
+    fetchCardCalled = true
+    lastFetchCardCardId = cardId
+    lastFetchCardForceRefresh = forceRefresh
+    lastFetchCardRetrieveBalances = retrieveBalances
+    if let result = nextFetchCardResult {
+      callback(result)
+    }
+  }
+
+  var nextFetchfetchFinancialAccountResult: Result<FinancialAccount, NSError>?
+  private(set) var fetchfetchFinancialAccountCalled = false
+  private(set) var lastFetchfetchFinancialAccountAccountId: String?
+  private(set) var lastFetchfetchFinancialAccountForceRefresh: Bool?
+  private(set) var lastFetchfetchFinancialAccountRetrieveBalances: Bool?
   func fetchFinancialAccount(_ accountId: String, forceRefresh: Bool, retrieveBalances: Bool,
                              callback: @escaping Result<FinancialAccount, NSError>.Callback) {
-    fetchFinancialAccountCalled = true
-    lastFetchFinancialAccountAccountId = accountId
-    lastFetchFinancialAccountForceRefresh = forceRefresh
-    lastFetchFinancialAccountRetrieveBalances = retrieveBalances
-    if let result = nextFetchFinancialAccountResult {
+    fetchfetchFinancialAccountCalled = true
+    lastFetchfetchFinancialAccountAccountId = accountId
+    lastFetchfetchFinancialAccountForceRefresh = forceRefresh
+    lastFetchfetchFinancialAccountRetrieveBalances = retrieveBalances
+    if let result = nextFetchfetchFinancialAccountResult {
       callback(result)
     }
   }
@@ -727,4 +743,9 @@ class AptoPlatformFake: AptoPlatformProtocol {
   func runPendingNetworkRequests() {
     runPendingNetworkRequestsCalled = true
   }
+  
+  func getPaymentSources(_ request: PaginationQuery?, callback: @escaping Result<[PaymentSource], NSError>.Callback) { }
+  func addPaymentSource(with request: PaymentSourceRequest, callback: @escaping Result<PaymentSource, NSError>.Callback) { }
+  func deletePaymentSource(paymentSourceId: String, callback: @escaping Result<Void, NSError>.Callback) {}
+  func pushFunds(with request: PushFundsRequest, callback: @escaping Result<PaymentResult, NSError>.Callback) {}
 }

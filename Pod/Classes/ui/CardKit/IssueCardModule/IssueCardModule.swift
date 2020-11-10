@@ -32,7 +32,7 @@ class IssueCardModule: UIModule, IssueCardModuleProtocol {
   }
 
   func cardIssued(_ card: Card) {
-    self.onFinish?(self)
+    finish(result: card)
   }
 
   func closeTapped() {

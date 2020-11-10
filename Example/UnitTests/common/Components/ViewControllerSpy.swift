@@ -161,7 +161,7 @@ class ViewControllerSpy: ViewControllerProtocol {
   }
 
   private(set) var showLoadingViewCalled = false
-  func showLoadingView(uiConfig: UIConfig) {
+  func showLoadingView(uiConfig: UIConfig?) {
     showLoadingViewCalled = true
   }
 

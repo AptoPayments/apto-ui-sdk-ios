@@ -13,12 +13,14 @@ class UserStorageSpy: UserStorageProtocol {
   private(set) var lastCreateUserApiKey: String?
   private(set) var lastCreateUserUserData: DataPointList?
   private(set) var lastCreateUserCustodianUid: String?
-  func createUser(_ apiKey: String, userData: DataPointList, custodianUid: String?,
+  private(set) var lastCreateUserMetadata: String?
+  func createUser(_ apiKey: String, userData: DataPointList, custodianUid: String?, metadata: String?,
                   callback: @escaping Result<ShiftUser, NSError>.Callback) {
     createUserCalled = true
     lastCreateUserApiKey = apiKey
     lastCreateUserUserData = userData
     lastCreateUserCustodianUid = custodianUid
+    lastCreateUserMetadata = metadata
   }
 
   func loginWith(_ apiKey: String, verifications: [Verification],
@@ -101,9 +103,9 @@ class UserStorageSpy: UserStorageProtocol {
 
 class UserStorageFake: UserStorageSpy {
   var nextCreateUserResult: Result<ShiftUser, NSError>?
-  override func createUser(_ apiKey: String, userData: DataPointList, custodianUid: String?,
+  override func createUser(_ apiKey: String, userData: DataPointList, custodianUid: String?, metadata: String?,
                            callback: @escaping Result<ShiftUser, NSError>.Callback) {
-    super.createUser(apiKey, userData: userData, custodianUid: custodianUid, callback: callback)
+    super.createUser(apiKey, userData: userData, custodianUid: custodianUid, metadata: metadata, callback: callback)
     if let result = nextCreateUserResult {
       callback(result)
     }

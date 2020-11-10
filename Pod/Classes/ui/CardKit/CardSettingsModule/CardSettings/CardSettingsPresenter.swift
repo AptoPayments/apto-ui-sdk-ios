@@ -54,6 +54,9 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                                         termsAndConditions: config.termsAndCondition,
                                         privacyPolicy: config.privacyPolicy)
     self.viewModel.legalDocuments.send(legalDocuments)
+    
+    let isShowFundsFeatureEnabled = (self.card.features?.funding?.status == .enabled)
+    self.viewModel.showAddFundsFeature.send(isShowFundsFeatureEnabled)
   }
 
   func viewLoaded() {
@@ -122,25 +125,13 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     self.router.closeFromShiftCardSettings()
   }
 
-  func showCardInfoChanged(switcher: UISwitch) {
-    if switcher.isOn {
-      router.authenticate { [weak self] accessGranted in
-        guard let self = self else { return }
-        if !accessGranted {
-          self.viewModel.showCardInfo.send(false)
-        }
-        else {
-          self.view.showLoadingSpinner()
-          self.router.showCardInfo { [weak self] in
-            self?.view.hideLoadingSpinner()
-            self?.router.closeFromShiftCardSettings()
-          }
-        }
+  func didTapOnShowCardInfo() {
+    router.authenticate { [weak self] accessGranted in
+      guard let self = self else { return }
+      if accessGranted {
+        self.router.showCardInfo()
+        self.router.closeFromShiftCardSettings()
       }
-    }
-    else {
-      viewModel.showCardInfo.send(false)
-      router.hideCardInfo()
     }
   }
 
@@ -158,7 +149,6 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
       viewModel.showGetPin.send(false)
     }
     viewModel.locked.send(card.state != .active)
-    viewModel.showCardInfo.send(router.isCardInfoVisible())
     viewModel.showIVRSupport.send(card.features?.ivrSupport?.status == .enabled)
     viewModel.isShowDetailedCardActivityEnabled.send(interactor.isShowDetailedCardActivityEnabled())
     viewModel.showDetailedCardActivity.send(config.showDetailedCardActivity)
@@ -178,6 +168,10 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     helpAction.run()
   }
 
+  func didTapOnLoadFunds() {
+    router.showAddFunds(for: card)
+  }
+  
   func lostCardTapped() {
     reportLostCardAction.run { [unowned self] result in
       switch result {

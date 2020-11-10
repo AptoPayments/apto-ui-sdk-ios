@@ -42,6 +42,6 @@ class FullScreenDisclaimerModule: UIModule, FullScreenDisclaimerModuleProtocol {
 extension FullScreenDisclaimerModule: FullScreenDisclaimerRouterProtocol {
   func agreeTapped() {
     onDisclaimerAgreed?(self)
-    onFinish?(self)
+    finish()
   }
 }

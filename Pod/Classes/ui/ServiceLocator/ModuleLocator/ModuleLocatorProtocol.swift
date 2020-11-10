@@ -49,7 +49,7 @@ protocol ModuleLocatorProtocol {
   func webBrowserModule(url: URL, headers: [String: String]?, alternativeTitle: String?) -> UIModuleProtocol
 
   // MARK: - Manage card
-  func manageCardModule(card: Card, mode: ShiftCardModuleMode) -> UIModuleProtocol
+  func manageCardModule(card: Card, mode: AptoUISDKMode) -> UIModuleProtocol
   func fundingSourceSelector(card: Card) -> FundingSourceSelectorModuleProtocol
   func cardSettingsModule(card: Card) -> CardSettingsModuleProtocol
   func cardMonthlyStatsModule(card: Card) -> CardMonthlyStatsModuleProtocol

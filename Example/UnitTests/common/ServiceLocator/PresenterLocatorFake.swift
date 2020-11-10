@@ -102,7 +102,7 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardPresenter(config: ManageShiftCardPresenterConfig) -> ManageShiftCardPresenterProtocol {
+  func manageCardPresenter(config: ManageCardPresenterConfig) -> ManageCardPresenterProtocol {
     Swift.fatalError("manageCardPresenter(config:) has not been implemented")
   }
 

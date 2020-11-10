@@ -28,7 +28,7 @@ class VerifyPasscodePresenter: VerifyPasscodePresenterProtocol {
     interactor?.verify(code: code) { [weak self] result in
       let isValid = result.value! // swiftlint:disable:this force_unwrapping
       if isValid {
-        self?.router?.finish()
+        self?.router?.finish(result: nil)
       }
       else {
         self?.viewModel.error.send(WrongPINError())

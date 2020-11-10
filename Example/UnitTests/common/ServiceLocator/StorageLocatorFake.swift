@@ -67,4 +67,8 @@ class StorageLocatorFake: StorageLocatorProtocol {
   func userPreferencesStorage() -> UserPreferencesStorageProtocol {
     return userPreferencesStorageFake
   }
+  
+  func paymentSourcesStorage(transport: JSONTransport) -> PaymentSourcesStorageProtocol {
+    PaymentSourcesStorageFake()
+  }
 }

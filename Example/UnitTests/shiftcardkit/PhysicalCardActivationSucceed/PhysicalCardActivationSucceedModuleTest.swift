@@ -42,7 +42,7 @@ class PhysicalCardActivationSucceedModuleTest: XCTestCase {
     var completionCalled = false
 
     // When
-    sut.call(url: URL(string: "https://shiftpayments.com")!) { // swiftlint:disable:this force_unwrapping
+    sut.call(url: URL(string: "https://aptopayments.com")!) { // swiftlint:disable:this force_unwrapping
       completionCalled = true
     }
 
@@ -86,7 +86,7 @@ class PhysicalCardActivationSucceedModuleTest: XCTestCase {
     let setPinModule = serviceLocator.moduleLocatorFake.setPinModuleSpy
 
     // When
-    setPinModule.onFinish?(setPinModule)
+    setPinModule.finish(result: nil)
 
     // Then
     XCTAssertTrue(onFinishCalled)
@@ -113,7 +113,7 @@ class PhysicalCardActivationSucceedModuleTest: XCTestCase {
     let voIPModule = serviceLocator.moduleLocatorFake.voIPModuleSpy
 
     // When
-    voIPModule.onFinish?(voIPModule)
+    voIPModule.finish(result: nil)
 
     // Then
     XCTAssertTrue(onFinishCalled)

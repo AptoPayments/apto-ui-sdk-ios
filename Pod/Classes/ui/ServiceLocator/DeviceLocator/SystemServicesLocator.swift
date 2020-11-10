@@ -30,6 +30,14 @@ class SystemServicesLocator: SystemServicesLocatorProtocol {
     CardAdditionalFields.shared
   }
   
+  func cardMetadata() -> CardMetadataProtocol {
+    CardMetadata.shared
+  }
+
+  func userMetadata() -> UserMetadataProtocol {
+    UserMetadata.shared
+  }
+
   private var _authenticationManager: AuthenticationManagerProtocol?
   func authenticationManager() -> AuthenticationManagerProtocol {
     if let manager = _authenticationManager {

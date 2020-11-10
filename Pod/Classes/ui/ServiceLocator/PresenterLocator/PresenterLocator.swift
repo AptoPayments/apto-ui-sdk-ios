@@ -91,8 +91,8 @@ final class PresenterLocator: PresenterLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardPresenter(config: ManageShiftCardPresenterConfig) -> ManageShiftCardPresenterProtocol {
-    return ManageShiftCardPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
+  func manageCardPresenter(config: ManageCardPresenterConfig) -> ManageCardPresenterProtocol {
+    return ManageCardPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
   }
 
   func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig)

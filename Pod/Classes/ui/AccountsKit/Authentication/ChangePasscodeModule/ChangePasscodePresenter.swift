@@ -68,7 +68,7 @@ class ChangePasscodePresenter: ChangePasscodePresenterProtocol {
         self?.viewModel.error.send(error)
         self?.viewModel.step.send(.setPasscode)
       case .success:
-        self?.router?.finish()
+        self?.router?.finish(result: nil)
       }
     }
   }

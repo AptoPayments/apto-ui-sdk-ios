@@ -61,7 +61,7 @@ class FullScreenDisclaimerPresenterTest: XCTestCase {
 
   func testLinkTappedCallShowExternalURL() {
     // Given
-    let url = URL(string: "https://shiftpayments.com")!
+    let url = URL(string: "https://aptopayments.com")!
 
     // When
     sut.linkTapped(url)

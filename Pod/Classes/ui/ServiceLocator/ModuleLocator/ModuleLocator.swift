@@ -130,8 +130,8 @@ final class ModuleLocator: ModuleLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardModule(card: Card, mode: ShiftCardModuleMode) -> UIModuleProtocol {
-    return ManageShiftCardModule(serviceLocator: serviceLocator, card: card, mode: mode)
+  func manageCardModule(card: Card, mode: AptoUISDKMode) -> UIModuleProtocol {
+    return ManageCardModule(serviceLocator: serviceLocator, card: card, mode: mode)
   }
 
   func fundingSourceSelector(card: Card) -> FundingSourceSelectorModuleProtocol {

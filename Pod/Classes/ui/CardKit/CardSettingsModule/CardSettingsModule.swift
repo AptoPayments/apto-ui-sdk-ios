@@ -108,16 +108,12 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
     caller.call(phoneNumberURL: url, from: self, completion: completion)
   }
 
-  func showCardInfo(completion: @escaping () -> Void) {
-    delegate?.showCardInfo(completion: completion)
+  func showCardInfo() {
+    delegate?.showCardInfo()
   }
 
   func hideCardInfo() {
     delegate?.hideCardInfo()
-  }
-
-  func isCardInfoVisible() -> Bool {
-    return delegate?.isCardInfoVisible() ?? false
   }
 
   func cardStateChanged(includingTransactions: Bool) {
@@ -146,5 +142,14 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
   func authenticate(completion: @escaping (Bool) -> Void) {
     let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
     authenticationManager.authenticate(from: self, completion: completion)
+  }
+  
+  func showAddFunds(for card: Card) {
+    let viewModel = AddFundsViewModel(card: card)
+    let viewController = AddFundsViewController(viewModel: viewModel)
+    viewModel.navigator = AddFundsNavigator(
+      from: viewController
+    )
+    self.navigationController?.pushViewController(viewController, animated: true, completion: nil)
   }
 }

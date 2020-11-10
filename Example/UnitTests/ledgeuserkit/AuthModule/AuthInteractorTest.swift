@@ -22,6 +22,7 @@ class AuthInteractorTest: XCTestCase {
                                                                    allowedCountries: [dataProvider.usa],
                                                                    mode: .embedded)
   private let dataReceiver: AuthDataReceiverSpy = AuthDataReceiverSpy()
+  private lazy var userMetadataSpy = UserMetadataSpy()
 
   override func setUp() {
     super.setUp()
@@ -400,16 +401,19 @@ extension AuthInteractorTest {
 }
 
 private extension AuthInteractorTest {
+
   func givenPhonePrimaryCredential() {
     sut = AuthInteractor(platform: platform, initialUserData: dataProvider.phoneNumberDataPointList, config: authConfig,
-                         dataReceiver: dataReceiver)
+                         dataReceiver: dataReceiver,
+                         userMetadata: userMetadataSpy)
   }
 
   func givenEmailPrimaryCredential() {
     sut = AuthInteractor(platform: platform, initialUserData: dataProvider.emailDataPointList,
                          config: AuthModuleConfig(primaryAuthCredential: .email, secondaryAuthCredential: .phoneNumber,
                                                   allowedCountries: [dataProvider.usa], mode: .embedded),
-                         dataReceiver: dataReceiver)
+                         dataReceiver: dataReceiver,
+                         userMetadata: userMetadataSpy)
   }
 
   func givenBirthDatePrimaryCredential() {
@@ -417,7 +421,8 @@ private extension AuthInteractorTest {
                          config: AuthModuleConfig(primaryAuthCredential: .birthDate,
                                                   secondaryAuthCredential: .email,
                                                   allowedCountries: [dataProvider.usa], mode: .embedded),
-                         dataReceiver: dataReceiver)
+                         dataReceiver: dataReceiver,
+                         userMetadata: userMetadataSpy)
   }
 
   func givenBirthDateSecondaryCredential() {
@@ -425,7 +430,8 @@ private extension AuthInteractorTest {
                          config: AuthModuleConfig(primaryAuthCredential: .email,
                                                   secondaryAuthCredential: .birthDate,
                                                   allowedCountries: [dataProvider.usa], mode: .embedded),
-                         dataReceiver: dataReceiver)
+                         dataReceiver: dataReceiver,
+                         userMetadata: userMetadataSpy)
   }
 
   func givenSSNPrimaryCredential() {
@@ -433,6 +439,7 @@ private extension AuthInteractorTest {
                          config: AuthModuleConfig(primaryAuthCredential: .idDocument,
                                                   secondaryAuthCredential: .email,
                                                   allowedCountries: [dataProvider.usa], mode: .embedded),
-                         dataReceiver: dataReceiver)
+                         dataReceiver: dataReceiver,
+                         userMetadata: userMetadataSpy)
   }
 }

@@ -13,10 +13,11 @@ extension UIButton {
   static func roundedButtonWith(_ title: String,
                                 backgroundColor: UIColor,
                                 accessibilityLabel: String? = nil,
+                                cornerRadius: CGFloat = 5,
                                 tapHandler: @escaping () -> Void) -> UIButton {
     let button = UIButton()
     button.layer.masksToBounds = true
-    button.layer.cornerRadius = 5
+    button.layer.cornerRadius = cornerRadius
     button.clipsToBounds = true
     button.backgroundColor = backgroundColor
     button.setTitle(title, for: UIControl.State())

@@ -27,7 +27,7 @@ class UserStorageTest: XCTestCase {
   // MARK: - Create user
   func testCreateUserCallTransport() {
     // When
-    sut.createUser(apiKey, userData: userData, custodianUid: nil) { _ in }
+    sut.createUser(apiKey, userData: userData, custodianUid: nil, metadata: nil) { _ in }
 
     // Then
     XCTAssertTrue(transport.postCalled)
@@ -43,7 +43,7 @@ class UserStorageTest: XCTestCase {
     let expectedUrl = JSONRouter.createUser
 
     // When
-    sut.createUser(apiKey, userData: userData, custodianUid: nil) { _ in }
+    sut.createUser(apiKey, userData: userData, custodianUid: nil, metadata: nil) { _ in }
 
     // Then
     guard let urlWrapper = transport.lastPostURL as? URLWrapper else {
@@ -58,10 +58,21 @@ class UserStorageTest: XCTestCase {
     let custodianUid = "custodianUid"
 
     // When
-    sut.createUser(apiKey, userData: userData, custodianUid: custodianUid) { _ in }
+    sut.createUser(apiKey, userData: userData, custodianUid: custodianUid, metadata: nil) { _ in }
 
     // Then
     XCTAssertEqual(custodianUid, transport.lastPostParameters?["custodian_uid"] as? String)
+  }
+
+  func testCreateUserWithMetadataAddMetadataToParameters() {
+    // Given
+    let metadata = "metadata"
+
+    // When
+    sut.createUser(apiKey, userData: userData, custodianUid: nil, metadata: metadata) { _ in }
+
+    // Then
+    XCTAssertEqual(metadata, transport.lastPostParameters?["metadata"] as? String)
   }
 
   func testCreateUserRequestFailsCallbackFailure() {
@@ -70,7 +81,7 @@ class UserStorageTest: XCTestCase {
     transport.nextPostResult = .failure(BackendError(code: .emailInvalid))
 
     // When
-    sut.createUser(apiKey, userData: userData, custodianUid: nil) { result in
+    sut.createUser(apiKey, userData: userData, custodianUid: nil, metadata: nil) { result in
       returnedResult = result
     }
 
@@ -84,7 +95,7 @@ class UserStorageTest: XCTestCase {
     transport.nextPostResult = .success(userJSON)
 
     // When
-    sut.createUser(apiKey, userData: userData, custodianUid: nil) { result in
+    sut.createUser(apiKey, userData: userData, custodianUid: nil, metadata: nil) { result in
       returnedResult = result
     }
 
@@ -98,7 +109,7 @@ class UserStorageTest: XCTestCase {
     transport.nextPostResult = .success(ModelDataProvider.provider.emptyJSON)
 
     // When
-    sut.createUser(apiKey, userData: userData, custodianUid: nil) { result in
+    sut.createUser(apiKey, userData: userData, custodianUid: nil, metadata: nil) { result in
       returnedResult = result
     }
 

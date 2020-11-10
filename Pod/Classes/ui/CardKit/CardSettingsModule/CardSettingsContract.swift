@@ -10,9 +10,8 @@ import Bond
 import AptoSDK
 
 protocol CardSettingsModuleDelegate: class {
-  func showCardInfo(completion: @escaping () -> Void)
+  func showCardInfo()
   func hideCardInfo()
-  func isCardInfoVisible() -> Bool
   func cardStateChanged(includingTransactions: Bool)
 }
 
@@ -21,13 +20,13 @@ protocol CardSettingsRouterProtocol: class {
   func changeCardPin()
   func showVoIP(actionSource: VoIPActionSource)
   func call(url: URL, completion: @escaping () -> Void)
-  func showCardInfo(completion: @escaping () -> Void)
+  func showCardInfo()
   func hideCardInfo()
-  func isCardInfoVisible() -> Bool
   func cardStateChanged(includingTransactions: Bool)
   func show(content: Content, title: String)
   func showMonthlyStatements()
   func authenticate(completion: @escaping (Bool) -> Void)
+  func showAddFunds(for card: Card)
 }
 
 extension CardSettingsRouterProtocol {
@@ -68,7 +67,6 @@ extension LegalDocuments {
 
 class CardSettingsViewModel {
   let locked: Observable<Bool?> = Observable(nil)
-  let showCardInfo: Observable<Bool?> = Observable(nil)
   let legalDocuments: Observable<LegalDocuments> = Observable(LegalDocuments())
   let showChangePin: Observable<Bool> = Observable(false)
   let showGetPin: Observable<Bool> = Observable(false)
@@ -76,6 +74,7 @@ class CardSettingsViewModel {
   let showDetailedCardActivity: Observable<Bool> = Observable(false)
   let isShowDetailedCardActivityEnabled: Observable<Bool> = Observable(false)
   let showMonthlyStatements: Observable<Bool> = Observable(false)
+  let showAddFundsFeature: Observable<Bool> = Observable(false)
 }
 
 protocol CardSettingsPresenterProtocol: class {
@@ -95,9 +94,10 @@ protocol CardSettingsPresenterProtocol: class {
   func getPinTapped()
   func callIvrTapped()
   func lockCardChanged(switcher: UISwitch)
-  func showCardInfoChanged(switcher: UISwitch)
+  func didTapOnShowCardInfo()
   func show(content: Content, title: String)
   func updateCardNewStatus()
   func showDetailedCardActivity(_ newValue: Bool)
   func monthlyStatementsTapped()
+  func didTapOnLoadFunds()
 }

@@ -9,8 +9,11 @@ import AptoSDK
 @testable import AptoUISDK
 
 class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettingsModuleProtocol {
+ 
   var delegate: CardSettingsModuleDelegate?
-
+  
+  func showAddFunds(for card: Card) {}
+  
   private(set) var closeFromShiftCardSettingsCalled = false
   func closeFromShiftCardSettings() {
     closeFromShiftCardSettingsCalled = true
@@ -36,9 +39,8 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
   }
 
   private(set) var showCardInfoCalled = false
-  func showCardInfo(completion: @escaping () -> Void) {
+  func showCardInfo() {
     showCardInfoCalled = true
-    completion()
   }
 
   private(set) var hideCardInfoCalled = false
@@ -83,7 +85,7 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
 
 class CardSettingsModuleDelegateSpy: CardSettingsModuleDelegate {
   private(set) var showCardInfoCalled = false
-  func showCardInfo(completion: @escaping () -> Void) {
+  func showCardInfo() {
     showCardInfoCalled = true
   }
 
@@ -138,6 +140,10 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
   // swiftlint:enable implicitly_unwrapped_optional
   var analyticsManager: AnalyticsServiceProtocol?
 
+  func didTapOnLoadFunds() {
+      
+  }
+  
   private(set) var viewLoadedCalled = false
   func viewLoaded() {
     viewLoadedCalled = true
@@ -178,9 +184,9 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
     lockCardChangedCalled = true
   }
 
-  private(set) var showCardInfoChangedCalled = false
-  func showCardInfoChanged(switcher: UISwitch) {
-    showCardInfoChangedCalled = true
+  private(set) var didTapOnShowCardInfoCalled = false
+  func didTapOnShowCardInfo() {
+    didTapOnShowCardInfoCalled = true
   }
 
   private(set) var showContentCalled = false

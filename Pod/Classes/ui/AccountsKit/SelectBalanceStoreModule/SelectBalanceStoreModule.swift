@@ -159,7 +159,7 @@ class SelectBalanceStoreModule: UIModule, SelectBalanceStoreModuleProtocol {
 
   private func process(result: SelectBalanceStoreResult) {
     if result.isSuccess {
-      self.onFinish?(self)
+      finish()
     }
     else {
       analyticsManager?.track(event: result.event)

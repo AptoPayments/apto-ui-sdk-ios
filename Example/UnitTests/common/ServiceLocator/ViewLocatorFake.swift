@@ -21,7 +21,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
     return CountrySelectorViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func authView(uiConfig: UIConfig, mode: ShiftCardModuleMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol {
+  func authView(uiConfig: UIConfig, mode: AptoUISDKMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol {
     return AuthViewControllerTheme2(uiConfiguration: uiConfig, mode: mode, eventHandler: eventHandler)
   }
 
@@ -91,8 +91,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardView(mode: ShiftCardModuleMode,
-                      presenter: ManageShiftCardEventHandler) -> ManageShiftCardViewControllerProtocol {
+  func manageCardView(mode: AptoUISDKMode, presenter: ManageCardEventHandler) -> ManageCardViewControllerProtocol {
     Swift.fatalError("manageCardView(mode:presenter:) has not been implemented")
   }
 

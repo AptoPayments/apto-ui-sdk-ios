@@ -54,7 +54,7 @@ open class UIModule: NSObject, UIModuleProtocol {
   // Callbacks
   open var onClose: ((_ module: UIModuleProtocol) -> Void)?
   open var onNext: ((_ module: UIModuleProtocol) -> Void)?
-  open var onFinish: ((_ module: UIModuleProtocol) -> Void)?
+  open var onFinish: ((_ result: UIModuleResult) -> Void)?
 
   // init
   init(serviceLocator: ServiceLocatorProtocol) {
@@ -75,8 +75,8 @@ open class UIModule: NSObject, UIModuleProtocol {
     onClose?(self)
   }
 
-  public func finish() {
-    onFinish?(self)
+  public func finish(result: Any? = nil) {
+    onFinish?(UIModuleResult(module: self, result: result))
   }
 
   public func next() {

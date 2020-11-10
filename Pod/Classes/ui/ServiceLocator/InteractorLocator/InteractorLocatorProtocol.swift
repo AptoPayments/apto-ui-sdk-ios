@@ -38,7 +38,7 @@ protocol InteractorLocatorProtocol {
                             dataReceiver: WebBrowserDataReceiverProtocol) -> WebBrowserInteractorProtocol
 
   // MARK: - Manage card
-  func manageCardInteractor(card: Card) -> ManageShiftCardInteractorProtocol
+  func manageCardInteractor(card: Card) -> ManageCardInteractorProtocol
   func fundingSourceSelector(card: Card) -> FundingSourceSelectorInteractorProtocol
   func cardSettingsInteractor() -> CardSettingsInteractorProtocol
   func kycInteractor(card: Card) -> KYCInteractorProtocol

@@ -28,7 +28,7 @@ class CreatePasscodePresenter: CreatePasscodePresenterProtocol {
       case .failure(let error):
         self?.viewModel.error.send(error)
       case .success:
-        self?.router?.finish()
+        self?.router?.finish(result: nil)
       }
     }
   }

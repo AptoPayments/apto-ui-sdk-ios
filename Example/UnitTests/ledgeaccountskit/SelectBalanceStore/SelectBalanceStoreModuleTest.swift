@@ -150,7 +150,7 @@ class SelectBalanceStoreModuleTest: XCTestCase {
     let dataConfirmationModule = serviceLocator.moduleLocatorFake.dataConfirmationModuleSpy
 
     // When
-    dataConfirmationModule.onFinish?(dataConfirmationModule)
+    dataConfirmationModule.finish(result: nil)
 
     // Then
     XCTAssertTrue(platform.saveOauthUserDataCalled)
@@ -162,7 +162,7 @@ class SelectBalanceStoreModuleTest: XCTestCase {
     platform.nextSaveOauthUserDataResult = .success(dataProvider.oauthSaveUserDataFailure)
 
     // When
-    dataConfirmationModule.onFinish?(dataConfirmationModule)
+    dataConfirmationModule.finish(result: nil)
 
     // Then
     XCTAssertFalse(platform.setBalanceStoreCalled)
@@ -175,7 +175,7 @@ class SelectBalanceStoreModuleTest: XCTestCase {
     platform.nextSaveOauthUserDataResult = .success(dataProvider.oauthSaveUserDataSucceed)
 
     // When
-    dataConfirmationModule.onFinish?(dataConfirmationModule)
+    dataConfirmationModule.finish(result: nil)
 
     // Then
     XCTAssertTrue(platform.setBalanceStoreCalled)
@@ -192,7 +192,7 @@ class SelectBalanceStoreModuleTest: XCTestCase {
     platform.nextUpdateUserInfoResult = .failure(BackendError(code: .other))
 
     // When
-    dataConfirmationModule.onFinish?(dataConfirmationModule)
+    dataConfirmationModule.finish(result: nil)
 
     // Then
     XCTAssertFalse(platform.setBalanceStoreCalled)

@@ -28,7 +28,7 @@ final class ViewLocator: ViewLocatorProtocol {
     return CountrySelectorViewControllerTheme2(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
   }
 
-  func authView(uiConfig: UIConfig, mode: ShiftCardModuleMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol {
+  func authView(uiConfig: UIConfig, mode: AptoUISDKMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol {
     return AuthViewControllerTheme2(uiConfiguration: uiConfig, mode: mode, eventHandler: eventHandler)
   }
 
@@ -98,9 +98,8 @@ final class ViewLocator: ViewLocatorProtocol {
   }
 
   // MARK: - Manage card
-  func manageCardView(mode: ShiftCardModuleMode,
-                      presenter: ManageShiftCardEventHandler) -> ManageShiftCardViewControllerProtocol {
-     return ManageShiftCardViewControllerTheme2(mode: mode, uiConfiguration: uiConfig, presenter: presenter)
+  func manageCardView(mode: AptoUISDKMode, presenter: ManageCardEventHandler) -> ManageCardViewControllerProtocol {
+     return ManageCardViewControllerTheme2(mode: mode, uiConfiguration: uiConfig, presenter: presenter)
   }
 
   func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> ShiftViewController {

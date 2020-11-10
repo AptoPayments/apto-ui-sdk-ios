@@ -16,4 +16,6 @@ protocol SystemServicesLocatorProtocol: FileDownloaderProvider {
   func dateProvider() -> DateProviderProtocol
   func authenticationManager() -> AuthenticationManagerProtocol
   func cardAdditionalFields() -> CardAdditionalFieldsProtocol
+  func cardMetadata() -> CardMetadataProtocol
+  func userMetadata() -> UserMetadataProtocol
 }

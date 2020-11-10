@@ -12,15 +12,17 @@ class AuthInteractor: AuthInteractorProtocol {
   private unowned let dataReceiver: AuthDataReceiver
   private let config: AuthModuleConfig
   var internalUserData: DataPointList
+  private let userMetadata: UserMetadataProtocol
 
   // MARK: - Initialization
 
   init(platform: AptoPlatformProtocol, initialUserData: DataPointList, config: AuthModuleConfig,
-       dataReceiver: AuthDataReceiver) {
+       dataReceiver: AuthDataReceiver, userMetadata: UserMetadataProtocol) {
     self.platform = platform
     self.internalUserData = initialUserData.copy() as! DataPointList // swiftlint:disable:this force_cast
     self.dataReceiver = dataReceiver
     self.config = config
+    self.userMetadata = userMetadata
   }
 
   // MARK: - AuthInteractorProtocol protocol
@@ -130,12 +132,13 @@ class AuthInteractor: AuthInteractorProtocol {
         return
       }
       dataReceiver.showLoadingView()
-      self.platform.createUser(userData: self.internalUserData) { [weak self] result in
+      self.platform.createUser(userData: self.internalUserData, metadata: userMetadata.get()) { [weak self] result in
         self?.dataReceiver.hideLoadingView()
         switch result {
         case .failure(let error):
           self?.dataReceiver.show(error: error)
         case .success(let user):
+          self?.userMetadata.clear()
           self?.dataReceiver.returnExistingUser(user)
         }
       }

@@ -37,7 +37,7 @@ public protocol ViewControllerProtocol {
             tapHandler: (() -> Void)?)
   func showLoadingSpinner(tintColor: UIColor, position: SubviewPosition)
   func hideLoadingSpinner()
-  func showLoadingView(uiConfig: UIConfig)
+  func showLoadingView(uiConfig: UIConfig?)
   func hideLoadingView()
   func configureLeftNavButton(mode: UIViewControllerLeftButtonMode?, uiConfig: UIConfig?)
   var navigationController: UINavigationController? { get }
@@ -336,14 +336,21 @@ extension UIViewController: ViewControllerProtocol {
       }
     }
   }
-
-  public func showLoadingView(uiConfig: UIConfig) {
+ 
+  public func showLoadingView(uiConfig: UIConfig?) {
+    let tag = 2020
+    let loadingViewAlreadyShowing = UIApplication.shared.keyWindow?.subviews.first(where: { $0.tag == tag }) != nil
+    guard !loadingViewAlreadyShowing else { return }
+    
     if let window = UIApplication.shared.keyWindow {
       let loadingView = UIView(frame: .zero)
+      loadingView.tag = tag
       loadingView.backgroundColor = view.backgroundColor?.withAlphaComponent(0.9)
       let activityIndicator = UIActivityIndicatorView(style: .white)
-      activityIndicator.color = uiConfig.uiPrimaryColor
+      activityIndicator.color = uiConfig?.uiPrimaryColor ?? .gray
       loadingView.addSubview(activityIndicator)
+      loadingView.alpha = 0
+      
       activityIndicator.snp.makeConstraints { make in
         make.center.equalToSuperview()
       }
@@ -351,7 +358,11 @@ extension UIViewController: ViewControllerProtocol {
       loadingView.snp.makeConstraints { make in
         make.edges.equalToSuperview()
       }
-      activityIndicator.startAnimating()
+      
+      UIView.animate(withDuration: 0.3) {
+        activityIndicator.startAnimating()
+        loadingView.alpha = 1
+      }
     }
   }
 
@@ -360,7 +371,12 @@ extension UIViewController: ViewControllerProtocol {
       for subview in window.subviews.reversed() {
         // The spinner is inside a container
         if subview.subviews.first is UIActivityIndicatorView { // swiftlint:disable:this for_where
-          subview.removeFromSuperview()
+
+          UIView.animate(withDuration: 0.3, animations: {
+            subview.alpha = 0
+          }) { _ in
+            subview.removeFromSuperview()
+          }
           return
         }
       }

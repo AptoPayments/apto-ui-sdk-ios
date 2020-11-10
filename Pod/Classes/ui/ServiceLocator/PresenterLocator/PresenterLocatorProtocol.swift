@@ -36,7 +36,7 @@ protocol PresenterLocatorProtocol {
   func webBrowserPresenter() -> WebBrowserPresenterProtocol
 
   // MARK: - Manage card
-  func manageCardPresenter(config: ManageShiftCardPresenterConfig) -> ManageShiftCardPresenterProtocol
+  func manageCardPresenter(config: ManageCardPresenterConfig) -> ManageCardPresenterProtocol
   func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig)
     -> FundingSourceSelectorPresenterProtocol
   func cardSettingsPresenter(card: Card, config: CardSettingsPresenterConfig, emailRecipients: [String?],
