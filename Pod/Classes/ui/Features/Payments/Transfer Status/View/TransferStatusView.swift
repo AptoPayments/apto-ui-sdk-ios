@@ -6,7 +6,8 @@ import ReactiveKit
 final class TransferStatusView: UIView {
   
   private let scrollView = UIScrollView()
-  private let uiConfig = AptoPlatform.defaultManager().fetchUIConfig()
+  private let uiConfig: UIConfig
+    
   
   private let statusIcon: UIImageView = {
     let imageView = UIImageView()
@@ -14,34 +15,40 @@ final class TransferStatusView: UIView {
     return imageView
   }()
   
-  private let transferStateLabel: UILabel = {
+  private lazy var transferStateLabel: UILabel = {
     let label = UILabel()
     label.font = .systemFont(ofSize: 24, weight: .semibold)
+    label.textColor = uiConfig.textPrimaryColor
     return label
   }()
   
-  private let disclaimerLabel: UILabel = {
+  private lazy var disclaimerLabel: UILabel = {
     let label = UILabel()
     label.font = .systemFont(ofSize: 12)
     label.numberOfLines = 0
-    label.text = "This transaction will appear in your bank account statement as: Acme Card Program – Cardholder Account Learn more in the Cardholder Agreement"
+    label.isUserInteractionEnabled = true
+    label.lineBreakMode = .byWordWrapping
     return label
   }()
   
-  private let tableView: UITableView = {
+  private lazy var tableView: UITableView = {
     let tableView = UITableView(frame: .zero, style: .grouped)
-    tableView.backgroundColor = .lightGray
     tableView.isScrollEnabled = false
+    tableView.separatorStyle = .none
     return tableView
   }()
   
   private var closeButton: UIButton!
-  private let dataSource = TransferStatusDataSource()
+  private lazy var dataSource: TransferStatusDataSource = {
+      let dataSource = TransferStatusDataSource(uiConfig: uiConfig)
+      return dataSource
+  }()
   private var viewModel: TransferStatusViewModelType?
   private let disposeBag = DisposeBag()
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+    init(uiConfig: UIConfig) {
+    self.uiConfig = uiConfig
+    super.init(frame: .zero)
     setupView()
     setupConstraints()
   }
@@ -52,9 +59,9 @@ final class TransferStatusView: UIView {
   
   private func setupView() {
     backgroundColor = .white
-    statusIcon.tintColor = uiConfig?.uiPrimaryColor
+    statusIcon.tintColor = uiConfig.uiPrimaryColor
     
-    self.closeButton = .roundedButtonWith("load_funds.transaction.primary_cta".podLocalized(), backgroundColor: uiConfig?.uiPrimaryColor ?? .blue, cornerRadius: 24) { [weak self] in
+    self.closeButton = .roundedButtonWith("load_funds.transaction.primary_cta".podLocalized(), backgroundColor: uiConfig.uiPrimaryColor ?? .blue, cornerRadius: 24) { [weak self] in
       self?.viewModel?.input.didTapOnClose()
     }
 
@@ -78,15 +85,23 @@ final class TransferStatusView: UIView {
       switch state {
       case .idle:
         break
-      case .loaded(let items, let amount):
+      case .loaded(let items, let amount, let softDescriptor):
         self?.dataSource.items = items
-        self?.configureTransferState(with: amount)
+        self?.configureTransferState(with: amount, softDescriptor: softDescriptor)
       }
     }).dispose(in: self.disposeBag)
   }
   
-  private func configureTransferState(with amount: Amount) {
+    private func configureTransferState(with amount: Amount, softDescriptor: String) {
     let title = "load_funds.transaction.successfull.description".podLocalized().replacingOccurrences(of: "<<VALUE>>", with: amount.absText)
+    let bankDescriptionText = "load_funds.transaction.bank_description".podLocalized().replacingOccurrences(of: "<<VALUE>>", with: softDescriptor)
+    let learnMoreLinkText = "\n" + "load_funds.transaction.learn_more".podLocalized()
+    let bankDescription = NSMutableAttributedString(string: bankDescriptionText, attributes: [.foregroundColor: uiConfig.textPrimaryColor])
+    let learnMoreLink = NSMutableAttributedString(string: learnMoreLinkText, attributes: [.foregroundColor: uiConfig.textLinkColor])
+    let disclaimerText = NSMutableAttributedString()
+    disclaimerText.append(bankDescription)
+    disclaimerText.append(learnMoreLink)
+        self.disclaimerLabel.attributedText = disclaimerText
     self.transferStateLabel.text = title
   }
   
@@ -112,7 +127,7 @@ final class TransferStatusView: UIView {
     }
     
     disclaimerLabel.snp.makeConstraints { constraints in
-      constraints.leading.greaterThanOrEqualToSuperview().offset(16)
+      constraints.leading.equalTo(self).offset(16)
       constraints.trailing.equalTo(self).inset(16)
       constraints.top.equalTo(tableView.snp.bottom).offset(16)
       constraints.bottom.lessThanOrEqualToSuperview().inset(32)

@@ -3,13 +3,17 @@ import ReactiveKit
 import AptoSDK
 
 final class AddFundsViewController: UIViewController {
-  private let addFundsView = AddFundsView()
   private let viewModel: AddFundsViewModelType
-  private let uiConfig = AptoPlatform.defaultManager().fetchUIConfig()
+  private var uiConfig: UIConfig
   private let disposeBag = DisposeBag()
-  
-  init(viewModel: AddFundsViewModelType) {
+  private lazy var addFundsView: AddFundsView = {
+      let addFundsView = AddFundsView(uiConfig: uiConfig)
+      return addFundsView
+  }()
+    
+  init(viewModel: AddFundsViewModelType, uiConfig: UIConfig) {
     self.viewModel = viewModel
+    self.uiConfig = uiConfig
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -50,7 +54,6 @@ final class AddFundsViewController: UIViewController {
       }
     }.dispose(in: disposeBag)
     
-    addFundsView.set(uiConfig: self.uiConfig)
     addFundsView.didTapOnChangeCurrentCard = { [weak self] in
       self?.viewModel.input.didTapOnChangeCard()
     }

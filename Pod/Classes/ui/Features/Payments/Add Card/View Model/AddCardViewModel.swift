@@ -11,21 +11,23 @@ final class AddCardViewModel: ViewModel {
   // MARK: - Collaborators
   
   private let aptoPlatform: AptoPlatformProtocol
-  private let cardDtector: CardDetector
+  private let cardDetector: CardDetector
   private let expirationDateValidator: ExpirationDateValidator
   private let notificationCenter: NotificationCenter
-  
+  private var cardNetworks: [CardNetwork]
   var navigator: AddCardNavigatorType?
   
   init(aptoPlatform: AptoPlatformProtocol = AptoPlatform.defaultManager(),
        cardDtector: CardDetector = .init(),
        expirationDateValidator: ExpirationDateValidator = .init(),
-       notificationCenter: NotificationCenter = .default)
+       notificationCenter: NotificationCenter = .default,
+       cardNetworks: [CardNetwork] = [])
   {
     self.aptoPlatform = aptoPlatform
-    self.cardDtector = cardDtector
+    self.cardDetector = cardDtector
     self.expirationDateValidator = expirationDateValidator
     self.notificationCenter = notificationCenter
+    self.cardNetworks = cardNetworks
   }
  
   // MARK: - Output
@@ -103,7 +105,7 @@ final class AddCardViewModel: ViewModel {
         return
     }
     
-    guard case (_, true) = cardDtector.detect(card) else {
+    guard case (_, true) = cardDetector.detect(card, cardNetworks: cardNetworks) else {
       self.disableAddCardButton()
       return
     }

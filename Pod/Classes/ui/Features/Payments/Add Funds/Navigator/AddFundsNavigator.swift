@@ -8,16 +8,21 @@ protocol AddFundsNavigatorType: AnyObject {
 }
 
 final class AddFundsNavigator: AddFundsNavigatorType {
-
+  private var uiConfig: UIConfig
   private let from: UIViewController
+  private let softDescriptor: String
+  private let cardNetworks: [CardNetwork]
 
-  init(from: UIViewController) {
+  init(from: UIViewController, uiConfig: UIConfig, softDescriptor: String, cardNetworks: [CardNetwork]) {
+    self.cardNetworks = cardNetworks
     self.from = from
+    self.uiConfig = uiConfig
+    self.softDescriptor = softDescriptor
   }
   
   func navigateToAddCard() {
-    let viewModel = AddCardViewModel()
-    let viewController = AddCardViewController(viewModel: viewModel)
+    let viewModel = AddCardViewModel(cardNetworks: cardNetworks)
+    let viewController = AddCardViewController(viewModel: viewModel, uiConfig: uiConfig, cardNetworks: cardNetworks)
     let navigationController = UINavigationController(
       rootViewController: viewController
     )
@@ -34,7 +39,9 @@ final class AddFundsNavigator: AddFundsNavigatorType {
       rootViewController: viewController
     )
     viewModel.navigator = PaymentMethodsNavigator(
-      from: navigationController
+      from: navigationController,
+      uiConfig: uiConfig,
+      cardNetworks: cardNetworks
     )
     from.navigationController?.present(navigationController, animated: true)
   }
@@ -42,9 +49,10 @@ final class AddFundsNavigator: AddFundsNavigatorType {
   func navigateToPaymentResult(with result: PaymentResult, and currentPaymentSource: PaymentSource) {
     let viewModel = TransferStatusViewModel(
       paymentResult: result,
-      paymentSource: currentPaymentSource
+      paymentSource: currentPaymentSource,
+      softDescriptor: softDescriptor
     )
-    let viewController = TransferStatusViewController(viewModel: viewModel)
+    let viewController = TransferStatusViewController(viewModel: viewModel, uiConfig: uiConfig)
     let navigationController = UINavigationController(
       rootViewController: viewController
     )

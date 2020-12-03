@@ -8,7 +8,7 @@ struct ExpirationDateValidator {
     guard let (month, year) = self.extractDate(from: input) else { return false }
 
     guard month > 0 && month <= 12 else { return false }
-    guard ExpirationDateValidator.currentMillenium + year >= Date().year else { return false }
+    guard (year == Date().year && month >= Date().month) || year > Date().year else { return false }
     return true
   }
   

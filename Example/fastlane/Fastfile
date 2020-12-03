@@ -4,8 +4,8 @@ default_platform(:ios)
 
 WORKSPACE = "ShiftSDK.xcworkspace"
 SCHEME = {
-  :unit => "ShiftSDK Demo Local",
-  :ui => "ShiftSDK Automation Tests",
+  :unit => "AptoUISDK Demo Local",
+  :ui => "AptoUISDK Automation Tests",
 }
 PUBLIC_REPOS = {
   :core => "../../../apto-sdk-ios",

@@ -1,16 +1,20 @@
 import Foundation
+import AptoSDK
 
 final class PaymentMethodsNavigator: PaymentMethodsNavigatorType {
-  
+  private var uiConfig: UIConfig
   private let from: UIViewController
+  private let cardNetworks: [CardNetwork]
   
-  init(from: UIViewController) {
+  init(from: UIViewController, uiConfig: UIConfig, cardNetworks: [CardNetwork]) {
     self.from = from
+    self.uiConfig = uiConfig
+    self.cardNetworks = cardNetworks
   }
   
   func didTapOnAddCard() {
-    let viewModel = AddCardViewModel()
-    let viewController = AddCardViewController(viewModel: viewModel)
+    let viewModel = AddCardViewModel(cardNetworks: cardNetworks)
+    let viewController = AddCardViewController(viewModel: viewModel, uiConfig: uiConfig, cardNetworks: cardNetworks)
     let navigationController = UINavigationController(
       rootViewController: viewController
     )

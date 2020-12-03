@@ -118,6 +118,7 @@
 		3CF9F2E4230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9F2E3230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift */; };
 		3CF9F2E6230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9F2E5230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift */; };
 		3CF9F2E8230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9F2E7230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift */; };
+		6B9CFDFA256D7DD50054DFC6 /* CardFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CFDF9256D7DD50054DFC6 /* CardFormatterTest.swift */; };
 		6D2CB00674B36430AC59868C /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9B834E332FB32D51CA509 /* Pods_Demo.framework */; };
 		9A75992422410BFB00E87E72 /* AnalyticsManagerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A75992322410BFB00E87E72 /* AnalyticsManagerSpy.swift */; };
 		A84D8538568516E8C78356BF /* Pods_AutomationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45F2957E27CE6A1407A11B4 /* Pods_AutomationTests.framework */; };
@@ -409,6 +410,7 @@
 		53AADFDC269B7B832C1CC1C5 /* Pods-AutomationTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomationTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-AutomationTests/Pods-AutomationTests.local.xcconfig"; sourceTree = "<group>"; };
 		5CEE43EEF492E879B1DBFA2B /* Pods-AutomationTests.stg.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomationTests.stg.xcconfig"; path = "Pods/Target Support Files/Pods-AutomationTests/Pods-AutomationTests.stg.xcconfig"; sourceTree = "<group>"; };
 		69AC568A3FBE3349E01DB84B /* Pods-SnapshotTests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SnapshotTests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SnapshotTests/Pods-SnapshotTests.dev.xcconfig"; sourceTree = "<group>"; };
+		6B9CFDF9256D7DD50054DFC6 /* CardFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFormatterTest.swift; sourceTree = "<group>"; };
 		6BA64FF7BC6649A5EE5D70C7 /* Pods_SnapshotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SnapshotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E88F183EB1AC05649A27F2F /* Pods_Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		760F8205A713A9FD3FE7A8FF /* Pods_ledgelink_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ledgelink_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -889,6 +891,7 @@
 			children = (
 				338E36F724B88C220072C7CE /* CardDetectorTest.swift */,
 				2CBD246D25543DA600691D1E /* ExpirationDateValidatorTest.swift */,
+				6B9CFDF9256D7DD50054DFC6 /* CardFormatterTest.swift */,
 			);
 			path = Payments;
 			sourceTree = "<group>";
@@ -1888,6 +1891,7 @@
 				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PullToRefreshKit/PullToRefreshKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveKit/ReactiveKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
@@ -1915,6 +1919,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PullToRefreshKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
@@ -2061,6 +2066,7 @@
 				D99BDA2694F6E9769381BE7D /* ExternalOAuthModuleTest.swift in Sources */,
 				D99BDB56D5589E314E12E900 /* ExternalOAuthInteractorTest.swift in Sources */,
 				3CEBF054215A94D400B077BD /* DataConfirmationModuleTest.swift in Sources */,
+				6B9CFDFA256D7DD50054DFC6 /* CardFormatterTest.swift in Sources */,
 				3C13E53923900FEC00C9F0D3 /* ChangePasscodeTestDoubles.swift in Sources */,
 				D99BDE1E2A95F86112A63746 /* ExternalOAuthPresenterTest.swift in Sources */,
 				D99BD6D836E171312774F482 /* SelectBalanceStoreModuleTest.swift in Sources */,

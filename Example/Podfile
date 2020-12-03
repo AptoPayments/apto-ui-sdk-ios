@@ -22,6 +22,7 @@ def runtimepods
   pod 'TwilioVoice', '~> 3.0'
   pod 'Branch', '~> 0.33.1'
   pod 'AlamofireNetworkActivityLogger', '~> 2.0'
+  pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '6.0.9'
 end
 
 target :Demo do

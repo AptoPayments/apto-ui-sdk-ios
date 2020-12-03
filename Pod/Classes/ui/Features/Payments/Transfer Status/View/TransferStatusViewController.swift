@@ -1,11 +1,17 @@
 import UIKit
+import AptoSDK
 
 final class TransferStatusViewController: UIViewController {
-  private let transferStatusView = TransferStatusView()
-  private let viewModel: TransferStatusViewModelType
   
-  init(viewModel: TransferStatusViewModelType) {
+  private let viewModel: TransferStatusViewModelType
+  private let uiConfig: UIConfig
+  private lazy var transferStatusView: TransferStatusView = {
+      let transferStatusView = TransferStatusView(uiConfig: uiConfig)
+      return transferStatusView
+  }()
+  init(viewModel: TransferStatusViewModelType, uiConfig: UIConfig) {
     self.viewModel = viewModel
+    self.uiConfig = uiConfig
     super.init(nibName: nil, bundle: nil)
   }
   

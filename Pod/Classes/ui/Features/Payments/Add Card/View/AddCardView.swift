@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import ReactiveKit
 import Bond
+import AptoSDK
 
 final class AddCardView: UIView {
 
@@ -9,30 +10,82 @@ final class AddCardView: UIView {
   private let keyboardWatcher = KeyboardWatcher()
   private var viewModel: AddCardViewModelType?
   private let disposeBag = DisposeBag()
-  
-  private let cardInputView: CardInputView = {
-    let cardInput = CardInputView()
+  private var uiConfig: UIConfig
+  private var cardNetworks: [CardNetwork]
+  private lazy var cardInputView: CardInputView = {
+    let cardInput = CardInputView(uiConfig: uiConfig, cardNetworks: self.cardNetworks)
     cardInput.placeholder = "load_funds.add_card.card_number.placeholder".podLocalized()
     return cardInput
   }()
   
-  private let expirationDateInputView: TextInputView = {
-    let textInput = TextInputView()
-    textInput.keyboardType = .asciiCapable
+  private lazy var expirationDateInputView: TextInputView = {
+    let pattern = ExpirationDateValidator()
+    let textInput = TextInputView(uiConfig: uiConfig)
+    textInput.maximumLength = 5
+    textInput.validator = { input in
+        return pattern.validate(input ?? "")
+    }
+    textInput.formatter = { updatedText, string in
+        if string == "" {
+            if updatedText.count == 2 {
+                textInput.value = "\(updatedText.prefix(1))"
+                return false
+            }
+        } else if updatedText.count == 1 {
+            if updatedText > "1" {
+                return true
+            }
+        } else if updatedText.count == 2 {
+            textInput.value = "\(updatedText)/"
+            return false
+        }
+        else if updatedText.count > 5 {
+            return false
+        }
+        return true
+    }
+    textInput.keyboardType = .numberPad
     textInput.placeholder = "load_funds.add_card.date.placeholder".podLocalized()
     return textInput
   }()
   
-  private let cvvCodeInputView: TextInputView = {
-    let textInput = TextInputView()
+  private lazy var cvvCodeInputView: TextInputView = {
+    let textInput = TextInputView(uiConfig: uiConfig)
+    textInput.maximumLength = 3
+    textInput.validator = { input in
+        return input?.count ?? 0 == textInput.maximumLength
+    }
+    textInput.formatter = { updatedText, string in
+        return updatedText.count <= textInput.maximumLength
+    }
     textInput.keyboardType = .numberPad
     textInput.placeholder = "load_funds.add_card.cvv.placeholder".podLocalized()
     return textInput
   }()
   
-  private let zipCodeInputView: TextInputView = {
-    let textInput = TextInputView()
-    textInput.keyboardType = .asciiCapable
+  private lazy var zipCodeInputView: TextInputView = {
+    let pattern = ZipCodeValidator(failReasonMessage: "Wrong Zip Code")
+    let textInput = TextInputView(uiConfig: uiConfig)
+    textInput.maximumLength = 10
+    textInput.validator = { input in
+        return pattern.validate(input) == .pass
+    }
+    textInput.formatter = { updatedText, string in
+        if string == "" {
+            if updatedText.count == 5 {
+                textInput.value = "\(updatedText.prefix(5))"
+                return false
+            }
+        } else if updatedText.count == 6 {
+            textInput.value = "\(updatedText.prefix(5))-\(string)"
+            return false
+        } else if updatedText.count > 10{
+            return false
+        }
+        return true
+    }
+    
+    textInput.keyboardType = .numberPad
     textInput.placeholder = "load_funds.add_card.zip.placeholder".podLocalized()
     return textInput
   }()
@@ -52,8 +105,10 @@ final class AddCardView: UIView {
 
   private var addCardButton: UIButton!
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  init(uiConfig: UIConfig, cardNetworks: [CardNetwork]) {
+    self.uiConfig = uiConfig
+    self.cardNetworks = cardNetworks
+    super.init(frame: .zero)
     setupView()
     setupConstraints()
     configureValidators()
@@ -88,9 +143,34 @@ final class AddCardView: UIView {
     self.viewModel = viewModel
     self.bind()
   }
+    private func hideCardDetails(card: String){
+        if card.isEmpty {
+            self.cvvCodeInputView.isHidden = true
+            self.zipCodeInputView.isHidden = true
+            self.expirationDateInputView.isHidden = true
+        }else{
+            self.cvvCodeInputView.isHidden = false
+            self.zipCodeInputView.isHidden = false
+            self.expirationDateInputView.isHidden = false
+            self.cvvCodeInputView.value = ""
+            self.zipCodeInputView.value = ""
+            self.expirationDateInputView.value = ""
+            self.viewModel?.input.didChange(expiration: "")
+            self.viewModel?.input.didChange(zipCode: "")
+            self.viewModel?.input.didChange(cvv: "")
+        }
+    }
  
   private func bind() {
     cardInputView.didChangeCard = { [weak self] (card, type) in
+        self?.hideCardDetails(card: card)
+        switch type {
+        case .amex:
+            self?.cvvCodeInputView.maximumLength = 4
+        default:
+            self?.cvvCodeInputView.maximumLength = 3
+        }
+        
       self?.viewModel?.input.didChange(card: card, with: type)
     }
     

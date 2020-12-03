@@ -3,7 +3,7 @@ import AptoSDK
 
 enum TransferStatusViewState {
   case idle
-  case loaded(items: [TransferStatusItem], amount: Amount)
+    case loaded(items: [TransferStatusItem], amount: Amount, softDescriptor: String)
 }
 
 protocol TransferStatusViewModelType {

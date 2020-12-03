@@ -9,7 +9,7 @@ final class TransferStatusNavigator: TransferStatusNavigationType {
   init(from: UIViewController?) {
     self.from = from
   }
-  
+    
   func close() {
     from?.dismiss(animated: true) { [weak self] in
       self?.onFinish?()

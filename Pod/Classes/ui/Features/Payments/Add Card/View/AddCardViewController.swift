@@ -1,13 +1,21 @@
 import UIKit
 import ReactiveKit
+import AptoSDK
 
 final class AddCardViewController: UIViewController {
-  private let addCardView = AddCardView()
+  private var uiConfig: UIConfig
   private let viewModel: AddCardViewModelType
   private let disposeBag = DisposeBag()
+  private let cardNetworks: [CardNetwork]
+  private lazy var addCardView: AddCardView = {
+    let addCardView = AddCardView(uiConfig: uiConfig, cardNetworks: self.cardNetworks)
+    return addCardView
+  }()
   
-  init(viewModel: AddCardViewModelType) {
+  init(viewModel: AddCardViewModelType, uiConfig: UIConfig, cardNetworks: [CardNetwork]) {
     self.viewModel = viewModel
+    self.uiConfig = uiConfig
+    self.cardNetworks = cardNetworks
     super.init(nibName: nil, bundle: nil)
   }
  

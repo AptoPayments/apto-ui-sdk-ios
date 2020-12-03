@@ -7,20 +7,17 @@ import AptoSDK
 final class AddFundsView: UIView {
   
   private lazy var textField: UITextField = {
-    let textField = UITextField()
-    textField.font = .boldSystemFont(ofSize: 44)
+    let textField = ComponentCatalog.textFieldWith(placeholder: "$0",placeholderColor: uiConfig.textSecondaryColor, font: .boldSystemFont(ofSize: 44), textColor: uiConfig.textPrimaryColor)
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
-    textField.placeholder = "$0"
     return textField
   }()
-  
   private lazy var currentCardView = CurrentCardView()
   private let keyboardWatcher = KeyboardWatcher()
   private let paymentSourceMapper = PaymentSourceMapper()
   private var nextButton: UIButton!
   private let disposeBag = DisposeBag()
-  private var uiConfig: UIConfig?
+  private var uiConfig: UIConfig
   
   private lazy var stackView: UIStackView = {
     let stackView = UIStackView()
@@ -34,8 +31,9 @@ final class AddFundsView: UIView {
   
   private var viewModel: AddFundsViewModelType?
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  init(uiConfig: UIConfig) {
+    self.uiConfig = uiConfig
+        super.init(frame: .zero)
     setupView()
     setupConstraints()
     watchKeyboard()
@@ -49,7 +47,7 @@ final class AddFundsView: UIView {
     backgroundColor = .white
     addSubview(textField)
 
-    self.nextButton = .roundedButtonWith("load_funds.add_money.primary_cta".podLocalized(), backgroundColor: .blue, cornerRadius: 24) { [weak self] in
+    self.nextButton = .roundedButtonWith("load_funds.add_money.primary_cta".podLocalized(), backgroundColor: uiConfig.uiPrimaryColor, cornerRadius: 24) { [weak self] in
       self?.viewModel?.input.didTapOnPullFunds()
     }
     self.nextButton.isHidden = true
@@ -61,15 +59,7 @@ final class AddFundsView: UIView {
     
     textField.becomeFirstResponder()
     textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-  }
-  
-  private func updateUIConfig() {
-    self.nextButton.backgroundColor = uiConfig?.uiPrimaryColor
-  }
-  
-  func set(uiConfig: UIConfig?) {
-    self.uiConfig = uiConfig
-    self.updateUIConfig()
+    textField.addTarget(self, action: #selector(textFieldDidBeginEditing), for: .editingDidBegin)
   }
   
   func set(current paymentSource: PaymentSource?) {
@@ -154,10 +144,24 @@ final class AddFundsView: UIView {
   }
 }
 
-// MARK: - UITextField
 
+// MARK: - UITextField
 extension AddFundsView {
   @objc private func textFieldDidChange(_ textField: UITextField) {
-    self.didChangeAmountValue?(textField.text)
+    if let text = textField.text{
+        let textWithoutSymbol = String(text.dropFirst()).replacingOccurrences(of: ",", with: "")
+        let formattedNumber = Amount(value: (textWithoutSymbol as NSString).doubleValue , currency: "USD").text
+        let decimalTextWithSymbol = String(formattedNumber.dropLast(3)).replacingOccurrences(of: ",", with: "")
+        let decimalText = String(decimalTextWithSymbol.dropFirst())
+        self.textField.text = decimalTextWithSymbol
+        self.didChangeAmountValue?(decimalText)
+    }
   }
-}
+    @objc private func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.textAlignment = .center
+        if textField.text != nil {
+            let formattedNumber = Amount(value: ("0" as NSString).doubleValue , currency: "USD").text
+            let decimalTextWithSymbol = String(formattedNumber.dropLast(3))
+            self.textField.text = decimalTextWithSymbol
+        }
+    }}

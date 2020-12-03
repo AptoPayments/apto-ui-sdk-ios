@@ -134,11 +134,11 @@ private extension CardSettingsViewControllerTheme2 {
                     legalDocuments, showIvrSupport, showDetailedCardActivity, showMonthlyStatements in
     // swiftlint:enable closure_parameter_position
       let settingsRows = [
+        self.setUpAddFundsRow(),
         self.createSettingsTitle(),
         self.createChangePinRow(showButton: showChangePin),
         self.createGetPinRow(showButton: showGetPin),
         self.setUpShowCardInfoRow(),
-        self.setUpAddFundsRow(),
         self.setUpLockCardRow()
       ].compactMap { return $0 }
       let transactionsRows = [
@@ -180,7 +180,7 @@ private extension CardSettingsViewControllerTheme2 {
   }
 
   func createSettingsTitle() -> FormRowView {
-    return FormRowSectionTitleViewTheme2(title: "card_settings.settings.settings.title".podLocalized(),
+    return FormRowSectionTitleViewTheme2(title: "card_settings.settings.title".podLocalized(),
                                          uiConfig: uiConfiguration)
   }
 

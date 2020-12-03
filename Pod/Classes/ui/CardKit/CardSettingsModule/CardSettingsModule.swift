@@ -146,9 +146,12 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
   
   func showAddFunds(for card: Card) {
     let viewModel = AddFundsViewModel(card: card)
-    let viewController = AddFundsViewController(viewModel: viewModel)
+    let viewController = AddFundsViewController(viewModel: viewModel, uiConfig: uiConfig)
     viewModel.navigator = AddFundsNavigator(
-      from: viewController
+      from: viewController,
+      uiConfig: uiConfig,
+      softDescriptor: card.features?.funding?.softDescriptor ?? "",
+      cardNetworks: card.features?.funding?.cardNetworks ?? []
     )
     self.navigationController?.pushViewController(viewController, animated: true, completion: nil)
   }

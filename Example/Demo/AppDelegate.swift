@@ -11,6 +11,7 @@ import AptoSDK
 import UserNotifications
 import Branch
 import AlamofireNetworkActivityLogger
+import Sentry
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,7 +42,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
     #endif
-    
+    SentrySDK.start { options in
+        options.dsn = "https://38a383fcaf494b0e93b6f2537c574aeb@o21951.ingest.sentry.io/5518327"
+        options.debug = true 
+    }
     return true
   }
 

@@ -1,14 +1,23 @@
 import UIKit
 import SnapKit
+import AptoSDK
 
 final class CardInputView: UIView {
   
   private let cardDetector = CardDetector()
-  private let cardFormatter = CardFormatter()
-  
+  private lazy var cardFormatter: CardFormatter = {
+    let cardFormatter = CardFormatter(cardNetworks: cardNetworks)
+    return cardFormatter
+  }()
+  private var numberOfSpaces = 3
+  private var maxLength = 16
+  private var uiConfig: UIConfig
+  private var cardNetworks: [CardNetwork]
+
+
   var didChangeFocus: (() -> Void)?
   var didChangeCard: ((_ card: String, _ type: CardType) -> Void)?
-  
+
   private lazy var cardIcon: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage.imageFromPodBundle("credit_debit_card")
@@ -32,28 +41,31 @@ final class CardInputView: UIView {
   }()
   
   private lazy var textField: UITextField = {
-    let textField = UITextField()
-    textField.font = .systemFont(ofSize: 16)
-    textField.keyboardType = .numberPad
-    textField.textContentType = .creditCardNumber
-    return textField
-  }()
+    let textField = ComponentCatalog.textFieldWith(placeholderColor: uiConfig.textSecondaryColor,
+                                                   font: uiConfig.fontProvider.cardDetailsTextFont,
+                                                   textColor: uiConfig.textPrimaryColor)
+        textField.keyboardType = .numberPad
+        textField.textContentType = .creditCardNumber
+        return textField
+    }()
    
   var value: String? {
     get { textField.text }
     set {
       textField.text = newValue
-      didChangeTextField(nil)
+      
     }
   }
   
   var placeholder: String? {
-    set { textField.placeholder = newValue }
+    set { textField.attributedPlaceholder = NSAttributedString(string: newValue ?? "", attributes: [NSAttributedString.Key.foregroundColor: uiConfig.textSecondaryColor]) }
     get { textField.placeholder }
   }
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  init(uiConfig: UIConfig, cardNetworks: [CardNetwork]) {
+    self.cardNetworks = cardNetworks
+    self.uiConfig = uiConfig
+    super.init(frame: .zero)
     setupView()
     setupConstraints()
   }
@@ -70,7 +82,7 @@ final class CardInputView: UIView {
     addSubview(textField)
     
     textField.delegate = self
-    textField.addTarget(self, action: #selector(didChangeTextField(_:)), for: .editingChanged)
+    textField.addTarget(self, action: #selector(didStartEditingTextField), for: .editingDidBegin)
   }
  
   private func setupConstraints() {
@@ -106,29 +118,45 @@ final class CardInputView: UIView {
 // MARK: - UITextField
 
 extension CardInputView: UITextFieldDelegate {
-  
-  func textFieldDidEndEditing(_ textField: UITextField) {
-    guard let input = textField.text, !input.isEmpty else { return }
-    
-    let (cardType, isCardValid) = cardDetector.detect(input)
-    
-    if !isCardValid {
-      borderedView.showError()
-    } else {
-      borderedView.hideError()
+      
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    guard let currentString: String = textField.text, let characterRange = Range(range, in: currentString) else { return true }
+    let newString = currentString.replacingCharacters(in: characterRange, with: string)
+    self.updateCardIcon(for: newString)
+    self.configureLength(for: newString)
+    let cardLengthWithSpaces = maxLength + numberOfSpaces
+    let formattedText = cardFormatter.format(String(newString.prefix(cardLengthWithSpaces)))
+    self.textField.text = formattedText
+    let (cardType, isCardValid) = cardDetector.detect(newString, cardNetworks: self.cardNetworks)
+    if isCardValid && formattedText.count == cardLengthWithSpaces {
+        borderedView.hideError()
+        self.didChangeCard?(newString, cardType)
+    } else if formattedText.count < cardLengthWithSpaces {
+        self.didChangeCard?("", cardType)
     }
-
-    self.didChangeCard?(input, cardType)
+    return false
   }
+    @objc private func didStartEditingTextField(){
+        if self.textField.text?.count ?? 0 < maxLength + numberOfSpaces {
+          self.didChangeCard?("", .unknown)
+        }
+    }
+    private func configureLength(for input: String){
+        switch cardDetector.detect(input) {
+        case (.amex, _):
+            self.maxLength = 15
+            self.numberOfSpaces = 2
+            if input.count == maxLength {
+              borderedView.hideError()
+            }
+        default:
+            self.maxLength = 16
+            self.numberOfSpaces = 3
+        }
+    }
   
-  @objc private func didChangeTextField(_ notification: NSNotification?) {
-    guard let input = textField.text else { return }
-    self.updateCardIcon(for: input)
-    self.textField.text = cardFormatter.format(input)
-  }
- 
   private func updateCardIcon(for input: String) {
-    switch cardDetector.detect(input) {
+    switch cardDetector.detect(input,cardNetworks: self.cardNetworks) {
     case (.amex, _):
       cardIcon.image = .imageFromPodBundle("american_express")
     case (.visa, _):

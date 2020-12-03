@@ -58,6 +58,7 @@ final class PaymentMethodCell: UITableViewCell {
     self.icon.image = item.icon
     self.rightIcon.image = self.icon(for: item)
     self.rightIcon.tintColor = uiConfig?.uiPrimaryColor
+    self.backgroundColor = uiConfig?.uiBackgroundPrimaryColor
   }
   
   private func icon(for item: PaymentMethodItem) -> UIImage? {

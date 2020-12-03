@@ -1,6 +1,7 @@
 import Foundation
+import AptoSDK
 
-enum CardType: Equatable, CaseIterable {
+enum CardType: String, Equatable, CaseIterable {
   /* Prefixes and card lengths https://en.wikipedia.org/wiki/Bank_card_number */
   
   case unknown, amex, visa, mastercard, discover
@@ -19,6 +20,22 @@ enum CardType: Equatable, CaseIterable {
       return []
     }
   }
+    
+    var regex: String {
+        switch self {
+        case .amex:
+            return "^3[47][0-9]{13}$"
+        case .visa:
+            return "^4[0-9]{15}$"
+        case .discover:
+            return "^6(?:011\\d{12}|5\\d{14}|4[4-9]\\d{13}|22(?:1(?:2[6-9]|[3-9]\\d)|[2-8]\\d{2}|9(?:[01]\\d|2[0-5]))\\d{10})$"
+        case .mastercard:
+            return "^(?:5[1-5]|2(?!2([01]|20)|7(2[1-9]|3))[2-7])\\d{14}$"
+        default:
+            return ""
+            
+        }
+    }
   
   var lenght: [Int] {
     switch self {
@@ -46,19 +63,19 @@ enum CardType: Equatable, CaseIterable {
 }
 
 struct CardDetector {
-  
-  func detect(_ input: String) -> (cardType: CardType, isValid: Bool) {
+
+    func detect(_ input: String, cardNetworks: [CardNetwork] = []) -> (cardType: CardType, isValid: Bool) {
     let numbers = input.trimmingCharacters(in: .whitespacesAndNewlines)
       .replacingOccurrences(of: " ", with: "")
-    let cardType = self.cardType(for: numbers)
+        let cardType = self.cardType(for: numbers, cardNetworks: cardNetworks)
     if cardType != .unknown {
       return (cardType, self.isCardValid(cardType, numbers))
     }
     return (.unknown, false)
   }
   
-  private func cardType(for input: String) -> CardType {
-    for type in CardType.allCases where type != .unknown {
+    private func cardType(for input: String, cardNetworks: [CardNetwork]) -> CardType {
+      for type in CardType.allCases where type != .unknown && cardNetworks.map({ $0.rawValue }).contains(type.rawValue) {
       for prefix in type.prefix {
         let firstDigits = input.prefix(
           String(prefix.upperBound).count
@@ -72,8 +89,18 @@ struct CardDetector {
   }
   
   private func isCardValid(_ type: CardType, _ numbers: String) -> Bool {
-    type.lenght.contains(numbers.count) && luhnCheck(number: numbers)
+    type.lenght.contains(numbers.count) && luhnCheck(number: numbers) && matchesRegex(regex: type.regex, text: numbers)
   }
+    
+    private func matchesRegex(regex: String!, text: String!) -> Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
+            let match = regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+            return match != nil
+        }catch {
+            return false
+        }
+    }
   
   /// Shamelessly adapted from https://stackoverflow.com/a/39000648
   private func luhnCheck(number: String) -> Bool {

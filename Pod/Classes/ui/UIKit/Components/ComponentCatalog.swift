@@ -126,6 +126,22 @@ class ComponentCatalog {
     retVal.tintColor = uiConfig.uiPrimaryColor
     return retVal
   }
+    
+  static func textFieldWith(placeholder: String = "",
+                            placeholderColor: UIColor = .lightGray,
+                            value: String = "",
+                            font: UIFont? = .systemFont(ofSize: 16),
+                            accessibilityLabel: String? = nil,
+                            textColor: UIColor? = .black) -> UITextField {
+    let textField = UITextField()
+    textField.font = font
+    textField.text = value
+    textField.attributedPlaceholder = NSAttributedString(string: placeholder,
+                                                         attributes: [NSAttributedString.Key.foregroundColor: placeholderColor])
+    textField.textColor = textColor
+    textField.accessibilityLabel = accessibilityLabel
+    return textField
+  }
 
   static func formEmailTextFieldWith(placeholder: String,
                                      value: String?,

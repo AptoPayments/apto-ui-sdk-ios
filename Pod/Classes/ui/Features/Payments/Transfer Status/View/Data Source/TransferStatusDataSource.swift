@@ -1,15 +1,20 @@
 import Foundation
+import AptoSDK
 
 final class TransferStatusDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
   
   private var tableView: UITableView?
-  
+    private var uiConfig: UIConfig?
   var items: [TransferStatusItem] = [] {
     didSet { tableView?.reloadData() }
   }
+    
+  init(uiConfig: UIConfig){
+      self.uiConfig = uiConfig
+  }
   
   func configure(tableView: UITableView) {
-    tableView.backgroundColor = .white
+    tableView.backgroundColor = uiConfig?.uiBackgroundPrimaryColor
     tableView.register(TransferStatusCell.self, forCellReuseIdentifier: TransferStatusCell.identifier)
     tableView.estimatedRowHeight = 56
     tableView.dataSource = self
@@ -23,7 +28,7 @@ final class TransferStatusDataSource: NSObject, UITableViewDataSource, UITableVi
     guard let cell = tableView.dequeueReusableCell(withIdentifier: TransferStatusCell.identifier, for: indexPath) as? TransferStatusCell else { fatalError() }
     guard indexPath.row <= items.count else { fatalError() }
     let item = items[indexPath.row]
-    cell.configure(with: item)
+    cell.configure(with: item, uiConfig: uiConfig)
     return cell
   }
   
