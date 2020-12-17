@@ -44,6 +44,7 @@ class VerifyPhoneInteractor: VerifyPhoneInteractorProtocol {
     case .verification(let verification):
       self.verification = verification
       dataReceiver.unknownPhoneNumber()
+      self.dataReceiver.sendPinSuccess()
     }
   }
 

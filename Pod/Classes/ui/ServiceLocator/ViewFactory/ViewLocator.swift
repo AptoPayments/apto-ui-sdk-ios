@@ -126,8 +126,8 @@ final class ViewLocator: ViewLocatorProtocol {
     return NotificationPreferencesViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func setPinView(presenter: SetPinPresenterProtocol) -> ShiftViewController {
-    return SetPinViewControllerThemeTwo(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
+  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> ShiftViewController {
+    return SetCodeViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter, texts: texts)
   }
 
   func voIPView(presenter: VoIPPresenterProtocol) -> ShiftViewController {

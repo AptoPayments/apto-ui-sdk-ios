@@ -259,6 +259,15 @@ class AptoPlatformFake: AptoPlatformProtocol {
 
   // MARK: - Verifications
 
+  var nextStartPrimaryVerificationResult: Result<Verification, NSError>?
+  private(set) var startPrimaryVerificationCalled = false
+  func startPrimaryVerification(callback: @escaping Result<Verification, NSError>.Callback) {
+    startPrimaryVerificationCalled = true
+    if let result = nextStartPrimaryVerificationResult {
+      callback(result)
+    }
+  }
+
   var nextStartPhoneVerificationResult: Result<Verification, NSError>?
   private(set) var startPhoneVerificationCalled = false
   private(set) var lastStartPhoneVerificationPhone: PhoneNumber?
@@ -575,6 +584,22 @@ class AptoPlatformFake: AptoPlatformProtocol {
     lastChangeCardPINCardId = cardId
     lastChangeCardPINPIN = pin
     if let result = nextChangeCardPINResult {
+      callback(result)
+    }
+  }
+
+  var nextSetCardPassCodeResult: Result<Void, NSError>?
+  private(set) var setCardPassCodeCalled = false
+  private(set) var lastSetCardPassCodeCardId: String?
+  private(set) var lastSetCardPassCodePassCode: String?
+  private(set) var lastSetCardPassCodeVerificationId: String?
+  func setCardPassCode(_ cardId: String, passCode: String, verificationId: String?,
+                       callback: @escaping Result<Void, NSError>.Callback) {
+    setCardPassCodeCalled = true
+    lastSetCardPassCodeCardId = cardId
+    lastSetCardPassCodePassCode = passCode
+    lastSetCardPassCodeVerificationId = verificationId
+    if let result = nextSetCardPassCodeResult {
       callback(result)
     }
   }

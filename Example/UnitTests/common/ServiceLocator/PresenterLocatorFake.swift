@@ -141,8 +141,8 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
     return notificationPreferencesPresenterSpy
   }
 
-  lazy var setPinPresenterSpy = SetPinPresenterSpy()
-  func setPinPresenter() -> SetPinPresenterProtocol {
+  lazy var setPinPresenterSpy = SetCodePresenterSpy()
+  func setCodePresenter() -> SetCodePresenterProtocol {
     return setPinPresenterSpy
   }
 

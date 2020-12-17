@@ -119,7 +119,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
     return ShiftViewController(uiConfiguration: uiConfig)
   }
 
-  func setPinView(presenter: SetPinPresenterProtocol) -> ShiftViewController {
+  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> ShiftViewController {
     return ShiftViewController(uiConfiguration: uiConfig)
   }
 

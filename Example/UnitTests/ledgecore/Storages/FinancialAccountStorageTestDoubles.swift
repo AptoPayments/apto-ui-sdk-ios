@@ -51,6 +51,22 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
                                  callback: @escaping Result<FinancialAccount, NSError>.Callback) {
   }
 
+  private(set) var setCardPassCodeCalled = false
+  private(set) var lastSetCardPassCodeApiKey: String?
+  private(set) var lastSetCardPassCodeUserToken: String?
+  private(set) var lastSetCardPassCodeCardId: String?
+  private(set) var lastSetCardPassCodePassCode: String?
+  private(set) var lastSetCardPassCodeVerificationId: String?
+  func setCardPassCode(_ apiKey: String, userToken: String, cardId: String, passCode: String, verificationId: String?,
+                       callback: @escaping Result<Void, NSError>.Callback) {
+    setCardPassCodeCalled = true
+    lastSetCardPassCodeApiKey = apiKey
+    lastSetCardPassCodeUserToken = userToken
+    lastSetCardPassCodeCardId = cardId
+    lastSetCardPassCodePassCode = passCode
+    lastSetCardPassCodeVerificationId = verificationId
+  }
+
   func financialAccountFundingSources(_ apiKey: String, userToken: String, accountId: String, page: Int?, rows: Int?,
                                       forceRefresh: Bool,
                                       callback: @escaping Result<[FundingSource], NSError>.Callback) {

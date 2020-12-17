@@ -24,6 +24,11 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
     changeCardPinCalled = true
   }
 
+  private(set) var setPassCodeCalled = false
+  func setPassCode() {
+    setPassCodeCalled = true
+  }
+
   private(set) var showVoIPCalled = false
   private(set) var lastShowVoIPActionSource: VoIPActionSource?
   func showVoIP(actionSource: VoIPActionSource) {
@@ -172,6 +177,11 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
   private(set) var getPinTappedCalled = false
   func getPinTapped() {
     getPinTappedCalled = true
+  }
+
+  private(set) var setPassCodeTappedCalled = false
+  func setPassCodeTapped() {
+    setPassCodeTappedCalled = true
   }
 
   private(set) var callIvrTappedCalled = false

@@ -53,7 +53,7 @@ protocol ViewLocatorProtocol {
   func cardMonthlyView(presenter: CardMonthlyStatsPresenterProtocol) -> ShiftViewController
   func transactionListView(presenter: TransactionListPresenterProtocol) -> ShiftViewController
   func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> ShiftViewController
-  func setPinView(presenter: SetPinPresenterProtocol) -> ShiftViewController
+  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> ShiftViewController
   func voIPView(presenter: VoIPPresenterProtocol) -> ShiftViewController
   func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> ShiftViewController
   func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> ShiftViewController

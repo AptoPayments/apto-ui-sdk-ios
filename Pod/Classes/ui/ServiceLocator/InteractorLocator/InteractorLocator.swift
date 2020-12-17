@@ -133,8 +133,12 @@ final class InteractorLocator: InteractorLocatorProtocol {
     return NotificationPreferencesInteractor(platform: serviceLocator.platform)
   }
 
-  func setPinInteractor(card: Card) -> SetPinInteractorProtocol {
+  func setPinInteractor(card: Card) -> SetCodeInteractorProtocol {
     return SetPinInteractor(platform: serviceLocator.platform, card: card)
+  }
+
+  func setPassCodeInteractor(card: Card, verification: Verification?) -> SetCodeInteractorProtocol {
+    return SetPassCodeInteractor(platform: serviceLocator.platform, card: card, verification: verification)
   }
 
   func voIPInteractor(card: Card, actionSource: VoIPActionSource) -> VoIPInteractorProtocol {

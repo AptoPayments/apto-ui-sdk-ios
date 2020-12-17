@@ -154,8 +154,12 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return NotificationPreferencesModule(serviceLocator: serviceLocator)
   }
 
-  func setPinModule(card: Card) -> SetPinModuleProtocol {
+  func setPinModule(card: Card) -> SetCodeModuleProtocol {
     return SetPinModule(serviceLocator: serviceLocator, card: card)
+  }
+
+  func setPassCodeModule(card: Card, verification: Verification?) -> SetCodeModuleProtocol {
+    return SetPassCodeModule(serviceLocator: serviceLocator, card: card, verification: verification)
   }
 
   func voIPModule(card: Card, actionSource: VoIPActionSource) -> VoIPModuleProtocol {

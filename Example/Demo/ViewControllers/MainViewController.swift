@@ -17,6 +17,7 @@ class MainViewController: UIViewController {
   fileprivate struct Params {
     static let labelWidth: CGFloat = 120
     static let blueColor: UIColor = UIColor(red: 0.0, green: 0.45, blue: 0.94, alpha: 1.0)
+    static let googleMapsApiKey = "AIzaSyAj21pmvNCyCzFqYq2D3nL4FwYPCzpHwRA"
   }
 
   fileprivate var launchCardFlowButton: UIButton!
@@ -99,7 +100,10 @@ class MainViewController: UIViewController {
       .showDetailedCardActivityOption: true,
       .showMonthlyStatementsOption: true
     ])
-    AptoPlatform.defaultManager().startCardFlow(from: self, mode: .standalone, options: options) { [weak self] result in
+    AptoPlatform.defaultManager().startCardFlow(from: self,
+                                                mode: .standalone,
+                                                options: options,
+                                                googleMapsApiKey: Params.googleMapsApiKey) { [weak self] result in
       self?.hideLoadingSpinner()
       switch result {
       case .failure(let error):

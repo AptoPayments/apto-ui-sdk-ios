@@ -46,7 +46,7 @@ protocol PresenterLocatorProtocol {
   func transactionListPresenter(config: TransactionListModuleConfig) -> TransactionListPresenterProtocol
   func transactionListPresenter(config: TransactionListModuleConfig, transactionListEvents: TransactionListEvents?) -> TransactionListPresenterProtocol
   func notificationPreferencesPresenter() -> NotificationPreferencesPresenterProtocol
-  func setPinPresenter() -> SetPinPresenterProtocol
+  func setCodePresenter() -> SetCodePresenterProtocol
   func voIPPresenter() -> VoIPPresenterProtocol
   func monthlyStatementsListPresenter() -> MonthlyStatementsListPresenterProtocol
   func monthlyStatementsReportPresenter() -> MonthlyStatementsReportPresenterProtocol

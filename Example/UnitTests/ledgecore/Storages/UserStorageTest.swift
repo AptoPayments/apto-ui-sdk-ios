@@ -258,4 +258,59 @@ class UserStorageTest: XCTestCase {
     // Then
     XCTAssertEqual(true, returnedResult?.isFailure)
   }
+
+  // MARK: - Start primary verification
+  func testStartPrimaryVerificationCallTransport() {
+    // When
+    sut.startPrimaryVerification(apiKey, userToken: userToken) { _ in  }
+
+    // Then
+    XCTAssertTrue(transport.postCalled)
+    XCTAssertNotNil(transport.lastPostURL)
+    XCTAssertNotNil(transport.lastPostAuthorization)
+    XCTAssertEqual(true, transport.lastPostFilterInvalidTokenResult)
+  }
+
+  func testStartPrimaryVerificationRequestFailCallbackFailure() {
+    // Given
+    var returnedResult: Result<Verification, NSError>?
+    transport.nextPostResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.startPrimaryVerification(apiKey, userToken: userToken) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
+  func testStartPrimaryVerificationRequestSucceedCallbackSuccess() {
+    // Given
+    var returnedResult: Result<Verification, NSError>?
+    transport.nextPostResult = .success(ModelDataProvider.provider.verificationJSON)
+
+    // When
+    sut.startPrimaryVerification(apiKey, userToken: userToken) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isSuccess)
+  }
+
+  func testStartPrimaryVerificationRequestSucceedWithMalformedJSONCallbackFailure() {
+    // Given
+    var returnedResult: Result<Verification, NSError>?
+    transport.nextPostResult = .success(ModelDataProvider.provider.emptyJSON)
+
+    // When
+    sut.startPrimaryVerification(apiKey, userToken: userToken) { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
 }

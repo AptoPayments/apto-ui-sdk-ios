@@ -8,7 +8,7 @@
 import Foundation
 import AptoSDK
 
-class SetPinInteractor: SetPinInteractorProtocol {
+class SetPinInteractor: SetCodeInteractorProtocol {
   private let platform: AptoPlatformProtocol
   private let card: Card
 
@@ -17,7 +17,7 @@ class SetPinInteractor: SetPinInteractorProtocol {
     self.card = card
   }
 
-  func changePin(_ pin: String, completion: @escaping Result<Card, NSError>.Callback) {
-    platform.changeCardPIN(card.accountId, pin: pin, callback: completion)
+  func changeCode(_ code: String, completion: @escaping Result<Card, NSError>.Callback) {
+    platform.changeCardPIN(card.accountId, pin: code, callback: completion)
   }
 }

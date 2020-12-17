@@ -21,6 +21,8 @@
 		2C1C6D1A1FABAE5D00BD4CD8 /* OfferListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1C6D191FABAE5D00BD4CD8 /* OfferListScreen.swift */; };
 		2C30CE731F4A27BD00DD7A5A /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30CE721F4A27BD00DD7A5A /* HomeScreen.swift */; };
 		2C30CE751F4A41EC00DD7A5A /* VerifyEmailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30CE741F4A41EC00DD7A5A /* VerifyEmailScreen.swift */; };
+		2C38C3D7258B761B00D3DC48 /* SetPassCodeInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C38C3D6258B761B00D3DC48 /* SetPassCodeInteractorTest.swift */; };
+		2C38C3DC258B7E5100D3DC48 /* SetPassCodeModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C38C3DB258B7E5100D3DC48 /* SetPassCodeModuleTest.swift */; };
 		2C526AD41DD5FE5D00537C86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C526AC21DD5FE5D00537C86 /* AppDelegate.swift */; };
 		2C526AD51DD5FE5D00537C86 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C526AC31DD5FE5D00537C86 /* Localizable.strings */; };
 		2C526AD61DD5FE5D00537C86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C526AC71DD5FE5D00537C86 /* Images.xcassets */; };
@@ -175,7 +177,7 @@
 		D99BD6233DCDEC877BB1FCF7 /* AuthModuleTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD12ED8909ACDE7F3A71B /* AuthModuleTestDoubles.swift */; };
 		D99BD62AFD7D84FCA5EAB0ED /* FullScreenDisclaimerPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDF21C640DE79B64E1579 /* FullScreenDisclaimerPresenterTest.swift */; };
 		D99BD656AC57498ABC4E58D7 /* NotificationPreferencesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD4B82FD5A06D0959306D /* NotificationPreferencesTest.swift */; };
-		D99BD65D17206BD083AAAB41 /* SetPinPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD4F2C4BB672983CD87F0 /* SetPinPresenterTest.swift */; };
+		D99BD65D17206BD083AAAB41 /* SetCodePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD4F2C4BB672983CD87F0 /* SetCodePresenterTest.swift */; };
 		D99BD676A369BA5631FDF6D6 /* AmountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD81168A3CD43BA59123C /* AmountTest.swift */; };
 		D99BD687B765050BE2C7F994 /* StorageLocatorFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD2444FD3D4A30DF44712 /* StorageLocatorFake.swift */; };
 		D99BD68B9F302FB06D638D1F /* CardMonthlyStatsPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD2F0DFBA5852D7848E1A /* CardMonthlyStatsPresenterTest.swift */; };
@@ -227,7 +229,7 @@
 		D99BDE1E2A95F86112A63746 /* ExternalOAuthPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD6B194BF7F5FD9BD6B87 /* ExternalOAuthPresenterTest.swift */; };
 		D99BDE2A95E69E64A6A6DC37 /* VoIPCallTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDA2B92AB1FAB3D1D7B1C /* VoIPCallTestDoubles.swift */; };
 		D99BDE4FF2BB737432F8C774 /* MonthlyStatementsReportInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDC8CE5CEED1B0674ACD6 /* MonthlyStatementsReportInteractorTest.swift */; };
-		D99BDE9FFB16559DDC2A9CBD /* SetPinTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD0715668ED8618BD82EE /* SetPinTestDoubles.swift */; };
+		D99BDE9FFB16559DDC2A9CBD /* SetCodeTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD0715668ED8618BD82EE /* SetCodeTestDoubles.swift */; };
 		D99BDEDD6BCCD184AB185BDD /* WebBrowserModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD383C506D53A55B5167F /* WebBrowserModuleTest.swift */; };
 		D99BDEF95E697662D1BEE92F /* WaitListTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDB763CCFE2B6663B024C /* WaitListTestDoubles.swift */; };
 		D99BDF2A84167D22586F4DDE /* ShowDisclaimerActionModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDDEC7F89BAF6E9D29BCB /* ShowDisclaimerActionModuleTest.swift */; };
@@ -301,6 +303,8 @@
 		2C22177A1C5CE33F00558F0F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2C30CE721F4A27BD00DD7A5A /* HomeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		2C30CE741F4A41EC00DD7A5A /* VerifyEmailScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyEmailScreen.swift; sourceTree = "<group>"; };
+		2C38C3D6258B761B00D3DC48 /* SetPassCodeInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPassCodeInteractorTest.swift; sourceTree = "<group>"; };
+		2C38C3DB258B7E5100D3DC48 /* SetPassCodeModuleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPassCodeModuleTest.swift; sourceTree = "<group>"; };
 		2C526AC21DD5FE5D00537C86 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C526AC41DD5FE5D00537C86 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2C526AC51DD5FE5D00537C86 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -431,7 +435,7 @@
 		D99BD00B83C53D45044B1FA1 /* VoIPModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoIPModuleTest.swift; sourceTree = "<group>"; };
 		D99BD011C1A46F756FF8093B /* FullScreenDisclaimerModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenDisclaimerModuleTest.swift; sourceTree = "<group>"; };
 		D99BD042115A0913247DF648 /* IssueCardModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCardModuleTest.swift; sourceTree = "<group>"; };
-		D99BD0715668ED8618BD82EE /* SetPinTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinTestDoubles.swift; sourceTree = "<group>"; };
+		D99BD0715668ED8618BD82EE /* SetCodeTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetCodeTestDoubles.swift; sourceTree = "<group>"; };
 		D99BD0BD4D675A0EBFD070EB /* CardStyleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStyleTest.swift; sourceTree = "<group>"; };
 		D99BD0DA5FA928609BBAC94F /* TransactionListPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListPresenterTest.swift; sourceTree = "<group>"; };
 		D99BD0EA8C02AA98A3D2F1DE /* TransactionListModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListModuleTest.swift; sourceTree = "<group>"; };
@@ -474,7 +478,7 @@
 		D99BD4CAA3430745EE97EB8E /* MonthlyStatementsListModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyStatementsListModuleTest.swift; sourceTree = "<group>"; };
 		D99BD4E2D1B5822248215826 /* ServerMaintenanceErrorPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerMaintenanceErrorPresenterTest.swift; sourceTree = "<group>"; };
 		D99BD4ED0CB0C5B41A5ECC71 /* ExternalOAuthModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalOAuthModuleTest.swift; sourceTree = "<group>"; };
-		D99BD4F2C4BB672983CD87F0 /* SetPinPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinPresenterTest.swift; sourceTree = "<group>"; };
+		D99BD4F2C4BB672983CD87F0 /* SetCodePresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetCodePresenterTest.swift; sourceTree = "<group>"; };
 		D99BD56190C5C4551B635532 /* FullScreenDisclaimerInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenDisclaimerInteractorTest.swift; sourceTree = "<group>"; };
 		D99BD574FE505054FDACB119 /* MonthlyStatementsListInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyStatementsListInteractorTest.swift; sourceTree = "<group>"; };
 		D99BD5D1CAEA83B9B60373F1 /* InMemoryUserDefaultsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryUserDefaultsStorage.swift; sourceTree = "<group>"; };
@@ -632,6 +636,24 @@
 				3C92D20F2343964A00C48D90 /* MonthlyStatementsPeriodTest.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		2C1C3C85258B6904008C7103 /* SetCodeModule */ = {
+			isa = PBXGroup;
+			children = (
+				D99BD0715668ED8618BD82EE /* SetCodeTestDoubles.swift */,
+				D99BD4F2C4BB672983CD87F0 /* SetCodePresenterTest.swift */,
+			);
+			path = SetCodeModule;
+			sourceTree = "<group>";
+		};
+		2C38C3D5258B75DD00D3DC48 /* SetPassCodeModule */ = {
+			isa = PBXGroup;
+			children = (
+				2C38C3D6258B761B00D3DC48 /* SetPassCodeInteractorTest.swift */,
+				2C38C3DB258B7E5100D3DC48 /* SetPassCodeModuleTest.swift */,
+			);
+			path = SetPassCodeModule;
 			sourceTree = "<group>";
 		};
 		2C526AC11DD5FE5D00537C86 /* Demo */ = {
@@ -1258,9 +1280,7 @@
 		D99BD5AE8596C20C9D11900D /* SetPinModule */ = {
 			isa = PBXGroup;
 			children = (
-				D99BD0715668ED8618BD82EE /* SetPinTestDoubles.swift */,
 				D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */,
-				D99BD4F2C4BB672983CD87F0 /* SetPinPresenterTest.swift */,
 				D99BD960D51769BD542CBDED /* SetPinModuleTest.swift */,
 			);
 			path = SetPinModule;
@@ -1525,7 +1545,9 @@
 				D99BDFC6D1261BC749829121 /* WaitListModule */,
 				D99BD12889996B39EB4619D4 /* NotificationPreferences */,
 				D99BDE0EE5E45792839A1209 /* CardProductSelector */,
+				2C1C3C85258B6904008C7103 /* SetCodeModule */,
 				D99BD5AE8596C20C9D11900D /* SetPinModule */,
+				2C38C3D5258B75DD00D3DC48 /* SetPassCodeModule */,
 				D99BD8DC429CBB2C8869B97F /* CardSettings */,
 				D99BD908FB7C8073C49F897F /* Statements */,
 				334E13212464477C00BADC89 /* FundingSource */,
@@ -2080,6 +2102,7 @@
 				D99BD5DE2B51A91002A694EB /* ServerMaintenanceErrorModuleTest.swift in Sources */,
 				D99BD687B765050BE2C7F994 /* StorageLocatorFake.swift in Sources */,
 				D99BD0D3B76E2A681556D3A1 /* AptoPlatformTestDoubles.swift in Sources */,
+				2C38C3D7258B761B00D3DC48 /* SetPassCodeInteractorTest.swift in Sources */,
 				D99BD31F56E362E159AACE4F /* ContentPresenterTestDoubles.swift in Sources */,
 				D99BD466641EDE6E07ABF939 /* ContentPresenterInteractorTest.swift in Sources */,
 				334E13232464479700BADC89 /* FundingSourceSelectorPresenterTest.swift in Sources */,
@@ -2146,8 +2169,9 @@
 				D99BD9C779CB8F62FEFA0E47 /* CountrySelectorInteractorTest.swift in Sources */,
 				D99BDB2CD01601378EF98EBC /* CountrySelectorPresenterTest.swift in Sources */,
 				D99BD4A755759998FD86B09B /* SetPinInteractorTest.swift in Sources */,
-				D99BDE9FFB16559DDC2A9CBD /* SetPinTestDoubles.swift in Sources */,
-				D99BD65D17206BD083AAAB41 /* SetPinPresenterTest.swift in Sources */,
+				D99BDE9FFB16559DDC2A9CBD /* SetCodeTestDoubles.swift in Sources */,
+				2C38C3DC258B7E5100D3DC48 /* SetPassCodeModuleTest.swift in Sources */,
+				D99BD65D17206BD083AAAB41 /* SetCodePresenterTest.swift in Sources */,
 				D99BDAF4F0A593DEEF908090 /* SetPinModuleTest.swift in Sources */,
 				D99BD058DF3974DAFDD8063F /* VoIPTestDoubles.swift in Sources */,
 				2C61F4C52551DDA700A0707E /* ManageCardInteractorTest.swift in Sources */,

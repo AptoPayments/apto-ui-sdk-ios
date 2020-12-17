@@ -7,6 +7,8 @@
 
 import UIKit
 import AptoSDK
+import Bond
+import ReactiveKit
 
 class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
   private let card: Card
@@ -14,6 +16,7 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
   private var projectConfiguration: ProjectConfiguration! // swiftlint:disable:this implicitly_unwrapped_optional
   private var presenter: CardSettingsPresenterProtocol?
   private var contentPresenterModule: ContentPresenterModuleProtocol?
+  private let disposeBag = DisposeBag()
 
   weak var delegate: CardSettingsModuleDelegate?
 
@@ -93,6 +96,32 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
     present(module: module) { _ in }
   }
 
+  func setPassCode() {
+    guard card.state == .active else {
+      self.show(message: "manage_card.confirm_pass_code.card_not_active.message".podLocalized(),
+                title: "manage_card.confirm_pass_code.card_not_active.title".podLocalized(), isError: false)
+      return
+    }
+    let viewModel = PassCodeOnboardingViewModel(card: card)
+    let viewController = PassCodeOnboardingViewController(viewModel: viewModel, uiConfig: uiConfig)
+    viewModel.navigator = PassCodeOnboardingNavigator(
+      from: viewController,
+      uiConfig: uiConfig,
+      serviceLocator: serviceLocator
+    )
+    let navigationController = UINavigationController(rootViewController: viewController)
+    present(viewController: navigationController, animated: true, embedInNavigationController: false) {}
+    viewModel.output.moduleState.observeNext { [weak self] state in
+      switch state {
+      case .idle:
+        self?.hideLoadingView()
+      case .finished:
+        self?.show(message: "manage_card.confirm_pass_code.pin_updated.message".podLocalized(),
+                   title: "manage_card.confirm_pass_code.pin_updated.title".podLocalized(), isError: false)
+      }
+    }.dispose(in: disposeBag)
+  }
+
   func showVoIP(actionSource: VoIPActionSource) {
     let module = serviceLocator.moduleLocator.voIPModule(card: card, actionSource: actionSource)
     module.onClose = { [weak self] _ in
@@ -118,6 +147,7 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
 
   func cardStateChanged(includingTransactions: Bool) {
     delegate?.cardStateChanged(includingTransactions: includingTransactions)
+    close()
   }
 
   func show(content: Content, title: String) {

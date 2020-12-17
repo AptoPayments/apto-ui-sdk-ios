@@ -41,7 +41,7 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
   var view: PINVerificationView!
   // swiftlint:enable implicitly_unwrapped_optional
   let viewModel = PINVerificationViewModel()
-  var countDown: CountDown! // swiftlint:disable:this implicitly_unwrapped_optional
+  var countDown: CountDown?
   var userTriggeredResendPin = false
 
   func viewLoaded() {
@@ -98,7 +98,7 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
 
   func pinVerificationSucceeded(_ verification: Verification) {
     view.hideLoadingSpinner()
-    countDown.stop()
+    countDown?.stop()
     router.phoneVerificationPassed(verification: verification)
   }
 
@@ -121,14 +121,14 @@ class VerifyPhonePresenter: VerifyPhonePresenterProtocol {
     viewModel.footerTitle.send("auth.verify_phone.footer".podLocalized())
     viewModel.resendButtonState.send(.waiting(pendingSeconds: Constants.waitSeconds))
     countDown = CountDown()
-    countDown.start(
+    countDown?.start(
       seconds: Constants.waitSeconds + 1,
       fireBlock: { [weak self] pendingSeconds in
         self?.viewModel.resendButtonState.send(.waiting(pendingSeconds: pendingSeconds))
       },
       endBlock: { [weak self] in
         self?.viewModel.resendButtonState.send(.enabled)
-        self?.countDown.stop()
+        self?.countDown?.stop()
     })
   }
 }

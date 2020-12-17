@@ -126,8 +126,8 @@ final class PresenterLocator: PresenterLocatorProtocol {
     return NotificationPreferencesPresenter()
   }
 
-  func setPinPresenter() -> SetPinPresenterProtocol {
-    return SetPinPresenter()
+  func setCodePresenter() -> SetCodePresenterProtocol {
+    return SetCodePresenter()
   }
 
   func voIPPresenter() -> VoIPPresenterProtocol {

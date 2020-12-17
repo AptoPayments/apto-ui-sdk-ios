@@ -18,6 +18,7 @@ protocol CardSettingsModuleDelegate: class {
 protocol CardSettingsRouterProtocol: class {
   func closeFromShiftCardSettings()
   func changeCardPin()
+  func setPassCode()
   func showVoIP(actionSource: VoIPActionSource)
   func call(url: URL, completion: @escaping () -> Void)
   func showCardInfo()
@@ -65,16 +66,29 @@ extension LegalDocuments {
   }
 }
 
+struct CardSettingsButtonsVisibility {
+  let showChangePin: Bool
+  let showGetPin: Bool
+  let showSetPassCode: Bool
+  let showIVRSupport: Bool
+  let showDetailedCardActivity: Bool
+  let isShowDetailedCardActivityEnabled: Bool
+  let showMonthlyStatements: Bool
+  let showAddFundsFeature: Bool
+}
+
+extension CardSettingsButtonsVisibility {
+  init() {
+    self.init(showChangePin: false, showGetPin: false, showSetPassCode: false, showIVRSupport: false,
+              showDetailedCardActivity: false, isShowDetailedCardActivityEnabled: false, showMonthlyStatements: false,
+              showAddFundsFeature: false)
+  }
+}
+
 class CardSettingsViewModel {
   let locked: Observable<Bool?> = Observable(nil)
   let legalDocuments: Observable<LegalDocuments> = Observable(LegalDocuments())
-  let showChangePin: Observable<Bool> = Observable(false)
-  let showGetPin: Observable<Bool> = Observable(false)
-  let showIVRSupport: Observable<Bool> = Observable(false)
-  let showDetailedCardActivity: Observable<Bool> = Observable(false)
-  let isShowDetailedCardActivityEnabled: Observable<Bool> = Observable(false)
-  let showMonthlyStatements: Observable<Bool> = Observable(false)
-  let showAddFundsFeature: Observable<Bool> = Observable(false)
+  let buttonsVisibility: Observable<CardSettingsButtonsVisibility> = Observable(CardSettingsButtonsVisibility())
 }
 
 protocol CardSettingsPresenterProtocol: class {
@@ -92,6 +106,7 @@ protocol CardSettingsPresenterProtocol: class {
   func lostCardTapped()
   func changePinTapped()
   func getPinTapped()
+  func setPassCodeTapped()
   func callIvrTapped()
   func lockCardChanged(switcher: UISwitch)
   func didTapOnShowCardInfo()

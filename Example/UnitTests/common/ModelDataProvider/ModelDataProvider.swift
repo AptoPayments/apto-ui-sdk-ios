@@ -218,7 +218,8 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                passCode: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -245,7 +246,8 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
                                 getPin: FeatureAction(source: .voIP, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                passCode: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -272,7 +274,8 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .api, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                passCode: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -299,7 +302,36 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                passCode: nil)
+    let card = Card(accountId: "card_id",
+                    cardProductId: "card_product_id",
+                    cardNetwork: .other,
+                    cardIssuer: .shift,
+                    cardBrand: "Shift",
+                    state: .active,
+                    cardHolder: "Holder Name",
+                    lastFourDigits: "7890",
+                    spendableToday: Amount(value: 12.34, currency: "GBP"),
+                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                    totalBalance: Amount(value: 12.34, currency: "GBP"),
+                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                    kyc: .passed,
+                    orderedStatus: .received,
+                    features: features,
+                    panToken: "pan_token",
+                    cvvToken: "cvv_token",
+                    verified: true)
+    return card
+  }()
+
+  lazy var cardWithPassCode: Card = {
+    let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
+    let ivr = IVR(status: .enabled, phone: phoneNumber)
+    let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
+                                getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                passCode: PassCode(status: .enabled, passCodeSet: false, verificationRequired: true))
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -326,7 +358,8 @@ class ModelDataProvider {
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
                                 getPin: FeatureAction(source: .unknown, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil)
+                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                passCode: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -591,4 +624,17 @@ class ModelDataProvider {
 
   lazy var monthlyStatementsPeriod = MonthlyStatementsPeriod(start: Month(month: 5, year: 2019),
                                                              end: Month(month: 9, year: 2019))
+
+  lazy var verification: Verification = {
+    let verification = Verification(verificationId: "verification_id",
+                                    verificationType: .phoneNumber,
+                                    status: .passed)
+    return verification
+  }()
+
+  lazy var verificationJSON = JSON(dictionaryLiteral: ("type", "verification"), ("verification_id", "id"),
+                                   ("verification_type", "phone"), ("verification_type", "phone"),
+                                   ("status", "pending"))
+
+
 }

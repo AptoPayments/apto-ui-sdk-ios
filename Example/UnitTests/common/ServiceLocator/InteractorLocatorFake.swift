@@ -136,9 +136,14 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
     return notificationPreferencesInteractorFake
   }
 
-  lazy var setPinInteractorFake = SetPinInteractorFake()
-  func setPinInteractor(card: Card) -> SetPinInteractorProtocol {
+  lazy var setPinInteractorFake = SetCodeInteractorFake()
+  func setPinInteractor(card: Card) -> SetCodeInteractorProtocol {
     return setPinInteractorFake
+  }
+
+  lazy var setPassCodeInteractorFake = SetCodeInteractorFake()
+  func setPassCodeInteractor(card: Card, verification: Verification?) -> SetCodeInteractorProtocol {
+    return setPassCodeInteractorFake
   }
 
   lazy var voIPInteractorFake = VoIPInteractorFake()

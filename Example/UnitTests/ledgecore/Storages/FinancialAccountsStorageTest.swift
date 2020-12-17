@@ -103,6 +103,65 @@ class FinancialAccountsStorageTest: XCTestCase {
     XCTAssertEqual(true, returnedResult?.isFailure)
   }
 
+  // MARK: - Set card pass code
+  func testSetCardPassCodeCallTransport() {
+    // When
+    sut.setCardPassCode(apiKey, userToken: userToken, cardId: "card_id", passCode: "passcode",
+                        verificationId: "verification_id") { _ in }
+
+    // Then
+    XCTAssertTrue(transport.postCalled)
+    XCTAssertNotNil(transport.lastPostURL)
+    XCTAssertNotNil(transport.lastPostAuthorization)
+    XCTAssertNotNil(transport.lastPostParameters)
+    XCTAssertNotNil(transport.lastPostParameters?["passcode"])
+    XCTAssertNotNil(transport.lastPostParameters?["verification_id"])
+    XCTAssertEqual(true, transport.lastPostFilterInvalidTokenResult)
+  }
+
+  func testSetCardPassCodeWithAppropriateURL() {
+    // Given
+    let expectedUrl = JSONRouter.setCardPassCode
+
+    // When
+    sut.setCardPassCode(apiKey, userToken: userToken, cardId: "card_id", passCode: "passcode") { _ in }
+
+    // Then
+    guard let urlWrapper = transport.lastPostURL as? URLWrapper else {
+      XCTFail("Wrong url type sent to transport")
+      return
+    }
+    XCTAssertEqual(expectedUrl, urlWrapper.url)
+  }
+
+  func testSetCardPassCodeRequestFailCallbackFailure() {
+    // Given
+    var returnedResult: Result<Void, NSError>?
+    transport.nextPostResult = .failure(BackendError(code: .other))
+
+    // When
+    sut.setCardPassCode(apiKey, userToken: userToken, cardId: "card_id", passCode: "passcode") { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isFailure)
+  }
+
+  func testSetCardPassCodeRequestSucceedCallbackSuccess() {
+    // Given
+    var returnedResult: Result<Void, NSError>?
+    transport.nextPostResult = .success(ModelDataProvider.provider.emptyJSON)
+
+    // When
+    sut.setCardPassCode(apiKey, userToken: userToken, cardId: "card_id", passCode: "passcode") { result in
+      returnedResult = result
+    }
+
+    // Then
+    XCTAssertEqual(true, returnedResult?.isSuccess)
+  }
+
   // MARK: - Issue card
   func testIssueCardCallTransport() {
     // When

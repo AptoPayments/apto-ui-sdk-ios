@@ -54,9 +54,6 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                                         termsAndConditions: config.termsAndCondition,
                                         privacyPolicy: config.privacyPolicy)
     self.viewModel.legalDocuments.send(legalDocuments)
-    
-    let isShowFundsFeatureEnabled = (self.card.features?.funding?.status == .enabled)
-    self.viewModel.showAddFundsFeature.send(isShowFundsFeatureEnabled)
   }
 
   func viewLoaded() {
@@ -136,23 +133,16 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   }
 
   fileprivate func refreshData() {
-    if let setPin = card.features?.setPin, setPin.status == .enabled {
-      viewModel.showChangePin.send(true)
-    }
-    else {
-      viewModel.showChangePin.send(false)
-    }
-    if let getPin = card.features?.getPin, getPin.status == .enabled {
-      viewModel.showGetPin.send(true)
-    }
-    else {
-      viewModel.showGetPin.send(false)
-    }
     viewModel.locked.send(card.state != .active)
-    viewModel.showIVRSupport.send(card.features?.ivrSupport?.status == .enabled)
-    viewModel.isShowDetailedCardActivityEnabled.send(interactor.isShowDetailedCardActivityEnabled())
-    viewModel.showDetailedCardActivity.send(config.showDetailedCardActivity)
-    viewModel.showMonthlyStatements.send(config.showMonthlyStatements)
+    viewModel.buttonsVisibility.send(CardSettingsButtonsVisibility(
+      showChangePin: card.features?.setPin?.status == .enabled,
+      showGetPin: card.features?.getPin?.status == .enabled,
+      showSetPassCode: card.features?.passCode?.status == .enabled,
+      showIVRSupport: card.features?.ivrSupport?.status == .enabled,
+      showDetailedCardActivity: config.showDetailedCardActivity,
+      isShowDetailedCardActivityEnabled: interactor.isShowDetailedCardActivityEnabled(),
+      showMonthlyStatements: config.showMonthlyStatements,
+      showAddFundsFeature: card.features?.funding?.status == .enabled))
   }
 
   func closeTapped() {
@@ -207,6 +197,10 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     case .unknown:
       break
     }
+  }
+
+  func setPassCodeTapped() {
+    router.setPassCode()
   }
 
   func show(content: Content, title: String) {

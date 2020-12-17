@@ -55,7 +55,8 @@ protocol ModuleLocatorProtocol {
   func cardMonthlyStatsModule(card: Card) -> CardMonthlyStatsModuleProtocol
   func transactionListModule(card: Card, config: TransactionListModuleConfig) -> TransactionListModuleProtocol
   func notificationPreferencesModule() -> NotificationPreferencesModuleProtocol
-  func setPinModule(card: Card) -> SetPinModuleProtocol
+  func setPinModule(card: Card) -> SetCodeModuleProtocol
+  func setPassCodeModule(card: Card, verification: Verification?) -> SetCodeModuleProtocol
   func voIPModule(card: Card, actionSource: VoIPActionSource) -> VoIPModuleProtocol
   func monthlyStatementsList() -> MonthlyStatementsListModuleProtocol
   func monthlyStatementsReportModule(month: Month) -> MonthlyStatementsReportModuleProtocol

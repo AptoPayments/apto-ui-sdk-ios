@@ -210,11 +210,18 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
     return notificationPreferencesModuleSpy
   }
 
-  lazy var setPinModuleSpy: SetPinModuleSpy = {
-    return SetPinModuleSpy(serviceLocator: serviceLocator)
+  lazy var setPinModuleSpy: SetCodeModuleSpy = {
+    return SetCodeModuleSpy(serviceLocator: serviceLocator)
   }()
-  func setPinModule(card: Card) -> SetPinModuleProtocol {
+  func setPinModule(card: Card) -> SetCodeModuleProtocol {
     return setPinModuleSpy
+  }
+
+  lazy var setPassCodeModuleSpy: SetCodeModuleSpy = {
+    return SetCodeModuleSpy(serviceLocator: serviceLocator)
+  }()
+  func setPassCodeModule(card: Card, verification: Verification?) -> SetCodeModuleProtocol {
+    return setPassCodeModuleSpy
   }
 
   lazy var voIPModuleSpy: VoIPModuleSpy = {

@@ -25,7 +25,7 @@ class SetPinInteractorTest: XCTestCase {
 
   func testChangePinCallCardSessionToChangePin() {
     // When
-    sut.changePin(pin) { _ in }
+    sut.changeCode(pin) { _ in }
 
     // Then
     XCTAssertTrue(platform.changeCardPINCalled)
@@ -39,7 +39,7 @@ class SetPinInteractorTest: XCTestCase {
     platform.nextChangeCardPINResult = .success(card)
 
     // When
-    sut.changePin(pin) { result in
+    sut.changeCode(pin) { result in
       returnedResult = result
     }
 
@@ -53,7 +53,7 @@ class SetPinInteractorTest: XCTestCase {
     platform.nextChangeCardPINResult = .failure(BackendError(code: .other))
 
     // When
-    sut.changePin(pin) { result in
+    sut.changeCode(pin) { result in
       returnedResult = result
     }
 

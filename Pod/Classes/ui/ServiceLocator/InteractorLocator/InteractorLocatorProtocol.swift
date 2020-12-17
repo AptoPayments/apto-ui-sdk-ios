@@ -45,7 +45,8 @@ protocol InteractorLocatorProtocol {
   func cardMonthlyStatsInteractor(card: Card) -> CardMonthlyStatsInteractorProtocol
   func transactionListInteractor(card: Card) -> TransactionListInteractorProtocol
   func notificationPreferencesInteractor() -> NotificationPreferencesInteractorProtocol
-  func setPinInteractor(card: Card) -> SetPinInteractorProtocol
+  func setPinInteractor(card: Card) -> SetCodeInteractorProtocol
+  func setPassCodeInteractor(card: Card, verification: Verification?) -> SetCodeInteractorProtocol
   func voIPInteractor(card: Card, actionSource: VoIPActionSource) -> VoIPInteractorProtocol
   func monthlyStatementsListInteractor() -> MonthlyStatementsListInteractorProtocol
   func monthlyStatementsReportInteractor(month: Month, downloaderProvider: FileDownloaderProvider)

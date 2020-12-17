@@ -9,16 +9,17 @@ import XCTest
 import AptoSDK
 @testable import AptoUISDK
 
-class SetPinModuleTest: XCTestCase {
-  private var sut: SetPinModule! // swiftlint:disable:this implicitly_unwrapped_optional
+class SetPassCodeModuleTest: XCTestCase {
+  private var sut: SetPassCodeModule! // swiftlint:disable:this implicitly_unwrapped_optional
 
   // Collaborators
   private let serviceLocator = ServiceLocatorFake()
   private let card = ModelDataProvider.provider.card
+  private let verification = ModelDataProvider.provider.verification
 
   override func setUp() {
     super.setUp()
-    sut = SetPinModule(serviceLocator: serviceLocator, card: card)
+    sut = SetPassCodeModule(serviceLocator: serviceLocator, card: card, verification: verification)
   }
 
   func testInitializeCallbackSuccess() {
@@ -47,7 +48,7 @@ class SetPinModuleTest: XCTestCase {
     XCTAssertNotNil(presenter.analyticsManager)
   }
 
-  func testPinChangeCallClose() {
+  func testCodeChangedCallClose() {
     // Given
     var finishCalled = false
     sut.onFinish = { _ in

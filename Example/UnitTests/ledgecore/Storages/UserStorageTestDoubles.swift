@@ -35,6 +35,14 @@ class UserStorageSpy: UserStorageProtocol {
                       callback: @escaping Result<ShiftUser, NSError>.Callback) {
   }
 
+  private(set) var startPrimaryVerificationCalled = false
+  private(set) var lastStarPrimaryVerificationApiKey: String?
+  private(set) var lastStarPrimaryVerificationUserToken: String?
+  func startPrimaryVerification(_ apiKey: String, userToken: String, callback: @escaping Result<Verification, NSError>.Callback) {
+    startPrimaryVerificationCalled = true
+    lastStarPrimaryVerificationUserToken = userToken
+  }
+
   func startPhoneVerification(_ apiKey: String, phone: PhoneNumber,
                               callback: @escaping Result<Verification, NSError>.Callback) {
   }

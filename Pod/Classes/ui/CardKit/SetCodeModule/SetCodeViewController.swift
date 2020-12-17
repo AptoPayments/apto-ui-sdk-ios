@@ -11,20 +11,22 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class SetPinViewControllerThemeTwo: ShiftViewController {
+class SetCodeViewController: ShiftViewController {
   private let disposeBag = DisposeBag()
-  private unowned let presenter: SetPinPresenterProtocol
+  private unowned let presenter: SetCodePresenterProtocol
+  private let texts: SetCodeViewControllerTexts
   private let titleLabel: UILabel
   private let explanationLabel: UILabel
   private var pinEntryContainerView = UIView()
   private var pinEntryView: UIPinEntryTextField
   private var pin: String?
 
-  init(uiConfiguration: UIConfig, presenter: SetPinPresenterProtocol) {
+  init(uiConfiguration: UIConfig, presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) {
     self.presenter = presenter
-    self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: "manage_card.set_pin.title".podLocalized(),
+    self.texts = texts
+    self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: texts.setCode.title,
                                                            multiline: false, uiConfig: uiConfiguration)
-    self.explanationLabel = ComponentCatalog.formLabelWith(text: "manage_card.set_pin.explanation".podLocalized(),
+    self.explanationLabel = ComponentCatalog.formLabelWith(text: texts.setCode.explanation,
                                                            multiline: true, lineSpacing: uiConfiguration.lineSpacing,
                                                            letterSpacing: uiConfiguration.letterSpacing,
                                                            uiConfig: uiConfiguration)
@@ -53,7 +55,7 @@ class SetPinViewControllerThemeTwo: ShiftViewController {
   }
 }
 
-extension SetPinViewControllerThemeTwo: UIPinEntryTextFieldDelegate {
+extension SetCodeViewController: UIPinEntryTextFieldDelegate {
   func pinEntryTextField(didFinishInput frPinView: UIPinEntryTextField) {
     let newPin = frPinView.getText()
     if let pin = self.pin {
@@ -67,7 +69,7 @@ extension SetPinViewControllerThemeTwo: UIPinEntryTextFieldDelegate {
 
   func handlePinConfirmation(pin: String, newPin: String) {
     if pin == newPin {
-      presenter.pinEntered(pin)
+      presenter.codeEntered(pin)
     }
     else {
       updateUIForPin()
@@ -76,30 +78,30 @@ extension SetPinViewControllerThemeTwo: UIPinEntryTextFieldDelegate {
   }
 
   func updateUIForPin() {
-    view.fadeIn(animations: { [unowned self] in // swiftlint:disable:this trailing_closure
-      self.titleLabel.updateAttributedText("manage_card.set_pin.title".podLocalized())
-      self.explanationLabel.updateAttributedText("manage_card.set_pin.explanation".podLocalized())
-      self.pinEntryView.resetText()
-      self.pinEntryView.focus()
-      self.navigationItem.leftBarButtonItem = nil
-      self.showNavCancelButton()
-      self.pin = nil
+    view.fadeIn(animations: { [weak self] in // swiftlint:disable:this trailing_closure
+      self?.titleLabel.updateAttributedText(self?.texts.setCode.title)
+      self?.explanationLabel.updateAttributedText(self?.texts.setCode.explanation)
+      self?.pinEntryView.resetText()
+      self?.pinEntryView.focus()
+      self?.navigationItem.leftBarButtonItem = nil
+      self?.showNavCancelButton()
+      self?.pin = nil
     })
   }
 
   func updateUIForPinConfirmation() {
-    view.fadeIn(animations: { [unowned self] in // swiftlint:disable:this trailing_closure
-      self.titleLabel.updateAttributedText("manage_card.confirm_pin.title".podLocalized())
-      self.explanationLabel.updateAttributedText("manage_card.confirm_pin.explanation".podLocalized())
-      self.pinEntryView.resetText()
-      self.pinEntryView.focus()
-      self.navigationItem.leftBarButtonItem = nil
-      self.showNavPreviousButton()
+    view.fadeIn(animations: { [weak self] in // swiftlint:disable:this trailing_closure
+      self?.titleLabel.updateAttributedText(self?.texts.confirmCode.title)
+      self?.explanationLabel.updateAttributedText(self?.texts.confirmCode.explanation)
+      self?.pinEntryView.resetText()
+      self?.pinEntryView.focus()
+      self?.navigationItem.leftBarButtonItem = nil
+      self?.showNavPreviousButton()
     })
   }
 }
 
-private extension SetPinViewControllerThemeTwo {
+private extension SetCodeViewController {
   func setUpViewModelSubscriptions() {
     let viewModel = presenter.viewModel
     viewModel.showLoading.ignoreNils().observeNext { [weak self] showLoading in
@@ -121,7 +123,7 @@ private extension SetPinViewControllerThemeTwo {
 }
 
 // MARK: - Set up UI
-private extension SetPinViewControllerThemeTwo {
+private extension SetCodeViewController {
   func setUpUI() {
     view.backgroundColor = uiConfiguration.uiBackgroundPrimaryColor
     setUpTitle()
@@ -196,7 +198,6 @@ private extension SetPinViewControllerThemeTwo {
 
   func showPinDoNotMatchErrorMessage() {
     _ = pinEntryView.resignFirstResponder()
-    show(message: "manage_card.confirm_pin.error_wrong_code.message".podLocalized(),
-         title: "manage_card.confirm_pin.error_wrong_code.title".podLocalized(), isError: true)
+    show(message: texts.setCode.wrongCodeMessage, title: texts.setCode.wrongCodeTitle, isError: true)
   }
 }

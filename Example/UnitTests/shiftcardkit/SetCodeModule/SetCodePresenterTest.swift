@@ -9,18 +9,18 @@ import XCTest
 import AptoSDK
 @testable import AptoUISDK
 
-class SetPinPresenterTest: XCTestCase {
-  private var sut: SetPinPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
+class SetCodePresenterTest: XCTestCase {
+  private var sut: SetCodePresenter! // swiftlint:disable:this implicitly_unwrapped_optional
 
   // Collaborators
-  private let router = SetPinModuleSpy(serviceLocator: ServiceLocatorFake())
-  private let interactor = SetPinInteractorFake()
+  private let router = SetCodeModuleSpy(serviceLocator: ServiceLocatorFake())
+  private let interactor = SetCodeInteractorFake()
   private let analyticsManager = AnalyticsManagerSpy()
   private let pin = "0986"
 
   override func setUp() {
     super.setUp()
-    sut = SetPinPresenter()
+    sut = SetCodePresenter()
     sut.router = router
     sut.interactor = interactor
     sut.analyticsManager = analyticsManager
@@ -37,17 +37,17 @@ class SetPinPresenterTest: XCTestCase {
 
   func testPinEnteredCallInteractor() {
     // When
-    sut.pinEntered(pin)
+    sut.codeEntered(pin)
 
     // Then
     XCTAssertEqual(true, sut.viewModel.showLoading.value)
-    XCTAssertTrue(interactor.changePinCalled)
-    XCTAssertEqual(pin, interactor.lastPinToChange)
+    XCTAssertTrue(interactor.changeCodeCalled)
+    XCTAssertEqual(pin, interactor.lastChangeCodeCode)
   }
 
   func testPinEnteredTrackEvent() {
     // When
-    sut.pinEntered(pin)
+    sut.codeEntered(pin)
 
     // Then
     XCTAssertTrue(analyticsManager.trackCalled)
@@ -56,23 +56,23 @@ class SetPinPresenterTest: XCTestCase {
 
   func testChangePinSucceedNotifyRouter() {
     // Given
-    interactor.nextChangePinResult = .success(ModelDataProvider.provider.card)
+    interactor.nextChangeCodeResult = .success(ModelDataProvider.provider.card)
 
     // When
-    sut.pinEntered(pin)
+    sut.codeEntered(pin)
 
     // Then
     XCTAssertEqual(false, sut.viewModel.showLoading.value)
-    XCTAssertTrue(router.pinChangedCalled)
+    XCTAssertTrue(router.codeChangedCalled)
   }
 
   func testChangePinFailShowError() {
     // Given
     let error = BackendError(code: .other)
-    interactor.nextChangePinResult = .failure(error)
+    interactor.nextChangeCodeResult = .failure(error)
 
     // When
-    sut.pinEntered(pin)
+    sut.codeEntered(pin)
 
     // Then
     XCTAssertEqual(false, sut.viewModel.showLoading.value)

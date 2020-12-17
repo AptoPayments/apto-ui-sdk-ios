@@ -45,7 +45,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertFalse(sut.viewModel.showChangePin.value)
+    XCTAssertFalse(sut.viewModel.buttonsVisibility.value.showChangePin)
   }
 
   func testCardWithSetPinShowChangePinIsTrue() {
@@ -56,7 +56,26 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertTrue(sut.viewModel.showChangePin.value)
+    XCTAssertTrue(sut.viewModel.buttonsVisibility.value.showChangePin)
+  }
+
+  func testCardWithoutSetPassCodeIsFalse() {
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertFalse(sut.viewModel.buttonsVisibility.value.showSetPassCode)
+  }
+
+  func testCardWithSetPassCodeIsTrue() {
+    // Given
+    setUpSUT(card: ModelDataProvider.provider.cardWithPassCode, config: config)
+
+    // When
+    sut.viewLoaded()
+
+    // Then
+    XCTAssertTrue(sut.viewModel.buttonsVisibility.value.showSetPassCode)
   }
 
   func testCardWithoutGetPinShowGetIsFalse() {
@@ -64,7 +83,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertFalse(sut.viewModel.showGetPin.value)
+    XCTAssertFalse(sut.viewModel.buttonsVisibility.value.showGetPin)
   }
 
   func testCardWithGetPinShowGetPinIsTrue() {
@@ -75,7 +94,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertTrue(sut.viewModel.showGetPin.value)
+    XCTAssertTrue(sut.viewModel.buttonsVisibility.value.showGetPin)
   }
 
   func testActiveCardLockedIsFalse() {
@@ -102,7 +121,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertFalse(sut.viewModel.showIVRSupport.value)
+    XCTAssertFalse(sut.viewModel.buttonsVisibility.value.showIVRSupport)
   }
 
   func testCardWithIvrSupportShowIvrSupportIsTrue() {
@@ -113,7 +132,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertTrue(sut.viewModel.showIVRSupport.value)
+    XCTAssertTrue(sut.viewModel.buttonsVisibility.value.showIVRSupport)
   }
 
   func testViewLoadedWithShowDetailedCardActivityShowDetailedCardActivity() {
@@ -121,7 +140,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertTrue(sut.viewModel.showDetailedCardActivity.value)
+    XCTAssertTrue(sut.viewModel.buttonsVisibility.value.showDetailedCardActivity)
   }
 
   func testViewLoadedWithoutShowDetailedCardActivityDoNotShowDetailedCardActivity() {
@@ -134,7 +153,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertFalse(sut.viewModel.showDetailedCardActivity.value)
+    XCTAssertFalse(sut.viewModel.buttonsVisibility.value.showDetailedCardActivity)
   }
 
   func testViewLoadedWithShowMonthlyStatementsShowMonthlyStatements() {
@@ -142,7 +161,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertTrue(sut.viewModel.showMonthlyStatements.value)
+    XCTAssertTrue(sut.viewModel.buttonsVisibility.value.showMonthlyStatements)
   }
 
   func testViewLoadedWithoutShowMonthlyStatementsDoNotShowMonthlyStatements() {
@@ -155,7 +174,7 @@ class CardSettingsPresenterTest: XCTestCase {
     sut.viewLoaded()
 
     // Then
-    XCTAssertFalse(sut.viewModel.showMonthlyStatements.value)
+    XCTAssertFalse(sut.viewModel.buttonsVisibility.value.showMonthlyStatements)
   }
 
   func testViewLoadedLoadDetailedCardActivityEnabled() {
@@ -167,7 +186,7 @@ class CardSettingsPresenterTest: XCTestCase {
 
     // Then
     XCTAssertTrue(interactor.isShowDetailedCardActivityEnabledCalled)
-    XCTAssertTrue(sut.viewModel.isShowDetailedCardActivityEnabled.value)
+    XCTAssertTrue(sut.viewModel.buttonsVisibility.value.isShowDetailedCardActivityEnabled)
   }
 
   func testUpdateCardNewStatusNotifyRouter() {
@@ -204,6 +223,14 @@ class CardSettingsPresenterTest: XCTestCase {
 
     // Then
     XCTAssertTrue(router.changeCardPinCalled)
+  }
+
+  func testSetPassCodeTappedNotifyRouter() {
+    // When
+    sut.setPassCodeTapped()
+
+    // Then
+    XCTAssertTrue(router.setPassCodeCalled)
   }
 
   func testCardWithVoIPGetPinTappedCallShowVoIP() {

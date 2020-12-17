@@ -124,34 +124,28 @@ private extension CardSettingsViewControllerTheme2 {
 private extension CardSettingsViewControllerTheme2 {
   func setupViewModelSubscriptions() { // swiftlint:disable:this function_body_length
     let viewModel = presenter.viewModel
-    // swiftlint:disable closure_parameter_position
-    combineLatest(viewModel.showChangePin,
-                  viewModel.showGetPin,
-                  viewModel.legalDocuments,
-                  viewModel.showIVRSupport,
-                  viewModel.showDetailedCardActivity,
-                  viewModel.showMonthlyStatements).observeNext { [unowned self] showChangePin, showGetPin,
-                    legalDocuments, showIvrSupport, showDetailedCardActivity, showMonthlyStatements in
-    // swiftlint:enable closure_parameter_position
+    combineLatest(viewModel.legalDocuments, viewModel.buttonsVisibility).observeNext { [unowned self] legalDocuments,
+      buttonsVisibility in
       let settingsRows = [
-        self.setUpAddFundsRow(),
+        self.setUpAddFundsRow(showButton: buttonsVisibility.showAddFundsFeature),
         self.createSettingsTitle(),
-        self.createChangePinRow(showButton: showChangePin),
-        self.createGetPinRow(showButton: showGetPin),
+        self.createChangePinRow(showButton: buttonsVisibility.showChangePin),
+        self.createGetPinRow(showButton: buttonsVisibility.showGetPin),
+        self.createSetPassCodeRow(showButton: buttonsVisibility.showSetPassCode),
         self.setUpShowCardInfoRow(),
         self.setUpLockCardRow()
       ].compactMap { return $0 }
       let transactionsRows = [
-        self.createTransactionsTitle(showDetailedCardActivity: showDetailedCardActivity),
-        self.createDetailedCardActivityRow(showDetailedCardActivity: showDetailedCardActivity)
+        self.createTransactionsTitle(showDetailedCardActivity: buttonsVisibility.showDetailedCardActivity),
+        self.createDetailedCardActivityRow(showDetailedCardActivity: buttonsVisibility.showDetailedCardActivity)
       ].compactMap { return $0 }
       let helpRows = [
         self.createSupportTitle(),
-        self.createIvrSupport(showIvrSupport),
+        self.createIvrSupport(buttonsVisibility.showIVRSupport),
         self.createHelpButton(),
         self.createLostCardButton(),
         self.createFAQButton(legalDocuments.faq),
-        self.createStatementsButton(showMonthlyStatements)
+        self.createStatementsButton(buttonsVisibility.showMonthlyStatements)
       ].compactMap { return $0 }
       let legalRows = [
         self.createLegalTitle(legalDocuments: legalDocuments),
@@ -301,6 +295,17 @@ private extension CardSettingsViewControllerTheme2 {
     }
   }
 
+  func createSetPassCodeRow(showButton: Bool) -> FormRowView? {
+    guard showButton else { return nil }
+    return FormBuilder.linkRowWith(title: "card_settings.settings.passcode.title".podLocalized(),
+                                   subtitle: "card_settings.settings.passcode.subtitle".podLocalized(),
+                                   leftIcon: nil,
+                                   height: 72,
+                                   uiConfig: uiConfiguration) { [unowned self] in
+      self.presenter.setPassCodeTapped()
+    }
+  }
+
   func setUpLockCardRow() -> FormRowSwitchTitleSubtitleView? {
     let title = "card_settings.settings.lock_card.title".podLocalized()
     let subtitle = "card_settings.settings.lock_card.description".podLocalized()
@@ -333,16 +338,13 @@ private extension CardSettingsViewControllerTheme2 {
       self.presenter.showDetailedCardActivity(switcher.isOn)
     }
     row.titleSubtitleView.subtitleLabel.numberOfLines = 2
-    row.switcher.isOn = presenter.viewModel.isShowDetailedCardActivityEnabled.value
+    row.switcher.isOn = presenter.viewModel.buttonsVisibility.value.isShowDetailedCardActivityEnabled
     return row
   }
 
   
-  func setUpAddFundsRow() -> FormRowView? {
-    guard presenter.viewModel.showAddFundsFeature.value else {
-      return nil
-    }
-    
+  func setUpAddFundsRow(showButton: Bool) -> FormRowView? {
+    guard showButton else { return nil }
     let addFundsRow = FormBuilder.linkRowWith(
       title: "card_settings.settings.card_add_funds.title".podLocalized(),
       subtitle: "card_settings.settings.card_add_funds.description".podLocalized(),
