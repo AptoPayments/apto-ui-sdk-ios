@@ -9,7 +9,8 @@ final class PaymentMethodsViewModel: ViewModel {
   
   var input: PaymentMethodsViewModelInput { self }
   var output: PaymentMethodsViewModelOutput { self }
-  
+    var selectedPaymentMethod: PaymentMethodItem?
+    
   private let apto: AptoPlatformProtocol
   private let mapper: PaymentSourceMapper
   private let notificationCenter: NotificationCenter
@@ -46,14 +47,19 @@ final class PaymentMethodsViewModel: ViewModel {
   }
   
   private func listenNotifications() {
-    notificationCenter.reactive.notification(name: .shouldRefreshPaymentMethods).observeNext { [weak self] _ in
-      self?.refreshPaymentMethods()
+    notificationCenter.reactive.notification(name: .shouldRefreshPaymentMethods).observeNext { [weak self] notification in
+        guard let defaultSelectedItem = notification.userInfo?["selectedItem"] as? PaymentMethodItem else {
+            self?.clearDefaultSelection()
+            self?.refreshPaymentMethods()
+            return
+        }
+        self?.selectedPaymentMethod = defaultSelectedItem
     }.dispose(in: disposeBag)
   }
   
-  private func refreshPaymentMethods() {
-    self.state.send(.loading)
-    self.getPaymentSources()
+    private func refreshPaymentMethods() {
+      self.state.send(.loading)
+      self.getPaymentSources()
   }
   
   private func getPaymentSources() {
@@ -71,10 +77,44 @@ final class PaymentMethodsViewModel: ViewModel {
     let addCardItem = PaymentMethodItem(id: "add_card", type: .addCard, title: "load_funds.add_card.primary_cta".podLocalized(), subtitle: "load_funds.add_card.secondary_cta".podLocalized(), icon: .imageFromPodBundle("credit_debit_card"), action: { [weak self] _ in
       self?.navigator?.didTapOnAddCard()
     })
+    var newPaymentMethod: PaymentMethodItem?{
+        didSet {
+            guard let newValue = newPaymentMethod else { return }
+            
+            selectedPaymentMethod = newValue
+            self.state.send(.loaded(makeDefaultSelection(items: items)))
+            self.notificationCenter.post(name: .shouldRefreshPaymentMethods, object: nil, userInfo: ["selectedItem" : newValue])
+            navigator?.close()
+        }
+    }
+    var items = self.mapper.map(elements: paymentMethods, action: { item in
+        newPaymentMethod = PaymentMethodItem(id: item.id,
+                                             type: item.type,
+                                             title: item.title,
+                                             subtitle: item.subtitle,
+                                             isSelected: true,
+                                             icon: item.icon, action: item.action)
+    })
     
-    var items = self.mapper.map(elements: paymentMethods)
     items.append(addCardItem)
     
-    self.state.send(.loaded(items))
+    self.state.send(.loaded(makeDefaultSelection(items: items)))
   }
+    
+    private func clearDefaultSelection() {
+        selectedPaymentMethod = nil
+    }
+    
+    private func makeDefaultSelection(items: [PaymentMethodItem]) -> [PaymentMethodItem] {
+        items.map { [selectedPaymentMethod] item in
+            guard let selectedPaymentMethod = selectedPaymentMethod else { return item }
+            return PaymentMethodItem(id: item.id,
+                                     type: item.type,
+                                     title: item.title,
+                                     subtitle: item.subtitle,
+                                     isSelected: selectedPaymentMethod.id == item.id,
+                                     icon: item.icon,
+                                     action: item.action)
+        }
+    }
 }

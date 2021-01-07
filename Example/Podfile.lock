@@ -8,7 +8,7 @@ PODS:
     - Alamofire (~> 4.8)
   - AptoObjCSDK (1.1.0):
     - AptoSDK
-  - AptoPCI (2.0.0)
+  - AptoPCI (2.0.1)
   - AptoSDK (2.8.0):
     - Alamofire (~> 4.8)
     - AlamofireNetworkActivityIndicator (~> 2.2)
@@ -20,8 +20,8 @@ PODS:
     - PhoneNumberKit (~> 3.2)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.5.2):
-    - AptoPCI (= 2.0.0)
+  - AptoUISDK (2.6.0):
+    - AptoPCI (= 2.0.1)
     - AptoSDK (= 2.8.0)
     - Bond (~> 7.6)
     - Down (~> 0.8.0)
@@ -97,7 +97,7 @@ DEPENDENCIES:
   - TwilioVoice (~> 3.0)
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
+  trunk:
     - Alamofire
     - Alamofire-Synchronous
     - AlamofireNetworkActivityIndicator
@@ -145,9 +145,9 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   AlamofireNetworkActivityLogger: 6d3398c692d2c5d83b0c58793537860aca1e383d
   AptoObjCSDK: 818ed46d0b6328d9ec76f32ab39e51d8ed8dffb1
-  AptoPCI: 44d5ac79d9a56703f880d9765e9da8d960675d33
+  AptoPCI: 9d83b0e7d55e23f1be0cbdcee7b0311af8a0be52
   AptoSDK: 63042eb7ec36a5aa796d7f0ddd6531e98a990160
-  AptoUISDK: 727780044b5c357e787185270c796432039f5e36
+  AptoUISDK: 8e42236d757c4040962120b4853fbf2395b6ba09
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
   DarklyEventSource: 6df384dcdb211d2b6bfbbe93a3148bd25567dd61
@@ -171,4 +171,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0b208b699e7e0e1d31596fddf1a6476a7225edfc
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.10.0

@@ -62,11 +62,11 @@ final class AddFundsViewModel: ViewModel {
   }
   
   func didTapOnChangeCard() {
-    guard self.currentPaymentSource != nil else {
+    guard let currentPaymentSource = self.currentPaymentSource else {
       navigator?.navigateToAddCard()
       return
     }
-    navigator?.navigateToPaymentMethods()
+    navigator?.navigateToPaymentMethods(defaultSelectedPaymentMethod: currentPaymentSource)
   }
   
   func didTapOnPullFunds() {
@@ -112,31 +112,39 @@ final class AddFundsViewModel: ViewModel {
   }
   
   private func listenNotifications() {
-    notificationCenter.reactive.notification(name: .shouldRefreshPaymentMethods).observeNext { [weak self] _ in
-      self?.fetchCurrentPaymentSource()
+    notificationCenter.reactive.notification(name: .shouldRefreshPaymentMethods).observeNext { [weak self] notification in
+      guard let selectedItem = notification.userInfo?["selectedItem"] as? PaymentMethodItem else {
+          self?.fetchCurrentPaymentSource()
+          return
+        }
+        self?.fetchCurrentPaymentSource(selectedItem: selectedItem.id)
     }.dispose(in: disposeBag)
   }
   
-  private func fetchCurrentPaymentSource() {
+  private func fetchCurrentPaymentSource(selectedItem: String = "") {
     self.state.send(.loading)
     self.apto.getPaymentSources(.default) { [weak self] result in
+        guard let self = self else { return }
       switch result {
       case .success(let paymentSources):
-        
-        self?.currentPaymentSource = paymentSources.first(where: { paymentSource in
-          if case .card(let card) = paymentSource {
-            return card.isPreferred
-          }
-          return false
-        })
-        self?.state.send(.loaded(self?.currentPaymentSource))
+        self.currentPaymentSource = self.extractAvailableSource(with: paymentSources, selectedItem: selectedItem)
+        self.state.send(.loaded(self.currentPaymentSource))
         
       case .failure(let error):
-        self?.state.send(.error(error))
+        self.state.send(.error(error))
       }
     }
   }
   
+    private func extractAvailableSource(with paymentSources: [PaymentSource], selectedItem: String) -> PaymentSource? {
+        return paymentSources.first(where: { paymentSource in
+            if case .card(let card) = paymentSource {
+                return selectedItem != "" ? card.id == selectedItem : card.isPreferred
+            }
+            return false
+        })
+    }
+    
   // MARK: - Alerts
   
   private var failedTransactionAlert: UIAlertController {

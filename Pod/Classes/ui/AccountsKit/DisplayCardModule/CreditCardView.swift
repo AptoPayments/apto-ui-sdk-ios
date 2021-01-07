@@ -95,7 +95,7 @@ public class CreditCardView: UIView {
       "wrongCode.message": "credit_card_view.wrong_code.message".podLocalized(),
       "wrongCode.okAction": "credit_card_view.wrong_code.ok_action".podLocalized()
     ]
-    let configStyle = PCIConfigStyle(theme: "light", textColor:  "#\(textColor.toHex ?? "ffffff")")
+    let configStyle = PCIConfigStyle(textColor:  "#\(textColor.toHex ?? "ffffff")")
     pciView.setStyle(style: configStyle)
   }
 
@@ -307,7 +307,7 @@ private extension CreditCardView {
       }
       if let rawColor = cardStyle.textColor, let color = UIColor.colorFromHexString(rawColor) {
         self?.textColor = color
-        self?.pciView.setStyle(style: PCIConfigStyle(theme: "light", textColor: "#\(rawColor)"))
+        self?.pciView.setStyle(style: PCIConfigStyle(textColor: "#\(rawColor)"))
       }
     }
   }

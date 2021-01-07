@@ -16,6 +16,7 @@ final class AddCardViewModel: ViewModel {
   private let notificationCenter: NotificationCenter
   private var cardNetworks: [CardNetwork]
   var navigator: AddCardNavigatorType?
+    private var userDefaults = UserDefaults.standard
   
   init(aptoPlatform: AptoPlatformProtocol = AptoPlatform.defaultManager(),
        cardDtector: CardDetector = .init(),

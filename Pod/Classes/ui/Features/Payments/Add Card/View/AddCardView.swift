@@ -84,7 +84,6 @@ final class AddCardView: UIView {
         }
         return true
     }
-    
     textInput.keyboardType = .numberPad
     textInput.placeholder = "load_funds.add_card.zip.placeholder".podLocalized()
     return textInput

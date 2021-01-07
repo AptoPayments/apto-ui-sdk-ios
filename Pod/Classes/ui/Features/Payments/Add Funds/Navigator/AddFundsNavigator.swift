@@ -2,7 +2,7 @@ import Foundation
 import AptoSDK
 
 protocol AddFundsNavigatorType: AnyObject {
-  func navigateToPaymentMethods()
+  func navigateToPaymentMethods(defaultSelectedPaymentMethod: PaymentSource?)
   func navigateToAddCard()
   func navigateToPaymentResult(with result: PaymentResult, and currentPaymentSource: PaymentSource)
 }
@@ -32,19 +32,23 @@ final class AddFundsNavigator: AddFundsNavigatorType {
     from.navigationController?.present(navigationController, animated: true)
   }
   
-  func navigateToPaymentMethods() {
-    let viewModel = PaymentMethodsViewModel()
-    let viewController = PaymentMethodsViewController(viewModel: viewModel)
-    let navigationController = UINavigationController(
-      rootViewController: viewController
-    )
-    viewModel.navigator = PaymentMethodsNavigator(
-      from: navigationController,
-      uiConfig: uiConfig,
-      cardNetworks: cardNetworks
-    )
-    from.navigationController?.present(navigationController, animated: true)
-  }
+    func navigateToPaymentMethods(defaultSelectedPaymentMethod: PaymentSource? = nil) {
+        let viewModel = PaymentMethodsViewModel()
+        if let defaultSelectedItem = defaultSelectedPaymentMethod {
+            viewModel.selectedPaymentMethod = PaymentSourceMapper().map(defaultSelectedItem, action: nil)
+        }
+        
+        let viewController = PaymentMethodsViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(
+            rootViewController: viewController
+        )
+        viewModel.navigator = PaymentMethodsNavigator(
+            from: navigationController,
+            uiConfig: uiConfig,
+            cardNetworks: cardNetworks
+        )
+        from.navigationController?.present(navigationController, animated: true)
+    }
   
   func navigateToPaymentResult(with result: PaymentResult, and currentPaymentSource: PaymentSource) {
     let viewModel = TransferStatusViewModel(
