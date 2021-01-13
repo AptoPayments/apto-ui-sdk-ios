@@ -239,6 +239,7 @@
 		D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD37861B13BB4F50A836A /* CardWaitListModuleTest.swift */; };
 		E068F49835C36AE634935FEA /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C626AD8E822159591786DCC3 /* Pods_UnitTests.framework */; };
 		E559808978340FABA714EBC0 /* Pods_SnapshotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA64FF7BC6649A5EE5D70C7 /* Pods_SnapshotTests.framework */; };
+		E5C43E3925AD9D2F008C7BCA /* UserTokenCleanerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C43E3825AD9D2F008C7BCA /* UserTokenCleanerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -552,6 +553,7 @@
 		D99BDF936A709E75178B60D3 /* CardSettingsPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSettingsPresenterTest.swift; sourceTree = "<group>"; };
 		D99BDFAEC0A452DD70C262B8 /* SelectBalanceStoreModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectBalanceStoreModuleTest.swift; sourceTree = "<group>"; };
 		D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinInteractorTest.swift; sourceTree = "<group>"; };
+		E5C43E3825AD9D2F008C7BCA /* UserTokenCleanerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTokenCleanerTests.swift; sourceTree = "<group>"; };
 		EC2196586EFC4A6E319E36B9 /* Pods_Link.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Link.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED11BED063CB67EC457CA7C8 /* Pods_LedgeLink_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LedgeLink_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1860DEBF00CF83A5F626C6B /* Pods-Demo.sbx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.sbx.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.sbx.xcconfig"; sourceTree = "<group>"; };
@@ -1589,6 +1591,7 @@
 				3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */,
 				33BC263E24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift */,
 				3C58BF36242A6A9300175697 /* UserTokenStorageTest.swift */,
+				E5C43E3825AD9D2F008C7BCA /* UserTokenCleanerTests.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -2166,6 +2169,7 @@
 				D99BD773E9D60CEE398C9CB9 /* NotificationPreferencesModuleTest.swift in Sources */,
 				D99BD0540AF9361B8B0FEC00 /* CountrySelectorModuleTest.swift in Sources */,
 				D99BDA158AC88FA0C9BEB9B5 /* CountrySelectorTestDoubles.swift in Sources */,
+				E5C43E3925AD9D2F008C7BCA /* UserTokenCleanerTests.swift in Sources */,
 				D99BD9C779CB8F62FEFA0E47 /* CountrySelectorInteractorTest.swift in Sources */,
 				D99BDB2CD01601378EF98EBC /* CountrySelectorPresenterTest.swift in Sources */,
 				D99BD4A755759998FD86B09B /* SetPinInteractorTest.swift in Sources */,
