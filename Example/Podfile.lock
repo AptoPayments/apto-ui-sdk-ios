@@ -9,7 +9,7 @@ PODS:
   - AptoObjCSDK (1.1.0):
     - AptoSDK
   - AptoPCI (2.0.1)
-  - AptoSDK (2.9.1):
+  - AptoSDK (2.9.2):
     - Alamofire (~> 4.8)
     - AlamofireNetworkActivityIndicator (~> 2.2)
     - Bond (~> 7.6)
@@ -20,9 +20,9 @@ PODS:
     - PhoneNumberKit (~> 3.2)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.7.1):
+  - AptoUISDK (2.7.2):
     - AptoPCI (= 2.0.1)
-    - AptoSDK (= 2.9.1)
+    - AptoSDK (= 2.9.2)
     - Bond (~> 7.6)
     - Down (~> 0.8.0)
     - GoogleKit (~> 0.3)
@@ -146,8 +146,8 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityLogger: 6d3398c692d2c5d83b0c58793537860aca1e383d
   AptoObjCSDK: 818ed46d0b6328d9ec76f32ab39e51d8ed8dffb1
   AptoPCI: 9d83b0e7d55e23f1be0cbdcee7b0311af8a0be52
-  AptoSDK: 44b2e479996ee26f32054011a01dc012b63fd365
-  AptoUISDK: 24317b6aec69c5d6d6e3ec9c28db3d5b227376b6
+  AptoSDK: add2a8fce61761cd6fcc411e832c453377697c56
+  AptoUISDK: fd1f2bada8270547dab6084bd40bed9b673d43a0
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
   DarklyEventSource: 6df384dcdb211d2b6bfbbe93a3148bd25567dd61
