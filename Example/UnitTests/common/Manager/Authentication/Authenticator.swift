@@ -24,4 +24,12 @@ class AuthenticatorFake: AuthenticatorProtocol {
     authenticateCalled = false
     lastAuthenticationMode = nil
   }
+    
+    func authenticateOnStartup(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+    
+    func requestBiometricPermission(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
 }

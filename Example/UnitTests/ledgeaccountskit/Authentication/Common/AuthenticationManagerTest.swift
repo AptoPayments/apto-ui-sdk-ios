@@ -210,7 +210,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testCodeDoNotExistsAuthenticateWithPINOnPCIEnabledShouldCreateCodeReturnTrue() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false, .authenticateWithPINOnPCI: true]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false], authenticateOnPCI: .pinOrBiometrics))
 
     // When
     let shouldCreateCode = sut.shouldCreateCode()
@@ -221,8 +221,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testCodeDoNotExistsAuthenticationFlagsDisabledShouldCreateCodeReturnFalse() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false,
-                                                       .authenticateWithPINOnPCI: false]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false,], authenticateOnPCI: .biometrics))
 
     // When
     let shouldCreateCode = sut.shouldCreateCode()
@@ -234,7 +233,7 @@ class AuthenticationManagerTest: XCTestCase {
   // MARK: - Can change code
   func testAuthenticateOnStartUpEnabledAndCodeExistsReturnTrue() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true, .authenticateWithPINOnPCI: false]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true], authenticateOnPCI: .biometrics))
     _ = sut.save(code: code)
 
     // When
@@ -246,7 +245,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testAuthenticateWithPINOnPCIEnabledAndCodeExistsReturnTrue() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false, .authenticateWithPINOnPCI: true]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false], authenticateOnPCI: .pinOrBiometrics))
     _ = sut.save(code: code)
 
     // When
@@ -258,7 +257,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testAuthenticateOnStartUpEnabledAndCodeDoNotExistsReturnFalse() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true, .authenticateWithPINOnPCI: false]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true], authenticateOnPCI: .biometrics))
 
     // When
     let canChangeCode = sut.canChangeCode()
@@ -269,7 +268,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testAuthenticateWithPINOnPCIEnabledAndCodeDoNotExistsReturnFalse() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false, .authenticateWithPINOnPCI: true]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false], authenticateOnPCI: .pinOrBiometrics))
 
     // When
     let canChangeCode = sut.canChangeCode()
@@ -280,8 +279,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testFeaturesDisabledAndDoNotCodeExistsReturnFalse() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false,
-                                                       .authenticateWithPINOnPCI: false]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false], authenticateOnPCI: .biometrics))
 
     // When
     let canChangeCode = sut.canChangeCode()
@@ -292,8 +290,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testFeaturesDisabledAndCodeExistsReturnFalse() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false,
-                                                       .authenticateWithPINOnPCI: false]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false], authenticateOnPCI: .biometrics))
     _ = sut.save(code: code)
 
     // When
@@ -451,7 +448,7 @@ class AuthenticationManagerTest: XCTestCase {
 
   func testAuthenticateUsePasscodeIfBiometricIsDisabledByUser() {
     // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true]))
+    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true], authenticateOnPCI: .pinOrBiometrics))
     let module = UIModuleSpy(serviceLocator: serviceLocator)
     aptoPlatform.nextIsBiometricEnabledResult = false
 
@@ -460,32 +457,6 @@ class AuthenticationManagerTest: XCTestCase {
 
     // Then
     XCTAssertEqual(.passcode, authenticator.lastAuthenticationMode)
-  }
-
-  func testAuthenticateUseBiometricIfPasscodeAuthenticationIsDisabled() {
-    // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: false,
-                                                       .authenticateWithPINOnPCI: false]))
-    let module = UIModuleSpy(serviceLocator: serviceLocator)
-
-    // When
-    sut.authenticate(from: module, mode: .allAvailables) { _ in }
-
-    // Then
-    XCTAssertEqual(.allAvailables, authenticator.lastAuthenticationMode)
-  }
-
-  func testAuthenticateUseBiometricEvenIfBiometricIsDisabledByUser() {
-    // Given
-    aptoPlatform.setCardOptions(CardOptions(features: [.authenticateOnStartUp: true]))
-    let module = UIModuleSpy(serviceLocator: serviceLocator)
-    aptoPlatform.nextIsBiometricEnabledResult = false
-
-    // When
-    sut.authenticate(from: module, mode: .biometry) { _ in }
-
-    // Then
-    XCTAssertEqual(.biometry, authenticator.lastAuthenticationMode)
   }
 
   // MARK: - Invalidate current code

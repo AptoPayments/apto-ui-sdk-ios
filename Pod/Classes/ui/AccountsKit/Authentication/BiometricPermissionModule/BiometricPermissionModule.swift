@@ -18,7 +18,7 @@ class BiometricPermissionModule: UIModule, BiometricPermissionModuleProtocol {
 
   func requestBiometricPermission(completion: @escaping (_ granted: Bool) -> Void) {
     let authManager = serviceLocator.systemServicesLocator.authenticationManager()
-    authManager.authenticate(from: self, mode: .biometry, completion: completion)
+    authManager.requestBiometricPermission(from: self, completion: completion)
   }
 
   private func buildViewController() -> UIViewController {

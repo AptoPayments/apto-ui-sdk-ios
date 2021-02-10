@@ -70,4 +70,12 @@ class AuthenticationManagerFake: AuthenticationManagerProtocol {
   func invalidateCurrentCode() {
     invalidateCurrentCodeCalled = true
   }
+    
+    func authenticateOnStartup(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+    
+    func requestBiometricPermission(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
 }

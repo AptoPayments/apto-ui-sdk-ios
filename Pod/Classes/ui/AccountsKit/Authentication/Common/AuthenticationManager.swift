@@ -12,6 +12,7 @@ enum AuthenticationMode {
   case biometry
   case passcode
   case allAvailables
+    case none
 }
 
 protocol AuthenticationManagerProtocol {
@@ -26,6 +27,8 @@ protocol AuthenticationManagerProtocol {
   func shouldAuthenticateOnStartUp() -> Bool
   func authenticate(from: UIModuleProtocol, mode: AuthenticationMode, completion: @escaping (Bool) -> Void)
   func invalidateCurrentCode()
+    func authenticateOnStartup(from: UIModuleProtocol, completion: @escaping (Bool) -> Void)
+    func requestBiometricPermission(from: UIModuleProtocol, completion: @escaping (Bool) -> Void)
 }
 
 extension AuthenticationManagerProtocol {
@@ -89,13 +92,15 @@ class AuthenticationManager: AuthenticationManagerProtocol {
   }
 
   func shouldCreateCode() -> Bool {
-    return !codeExists() && isFeatureEnabled()
+    return shouldRequirePassword() && !codeExists()
   }
 
   func canChangeCode() -> Bool {
-    return isFeatureEnabled() && codeExists()
+    return shouldRequirePassword() && codeExists()
   }
 
+    
+    
   func shouldAuthenticateOnStartUp() -> Bool {
     guard aptoPlatform.isFeatureEnabled(.authenticateOnStartUp), codeExists() else { return false }
     return shouldAuthenticate()
@@ -106,8 +111,11 @@ class AuthenticationManager: AuthenticationManagerProtocol {
       completion(true)
       return
     }
-    // do not use biometry if not enabled by the user, unless "forced" by the caller
-    let authMode = (isFeatureEnabled() && !isBiometricEnabledByUser && mode != .biometry) ? .passcode : mode
+    let context = AuthenticationSettingContext(isGlobalFaceIdEnabled: LocalAuthenticationHandler().biometryType == .faceID,
+                                               isLocalFaceIdEnabled: isBiometricEnabledByUser,
+                                               pciAuthenticationType: aptoPlatform.currentPCIAuthenticationType)
+    let authMode = AuthenticationTypeHelper.authenticationMode(with: context)
+    
     authenticator.authenticate(from: from, mode: authMode) { [unowned self] accessGranted in
       if accessGranted {
         self.lastAuthenticationDate = self.dateProvider.currentDate()
@@ -117,6 +125,23 @@ class AuthenticationManager: AuthenticationManagerProtocol {
     }
   }
 
+    func authenticateOnStartup(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        let mode = AuthenticationMode.passcode
+        authenticator.authenticateOnStartup(from: from) { [weak self] accessGranted in
+            guard let self = self else { return }
+            if accessGranted {
+                self.lastAuthenticationDate = self.dateProvider.currentDate()
+                self.lastAuthenticationMode = mode
+            }
+            completion(accessGranted)
+        }
+    }
+    
+    func requestBiometricPermission(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        authenticator.requestBiometricPermission(from: from) { completion($0) }
+    }
+    
+    
   func invalidateCurrentCode() {
     _currentPIN = nil
     lastAuthenticationDate = nil
@@ -134,8 +159,7 @@ class AuthenticationManager: AuthenticationManagerProtocol {
   }
 
   private func isFeatureEnabled() -> Bool {
-    return aptoPlatform.isFeatureEnabled(.authenticateOnStartUp) ||
-      aptoPlatform.isFeatureEnabled(.authenticateWithPINOnPCI)
+      aptoPlatform.isAuthTypePinOrBiometricsEnabled()
   }
 
   private func shouldAuthenticate(mode: AuthenticationMode = .allAvailables) -> Bool {
@@ -144,6 +168,11 @@ class AuthenticationManager: AuthenticationManagerProtocol {
     let components = Calendar.current.dateComponents([.second], from: lastDate, to: currentDate)
     return components.second! > AUTH_REQUEST_TIME_SECONDS // swiftlint:disable:this force_unwrapping
   }
+    
+    private func shouldRequirePassword() -> Bool {
+        aptoPlatform.isFeatureEnabled(.authenticateOnStartUp) ||
+            aptoPlatform.currentPCIAuthenticationType == .pinOrBiometrics
+    }
 }
 
 class PINSaveError: NSError {

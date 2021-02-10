@@ -199,7 +199,7 @@ open class CardModule: UIModule {
   @objc private func appDidBecomeActive() {
     let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
     if authenticationManager.shouldAuthenticateOnStartUp() {
-      authenticationManager.authenticate(from: self) { _ in }
+        authenticationManager.authenticateOnStartup(from: self) { _ in }
     }
   }
 
@@ -208,7 +208,7 @@ open class CardModule: UIModule {
     if authenticationManager.shouldAuthenticateOnStartUp() {
       serviceLocator.notificationHandler.addObserver(self, selector: #selector(appDidBecomeActive),
                                                      name: UIApplication.willEnterForegroundNotification)
-      authenticationManager.authenticate(from: self) { accessGranted in
+      authenticationManager.authenticateOnStartup(from: self) { accessGranted in
         if accessGranted {
           completion()
         }

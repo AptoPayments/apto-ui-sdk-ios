@@ -6,6 +6,8 @@
 //
 
 import XCTest
+import Alamofire
+import SwiftyJSON
 @testable import AptoSDK
 
 class FinancialAccountsStorageTest: XCTestCase {
@@ -63,7 +65,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testFetchMonthlySpendingRequestFailCallbackFailure() {
     // Given
-    var returnedResult: Result<MonthlySpending, NSError>?
+    var returnedResult: Swift.Result<MonthlySpending, NSError>?
     transport.nextGetResult = .failure(BackendError(code: .other))
 
     // When
@@ -77,7 +79,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testFetchMonthlySpendingRequestSucceedCallbackSuccess() {
     // Given
-    var returnedResult: Result<MonthlySpending, NSError>?
+    var returnedResult: Swift.Result<MonthlySpending, NSError>?
     transport.nextGetResult = .success(ModelDataProvider.provider.monthlySpendingJSON)
 
     // When
@@ -91,7 +93,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testFetchfetchMonthlySpendingRequestSucceedWithMalformedJSONCallbackFailure() {
     // Given
-    var returnedResult: Result<MonthlySpending, NSError>?
+    var returnedResult: Swift.Result<MonthlySpending, NSError>?
     transport.nextGetResult = .success(ModelDataProvider.provider.emptyJSON)
 
     // When
@@ -136,7 +138,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testSetCardPassCodeRequestFailCallbackFailure() {
     // Given
-    var returnedResult: Result<Void, NSError>?
+    var returnedResult: Swift.Result<Void, NSError>?
     transport.nextPostResult = .failure(BackendError(code: .other))
 
     // When
@@ -150,7 +152,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testSetCardPassCodeRequestSucceedCallbackSuccess() {
     // Given
-    var returnedResult: Result<Void, NSError>?
+    var returnedResult: Swift.Result<Void, NSError>?
     transport.nextPostResult = .success(ModelDataProvider.provider.emptyJSON)
 
     // When
@@ -214,7 +216,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testIssueCardRequestFailCallbackFailure() {
     // Given
-    var returnedResult: Result<Card, NSError>?
+    var returnedResult: Swift.Result<Card, NSError>?
     transport.nextPostResult = .failure(BackendError(code: .other))
 
     // When
@@ -229,7 +231,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testIssueCardRequestSucceedCallbackSuccess() {
     // Given
-    var returnedResult: Result<Card, NSError>?
+    var returnedResult: Swift.Result<Card, NSError>?
     transport.nextPostResult = .success(ModelDataProvider.provider.cardJSON)
 
     // When
@@ -244,7 +246,7 @@ class FinancialAccountsStorageTest: XCTestCase {
 
   func testIssueCardRequestSucceedWithMalformedJSONCallbackFailure() {
     // Given
-    var returnedResult: Result<Card, NSError>?
+    var returnedResult: Swift.Result<Card, NSError>?
     transport.nextPostResult = .success(ModelDataProvider.provider.emptyJSON)
 
     // When
@@ -256,4 +258,90 @@ class FinancialAccountsStorageTest: XCTestCase {
     // Then
     XCTAssertEqual(true, returnedResult?.isFailure)
   }
+    
+    func test_getFinancialAccount_deliversAccountDetailsOnValidJSONResponse() throws {
+        let accountId = "crd_98hnhu9sc7i9ay73375"
+        let (sut, transport) = makeSUT()
+        let item = makeCardInfo()
+        
+        let exp = expectation(description: "Wait for completion")
+        var capturedResults: Swift.Result<FinancialAccount, NSError>?
+        sut.getFinancialAccount(apiKey,
+                                userToken: userToken,
+                                accountId: accountId,
+                                forceRefresh: true,
+                                retrieveBalances: false,
+                                callback: { result in
+                                    capturedResults = result
+                                    exp.fulfill()
+                                })
+        
+        transport.complete(withResult: item.json)
+
+        guard let result = try? capturedResults?.get(), let card = result as? Card else {
+            XCTFail("Expected success got failure")
+            return
+        }
+
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(card.features?.bankAccount?.status, item.card.features?.bankAccount?.status)
+    }
+
+    // MARK: Private Helper methods
+    private func makeSUT() -> (sut: FinancialAccountsStorage, transport: StorageTransportSpy) {
+        let transport = StorageTransportSpy()
+        let cache = FinancialAccountCache(localCacheFileManager: LocalCacheFileManagerSpy())
+        let sut = FinancialAccountsStorage(transport: transport, cache: cache)
+        return (sut, transport)
+    }
+    
+    private func makeCardInfo() -> (card: Card, json: JSON) {
+        
+        let card = ModelDataProvider.provider.cardWithBankAccount
+        let jsonDetails: JSON = [
+            "type": "card",
+            "account_id": "card_id",
+            "last_four": "7890",
+            "card_network": "VISA",
+            "card_brand": "Marvel Card",
+            "card_issuer": "shift",
+            "expiration": "2021-03",
+            "state": "active",
+            "kyc_status": "PASSED",
+            "kyc_reason": "reason",
+            "ordered_status": "ordered",
+            "cardholder_first_name": "Holder",
+            "cardholder_last_name": "Name",
+            "card_product_id": "card_product_id",
+            "features": [
+                "bank_account": [
+                    "status": "enabled",
+                    "account_provisioned": true,
+                    "disclaimer": [],
+                    "account_details": [
+                        "routing_number": "123000789",
+                        "account_number": "1234567890"
+                    ]
+                ]
+            ]
+        ]
+        return (card, jsonDetails)
+    }
+    
+    class LocalCacheFileManagerSpy: LocalCacheFileManagerProtocol {
+        var cache = [String: Data]()
+        
+        func write(data: Data, filename: String) throws {
+            cache[filename] = data
+        }
+        
+        func read(filename: String) throws -> Data? {
+            cache[filename]
+        }
+        
+        func invalidate() throws {
+            cache.removeAll()
+        }
+    }
+
 }

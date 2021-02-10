@@ -587,5 +587,19 @@ class ComponentCatalog {
     }
     return retVal
   }
+
+    static func footerDescriptionLabelWith(text: String,
+                                           textAlignment: NSTextAlignment = .center,
+                                           accessibilityLabel: String? = nil,
+                                           uiConfig: UIConfig) -> UILabel {
+      let retVal = UILabel()
+      retVal.text = text
+      retVal.font = uiConfig.fontProvider.footerTextFont
+      retVal.textColor = uiConfig.iconPrimaryColor
+      retVal.textAlignment = textAlignment
+      retVal.accessibilityLabel = accessibilityLabel
+      return retVal
+    }
+
 }
 // swiftlint:enable type_body_length

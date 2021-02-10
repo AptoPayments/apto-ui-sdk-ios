@@ -86,6 +86,24 @@
                ReferencedContainer = "container:ShiftSDK.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "334E132B2464606100BADC89"
+               BuildableName = "SnapshotTests.xctest"
+               BlueprintName = "SnapshotTests"
+               ReferencedContainer = "container:ShiftSDK.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "CardInputViewTest">
+               </Test>
+               <Test
+                  Identifier = "CreditCardViewTest">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

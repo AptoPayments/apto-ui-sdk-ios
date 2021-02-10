@@ -10,6 +10,8 @@ protocol AuthenticatorProtocol {
   var isBiometryAvailable: Bool { get }
 
   func authenticate(from: UIModuleProtocol, mode: AuthenticationMode, completion: @escaping (Bool) -> Void)
+    func authenticateOnStartup(from: UIModuleProtocol, completion: @escaping (Bool) -> Void)
+    func requestBiometricPermission(from: UIModuleProtocol, completion: @escaping (Bool) -> Void)
 }
 
 class Authenticator: AuthenticatorProtocol {
@@ -31,7 +33,7 @@ class Authenticator: AuthenticatorProtocol {
         DispatchQueue.main.async {
           switch result {
           case .failure:
-            guard fallbackToPasscode, self.serviceLocator.platform.isFeatureEnabled(.authenticateWithPINOnPCI) else {
+            guard fallbackToPasscode, self.serviceLocator.platform.isAuthTypePinOrBiometricsEnabled() else {
               completion(false)
               return
             }
@@ -58,23 +60,49 @@ class Authenticator: AuthenticatorProtocol {
       authenticateWithBiometric(from: from, fallbackToPasscode: false, completion: completion)
     case .allAvailables:
       authenticateWithBiometric(from: from, fallbackToPasscode: true, completion: completion)
+    case .none:
+        DispatchQueue.main.async { completion(true) }
     }
   }
 
+    func authenticateOnStartup(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        showPasscodeModule(from, completion)
+    }
+
+    func requestBiometricPermission(from: UIModuleProtocol, completion: @escaping (Bool) -> Void) {
+        if localAuthenticationHandler.available() {
+            localAuthenticationHandler.authenticate { result in
+                DispatchQueue.main.async {
+                    if let accessGranted = try? result.get() {
+                        completion(accessGranted)
+                    } else {
+                        completion(false)
+                    }
+                }
+            }
+        } else {
+            completion(true)
+        }
+    }
+    
   private func verifyPasscode(_ from: UIModuleProtocol, _ completion: @escaping (Bool) -> Void) {
-    guard serviceLocator.platform.isFeatureEnabled(.authenticateWithPINOnPCI) else {
+    guard serviceLocator.platform.isAuthTypePinOrBiometricsEnabled() else {
       completion(true)
       return
     }
-    let module = serviceLocator.moduleLocator.verifyPasscodeModule()
-    self.verifyPasscodeModule = module
-    module.onFinish = { _ in
-      from.dismissModule {
-        self.verifyPasscodeModule = nil
-        DispatchQueue.main.async { completion(true) }
-      }
-    }
-    // swiftlint:disable:next force_cast
-    from.present(module: module) { _ in }
+    showPasscodeModule(from, completion)
   }
+
+    private func showPasscodeModule(_ from: UIModuleProtocol, _ completion: @escaping (Bool) -> Void) {
+        let module = serviceLocator.moduleLocator.verifyPasscodeModule()
+        self.verifyPasscodeModule = module
+        module.onFinish = { _ in
+          from.dismissModule {
+            self.verifyPasscodeModule = nil
+            DispatchQueue.main.async { completion(true) }
+          }
+        }
+        // swiftlint:disable:next force_cast
+        from.present(module: module) { _ in }
+    }
 }

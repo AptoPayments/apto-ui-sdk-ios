@@ -1,0 +1,58 @@
+//
+//  HeaderTextView.swift
+//  AptoUISDK
+//
+//  Created by Fabio Cuomo on 26/1/21.
+//
+
+import UIKit
+import SnapKit
+import AptoSDK
+
+public final class HeaderTextView: UIView {
+    let uiConfiguration: UIConfig
+    
+    private lazy var headerLabel: UILabel = {
+        let label = ComponentCatalog.topBarTitleLabelWith(text: "",
+                                                          textAlignment: .left,
+                                                          uiConfig: uiConfiguration)
+        label.textColor = uiConfiguration.iconPrimaryColor
+        return label
+    }()
+    private let dividerView = UIView()
+    private let headerText: String
+    
+    init(uiconfig: UIConfig, text: String) {
+        self.uiConfiguration = uiconfig
+        self.headerText = text
+        super.init(frame: .zero)
+        setupViews()
+        setupConstraints()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    private func setupViews() {
+        backgroundColor = uiConfiguration.textMessageColor
+        isOpaque = false
+        dividerView.backgroundColor = uiConfiguration.uiTertiaryColor
+        headerLabel.text = headerText.podLocalized()
+        
+        [headerLabel, dividerView].forEach(addSubview)
+    }
+    
+    private func setupConstraints() {
+        headerLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.centerY.equalToSuperview()
+        }
+        dividerView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.height.equalTo(1)
+        }
+    }
+}
+
+

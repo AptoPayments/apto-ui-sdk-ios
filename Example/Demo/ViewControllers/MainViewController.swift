@@ -99,7 +99,7 @@ class MainViewController: UIViewController {
       .showNotificationPreferences: true,
       .showDetailedCardActivityOption: true,
       .showMonthlyStatementsOption: true
-    ])
+    ], authenticateOnPCI: .biometrics)
     AptoPlatform.defaultManager().startCardFlow(from: self,
                                                 mode: .standalone,
                                                 options: options,

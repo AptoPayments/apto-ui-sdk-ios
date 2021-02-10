@@ -11,7 +11,10 @@
 class AptoPlatformFake: AptoPlatformProtocol {
  
   var delegate: AptoPlatformDelegate?
-
+    var currentPCIAuthenticationType: PCIAuthType {
+        lastCardOptionsSet?.authenticateOnPCI ?? .none
+    }
+    
   // MARK: - SDK Initialization
 
   private(set) var initializeWithApiKeyCalled = false
@@ -92,7 +95,13 @@ class AptoPlatformFake: AptoPlatformProtocol {
     return lastCardOptionsSet?.features[featureKey] ?? true
   }
 
-  var nextIsShowDetailedCardActivityEnabledResult = true
+    private(set) var isAuthTypePinOrBiometricsEnabledCalled = false
+    func isAuthTypePinOrBiometricsEnabled() -> Bool {
+        isAuthTypePinOrBiometricsEnabledCalled = true
+        return lastCardOptionsSet?.authenticateOnPCI == .pinOrBiometrics
+    }
+
+var nextIsShowDetailedCardActivityEnabledResult = true
   private(set) var isShowDetailedCardActivityEnabledCalled = false
   func isShowDetailedCardActivityEnabled() -> Bool {
     isShowDetailedCardActivityEnabledCalled = true

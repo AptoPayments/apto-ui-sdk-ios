@@ -33,8 +33,7 @@ class AccountSettingsModule: UIModule {
     let isMonthlyStatementsEnabled = platform.isFeatureEnabled(.showMonthlyStatementsOption)
     let authManager = serviceLocator.systemServicesLocator.authenticationManager()
     let isChangePINEnabled = authManager.canChangeCode()
-    let isAuthEnabled = platform.isFeatureEnabled(.authenticateOnStartUp)
-      || platform.isFeatureEnabled(.authenticateWithPINOnPCI)
+    let isAuthEnabled = platform.currentPCIAuthenticationType == .pinOrBiometrics || platform.currentPCIAuthenticationType == .biometrics
     let biometryType = isAuthEnabled ? authManager.biometryType : .none
     let config = AccountSettingsPresenterConfig(showNotificationPreferences: isNotificationPreferencesEnabled,
                                                 showMonthlyStatements: isMonthlyStatementsEnabled,
