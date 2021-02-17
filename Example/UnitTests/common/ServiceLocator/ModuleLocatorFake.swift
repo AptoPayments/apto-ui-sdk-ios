@@ -256,4 +256,11 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   func physicalCardActivationSucceedModule(card: Card) -> PhysicalCardActivationSucceedModuleProtocol {
     return physicalCardActivationSucceedModuleFake
   }
+    
+    func showBankAccountAgreements(disclaimer: Content) -> ShowAgreementModule {
+        return ShowAgreementModule(serviceLocator: serviceLocator,
+                                   disclaimer: disclaimer, actionConfirmer: UIAlertController.self,
+                                   analyticsManager: nil)
+    }
+
 }

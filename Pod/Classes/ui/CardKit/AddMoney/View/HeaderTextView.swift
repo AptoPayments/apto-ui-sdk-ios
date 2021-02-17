@@ -16,7 +16,7 @@ public final class HeaderTextView: UIView {
         let label = ComponentCatalog.topBarTitleLabelWith(text: "",
                                                           textAlignment: .left,
                                                           uiConfig: uiConfiguration)
-        label.textColor = uiConfiguration.iconPrimaryColor
+        label.textColor = uiConfiguration.textTopBarSecondaryColor
         return label
     }()
     private let dividerView = UIView()
@@ -37,7 +37,7 @@ public final class HeaderTextView: UIView {
         backgroundColor = uiConfiguration.textMessageColor
         isOpaque = false
         dividerView.backgroundColor = uiConfiguration.uiTertiaryColor
-        headerLabel.text = headerText.podLocalized()
+        headerLabel.text = headerText
         
         [headerLabel, dividerView].forEach(addSubview)
     }

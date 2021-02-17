@@ -158,10 +158,26 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     helpAction.run()
   }
 
-  func didTapOnLoadFunds() {
-    router.showAddFunds(for: card)
-  }
+    func didTapOnLoadFunds() {
+        router.showAddFunds(for: card)
+    }
   
+    private func customerHasProvisionedBankAccount() -> Bool {
+        guard let features = card.features, let bankAccount = features.bankAccount,
+              let hasSetupACHAccount = bankAccount.isAccountProvisioned else {
+            return false
+        }
+        return bankAccount.status == .enabled && hasSetupACHAccount
+    }
+
+    private func customerShouldAcceptCardholderAgreement() -> Bool {
+        guard let features = card.features, let bankAccount = features.bankAccount,
+              let hasSetupACHAccount = bankAccount.isAccountProvisioned else {
+            return false
+        }
+        return bankAccount.status == .enabled && hasSetupACHAccount == false
+    }
+
   func lostCardTapped() {
     reportLostCardAction.run { [unowned self] result in
       switch result {

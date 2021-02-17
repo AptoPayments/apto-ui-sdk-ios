@@ -33,7 +33,23 @@ class AddMoneyViewTests: XCTestCase {
     }
 
     func test_addMoneyView_rendersView() {
-        let vc = AddMoneyViewController(uiConfiguration: UIConfig.default)
-        assertSnapshot(matching: vc, as: .image(on: .iPhoneXsMax))
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.65)
+
+        let bottomView = AddMoneyView(uiconfig: UIConfig.default)
+        bottomView.configure(with: "crd_12345678")
+        backgroundView.addSubview(bottomView)
+        
+        bottomView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(15)
+            make.bottom.equalToSuperview().inset(10)
+            make.height.equalTo(200)
+        }
+        backgroundView.snp.makeConstraints { make in
+            make.height.equalTo(896)
+            make.width.equalTo(414)
+        }
+        
+        assertSnapshot(matching: backgroundView, as: .image)
     }
 }

@@ -64,4 +64,7 @@ protocol ModuleLocatorProtocol {
   // MARK: - Physical card activation
   func physicalCardActivationModule(card: Card) -> PhysicalCardActivationModuleProtocol
   func physicalCardActivationSucceedModule(card: Card) -> PhysicalCardActivationSucceedModuleProtocol
+
+    // MARK: Bank account agreements
+    func showBankAccountAgreements(disclaimer: Content) -> ShowAgreementModule
 }

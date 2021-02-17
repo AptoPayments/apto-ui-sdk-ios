@@ -316,8 +316,17 @@ class FinancialAccountsStorageTest: XCTestCase {
             "features": [
                 "bank_account": [
                     "status": "enabled",
-                    "account_provisioned": true,
-                    "disclaimer": [],
+                    "account_provisioned": false,
+                    "disclaimer": [
+                            "agreements_keys": [
+                                "evolve_eua"
+                            ],
+                            "content": [
+                                "type": "content",
+                                "format": "external_url",
+                                "value": "http://agreements.com"
+                            ]
+                    ],
                     "account_details": [
                         "routing_number": "123000789",
                         "account_number": "1234567890"

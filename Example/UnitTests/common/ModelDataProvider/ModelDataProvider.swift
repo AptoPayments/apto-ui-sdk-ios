@@ -355,9 +355,14 @@ class ModelDataProvider {
   }()
 
     lazy var cardWithBankAccount: Card = {
+        let keys = ["evolve_eua"]
+        let url = URL(string: "https://public-media-prd-usw1-shift.s3-us-west-1.amazonaws.com/developer_portal/disclaimers/instance_issuance_disclaimer.html")!
+        let content = Content.externalURL(url)
+        let disclaimer = BankAccountDisclaimer(agreementKeys: keys, content: content)
         let accountDetails = BankAccountDetails(routingNumber: "123000789", accountNumber: "1234567890")
         let bankAccount = BankAccountFeature(status: .enabled,
                                              isAccountProvisioned: true,
+                                             disclaimer: disclaimer,
                                              bankAccountDetails: accountDetails)
         let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil, passCode: nil, bankAccount: bankAccount)
         let card = Card(accountId: "card_id",

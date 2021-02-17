@@ -182,4 +182,11 @@ final class ModuleLocator: ModuleLocatorProtocol {
   func physicalCardActivationSucceedModule(card: Card) -> PhysicalCardActivationSucceedModuleProtocol {
     return PhysicalCardActivationSucceedModule(serviceLocator: serviceLocator, card: card, phoneCaller: PhoneCaller())
   }
+
+    func showBankAccountAgreements(disclaimer: Content) -> ShowAgreementModule {
+        ShowAgreementModule(serviceLocator: serviceLocator,
+                            disclaimer: disclaimer,
+                            actionConfirmer: UIAlertController.self,
+                            analyticsManager: serviceLocator.analyticsManager)
+    }
 }

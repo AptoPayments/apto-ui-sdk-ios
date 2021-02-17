@@ -14,6 +14,10 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
   
   func showAddFunds(for card: Card) {}
   
+    func showAddMoneyBottomSheet(cardId: String) {}
+    
+    func showBankAccountAgreements(disclaimer: Content, completion: @escaping () -> Void) { }
+    
   private(set) var closeFromShiftCardSettingsCalled = false
   func closeFromShiftCardSettings() {
     closeFromShiftCardSettingsCalled = true

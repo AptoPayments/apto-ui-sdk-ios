@@ -16,7 +16,7 @@ public final class ShowInfoView: UIView {
         let label = ComponentCatalog.boldMessageLabelWith(text: "",
                                                           textAlignment: .left,
                                                           uiConfig: uiConfiguration)
-        label.textColor = uiConfiguration.iconPrimaryColor
+        label.textColor = uiConfiguration.textTopBarSecondaryColor
         label.font = uiConfiguration.fontProvider.formListFont
         return label
     }()

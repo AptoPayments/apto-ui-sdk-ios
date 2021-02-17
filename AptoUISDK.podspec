@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "AptoUISDK"
-  s.version          = "2.8.0"
+  s.version          = "2.8.1"
   s.summary          = "The Apto UI platform iOS SDK."
   s.description      = <<-DESC
                         Apto iOS UI SDK provides a UI flow that allows to easily integrate the platform in your app.
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/AptoPayments/apto-ui-sdk-ios.git"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.authors          = { "Ivan Oliver" => "ivan@aptopayments.com", "Takeichi Kanzaki" => "takeichi@aptopayments.com" }
-  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.8.0" }
+  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.8.1" }
 
   s.platform = :ios
   s.ios.deployment_target = '10.0'
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.resources = ["Pod/Assets/*.png", "Pod/Assets/*.css", "Pod/Localization/*.lproj", "Pod/Assets/*.xcassets", "Pod/Fonts/*.ttf"]
 
   s.frameworks = 'UIKit', 'CoreLocation', 'Accelerate', 'AudioToolbox', 'AVFoundation', 'CoreGraphics', 'CoreMedia', 'CoreVideo', 'Foundation', 'MobileCoreServices', 'OpenGLES', 'QuartzCore', 'Security', 'LocalAuthentication', 'CallKit'
-  s.dependency 'AptoSDK', '3.0.0'
+  s.dependency 'AptoSDK', '3.0.1'
   s.dependency 'AptoPCI', '2.0.1'
   s.dependency 'SnapKit', '~> 5.0'
   s.dependency 'Bond', '~> 7.6'

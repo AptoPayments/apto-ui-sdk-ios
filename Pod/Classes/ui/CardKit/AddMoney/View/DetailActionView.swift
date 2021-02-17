@@ -12,26 +12,26 @@ import AptoSDK
 public final class DetailActionView: UIView {
     let uiConfiguration: UIConfig
     
-    private lazy var titleLabel: UILabel = {
+    private(set) lazy var titleLabel: UILabel = {
         let label = ComponentCatalog.boldMessageLabelWith(text: "",
                                                           textAlignment: .left,
                                                           uiConfig: uiConfiguration)
-        label.textColor = uiConfiguration.iconPrimaryColor
+        label.textColor = uiConfiguration.textTopBarSecondaryColor
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
-    private lazy var subTitleLabel: UILabel = {
+    private(set) lazy var subTitleLabel: UILabel = {
         let label = ComponentCatalog.boldMessageLabelWith(text: "",
                                                           textAlignment: .left,
                                                           uiConfig: uiConfiguration)
-        label.textColor = uiConfiguration.textSecondaryColor
+        label.textColor = uiConfiguration.textTertiaryColor
         label.font = uiConfiguration.fontProvider.itemDescriptionFont
         return label
     }()
     private lazy var chevronImageView: UIImageView = {
         guard let image = UIImage.imageFromPodBundle("row_arrow.png")?.asTemplate() else { return UIImageView() }
         let imageView = UIImageView(image: image)
-        imageView.tintColor = uiConfiguration.uiBackgroundPrimaryColor
+        imageView.tintColor = uiConfiguration.uiTertiaryColor
         return imageView
     }()
     private let dividerView = UIView()
@@ -53,8 +53,8 @@ public final class DetailActionView: UIView {
     private func setupViews() {
         backgroundColor = uiConfiguration.textMessageColor
         dividerView.backgroundColor = uiConfiguration.uiTertiaryColor
-        titleLabel.text = titleText.podLocalized()
-        subTitleLabel.text = subTitleText.podLocalized()
+        titleLabel.text = titleText
+        subTitleLabel.text = subTitleText
         
         [titleLabel, subTitleLabel, chevronImageView, dividerView].forEach(addSubview)
     }
@@ -77,6 +77,12 @@ public final class DetailActionView: UIView {
             make.left.right.equalToSuperview()
             make.height.equalTo(1)
         }
+    }
+    
+    // MARK: Public methods
+    public func configure(with title: String, subtitle: String) {
+        titleLabel.text = title
+        subTitleLabel.text = subtitle
     }
 }
 

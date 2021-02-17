@@ -16,7 +16,7 @@ public class DirectDepositView: UIView {
         let label = ComponentCatalog.formListLabelWith(text: "",
                                                        textAlignment: .left,
                                                        uiConfig: uiConfiguration)
-        label.textColor = uiConfiguration.iconPrimaryColor
+        label.textColor = uiConfiguration.textTopBarSecondaryColor
         label.numberOfLines = 0
         return label
     }()
@@ -29,6 +29,7 @@ public class DirectDepositView: UIView {
         let label = ComponentCatalog.footerDescriptionLabelWith(text: "",
                                                                 textAlignment: .left,
                                                                 uiConfig: uiConfiguration)
+        label.textColor = uiConfiguration.textTopBarSecondaryColor
         label.numberOfLines = 0
         return label
     }()

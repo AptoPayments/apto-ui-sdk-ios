@@ -18,14 +18,13 @@ public class AddMoneyView: UIView {
         view.clipsToBounds = true
         return view
     }()
-    private lazy var headerTextView = HeaderTextView(uiconfig: self.uiConfiguration, text: "load_funds.selector_dialog.title")
-    private lazy var item1ActionDetailView = DetailActionView(uiconfig: self.uiConfiguration,
-                                                              textTitle: "load_funds.selector_dialog.card.title",
-                                                              textSubTitle: "load_funds.selector_dialog.card.description")
-    private lazy var item2ActionDetailView = DetailActionView(uiconfig: self.uiConfiguration,
-                                                              textTitle: "load_funds.selector_dialog.direct_deposit.title",
-                                                              textSubTitle: "load_funds.selector_dialog.direct_deposit.description")
-
+    private lazy var headerTextView = HeaderTextView(uiconfig: self.uiConfiguration, text: "load_funds.selector_dialog.title".podLocalized())
+    private(set) lazy var item1ActionDetailView = DetailActionView(uiconfig: self.uiConfiguration,
+                                                                   textTitle: "load_funds.selector_dialog.card.title".podLocalized(),
+                                                                   textSubTitle: "load_funds.selector_dialog.card.description".podLocalized())
+    private(set) lazy var item2ActionDetailView = DetailActionView(uiconfig: self.uiConfiguration,
+                                                                   textTitle: "load_funds.selector_dialog.direct_deposit.title".podLocalized(),
+                                                                   textSubTitle: "load_funds.selector_dialog.direct_deposit.description".podLocalized())
     init(uiconfig: UIConfig) {
         self.uiConfiguration = uiconfig
         super.init(frame: .zero)
@@ -48,7 +47,7 @@ public class AddMoneyView: UIView {
         containerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalTo(bottomConstraint)
-            make.height.equalTo(250)
+            make.height.equalTo(230)
         }
         headerTextView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
@@ -64,6 +63,12 @@ public class AddMoneyView: UIView {
             make.top.equalTo(item1ActionDetailView.snp.bottom)
             make.height.equalTo(72)
         }
+    }
+    
+    // MARK: Public methods
+    public func configure(with cardProduct: String) {
+        let subtitle = "load_funds.selector_dialog.direct_deposit.description".podLocalized().replace(["<<VALUE>>": cardProduct])
+        item2ActionDetailView.configure(with: "load_funds.selector_dialog.direct_deposit.title".podLocalized(), subtitle: subtitle)
     }
 }
 

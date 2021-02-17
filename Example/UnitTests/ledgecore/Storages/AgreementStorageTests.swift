@@ -152,3 +152,9 @@ class AgreementStorageTests: XCTestCase {
     }
 
 }
+
+class AgreementStorageSpy: AgreementStorageProtocol {
+    func recordAgreement(_ apiKey: String, userToken: String, agreementRequest: AgreementRequest, completion: @escaping (RecordedAgreementsResult) -> Void) {
+        
+    }
+}

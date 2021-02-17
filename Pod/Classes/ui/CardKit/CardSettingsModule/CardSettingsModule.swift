@@ -185,4 +185,33 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
     )
     self.navigationController?.pushViewController(viewController, animated: true, completion: nil)
   }
+    
+    func showBankAccountAgreements(disclaimer: Content, completion: @escaping () -> Void) {
+        let module = serviceLocator.moduleLocator.showBankAccountAgreements(disclaimer: disclaimer)
+        module.onClose = { [weak self] _ in
+          self?.popModule {}
+        }
+        module.onFinish = { [weak self] _ in
+            self?.dismissModule(animated: false, completion: {
+                completion()
+            })
+        }
+        present(module: module, leftButtonMode: .close) { _ in }
+    }
+    
+    func showAddMoneyBottomSheet(cardId: String) {
+        let viewModel = AddMoneyViewModel(cardId: cardId, loader: serviceLocator.platform, analyticsManager: serviceLocator.analyticsManager)
+        let addMoneyController = AddMoneyViewController(uiConfiguration: uiConfig, viewModel: viewModel)
+        addMoneyController.directDepositAction = { [weak self] in
+            guard let self = self else { return }
+            let viewModel = DirectDepositViewModel(cardId: cardId,
+                                                   loader: self.serviceLocator.platform,
+                                                   analyticsManager: self.serviceLocator.analyticsManager)
+            let controller = DirectDepositViewController(uiConfiguration: UIConfig.default, viewModel: viewModel)
+            addMoneyController.closeAddMoney()
+            self.present(viewController: controller, animated: true, embedInNavigationController: true, completion: {})
+        }
+        addMoneyController.modalPresentationStyle = .overCurrentContext
+        present(viewController: addMoneyController, completion: {})
+    }
 }
