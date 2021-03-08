@@ -1,5 +1,5 @@
 //
-//  RemoteBankAccountLoaderTests.swift
+//  RemoteACHAccountLoaderTests.swift
 //  UnitTests
 //
 //  Created by Fabio Cuomo on 18/1/21.
@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 @testable import AptoSDK
 
-class RemoteBankAccountLoaderTests: XCTestCase {
+class RemoteACHAccountLoaderTests: XCTestCase {
 
     private let apiKey = "api_key"
     private let userToken = "user_token"
@@ -24,31 +24,31 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         XCTAssertTrue(transport.requestesURLs.isEmpty)
     }
     
-    // MARK: LoadBankAccount tests
-    func test_loadBankAccount_requestDataFromURL() throws {
+    // MARK: LoadACHAccount tests
+    func test_loadACHAccount_requestDataFromURL() throws {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
-        let url = makeURLWrapper(transport, url: .bankAccountDetails, parameters: [":balance_id": balanceId])
+        let url = makeURLWrapper(transport, url: .achAccountDetails, parameters: [":balance_id": balanceId])
 
-        sut.loadBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
+        sut.loadACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
         
         XCTAssertTrue(transport.getCalled)
         XCTAssertEqual(transport.requestesURLs, [try url.asURL()])
     }
 
-    func test_loadBankAccountTwice_requestDataFromURLTwice() throws {
+    func test_loadACHAccountTwice_requestDataFromURLTwice() throws {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
-        let url = makeURLWrapper(transport, url: .bankAccountDetails, parameters: [":balance_id": balanceId])
+        let url = makeURLWrapper(transport, url: .achAccountDetails, parameters: [":balance_id": balanceId])
         
-        sut.loadBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
-        sut.loadBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
+        sut.loadACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
+        sut.loadACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
 
         XCTAssertTrue(transport.getCalled)
         XCTAssertEqual(transport.requestesURLs, [try url.asURL(), try url.asURL()])
     }
     
-    func test_loadBankAccount_deliversErrorOnClientErrors() {
+    func test_loadACHAccount_deliversErrorOnClientErrors() {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
         let clientError = NSError(domain: "APTO DOMAIN ERROR", code: 0)
@@ -63,7 +63,7 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         }
     }
     
-    func test_loadBankAccount_deliversErrorOnInvalidJSONResponse() throws {
+    func test_loadACHAccount_deliversErrorOnInvalidJSONResponse() throws {
         let balanceId = "1234567890"
         let json = try JSON(data: Data("[]".utf8))
         let (sut, transport) = makeSUT()
@@ -78,7 +78,7 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         })
     }
 
-    func test_loadBankAccount_deliversAccountDetailsOnValidJSONResponse() throws {
+    func test_loadACHAccount_deliversAccountDetailsOnValidJSONResponse() throws {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
         let item = makeAccountDetails(routingNumber: "123000789", accountNumber: "1234567890")
@@ -93,31 +93,31 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         })
     }
     
-    // MARK: AssignBankAccount tests
-    func test_assignBankAccount_requestDataFromURL() throws {
+    // MARK: AssignACHAccount tests
+    func test_assignACHAccount_requestDataFromURL() throws {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
-        let url = makeURLWrapper(transport, url: .assignBankAccount, parameters: [":balance_id": balanceId])
+        let url = makeURLWrapper(transport, url: .assignACHAccount, parameters: [":balance_id": balanceId])
 
-        sut.assignBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
+        sut.assignACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
         
         XCTAssertTrue(transport.postCalled)
         XCTAssertEqual(transport.requestesURLs, [try url.asURL()])
     }
 
-    func test_assignBankAccountTwice_requestDataFromURLTwice() throws {
+    func test_assignACHAccountTwice_requestDataFromURLTwice() throws {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
-        let url = makeURLWrapper(transport, url: .assignBankAccount, parameters: [":balance_id": balanceId])
+        let url = makeURLWrapper(transport, url: .assignACHAccount, parameters: [":balance_id": balanceId])
         
-        sut.assignBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
-        sut.assignBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
+        sut.assignACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
+        sut.assignACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { _ in }
 
         XCTAssertTrue(transport.postCalled)
         XCTAssertEqual(transport.requestesURLs, [try url.asURL(), try url.asURL()])
     }
 
-    func test_assignBankAccount_deliversErrorOnClientErrors() {
+    func test_assignACHAccount_deliversErrorOnClientErrors() {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
         let clientError = NSError(domain: "APTO DOMAIN ERROR", code: 0)
@@ -132,7 +132,7 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         }
     }
 
-    func test_assignBankAccount_deliversErrorOnInvalidJSONResponse() throws {
+    func test_assignACHAccount_deliversErrorOnInvalidJSONResponse() throws {
         let balanceId = "1234567890"
         let json = try JSON(data: Data("[]".utf8))
         let (sut, transport) = makeSUT()
@@ -147,7 +147,7 @@ class RemoteBankAccountLoaderTests: XCTestCase {
                      })
     }
 
-    func test_assignBankAccount_deliversAccountDetailsOnValidJSONResponse() throws {
+    func test_assignACHAccount_deliversAccountDetailsOnValidJSONResponse() throws {
         let balanceId = "1234567890"
         let (sut, transport) = makeSUT()
         let item = makeAccountDetails(routingNumber: "123000789", accountNumber: "1234567890")
@@ -163,9 +163,9 @@ class RemoteBankAccountLoaderTests: XCTestCase {
     }
 
     // MARK: Private Helper methods
-    private func makeSUT() -> (sut: BankAccountStorage, transport: StorageTransportSpy) {
+    private func makeSUT() -> (sut: ACHAccountStorage, transport: StorageTransportSpy) {
         let transport = StorageTransportSpy()
-        let sut = BankAccountStorage(transport: transport)
+        let sut = ACHAccountStorage(transport: transport)
         return (sut, transport)
     }
     
@@ -173,15 +173,15 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         URLWrapper(baseUrl: transport.environment.baseUrl(), url: url, urlParameters: parameters)
     }
     
-    private func expectLoad(_ sut: BankAccountStorage,
-                            toCompleteWith result: BankAccountResult,
+    private func expectLoad(_ sut: ACHAccountStorage,
+                            toCompleteWith result: ACHAccountResult,
                             apiKey: String,
                             userToken: String,
                             balanceId: String,
                             when action: () -> Void) {
         
-        var capturedResults = [BankAccountResult]()
-        sut.loadBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { result in
+        var capturedResults = [ACHAccountResult]()
+        sut.loadACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { result in
             capturedResults.append(result)
         }
 
@@ -190,15 +190,15 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         XCTAssertEqual(capturedResults, [result])
     }
     
-    private func expectAssign(_ sut: BankAccountStorage,
-                              toCompleteWith result: BankAccountResult,
+    private func expectAssign(_ sut: ACHAccountStorage,
+                              toCompleteWith result: ACHAccountResult,
                               apiKey: String,
                               userToken: String,
                               balanceId: String,
                               when action: () -> Void) {
         
-        var capturedResults = [BankAccountResult]()
-        sut.assignBankAccount(apiKey, userToken: userToken, balanceId: balanceId) { result in
+        var capturedResults = [ACHAccountResult]()
+        sut.assignACHAccount(apiKey, userToken: userToken, balanceId: balanceId) { result in
             capturedResults.append(result)
         }
 
@@ -207,14 +207,24 @@ class RemoteBankAccountLoaderTests: XCTestCase {
         XCTAssertEqual(capturedResults, [result])
     }
 
-    private func makeAccountDetails(routingNumber: String, accountNumber: String) -> (accountDetails: BankAccountDetails, json: JSON) {
+    private func makeAccountDetails(routingNumber: String, accountNumber: String) -> (accountDetails: ACHAccountDetails, json: JSON) {
         
-        let details = BankAccountDetails(routingNumber: routingNumber, accountNumber: accountNumber)
+        let details = ACHAccountDetails(routingNumber: routingNumber, accountNumber: accountNumber)
         let jsonDetails: JSON = [
-            "routing_number": routingNumber,
-            "account_number": accountNumber
+            "account_details" : [
+                "routing_number": routingNumber,
+                "account_number": accountNumber
+            ]
         ]
         
         return (details, jsonDetails)
     }    
+}
+
+class ACHAccountStorageSpy: ACHAccountStorageProtocol {
+    func loadACHAccount(_ apiKey: String, userToken: String, balanceId: String, completion: @escaping (ACHAccountResult) -> Void) {
+    }
+    
+    func assignACHAccount(_ apiKey: String, userToken: String, balanceId: String, completion: @escaping (ACHAccountResult) -> Void) {
+    }
 }

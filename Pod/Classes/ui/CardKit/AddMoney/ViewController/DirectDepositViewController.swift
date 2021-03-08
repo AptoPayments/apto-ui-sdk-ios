@@ -29,7 +29,7 @@ class DirectDepositViewController: ShiftViewController {
         setupBinding()
         viewModel.load()
         viewModel.trackEvent()
-        title = "load_funds.selector_dialog.direct_deposit.title".podLocalized()
+        title = "load_funds.direct_deposit.title".podLocalized()
     }
     
     override func closeTapped() {
@@ -38,10 +38,18 @@ class DirectDepositViewController: ShiftViewController {
     
     // MARK: Private methods
     private func setupBinding() {
+        let longPressGestureOnAccountNumber = UILongPressGestureRecognizer(target: self, action: #selector(longPressOnAccountNumberField(_:)))
+        longPressGestureOnAccountNumber.minimumPressDuration = 0.3
+        mainView.accountNumberInfoView.valueLabel.addGestureRecognizer(longPressGestureOnAccountNumber)
+        
+        let longPressGestureOnRoutingNumber = UILongPressGestureRecognizer(target: self, action: #selector(longPressOnRoutingNumberField(_:)))
+        longPressGestureOnRoutingNumber.minimumPressDuration = 0.3
+        mainView.routingNumberInfoView.valueLabel.addGestureRecognizer(longPressGestureOnRoutingNumber)
+
         viewModel.onCardLoadingStateChange = { [weak self] isLoading in
             if isLoading {
                 self?.mainView.activityIndicator.startAnimating()
-                self?.mainView.alpha = 0
+                self?.mainView.hideView()
             } else {
                 self?.hideActivityIndicator()
             }
@@ -59,7 +67,26 @@ class DirectDepositViewController: ShiftViewController {
     private func hideActivityIndicator() {
         mainView.activityIndicator.stopAnimating()
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.mainView.alpha = 1
+            self?.mainView.showView()
         }
+    }
+    
+    private func copyToClipboard(from gestureReconizer: UILongPressGestureRecognizer) {
+        if gestureReconizer.state == .ended,
+           let label = gestureReconizer.view as? UILabel,
+           let string = label.text {
+            let pasteboard = UIPasteboard.general
+            pasteboard.string = string
+
+            self.showMessage("load_funds.ach_account_details.copied_to_clipboard".podLocalized())
+        }
+    }
+    
+    @objc func longPressOnAccountNumberField(_ gestureReconizer: UILongPressGestureRecognizer) {
+        copyToClipboard(from: gestureReconizer)
+    }
+
+    @objc func longPressOnRoutingNumberField(_ gestureReconizer: UILongPressGestureRecognizer) {
+        copyToClipboard(from: gestureReconizer)
     }
 }

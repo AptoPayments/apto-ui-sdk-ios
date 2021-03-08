@@ -54,7 +54,6 @@ class AddMoneyViewControllerTests: XCTestCase {
 
         sut.loadViewIfNeeded()
         loader.completeCardInfoLoading()
-        loader.completeCardProductLoading()
 
         XCTAssertFalse(sut.isActivityIndicatorLoading)
     }
@@ -64,20 +63,17 @@ class AddMoneyViewControllerTests: XCTestCase {
 
         sut.loadViewIfNeeded()
         loader.completeCardInfoLoading()
-        loader.completeCardProductLoading()
         
         XCTAssertEqual(loader.loadCardInfoCallCount, 1)
-        XCTAssertEqual(loader.loadCardProductCallCount, 1)
     }
     
     func test_loadCardCompletion_rendersSuccessfullyLoadedInfo() {
-        let card = ModelDataProvider.provider.cardWithBankAccount
+        let card = ModelDataProvider.provider.cardWithACHAccount
         let cardProduct = ModelDataProvider.provider.cardProduct
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
         loader.completeCardInfoLoading(with: card)
-        loader.completeCardProductLoading(with: cardProduct)
 
         let (debitCardTransferTitle, debitCardTransferSubtitle,
              directDepositTransferTitle, directDepositTransferSubtitle) = bottomSheetItems(cardProduct: cardProduct.name)
@@ -115,16 +111,16 @@ private extension AddMoneyViewController {
         return activityIndicator.isAnimating
     }
     var item1ActionDetailTitle: String? {
-        return bottomView.item1ActionDetailView.titleLabel.text
+        return addMoneyView.item1ActionDetailView.titleLabel.text
     }
     var item1ActionDetailSubTitle: String? {
-        return bottomView.item1ActionDetailView.subTitleLabel.text
+        return addMoneyView.item1ActionDetailView.subTitleLabel.text
     }
     var item2ActionDetailTitle: String? {
-        return bottomView.item2ActionDetailView.titleLabel.text
+        return addMoneyView.item2ActionDetailView.titleLabel.text
     }
     var item2ActionDetailSubTitle: String? {
-        return bottomView.item2ActionDetailView.subTitleLabel.text
+        return addMoneyView.item2ActionDetailView.subTitleLabel.text
     }
 }
 

@@ -16,7 +16,6 @@ final class AddMoneyViewModel {
 
     var onCardLoadingStateChange: Observer<Bool>?
     var onErrorCardLoading: Observer<NSError>?
-    var onCardProductNameLoadedSuccessfully: Observer<String>?
 
     init(cardId: String, loader: AptoPlatformProtocol, analyticsManager: AnalyticsServiceProtocol) {
         self.loader = loader
@@ -30,35 +29,15 @@ final class AddMoneyViewModel {
             .fetchCard(cardId,
                        forceRefresh: false,
                        retrieveBalances: false,
-                       callback: { [weak self] cardResult in
-                        switch cardResult {
-                        case .success(let card):
-                            self?.fetchCardProduct(card: card)
-                        case .failure(let error):
+                       callback: { [weak self] result in
+                        if let error = result.error {
                             self?.onErrorCardLoading?(error)
-                            self?.onCardLoadingStateChange?(false)
                         }
+                        self?.onCardLoadingStateChange?(false)
                        })
     }
     
     public func trackEvent() {
         analyticsManager.track(event: .addFundsSelectorStart)
-    }
-    
-    private func fetchCardProduct(card: Card) {
-        if let productId = card.cardProductId {
-            loader
-                .fetchCardProduct(cardProductId: productId,
-                                  forceRefresh: false,
-                                  callback: { [weak self] result in
-                                    switch result {
-                                    case .success(let cardProduct):
-                                        self?.onCardProductNameLoadedSuccessfully?(cardProduct.name)
-                                    case .failure(let error):
-                                        self?.onErrorCardLoading?(error)
-                                    }
-                                    self?.onCardLoadingStateChange?(false)
-                                  })
-        }
-    }
+    }    
 }

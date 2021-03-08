@@ -128,19 +128,19 @@ class AgreementStorageTests: XCTestCase {
 
         let json1: JSON = [
             "user_agreement": [
-                "id_str": "agreement_629adb2cc537cdf9",
+                "id": "agreement_629adb2cc537cdf9",
                 "agreement_key": "evolve_eua",
-                "user_action": "ACCEPTED",
-                "user_action_recorded_at": "2020-11-20T01:56:24.543-05:00"
+                "action": "ACCEPTED",
+                "recorded_at": "2020-11-20T01:56:24.543-05:00"
             ]
         ]
 
         let json2: JSON = [
             "user_agreement": [
-                "id_str": "agreement_629adb2cc537cdff",
+                "id": "agreement_629adb2cc537cdff",
                 "agreement_key": "apto_privacy",
-                "user_action": "DECLINED",
-                "user_action_recorded_at": "2020-11-22T01:56:24.543-05:00"
+                "action": "DECLINED",
+                "recorded_at": "2020-11-22T01:56:24.543-05:00"
             ]
         ]
 

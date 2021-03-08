@@ -19,10 +19,8 @@ def runtimepods
   pod 'Down', '~> 0.8'
   pod 'PullToRefreshKit', '~> 0.8', :inhibit_warnings => true
   pod 'Mixpanel-swift', '~> 2.7', :inhibit_warnings => true
-  pod 'TwilioVoice', '~> 3.0'
   pod 'Branch', '~> 0.33.1'
   pod 'AlamofireNetworkActivityLogger', '~> 2.0'
-  pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '6.0.9'
 end
 
 target :Demo do

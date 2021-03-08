@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
     button.snp.makeConstraints { make in
       make.height.equalTo(44)
     }
-    button.setTitle(title, for: UIControlState())
+    button.setTitle(title, for: UIControl.State())
     return button
   }
 

@@ -30,7 +30,7 @@ class CardLoaderSpy: AptoPlatformFake {
         cardProductCompletions.append(callback)
     }
     
-    func completeCardInfoLoading(with card: Card = ModelDataProvider.provider.cardWithBankAccount, at index: Int = 0) {
+    func completeCardInfoLoading(with card: Card = ModelDataProvider.provider.cardWithACHAccount, at index: Int = 0) {
         cardCompletions[index](.success(card))
     }
 

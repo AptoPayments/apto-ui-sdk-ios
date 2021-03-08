@@ -42,7 +42,6 @@ class DirectDepositViewControllerTests: XCTestCase {
 
         sut.loadViewIfNeeded()
         loader.completeCardInfoLoading()
-        loader.completeCardProductLoading()
 
         XCTAssertFalse(sut.isActivityIndicatorLoading)
     }
@@ -59,7 +58,7 @@ class DirectDepositViewControllerTests: XCTestCase {
     }
     
     func test_loadCardCompletion_rendersSuccessfullyLoadedInfo() {
-        let card = ModelDataProvider.provider.cardWithBankAccount
+        let card = ModelDataProvider.provider.cardWithACHAccount
         let cardProduct = ModelDataProvider.provider.cardProduct
         let (sut, loader) = makeSUT()
 
@@ -67,8 +66,8 @@ class DirectDepositViewControllerTests: XCTestCase {
         loader.completeCardInfoLoading(with: card)
         loader.completeCardProductLoading(with: cardProduct)
 
-        XCTAssertEqual(sut.accountNumber, card.features?.bankAccount?.bankAccountDetails?.accountNumber)
-        XCTAssertEqual(sut.routingNumber, card.features?.bankAccount?.bankAccountDetails?.routingNumber)
+        XCTAssertEqual(sut.accountNumber, card.features?.achAccount?.achAccountDetails?.accountNumber)
+        XCTAssertEqual(sut.routingNumber, card.features?.achAccount?.achAccountDetails?.routingNumber)
     }
 
     // MARK: - Helpers

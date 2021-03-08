@@ -41,7 +41,10 @@ class ShowDisclaimerActionModule: UIModule, ShowDisclaimerActionModuleProtocol {
   }
 
   private func buildFullScreenDisclaimerModule() -> FullScreenDisclaimerModuleProtocol {
-    let module = serviceLocator.moduleLocator.fullScreenDisclaimerModule(disclaimer: disclaimer)
+    let module = serviceLocator.moduleLocator.fullScreenDisclaimerModule(disclaimer: disclaimer,
+                                                                         disclaimerTitle: "disclaimer.disclaimer.title",
+                                                                         callToActionTitle: "disclaimer.disclaimer.call_to_action.title",
+                                                                         cancelActionTitle: "disclaimer.disclaimer.cancel_action.button")
     module.onClose = { [unowned self] _ in
       self.confirmClose {[unowned self] in
         self.close()

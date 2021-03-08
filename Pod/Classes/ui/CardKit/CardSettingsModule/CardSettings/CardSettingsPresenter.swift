@@ -27,7 +27,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   // swiftlint:enable implicitly_unwrapped_optional
   let viewModel: CardSettingsViewModel
   var analyticsManager: AnalyticsServiceProtocol?
-  private let card: Card
+  private var card: Card
   private let rowsPerPage = 20
   private let enableCardAction: EnableCardAction
   private let disableCardAction: DisableCardAction
@@ -159,25 +159,53 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   }
 
     func didTapOnLoadFunds() {
-        router.showAddFunds(for: card)
+        if customerHasProvisionedACHAccount() {
+            router.showAddMoneyBottomSheet(card: card)
+        } else if customerShouldAcceptACHAgreement() {
+            guard let features = card.features, let bankAccount = features.achAccount,
+                  let disclaimer = bankAccount.disclaimer,
+                  let content = disclaimer.content else {
+                return
+            }
+            router.showACHAccountAgreements(disclaimer: content,
+                                             cardId: card.accountId,
+                                             acceptCompletion: { [router, card, weak self] in
+                                                router?.showAddMoneyBottomSheet(card: card)
+                                                self?.refreshCardData(card.accountId)
+                                             },
+                                             declineCompletion: { [router, card] in router?.showAddFunds(for: card) })
+        } else {
+            router.showAddFunds(for: card)
+        }
     }
   
-    private func customerHasProvisionedBankAccount() -> Bool {
-        guard let features = card.features, let bankAccount = features.bankAccount,
+    private func customerHasProvisionedACHAccount() -> Bool {
+        guard let features = card.features, let bankAccount = features.achAccount,
               let hasSetupACHAccount = bankAccount.isAccountProvisioned else {
             return false
         }
         return bankAccount.status == .enabled && hasSetupACHAccount
     }
 
-    private func customerShouldAcceptCardholderAgreement() -> Bool {
-        guard let features = card.features, let bankAccount = features.bankAccount,
+    private func customerShouldAcceptACHAgreement() -> Bool {
+        guard let features = card.features, let bankAccount = features.achAccount,
               let hasSetupACHAccount = bankAccount.isAccountProvisioned else {
             return false
         }
         return bankAccount.status == .enabled && hasSetupACHAccount == false
     }
 
+    func refreshCardData(_ cardId: String) {
+        AptoPlatform
+            .defaultManager()
+            .fetchCard(cardId,
+                       forceRefresh: true) { [weak self] result in
+                if let refreshedCard = try? result.get() {
+                    self?.card = refreshedCard
+                }
+            }
+    }
+    
   func lostCardTapped() {
     reportLostCardAction.run { [unowned self] result in
       switch result {

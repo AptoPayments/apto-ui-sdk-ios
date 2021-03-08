@@ -20,7 +20,11 @@ class FullScreenDisclaimerModuleTest: XCTestCase {
   override func setUp() {
     super.setUp()
 
-    sut = FullScreenDisclaimerModule(serviceLocator: serviceLocator, disclaimer: disclaimer)
+    sut = FullScreenDisclaimerModule(serviceLocator: serviceLocator,
+                                     disclaimer: disclaimer,
+                                     disclaimerTitle: "title",
+                                     callToActionTitle: "callToActionTitle",
+                                     cancelActionTitle: "cancelTitle")
   }
 
   func testInitializeConfigurationSucceedCallCompletionBlockWithSuccess() {

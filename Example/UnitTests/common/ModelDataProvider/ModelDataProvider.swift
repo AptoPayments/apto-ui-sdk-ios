@@ -219,7 +219,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, bankAccount: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -247,7 +247,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
                                 getPin: FeatureAction(source: .voIP, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, bankAccount: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -275,7 +275,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .api, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, bankAccount: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -303,7 +303,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, bankAccount: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -332,7 +332,7 @@ class ModelDataProvider {
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
                                 passCode: PassCode(status: .enabled, passCodeSet: false, verificationRequired: true),
-                                bankAccount: nil)
+                                achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -354,17 +354,17 @@ class ModelDataProvider {
     return card
   }()
 
-    lazy var cardWithBankAccount: Card = {
+    lazy var cardWithACHAccount: Card = {
         let keys = ["evolve_eua"]
         let url = URL(string: "https://public-media-prd-usw1-shift.s3-us-west-1.amazonaws.com/developer_portal/disclaimers/instance_issuance_disclaimer.html")!
         let content = Content.externalURL(url)
-        let disclaimer = BankAccountDisclaimer(agreementKeys: keys, content: content)
-        let accountDetails = BankAccountDetails(routingNumber: "123000789", accountNumber: "1234567890")
-        let bankAccount = BankAccountFeature(status: .enabled,
+        let disclaimer = Disclaimer(agreementKeys: keys, content: content)
+        let accountDetails = ACHAccountDetails(routingNumber: "123000789", accountNumber: "1234567890")
+        let bankAccount = ACHAccountFeature(status: .enabled,
                                              isAccountProvisioned: true,
                                              disclaimer: disclaimer,
-                                             bankAccountDetails: accountDetails)
-        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil, passCode: nil, bankAccount: bankAccount)
+                                             achAccountDetails: accountDetails)
+        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil, passCode: nil, achAccount: bankAccount)
         let card = Card(accountId: "card_id",
                         cardProductId: "card_product_id",
                         cardNetwork: .visa,
@@ -390,7 +390,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
                                 getPin: FeatureAction(source: .unknown, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, bankAccount: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,

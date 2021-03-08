@@ -73,7 +73,12 @@ class StorageLocatorFake: StorageLocatorProtocol {
   }
     
     lazy var agreementStorageSpy = AgreementStorageSpy()
-    func bankAccountAgreementStorage(transport: JSONTransport) -> AgreementStorageProtocol {
+    func achAccountAgreementStorage(transport: JSONTransport) -> AgreementStorageProtocol {
         return agreementStorageSpy
+    }
+
+    lazy var achAccountStorageSpy = ACHAccountStorageSpy()
+    func achAccountStorage(transport: JSONTransport) -> ACHAccountStorageProtocol {
+        return achAccountStorageSpy
     }
 }

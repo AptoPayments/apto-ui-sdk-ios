@@ -36,8 +36,8 @@ final class DirectDepositViewModel {
                             self?.fetchCardProduct(card: card)
                         case .failure(let error):
                             self?.onErrorCardLoading?(error)
-                            self?.onCardLoadingStateChange?(false)
                         }
+                        self?.onCardLoadingStateChange?(false)
                        })
     }
     
@@ -66,7 +66,7 @@ final class DirectDepositViewModel {
 }
 
 public struct DirectDepositViewData {
-    let accountDetails: BankAccountDetails
+    let accountDetails: ACHAccountDetails
     let description: String
     let footer: String
 }
@@ -74,7 +74,7 @@ public struct DirectDepositViewData {
 struct DirectDepositViewDataMapper {
     private init() {}
     public static func map(card: Card, cardProduct: CardProduct) -> DirectDepositViewData? {
-        guard let accountDetails = card.features?.bankAccount?.bankAccountDetails else { return nil }
+        guard let accountDetails = card.features?.achAccount?.achAccountDetails else { return nil }
         let description = "load_funds.direct_deposit.instructions_description".podLocalized().replace(["<<APP_NAME>>": cardProduct.name])
         let footer = "load_funds.direct_deposit.footer.description".podLocalized().replace(["<<APP_NAME>>": cardProduct.name])
         return DirectDepositViewData(accountDetails: accountDetails, description: description, footer: footer)

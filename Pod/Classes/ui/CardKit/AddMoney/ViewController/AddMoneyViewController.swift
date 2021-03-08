@@ -6,25 +6,26 @@
 //
 
 import AptoSDK
+import SnapKit
 
 class AddMoneyViewController: ShiftViewController {
-    private(set) lazy var bottomView = AddMoneyView(uiconfig: self.uiConfiguration)
-    private let backView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.65)
-        return view
-    }()
+    private(set) lazy var addMoneyView = AddMoneyView(uiconfig: self.uiConfiguration)
     private(set) var activityIndicator: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .white)
         spinner.hidesWhenStopped = true
         return spinner
     }()
     var directDepositAction: (() -> Void)?
+    var debitCardAction: (() -> Void)?
     private let viewModel: AddMoneyViewModel
-
-    init(uiConfiguration: UIConfig, viewModel: AddMoneyViewModel) {
+    private let dismissUponPresentation: Bool
+    private var bottomSheetBottomConstraint: Constraint?
+    
+    init(uiConfiguration: UIConfig, viewModel: AddMoneyViewModel, dismissUponPresentation: Bool = true) {
         self.viewModel = viewModel
+        self.dismissUponPresentation = dismissUponPresentation
         super.init(uiConfiguration: uiConfiguration)
+        transitioningDelegate = self
     }
     
     @available(*, unavailable)
@@ -41,20 +42,13 @@ class AddMoneyViewController: ShiftViewController {
     
     private func setupView() {
         view.backgroundColor = .clear
-        [backView, bottomView, activityIndicator].forEach(view.addSubview)
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(closeAddMoney))
-        backView.addGestureRecognizer(recognizer)
-        
-        let item2Recognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnDirectDepositItem))
-        bottomView.item2ActionDetailView.addGestureRecognizer(item2Recognizer)
+        [addMoneyView, activityIndicator].forEach(view.addSubview)
     }
     
     private func setupConstraints() {
-        backView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        bottomView.snp.makeConstraints { make in
+        addMoneyView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(15)
-            make.bottom.equalTo(bottomConstraint).inset(10)
+            self.bottomSheetBottomConstraint = make.bottom.equalTo(bottomConstraint).offset(300).constraint
             make.height.equalTo(200)
         }
         activityIndicator.snp.makeConstraints { make in
@@ -62,16 +56,17 @@ class AddMoneyViewController: ShiftViewController {
         }
     }
     
-    @objc func closeAddMoney() {
-        dismiss(animated: false)
-    }
-    
-    @objc func didTapOnDirectDepositItem() {
-        directDepositAction?()
-    }
-    
     // MARK: Private methods
     private func setupBinding() {
+        let item1Recognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnDebitaCardItem))
+        addMoneyView.item1ActionDetailView.addGestureRecognizer(item1Recognizer)
+
+        let item2Recognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnDirectDepositItem))
+        addMoneyView.item2ActionDetailView.addGestureRecognizer(item2Recognizer)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeAddMoney))
+        addMoneyView.dimView.addGestureRecognizer(tapRecognizer)
+
         viewModel.onCardLoadingStateChange = { [activityIndicator] isLoading in
             if isLoading {
                 activityIndicator.startAnimating()
@@ -82,11 +77,35 @@ class AddMoneyViewController: ShiftViewController {
         
         viewModel.onErrorCardLoading = { [weak self] error in
             self?.show(error: error)
+        }        
+    }
+
+    // MARK: Public methods
+    @objc func closeAddMoney() {
+        dismiss(animated: false)
+    }
+    
+    @objc func didTapOnDirectDepositItem() {
+        if dismissUponPresentation {
+            closeAddMoney()
         }
-        
-        viewModel.onCardProductNameLoadedSuccessfully = { [bottomView] cardProductName in
-            bottomView.configure(with: cardProductName)
+        directDepositAction?()
+    }
+    
+    @objc func didTapOnDebitaCardItem() {
+        if dismissUponPresentation {
+            closeAddMoney()
         }
-    }    
+        debitCardAction?()
+    }
 }
 
+extension AddMoneyViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animationController = AddMoneyAnimationController(with: addMoneyView)
+        animationController.direction = .present
+        return animationController
+    }
+}

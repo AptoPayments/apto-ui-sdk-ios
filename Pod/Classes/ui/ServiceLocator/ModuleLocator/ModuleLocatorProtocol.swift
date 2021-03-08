@@ -9,7 +9,10 @@
 import AptoSDK
 
 protocol ModuleLocatorProtocol {
-  func fullScreenDisclaimerModule(disclaimer: Content) -> FullScreenDisclaimerModuleProtocol
+  func fullScreenDisclaimerModule(disclaimer: Content,
+                                  disclaimerTitle: String,
+                                  callToActionTitle: String,
+                                  cancelActionTitle: String) -> FullScreenDisclaimerModuleProtocol
   func countrySelectorModule(countries: [Country]) -> CountrySelectorModuleProtocol
 
   // MARK: - Auth module
@@ -65,6 +68,6 @@ protocol ModuleLocatorProtocol {
   func physicalCardActivationModule(card: Card) -> PhysicalCardActivationModuleProtocol
   func physicalCardActivationSucceedModule(card: Card) -> PhysicalCardActivationSucceedModuleProtocol
 
-    // MARK: Bank account agreements
-    func showBankAccountAgreements(disclaimer: Content) -> ShowAgreementModule
+    // MARK: ACH account agreements
+    func showACHAccountAgreements(disclaimer: Content, cardId: String) -> ShowAgreementModule
 }

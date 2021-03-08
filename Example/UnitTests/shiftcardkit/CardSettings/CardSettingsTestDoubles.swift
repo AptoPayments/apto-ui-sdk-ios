@@ -14,10 +14,13 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
   
   func showAddFunds(for card: Card) {}
   
-    func showAddMoneyBottomSheet(cardId: String) {}
+    func showAddMoneyBottomSheet(card: Card) {}
     
-    func showBankAccountAgreements(disclaimer: Content, completion: @escaping () -> Void) { }
-    
+    func showACHAccountAgreements(disclaimer: Content,
+                                   cardId: String,
+                                   acceptCompletion: @escaping () -> Void,
+                                   declineCompletion: @escaping () -> Void) {}
+
   private(set) var closeFromShiftCardSettingsCalled = false
   func closeFromShiftCardSettings() {
     closeFromShiftCardSettingsCalled = true

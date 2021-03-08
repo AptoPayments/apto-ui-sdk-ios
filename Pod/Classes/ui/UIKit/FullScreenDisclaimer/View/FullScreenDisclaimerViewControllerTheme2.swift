@@ -19,12 +19,20 @@ class FullScreenDisclaimerViewControllerTheme2: ShiftViewController {
   private let contentPresenterView: ContentPresenterView
   private let navigationView = UIView()
   private var agreeButton: UIButton! // swiftlint:disable:this implicitly_unwrapped_optional
-
-  init(uiConfiguration: UIConfig, eventHandler: FullScreenDisclaimerEventHandler) {
+    private var callToActionTitle: String
+    private var cancelActionTitle: String
+    
+  init(uiConfiguration: UIConfig,
+       eventHandler: FullScreenDisclaimerEventHandler,
+       disclaimerTitle: String,
+       callToActionTitle: String,
+       cancelActionTitle: String) {
     self.eventHandler = eventHandler
     self.contentPresenterView = ContentPresenterView(uiConfig: uiConfiguration)
-    self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: "disclaimer.disclaimer.title".podLocalized(),
+    self.titleLabel = ComponentCatalog.largeTitleLabelWith(text: disclaimerTitle.podLocalized(),
                                                            uiConfig: uiConfiguration)
+    self.callToActionTitle = callToActionTitle
+    self.cancelActionTitle = cancelActionTitle
     super.init(uiConfiguration: uiConfiguration)
   }
 
@@ -135,7 +143,7 @@ private extension FullScreenDisclaimerViewControllerTheme2 {
   }
 
   func setUpAgreeButton() {
-    agreeButton = ComponentCatalog.buttonWith(title: "disclaimer.disclaimer.call_to_action.title".podLocalized(),
+    agreeButton = ComponentCatalog.buttonWith(title: callToActionTitle.podLocalized(),
                                               showShadow: false,
                                               uiConfig: uiConfiguration) { [unowned self] in
       self.agreeTapped()
@@ -147,7 +155,7 @@ private extension FullScreenDisclaimerViewControllerTheme2 {
   }
 
   func setUpCancelButton() {
-    let title = "disclaimer.disclaimer.cancel_action.button".podLocalized()
+    let title = cancelActionTitle.podLocalized()
     let button = ComponentCatalog.formTextLinkButtonWith(title: title,
                                                          uiConfig: uiConfiguration) { [unowned self] in
       self.closeTapped()

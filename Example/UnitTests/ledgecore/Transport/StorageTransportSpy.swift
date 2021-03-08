@@ -27,7 +27,7 @@ class StorageTransportSpy: JSONTransportSpy {
                       callback: @escaping Swift.Result<JSON, NSError>.Callback) {
         super.get(url, authorization: authorization, parameters: parameters, headers: headers, acceptRedirectTo: acceptRedirectTo, filterInvalidTokenResult: filterInvalidTokenResult, callback: callback)
 
-        if let getURL = try? lastGetURL?.asURL(), let requestedURL = getURL {
+        if let requestedURL = try? lastGetURL?.asURL() {
             messages.append((requestedURL, callback))
         }
     }
@@ -39,7 +39,7 @@ class StorageTransportSpy: JSONTransportSpy {
                        callback: @escaping Swift.Result<JSON, NSError>.Callback) {
         super.post(url, authorization: authorization, parameters: parameters, filterInvalidTokenResult: filterInvalidTokenResult, callback: callback)
         
-        if let postURL = try? lastPostURL?.asURL(), let requestedURL = postURL {
+        if let requestedURL = try? lastPostURL?.asURL() {
             messages.append((requestedURL, callback))
         }
     }

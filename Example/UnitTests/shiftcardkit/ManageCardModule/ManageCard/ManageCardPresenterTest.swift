@@ -35,7 +35,7 @@ class ManageCardPresenterTest: XCTestCase {
     // Then
     XCTAssertTrue(notificationHandler.addObserverCalled)
     XCTAssertTrue(notificationHandler.lastAddObserverObserver === sut)
-    XCTAssertEqual(.UIApplicationDidBecomeActive, notificationHandler.lastAddObserverName)
+    XCTAssertEqual(UIApplication.didBecomeActiveNotification, notificationHandler.lastAddObserverName)
   }
 
   func testViewLoadedCallInteractor() {
@@ -349,7 +349,7 @@ class ManageCardPresenterTest: XCTestCase {
 
   func testWillEnterForegroundNotificationReceivedRefreshDataFromServer() {
     // When
-    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
+    notificationHandler.postNotification(UIApplication.didBecomeActiveNotification)
 
     // Then
     XCTAssertTrue(interactor.reloadCardCalled)
@@ -366,7 +366,7 @@ class ManageCardPresenterTest: XCTestCase {
                                                          dataProvider.transaction])
 
     // When
-    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
+    notificationHandler.postNotification(UIApplication.didBecomeActiveNotification)
 
     // Then
     XCTAssertEqual(2, sut.viewModel.transactions.numberOfItemsInAllSections)
@@ -378,7 +378,7 @@ class ManageCardPresenterTest: XCTestCase {
     interactor.nextProvideTransactionsResult = .success([dataProvider.transactionWith(transactionId: "other")])
 
     // When
-    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
+    notificationHandler.postNotification(UIApplication.didBecomeActiveNotification)
 
     // Then
     XCTAssertEqual(1, sut.viewModel.transactions.numberOfItemsInAllSections)

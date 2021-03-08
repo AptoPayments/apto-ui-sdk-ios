@@ -14,12 +14,21 @@ class FullScreenDisclaimerModule: UIModule, FullScreenDisclaimerModuleProtocol {
   private var presenter: FullScreenDisclaimerPresenterProtocol?
 
   var onDisclaimerAgreed: ((_ fullScreenDisclaimerModule: FullScreenDisclaimerModuleProtocol) -> Void)?
-
-  init(serviceLocator: ServiceLocatorProtocol, disclaimer: Content) {
-    self.disclaimer = disclaimer
-
-    super.init(serviceLocator: serviceLocator)
-  }
+    private var disclaimerTitle: String
+    private var callToActionTitle: String
+    private var cancelActionTitle: String
+    
+    init(serviceLocator: ServiceLocatorProtocol,
+         disclaimer: Content,
+         disclaimerTitle: String,
+         callToActionTitle: String,
+         cancelActionTitle: String) {
+        self.disclaimer = disclaimer
+        self.disclaimerTitle = disclaimerTitle
+        self.callToActionTitle = callToActionTitle
+        self.cancelActionTitle = cancelActionTitle
+        super.init(serviceLocator: serviceLocator)
+    }
 
   override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
     let viewController = buildFullScreenDisclaimerViewController(uiConfig)
@@ -30,7 +39,10 @@ class FullScreenDisclaimerModule: UIModule, FullScreenDisclaimerModuleProtocol {
     let presenter = serviceLocator.presenterLocator.fullScreenDisclaimerPresenter()
     let interactor = serviceLocator.interactorLocator.fullScreenDisclaimerInteractor(disclaimer: disclaimer)
     let viewController = serviceLocator.viewLocator.fullScreenDisclaimerView(uiConfig: uiConfig,
-                                                                             eventHandler: presenter)
+                                                                             eventHandler: presenter,
+                                                                             disclaimerTitle: disclaimerTitle,
+                                                                             callToActionTitle: callToActionTitle,
+                                                                             cancelActionTitle: cancelActionTitle)
     presenter.interactor = interactor
     presenter.router = self
     presenter.analyticsManager = serviceLocator.analyticsManager

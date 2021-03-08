@@ -28,8 +28,11 @@ protocol CardSettingsRouterProtocol: class {
   func showMonthlyStatements()
   func authenticate(completion: @escaping (Bool) -> Void)
   func showAddFunds(for card: Card)
-    func showBankAccountAgreements(disclaimer: Content, completion: @escaping () -> Void)
-    func showAddMoneyBottomSheet(cardId: String)
+    func showACHAccountAgreements(disclaimer: Content,
+                                   cardId: String,
+                                   acceptCompletion: @escaping () -> Void,
+                                   declineCompletion: @escaping () -> Void)
+    func showAddMoneyBottomSheet(card: Card)
 }
 
 extension CardSettingsRouterProtocol {

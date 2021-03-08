@@ -16,7 +16,10 @@ import AptoSDK
 // That statement will compile but the app will crash in runtime whenever a UIViewController is expected.
 protocol ViewLocatorProtocol {
   func fullScreenDisclaimerView(uiConfig: UIConfig,
-                                eventHandler: FullScreenDisclaimerEventHandler) -> UIViewController
+                                eventHandler: FullScreenDisclaimerEventHandler,
+                                disclaimerTitle: String,
+                                callToActionTitle: String,
+                                cancelActionTitle: String) -> UIViewController
   func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController
 
   // MARK: - Auth

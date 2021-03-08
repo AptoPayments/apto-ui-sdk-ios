@@ -17,6 +17,7 @@ public class DirectDepositView: UIView {
                                                        textAlignment: .left,
                                                        uiConfig: uiConfiguration)
         label.textColor = uiConfiguration.textTopBarSecondaryColor
+        label.font = uiConfiguration.fontProvider.formLabelFont
         label.numberOfLines = 0
         return label
     }()
@@ -99,5 +100,12 @@ public class DirectDepositView: UIView {
         footerLabel.text = viewData.footer
     }
 
+    func hideView() {
+        containerView.alpha = 0
+    }
+    
+    func showView() {
+        containerView.alpha = 1
+    }
 }
 

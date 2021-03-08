@@ -20,7 +20,10 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   lazy var fullScreenDisclaimerModuleSpy: FullScreenDisclaimerModuleSpy = {
     return FullScreenDisclaimerModuleSpy(serviceLocator: serviceLocator)
   }()
-  func fullScreenDisclaimerModule(disclaimer: Content) -> FullScreenDisclaimerModuleProtocol {
+  func fullScreenDisclaimerModule(disclaimer: Content,
+                                  disclaimerTitle: String,
+                                  callToActionTitle: String,
+                                  cancelActionTitle: String) -> FullScreenDisclaimerModuleProtocol {
     return fullScreenDisclaimerModuleSpy
   }
 
@@ -257,9 +260,10 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
     return physicalCardActivationSucceedModuleFake
   }
     
-    func showBankAccountAgreements(disclaimer: Content) -> ShowAgreementModule {
+    func showACHAccountAgreements(disclaimer: Content, cardId: String) -> ShowAgreementModule {
         return ShowAgreementModule(serviceLocator: serviceLocator,
-                                   disclaimer: disclaimer, actionConfirmer: UIAlertController.self,
+                                   cardId: cardId, disclaimer: disclaimer,
+                                   actionConfirmer: UIAlertController.self,
                                    analyticsManager: nil)
     }
 

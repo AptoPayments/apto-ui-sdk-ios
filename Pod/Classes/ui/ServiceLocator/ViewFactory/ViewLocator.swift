@@ -20,8 +20,15 @@ final class ViewLocator: ViewLocatorProtocol {
   }
 
   func fullScreenDisclaimerView(uiConfig: UIConfig,
-                                eventHandler: FullScreenDisclaimerEventHandler) -> UIViewController {
-     return FullScreenDisclaimerViewControllerTheme2(uiConfiguration: uiConfig, eventHandler: eventHandler)
+                                eventHandler: FullScreenDisclaimerEventHandler,
+                                disclaimerTitle: String,
+                                callToActionTitle: String,
+                                cancelActionTitle: String) -> UIViewController {
+     return FullScreenDisclaimerViewControllerTheme2(uiConfiguration: uiConfig,
+                                                     eventHandler: eventHandler,
+                                                     disclaimerTitle: disclaimerTitle,
+                                                     callToActionTitle: callToActionTitle,
+                                                     cancelActionTitle: cancelActionTitle)
   }
 
   func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController {

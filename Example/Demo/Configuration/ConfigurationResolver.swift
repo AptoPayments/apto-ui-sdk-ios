@@ -2,9 +2,11 @@ import UIKit
 import Branch
 import AptoSDK
 
-private enum AptoBranchKeys {
-  static let apiKey = "APTO_API_KEY"
-  static let environment = "APTO_ENVIRONMENT"
+public enum AptoBranchKeys {
+    static let apiKey = "APTO_API_KEY"
+    static let environment = "APTO_ENVIRONMENT"
+    static let referringLink = "~referring_link"
+    static let clickedLink = "+clicked_branch_link"
 }
 
 struct ConfigurationResolver {
@@ -20,7 +22,7 @@ struct ConfigurationResolver {
   }
   
   func resolve(
-    launchOptions: [UIApplicationLaunchOptionsKey: Any]?,
+    launchOptions: [UIApplication.LaunchOptionsKey: Any]?,
     _ completion: @escaping (Configuration) -> Void)
   {
     if TestEnvironment.isRunningTests() {
@@ -34,6 +36,7 @@ struct ConfigurationResolver {
   }
 
   private func extractConfiguration(from parameters: [AnyHashable: Any]?) -> Configuration {
+    SentryLoggerHelper.logBranch(parameters, storedConfiguration: storedConfiguration)
     guard let parameters = parameters,
       let apiKey = parameters[AptoBranchKeys.apiKey] as? String,
       let environment = parameters[AptoBranchKeys.environment] as? String else {

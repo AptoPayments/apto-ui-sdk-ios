@@ -783,5 +783,6 @@ var nextIsShowDetailedCardActivityEnabledResult = true
   func deletePaymentSource(paymentSourceId: String, callback: @escaping Result<Void, NSError>.Callback) {}
   func pushFunds(with request: PushFundsRequest, callback: @escaping Result<PaymentResult, NSError>.Callback) {}
     
-    func acceptBankAccountAgreements(_ request: AgreementRequest, callback: @escaping (RecordedAgreementsResult) -> Void) {}
+    func reviewAgreement(_ request: AgreementRequest, callback: @escaping (RecordedAgreementsResult) -> Void) {}
+    func assignAchAccount(balanceId: String, callback: @escaping (ACHAccountResult) -> Void) {}
 }

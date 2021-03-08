@@ -26,6 +26,7 @@ public final class ShowInfoView: UIView {
                                                           uiConfig: uiConfiguration)
         label.textColor = uiConfiguration.textSecondaryColor
         label.font = uiConfiguration.fontProvider.formListFont
+        label.isUserInteractionEnabled = true
         return label
     }()
     private let dividerView = UIView()

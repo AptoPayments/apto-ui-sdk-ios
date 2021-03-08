@@ -8,21 +8,20 @@ PODS:
     - Alamofire (~> 4.8)
   - AptoObjCSDK (1.1.0):
     - AptoSDK
-  - AptoPCI (2.0.1)
-  - AptoSDK (3.0.1):
+  - AptoPCI (2.1.0)
+  - AptoSDK (3.1.0):
     - Alamofire (~> 4.8)
     - AlamofireNetworkActivityIndicator (~> 2.2)
     - Bond (~> 7.6)
     - FTLinearActivityIndicator (= 1.2.1)
     - GoogleKit (~> 0.3)
-    - LaunchDarkly (~> 4.5.0)
     - Mixpanel-swift (~> 2.7)
     - PhoneNumberKit (~> 3.2)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.8.0):
-    - AptoPCI (= 2.0.1)
-    - AptoSDK (= 3.0.1)
+  - AptoUISDK (2.8.1):
+    - AptoPCI (= 2.1.0)
+    - AptoSDK (= 3.1.0)
     - Bond (~> 7.6)
     - Down (~> 0.8.0)
     - GoogleKit (~> 0.3)
@@ -31,14 +30,13 @@ PODS:
     - SnapKit (~> 5.0)
     - TrustKit (~> 1.6.0)
     - TTTAttributedLabel (~> 2.0)
-    - TwilioVoice (~> 3.0)
+    - TwilioVoice (~> 5.0.0)
   - Bond (7.8.1):
     - Differ (~> 1.4)
     - ReactiveKit (~> 3.14)
   - Branch (0.33.1):
     - Branch/Core (= 0.33.1)
   - Branch/Core (0.33.1)
-  - DarklyEventSource (4.1.1)
   - Differ (1.4.5)
   - Down (0.8.6)
   - FTLinearActivityIndicator (1.2.1)
@@ -46,10 +44,6 @@ PODS:
   - KIF (3.6.0):
     - KIF/Core (= 3.6.0)
   - KIF/Core (3.6.0)
-  - LaunchDarkly (4.5.0):
-    - LaunchDarkly/Core (= 4.5.0)
-  - LaunchDarkly/Core (4.5.0):
-    - DarklyEventSource (~> 4.1.0)
   - Mixpanel-swift (2.8.1):
     - Mixpanel-swift/Complete (= 2.8.1)
   - Mixpanel-swift/Complete (2.8.1)
@@ -61,15 +55,12 @@ PODS:
     - PhoneNumberKit/PhoneNumberKitCore
   - PullToRefreshKit (0.8.8)
   - ReactiveKit (3.17.4)
-  - Sentry (6.0.9):
-    - Sentry/Core (= 6.0.9)
-  - Sentry/Core (6.0.9)
   - SnapKit (5.0.1)
   - SnapshotTesting (1.7.2)
   - SwiftyJSON (5.0.0)
   - TrustKit (1.6.5)
   - TTTAttributedLabel (2.0.0)
-  - TwilioVoice (3.1.1)
+  - TwilioVoice (5.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.8)
@@ -88,13 +79,11 @@ DEPENDENCIES:
   - Mixpanel-swift (~> 2.7)
   - PhoneNumberKit (~> 3.2)
   - PullToRefreshKit (~> 0.8)
-  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `6.0.9`)
   - SnapKit (~> 5.0)
   - SnapshotTesting (~> 1.7.2)
   - SwiftyJSON (~> 5.0)
   - TrustKit (~> 1.6)
   - TTTAttributedLabel (= 2.0.0)
-  - TwilioVoice (~> 3.0)
 
 SPEC REPOS:
   trunk:
@@ -105,13 +94,11 @@ SPEC REPOS:
     - AptoPCI
     - Bond
     - Branch
-    - DarklyEventSource
     - Differ
     - Down
     - FTLinearActivityIndicator
     - GoogleKit
     - KIF
-    - LaunchDarkly
     - Mixpanel-swift
     - PhoneNumberKit
     - PullToRefreshKit
@@ -130,14 +117,6 @@ EXTERNAL SOURCES:
     :path: "../"
   AptoUISDK:
     :path: "../"
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 6.0.9
-
-CHECKOUT OPTIONS:
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 6.0.9
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -145,30 +124,27 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   AlamofireNetworkActivityLogger: 6d3398c692d2c5d83b0c58793537860aca1e383d
   AptoObjCSDK: 818ed46d0b6328d9ec76f32ab39e51d8ed8dffb1
-  AptoPCI: 9d83b0e7d55e23f1be0cbdcee7b0311af8a0be52
-  AptoSDK: 860555849b6e98389b3efc8448d431ac3b664c55
-  AptoUISDK: 66203105fe601b38a9d113d9bdbd59d3662c8b50
+  AptoPCI: 8a85a014534b5d9036170e3698309de4fa51bc88
+  AptoSDK: 72396e9e86047568cb6a2709ee6971dd11d9c9f9
+  AptoUISDK: 2db4fd1d98ae4d2aa2c966a05a762a977169b7c1
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
-  DarklyEventSource: 6df384dcdb211d2b6bfbbe93a3148bd25567dd61
   Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
   FTLinearActivityIndicator: a3ef57034bd05bc80c1a7c62c8797c0361fa7bee
   GoogleKit: c4b00706a0b1091b295e59920bbd46fd30f74243
   KIF: bd770edd8ce49bc7308501e4871e58a02d137be3
-  LaunchDarkly: c2863e664fe089665dc9e68b7084488011fee54a
   Mixpanel-swift: 9d3a2597ef015f187abae0bfa5fda5997d5e4429
   PhoneNumberKit: ff153d5e299f6da566cb73c6aa71e354933b2932
   PullToRefreshKit: 7cc53e720e69f135cffa1a57784dfb534f0222ab
   ReactiveKit: f9f9e079efa39312c597bf1508ef4810d111ce76
-  Sentry: 388c9dc093b2fd3a264466a5c5b21e25959610a9
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SnapshotTesting: 8caa6661fea7c8019d5b46de77c16bab99c36c5c
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
-  TwilioVoice: 92845cbc7dd725b64fdae027bb9e78b985d32ed7
+  TwilioVoice: b75c5120e1e6a7402fd1f9f4917e8215ce8d7baf
 
-PODFILE CHECKSUM: 0b208b699e7e0e1d31596fddf1a6476a7225edfc
+PODFILE CHECKSUM: 1a9a8efa2a05f4b43b3592d3edc764c29e58ce4c
 
 COCOAPODS: 1.10.1

@@ -284,7 +284,7 @@ class FinancialAccountsStorageTest: XCTestCase {
         }
 
         wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(card.features?.bankAccount?.status, item.card.features?.bankAccount?.status)
+        XCTAssertEqual(card.features?.achAccount?.status, item.card.features?.achAccount?.status)
     }
 
     // MARK: Private Helper methods
@@ -297,7 +297,7 @@ class FinancialAccountsStorageTest: XCTestCase {
     
     private func makeCardInfo() -> (card: Card, json: JSON) {
         
-        let card = ModelDataProvider.provider.cardWithBankAccount
+        let card = ModelDataProvider.provider.cardWithACHAccount
         let jsonDetails: JSON = [
             "type": "card",
             "account_id": "card_id",
@@ -314,11 +314,11 @@ class FinancialAccountsStorageTest: XCTestCase {
             "cardholder_last_name": "Name",
             "card_product_id": "card_product_id",
             "features": [
-                "bank_account": [
+                "ach": [
                     "status": "enabled",
                     "account_provisioned": false,
                     "disclaimer": [
-                            "agreements_keys": [
+                            "agreement_keys": [
                                 "evolve_eua"
                             ],
                             "content": [

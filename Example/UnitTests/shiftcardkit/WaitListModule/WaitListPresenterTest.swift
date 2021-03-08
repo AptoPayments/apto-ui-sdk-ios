@@ -48,12 +48,12 @@ class WaitListPresenterTest: XCTestCase {
     // Then
     XCTAssertTrue(notificationHandler.addObserverCalled)
     XCTAssertTrue(notificationHandler.lastAddObserverObserver === sut)
-    XCTAssertEqual(.UIApplicationDidBecomeActive, notificationHandler.lastAddObserverName)
+    XCTAssertEqual(UIApplication.didBecomeActiveNotification, notificationHandler.lastAddObserverName)
   }
 
   func testWillEnterForegroundNotificationReceivedRefreshDataFromServer() {
     // When
-    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
+    notificationHandler.postNotification(UIApplication.didBecomeActiveNotification)
 
     // Then
     XCTAssertTrue(interactor.reloadApplicationCalled)
@@ -64,7 +64,7 @@ class WaitListPresenterTest: XCTestCase {
     interactor.nextReloadApplicationResult = .failure(BackendError(code: .other))
 
     // When
-    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
+    notificationHandler.postNotification(UIApplication.didBecomeActiveNotification)
 
     // Then
     XCTAssertFalse(router.applicationStatusChangedCalled)
@@ -75,7 +75,7 @@ class WaitListPresenterTest: XCTestCase {
     interactor.nextReloadApplicationResult = .success(dataProvider.waitListCardApplication)
 
     // When
-    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
+    notificationHandler.postNotification(UIApplication.didBecomeActiveNotification)
 
     // Then
     XCTAssertFalse(router.applicationStatusChangedCalled)
@@ -86,7 +86,7 @@ class WaitListPresenterTest: XCTestCase {
     interactor.nextReloadApplicationResult = .success(dataProvider.cardApplication)
 
     // When
-    notificationHandler.postNotification(.UIApplicationDidBecomeActive)
+    notificationHandler.postNotification(UIApplication.didBecomeActiveNotification)
 
     // Then
     XCTAssertTrue(router.applicationStatusChangedCalled)

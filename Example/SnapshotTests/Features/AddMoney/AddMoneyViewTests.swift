@@ -37,7 +37,6 @@ class AddMoneyViewTests: XCTestCase {
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.65)
 
         let bottomView = AddMoneyView(uiconfig: UIConfig.default)
-        bottomView.configure(with: "crd_12345678")
         backgroundView.addSubview(bottomView)
         
         bottomView.snp.makeConstraints { make in

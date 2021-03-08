@@ -15,8 +15,15 @@ final class ModuleLocator: ModuleLocatorProtocol {
     self.serviceLocator = serviceLocator
   }
 
-  func fullScreenDisclaimerModule(disclaimer: Content) -> FullScreenDisclaimerModuleProtocol {
-    return FullScreenDisclaimerModule(serviceLocator: serviceLocator, disclaimer: disclaimer)
+  func fullScreenDisclaimerModule(disclaimer: Content,
+                                  disclaimerTitle: String,
+                                  callToActionTitle: String,
+                                  cancelActionTitle: String) -> FullScreenDisclaimerModuleProtocol {
+    return FullScreenDisclaimerModule(serviceLocator: serviceLocator,
+                                      disclaimer: disclaimer,
+                                      disclaimerTitle: disclaimerTitle,
+                                      callToActionTitle: callToActionTitle,
+                                      cancelActionTitle: cancelActionTitle)
   }
 
   func countrySelectorModule(countries: [Country]) -> CountrySelectorModuleProtocol {
@@ -183,9 +190,9 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return PhysicalCardActivationSucceedModule(serviceLocator: serviceLocator, card: card, phoneCaller: PhoneCaller())
   }
 
-    func showBankAccountAgreements(disclaimer: Content) -> ShowAgreementModule {
+    func showACHAccountAgreements(disclaimer: Content, cardId: String) -> ShowAgreementModule {
         ShowAgreementModule(serviceLocator: serviceLocator,
-                            disclaimer: disclaimer,
+                            cardId: cardId, disclaimer: disclaimer,
                             actionConfirmer: UIAlertController.self,
                             analyticsManager: serviceLocator.analyticsManager)
     }
