@@ -295,6 +295,6 @@ class NonEmptyTextValidator: DataValidator<String> {
 
 class ZipCodeValidator: PatternTextValidator {
   init(failReasonMessage: String) {
-    super.init(validPatterns: ["^\\d{5}$", "^\\d{5}(?:[-]\\d{4})?$"], failReasonMessage: failReasonMessage)
+    super.init(validPatterns: ["^\\d{5}$"], failReasonMessage: failReasonMessage)
   }
 }

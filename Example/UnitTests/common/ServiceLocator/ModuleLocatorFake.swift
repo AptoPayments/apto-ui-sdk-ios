@@ -35,10 +35,10 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   }
 
   func authModule(authConfig: AuthModuleConfig,
-                  initialUserData: DataPointList) -> AuthModuleProtocol {
+                  initialUserData: DataPointList, initializationData: InitializationData?) -> AuthModuleProtocol {
     return AuthModule(serviceLocator: serviceLocator,
                       config: authConfig,
-                      initialUserData: initialUserData)
+                      initialUserData: initialUserData, initializationData: initializationData)
   }
 
   lazy var externalOauthModuleFake: ExternalOAuthModuleFake = {
@@ -129,7 +129,7 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   lazy var issueCardModuleSpy: IssueCardModuleSpy = {
     return IssueCardModuleSpy(serviceLocator: serviceLocator)
   }()
-  func issueCardModule(application: CardApplication) -> UIModuleProtocol {
+  func issueCardModule(application: CardApplication, cardMetadata: String?) -> UIModuleProtocol {
     return issueCardModuleSpy
   }
 

@@ -12,15 +12,17 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
  
   var delegate: CardSettingsModuleDelegate?
   
-  func showAddFunds(for card: Card) {}
+  func showAddFunds(for card: Card, extraContent: ExtraContent?) {}
   
-    func showAddMoneyBottomSheet(card: Card) {}
+    func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?) {}
     
     func showACHAccountAgreements(disclaimer: Content,
                                    cardId: String,
                                    acceptCompletion: @escaping () -> Void,
                                    declineCompletion: @escaping () -> Void) {}
 
+    func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?) {}
+    
   private(set) var closeFromShiftCardSettingsCalled = false
   func closeFromShiftCardSettings() {
     closeFromShiftCardSettingsCalled = true
@@ -156,6 +158,8 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
       
   }
   
+    func didTapOnOrderPhysicalCard() {}
+    
   private(set) var viewLoadedCalled = false
   func viewLoaded() {
     viewLoadedCalled = true

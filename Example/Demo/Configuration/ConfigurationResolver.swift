@@ -30,8 +30,12 @@ struct ConfigurationResolver {
       return
     }
     
-    branch.initSession(launchOptions: launchOptions) { (parameters, _) in
-      completion(self.extractConfiguration(from: parameters))
+    branch.initSession(launchOptions: launchOptions) { (parameters, error) in
+        guard let clickedLink = parameters?[AptoBranchKeys.clickedLink] as? Bool, clickedLink else {
+            completion(self.storedConfiguration ?? .default)
+            return
+        }
+        completion(self.extractConfiguration(from: parameters))
     }
   }
 

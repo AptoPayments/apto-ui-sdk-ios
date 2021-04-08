@@ -125,6 +125,7 @@ class UIModuleSpy: UIModule {
                         animated: Bool,
                         leftButtonMode: UIViewControllerLeftButtonMode,
                         embedInNavigationController: Bool = true,
+                        presenterController: UIViewController? = nil,
                         completion: @escaping Result<UIViewController, NSError>.Callback) {
     presentModuleCalled = true
     lastModulePresented = module

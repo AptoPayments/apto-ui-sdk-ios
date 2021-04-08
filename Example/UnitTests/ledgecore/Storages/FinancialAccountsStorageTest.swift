@@ -287,6 +287,86 @@ class FinancialAccountsStorageTest: XCTestCase {
         XCTAssertEqual(card.features?.achAccount?.status, item.card.features?.achAccount?.status)
     }
 
+    func test_orderPhysicalCard_deliversCardOnValidJSONResponse() {
+        let accountId = "crd_98hnhu9sc7i9ay73375"
+        let (sut, transport) = makeSUT()
+        let item = makeCardInfo()
+        
+        let exp = expectation(description: "Wait for completion")
+        var capturedResults: Swift.Result<Card, NSError>?
+        sut.orderPhysicalCard(apiKey, userToken: userToken, accountId: accountId) { result in
+            capturedResults = result
+            exp.fulfill()
+        }
+        
+        transport.complete(withResult: item.json)
+
+        guard let card = try? capturedResults?.get() else {
+            XCTFail("Expected success got failure")
+            return
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(card.orderedStatus, item.card.orderedStatus)
+    }
+    
+    func test_orderPhysicalCard_deliversErroronClientErrors() {
+        let accountId = "crd_98hnhu9sc7i9ay73375"
+        let (sut, transport) = makeSUT()
+        
+        let exp = expectation(description: "Wait for completion")
+        var capturedResults: Swift.Result<Card, NSError>?
+        sut.orderPhysicalCard(apiKey, userToken: userToken, accountId: accountId) { result in
+            capturedResults = result
+            exp.fulfill()
+        }
+        let error = NSError(domain: "apto", code: 90230)
+        transport.complete(with: error)
+
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(capturedResults, .failure(error))
+    }
+
+    func test_orderPhysicalCardConfig_deliversConfigOnValidJSONResponse() {
+        let accountId = "crd_98hnhu9sc7i9ay73375"
+        let (sut, transport) = makeSUT()
+        let item = makePhysicalCardConfig()
+        
+        let exp = expectation(description: "Wait for completion")
+        var capturedResults: Swift.Result<PhysicalCardConfig, NSError>?
+        sut.getOrderPhysicalCardConfig(apiKey, userToken: userToken, accountId: accountId) { result in
+            capturedResults = result
+            exp.fulfill()
+        }
+        
+        transport.complete(withResult: item.json)
+
+        guard let config = try? capturedResults?.get() else {
+            XCTFail("Expected success got failure")
+            return
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(config.issuanceFee?.amount.value, item.config.issuanceFee?.amount.value)
+    }
+
+    func test_orderPhysicalCardConfig_deliversErroronClientErrors() {
+        let accountId = "crd_98hnhu9sc7i9ay73375"
+        let (sut, transport) = makeSUT()
+        
+        let exp = expectation(description: "Wait for completion")
+        var capturedResults: Swift.Result<PhysicalCardConfig, NSError>?
+        sut.getOrderPhysicalCardConfig(apiKey, userToken: userToken, accountId: accountId) { result in
+            capturedResults = result
+            exp.fulfill()
+        }
+        let error = NSError(domain: "apto", code: 90230)
+        transport.complete(with: error)
+
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(capturedResults, .failure(error))
+    }
+
     // MARK: Private Helper methods
     private func makeSUT() -> (sut: FinancialAccountsStorage, transport: StorageTransportSpy) {
         let transport = StorageTransportSpy()
@@ -337,20 +417,24 @@ class FinancialAccountsStorageTest: XCTestCase {
         return (card, jsonDetails)
     }
     
-    class LocalCacheFileManagerSpy: LocalCacheFileManagerProtocol {
-        var cache = [String: Data]()
-        
-        func write(data: Data, filename: String) throws {
-            cache[filename] = data
-        }
-        
-        func read(filename: String) throws -> Data? {
-            cache[filename]
-        }
-        
-        func invalidate() throws {
-            cache.removeAll()
-        }
+    private func makePhysicalCardConfig() -> (config: PhysicalCardConfig, json: JSON) {
+        let config = ModelDataProvider.provider.physicalCardConfig
+        let jsonDetail: JSON = [
+            "user_address": [
+                "street_one": "Hollywood Avenue",
+                "locality": "Los Angeles",
+                "region": "California",
+                "postal_code": "00154",
+                "street_two": "10",
+                "verified": true,
+                "country": "US",
+            ],
+            "issuance_fee": [
+                "amount": 5.00,
+                "currency": "USD"
+            ]
+        ]
+        return (config, jsonDetail)
     }
-
+    
 }

@@ -785,4 +785,8 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     
     func reviewAgreement(_ request: AgreementRequest, callback: @escaping (RecordedAgreementsResult) -> Void) {}
     func assignAchAccount(balanceId: String, callback: @escaping (ACHAccountResult) -> Void) {}
+    
+    func orderPhysicalCard(_ cardId: String, callback: @escaping (Result<Card, NSError>) -> Void) {}
+    func getOrderPhysicalCardConfig(_ cardId: String, callback: @escaping (Result<PhysicalCardConfig, NSError>) -> Void) {}
+
 }

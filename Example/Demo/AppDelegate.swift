@@ -20,9 +20,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
  
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    Branch.setBranchKey("<< BRANCH API KEY>>")
-    Branch.useTestBranchKey()
-    
     let configurationResolver = ConfigurationResolver()
     configurationResolver.resolve(launchOptions: launchOptions) { configuration in
       

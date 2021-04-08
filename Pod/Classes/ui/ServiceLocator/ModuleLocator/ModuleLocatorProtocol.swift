@@ -16,7 +16,7 @@ protocol ModuleLocatorProtocol {
   func countrySelectorModule(countries: [Country]) -> CountrySelectorModuleProtocol
 
   // MARK: - Auth module
-  func authModule(authConfig: AuthModuleConfig, initialUserData: DataPointList) -> AuthModuleProtocol
+    func authModule(authConfig: AuthModuleConfig, initialUserData: DataPointList, initializationData: InitializationData?) -> AuthModuleProtocol
   func verifyPhoneModule(verificationType: VerificationParams<PhoneNumber, Verification>) -> VerifyPhoneModuleProtocol
   func verifyEmailModule(verificationType: VerificationParams<Email, Verification>) -> VerifyEmailModuleProtocol
   func verifyBirthDateModule(verificationType: VerificationParams<BirthDate, Verification>)
@@ -39,7 +39,7 @@ protocol ModuleLocatorProtocol {
   func showDisclaimerActionModule(workflowObject: WorkflowObject,
                                   workflowAction: WorkflowAction) -> ShowDisclaimerActionModuleProtocol
   func verifyDocumentModule(workflowObject: WorkflowObject?) -> VerifyDocumentModule
-  func issueCardModule(application: CardApplication) -> UIModuleProtocol
+  func issueCardModule(application: CardApplication, cardMetadata: String?) -> UIModuleProtocol
   func waitListModule(application: CardApplication) -> WaitListModuleProtocol
   func cardWaitListModule(card: Card) -> CardWaitListModuleProtocol
 

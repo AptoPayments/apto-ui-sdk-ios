@@ -63,23 +63,22 @@ final class AddCardView: UIView {
     return textInput
   }()
   
+    static let zipCodeMaxLength = 5
+    
   private lazy var zipCodeInputView: TextInputView = {
     let pattern = ZipCodeValidator(failReasonMessage: "Wrong Zip Code")
     let textInput = TextInputView(uiConfig: uiConfig)
-    textInput.maximumLength = 10
+    textInput.maximumLength = AddCardView.zipCodeMaxLength
     textInput.validator = { input in
         return pattern.validate(input) == .pass
     }
     textInput.formatter = { updatedText, string in
         if string == "" {
-            if updatedText.count == 5 {
-                textInput.value = "\(updatedText.prefix(5))"
+            if updatedText.count == AddCardView.zipCodeMaxLength {
+                textInput.value = "\(updatedText.prefix(AddCardView.zipCodeMaxLength))"
                 return false
             }
-        } else if updatedText.count == 6 {
-            textInput.value = "\(updatedText.prefix(5))-\(string)"
-            return false
-        } else if updatedText.count > 10{
+        } else if updatedText.count > AddCardView.zipCodeMaxLength {
             return false
         }
         return true

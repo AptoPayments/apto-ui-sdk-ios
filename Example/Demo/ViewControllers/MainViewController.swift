@@ -95,7 +95,7 @@ class MainViewController: UIViewController {
     // Launch Card Flow
     self.showLoadingSpinner(tintColor: .white, position: .bottomCenter)
     let options = CardOptions(features: [
-      .showStatsButton: true,
+      .showStatsButton: false,
       .showNotificationPreferences: true,
       .showDetailedCardActivityOption: true,
       .showMonthlyStatementsOption: true

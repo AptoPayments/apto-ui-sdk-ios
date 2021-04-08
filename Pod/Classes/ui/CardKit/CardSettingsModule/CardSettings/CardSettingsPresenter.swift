@@ -35,7 +35,8 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   private let helpAction: HelpAction
   private let config: CardSettingsPresenterConfig
   private let phoneHelper = PhoneHelper.sharedHelper()
-
+    private let legalDocuments: LegalDocuments
+    
   init(platform: AptoPlatformProtocol,
        card: Card,
        config: CardSettingsPresenterConfig,
@@ -49,10 +50,10 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     self.reportLostCardAction = ReportLostCardAction(platform: platform, card: card, emailRecipients: emailRecipients,
                                                      uiConfig: uiConfig)
     self.helpAction = HelpAction(emailRecipients: emailRecipients)
-    let legalDocuments = LegalDocuments(cardHolderAgreement: config.cardholderAgreement,
-                                        faq: config.faq,
-                                        termsAndConditions: config.termsAndCondition,
-                                        privacyPolicy: config.privacyPolicy)
+    legalDocuments = LegalDocuments(cardHolderAgreement: config.cardholderAgreement,
+                                    faq: config.faq,
+                                    termsAndConditions: config.termsAndCondition,
+                                    privacyPolicy: config.privacyPolicy)
     self.viewModel.legalDocuments.send(legalDocuments)
   }
 
@@ -142,7 +143,8 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
       showDetailedCardActivity: config.showDetailedCardActivity,
       isShowDetailedCardActivityEnabled: interactor.isShowDetailedCardActivityEnabled(),
       showMonthlyStatements: config.showMonthlyStatements,
-      showAddFundsFeature: card.features?.funding?.status == .enabled))
+      showAddFundsFeature: card.features?.funding?.status == .enabled,
+      showOrderPhysicalCard: card.orderedStatus == .available))
   }
 
   func closeTapped() {
@@ -159,8 +161,9 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   }
 
     func didTapOnLoadFunds() {
+        let extraContent = ExtraContent(content: legalDocuments.cardHolderAgreement, title: "card_settings.legal.cardholder_agreement.title".podLocalized())
         if customerHasProvisionedACHAccount() {
-            router.showAddMoneyBottomSheet(card: card)
+            router.showAddMoneyBottomSheet(card: card, extraContent: extraContent)
         } else if customerShouldAcceptACHAgreement() {
             guard let features = card.features, let bankAccount = features.achAccount,
                   let disclaimer = bankAccount.disclaimer,
@@ -170,12 +173,14 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
             router.showACHAccountAgreements(disclaimer: content,
                                              cardId: card.accountId,
                                              acceptCompletion: { [router, card, weak self] in
-                                                router?.showAddMoneyBottomSheet(card: card)
+                                                router?.showAddMoneyBottomSheet(card: card, extraContent: extraContent)
                                                 self?.refreshCardData(card.accountId)
                                              },
-                                             declineCompletion: { [router, card] in router?.showAddFunds(for: card) })
+                                             declineCompletion: { [router, card] in
+                                                router?.showAddFunds(for: card, extraContent: extraContent)
+                                             })
         } else {
-            router.showAddFunds(for: card)
+            router.showAddFunds(for: card, extraContent: extraContent)
         }
     }
   
@@ -202,8 +207,18 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                        forceRefresh: true) { [weak self] result in
                 if let refreshedCard = try? result.get() {
                     self?.card = refreshedCard
+                    self?.refreshData()
                 }
             }
+    }
+    
+    func didTapOnOrderPhysicalCard() {
+        guard card.orderedStatus == .available else { return }
+        router.showOrderPhysicalCard(card) { [weak self] in
+            if let cardId = self?.card.accountId {
+                self?.refreshCardData(cardId)
+            }
+        }
     }
     
   func lostCardTapped() {

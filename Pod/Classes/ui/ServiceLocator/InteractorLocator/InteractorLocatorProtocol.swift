@@ -14,7 +14,7 @@ protocol InteractorLocatorProtocol {
 
   // MARK: - Auth
   func authInteractor(initialUserData: DataPointList, authConfig: AuthModuleConfig,
-                      dataReceiver: AuthDataReceiver) -> AuthInteractorProtocol
+                      dataReceiver: AuthDataReceiver, initializationData: InitializationData?) -> AuthInteractorProtocol
   func verifyPhoneInteractor(verificationType: VerificationParams<PhoneNumber, Verification>,
                              dataReceiver: VerifyPhoneDataReceiver) -> VerifyPhoneInteractorProtocol
   func verifyBirthDateInteractor(verificationType: VerificationParams<BirthDate, Verification>,
@@ -27,7 +27,7 @@ protocol InteractorLocatorProtocol {
   func changePasscodeInteractor() -> ChangePasscodeInteractorProtocol
   func biometricPermissionInteractor() -> BiometricPermissionInteractorProtocol
 
-  func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol
+    func issueCardInteractor(application: CardApplication, cardMetadata: String?) -> IssueCardInteractorProtocol
   func waitListInteractor(application: CardApplication) -> WaitListInteractorProtocol
   func cardWaitListInteractor(card: Card) -> CardWaitListInteractorProtocol
   func serverMaintenanceErrorInteractor() -> ServerMaintenanceErrorInteractorProtocol

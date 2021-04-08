@@ -76,6 +76,17 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
     self.presenter = presenter
     return viewController
   }
+    
+    private func dismissableContentPresenterModule(with content: Content,
+                                        title: String) -> ContentPresenterModuleProtocol {
+        let module = serviceLocator.moduleLocator.contentPresenterModule(content: content, title: title)
+        module.onClose = { [unowned self] _ in
+            self.dismissModule {
+                self.contentPresenterModule = nil
+            }
+        }
+        return module
+    }
 }
 
 extension CardSettingsModule: CardSettingsRouterProtocol {
@@ -151,12 +162,7 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
   }
 
   func show(content: Content, title: String) {
-    let module = serviceLocator.moduleLocator.contentPresenterModule(content: content, title: title)
-    module.onClose = { [unowned self] _ in
-      self.dismissModule {
-        self.contentPresenterModule = nil
-      }
-    }
+    let module = dismissableContentPresenterModule(with: content, title: title)
     contentPresenterModule = module
     present(module: module, leftButtonMode: .close) { _ in }
   }
@@ -174,17 +180,24 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
     authenticationManager.authenticate(from: self, completion: completion)
   }
   
-  func showAddFunds(for card: Card) {
-    let viewModel = AddFundsViewModel(card: card)
-    let viewController = AddFundsViewController(viewModel: viewModel, uiConfig: uiConfig)
-    viewModel.navigator = AddFundsNavigator(
-      from: viewController,
-      uiConfig: uiConfig,
-      softDescriptor: card.features?.funding?.softDescriptor ?? "",
-      cardNetworks: card.features?.funding?.cardNetworks ?? []
-    )
-    self.navigationController?.pushViewController(viewController, animated: true, completion: nil)
-  }
+    func showAddFunds(for card: Card, extraContent: ExtraContent? = nil) {
+        let viewModel = AddFundsViewModel(card: card)
+        let viewController = AddFundsViewController(viewModel: viewModel, uiConfig: uiConfig)
+        let fundsNavigator = AddFundsNavigator(
+            from: viewController,
+            uiConfig: uiConfig,
+            softDescriptor: card.features?.funding?.softDescriptor ?? "",
+            cardNetworks: card.features?.funding?.cardNetworks ?? []
+        )
+        if let extraContent = extraContent,
+           let content = extraContent.content {
+            fundsNavigator.presentExtraContent = { [weak self] presenter in
+                self?.presentExtraContent(from: presenter, content: content, title: extraContent.title)
+            }
+        }
+        viewModel.navigator = fundsNavigator
+        navigationController?.pushViewController(viewController, animated: true, completion: nil)
+    }
     
     func showACHAccountAgreements(disclaimer: Content,
                                    cardId: String,
@@ -204,7 +217,7 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
         present(module: module, leftButtonMode: .close) { _ in }
     }
     
-    func showAddMoneyBottomSheet(card: Card) {
+    func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent? = nil) {
         let viewModel = AddMoneyViewModel(cardId: card.accountId, loader: serviceLocator.platform, analyticsManager: serviceLocator.analyticsManager)
         let addMoneyController = AddMoneyViewController(uiConfiguration: uiConfig, viewModel: viewModel)
         addMoneyController.directDepositAction = { [weak self] in
@@ -216,9 +229,33 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
             self.present(viewController: controller, animated: true, embedInNavigationController: true, completion: {})
         }
         addMoneyController.debitCardAction = { [weak self] in
-            self?.showAddFunds(for: card)
+            self?.showAddFunds(for: card, extraContent: extraContent)
         }
         addMoneyController.modalPresentationStyle = .overCurrentContext
         present(viewController: addMoneyController, completion: {})
+    }
+    
+    // MARK: Private methods
+    private func presentExtraContent(from presenter: UIViewController?, content: Content, title: String) {
+        let module = dismissableContentPresenterModule(with: content, title: title)
+        if let presenter = presenter {
+            module.onClose = { _ in presenter.dismiss(animated: true) }
+        }
+        present(module: module, presenterController: presenter) { _ in }
+    }
+
+    func showOrderPhysicalCard(_ card: Card,
+                               completion: OrderPhysicalCardUIComposer.OrderedCompletion? = nil) {
+        let errorCompletion: OrderPhysicalCardUIComposer.CardConfigErrorCompletion = { [weak self] error in
+            self?.show(error: error)
+        }
+        let viewController = OrderPhysicalCardUIComposer
+            .composedWith(card: card,
+                          cardLoader: serviceLocator.platform,
+                          analyticsManager: serviceLocator.analyticsManager,
+                          uiConfiguration: UIConfig.default,
+                          cardOrderedCompletion: completion,
+                          cardConfigErrorCompletion: errorCompletion)
+        present(viewController: viewController, animated: true, embedInNavigationController: true, completion: {})
     }
 }

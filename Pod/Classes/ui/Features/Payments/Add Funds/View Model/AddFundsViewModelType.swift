@@ -13,6 +13,7 @@ enum AddFundsViewState {
 protocol AddFundsViewModelType {
   var input: AddFundsViewModelInput { get }
   var output: AddFundsViewModelOutput { get }
+    var exceedsDailyLimitsAmount: ((Double) -> Void)? { get set }
 }
 
 protocol AddFundsViewModelInput {

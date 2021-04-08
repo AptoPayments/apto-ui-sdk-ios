@@ -133,7 +133,8 @@ private extension CardSettingsViewControllerTheme2 {
         self.createGetPinRow(showButton: buttonsVisibility.showGetPin),
         self.createSetPassCodeRow(showButton: buttonsVisibility.showSetPassCode),
         self.setUpShowCardInfoRow(),
-        self.setUpLockCardRow()
+        self.setUpLockCardRow(lastItem: buttonsVisibility.showOrderPhysicalCard == false),
+        self.addShowOrderPhysicalCardRow(showButton: buttonsVisibility.showOrderPhysicalCard)
       ].compactMap { return $0 }
       let transactionsRows = [
         self.createTransactionsTitle(showDetailedCardActivity: buttonsVisibility.showDetailedCardActivity),
@@ -306,7 +307,7 @@ private extension CardSettingsViewControllerTheme2 {
     }
   }
 
-  func setUpLockCardRow() -> FormRowSwitchTitleSubtitleView? {
+  func setUpLockCardRow(lastItem: Bool) -> FormRowSwitchTitleSubtitleView? {
     let title = "card_settings.settings.lock_card.title".podLocalized()
     let subtitle = "card_settings.settings.lock_card.description".podLocalized()
     lockCardRow = FormBuilder.titleSubtitleSwitchRowWith(title: title,
@@ -319,7 +320,7 @@ private extension CardSettingsViewControllerTheme2 {
     if let locked = presenter.viewModel.locked.value {
       set(lockedSwitch: locked)
     }
-    lockCardRow?.showSplitter = false
+    lockCardRow?.showSplitter = !lastItem
     return lockCardRow
   }
 
@@ -368,4 +369,17 @@ private extension CardSettingsViewControllerTheme2 {
     return showCardInfoRow
   }
 
+    func addShowOrderPhysicalCardRow(showButton: Bool) -> FormRowView? {
+        guard showButton else { return nil }
+        let addOrderPhysicalCardRow = FormBuilder.linkRowWith(
+            title: "card_settings.settings.order_physical.title".podLocalized(),
+            subtitle: "",
+            leftIcon: nil,
+            height: 72,
+            uiConfig: uiConfiguration) { [weak self] in
+                self?.presenter.didTapOnOrderPhysicalCard()
+        }
+        addOrderPhysicalCardRow.showSplitter = false
+        return addOrderPhysicalCardRow
+    }
 }

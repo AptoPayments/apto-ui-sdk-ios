@@ -54,13 +54,23 @@ extension AccountSettingsModule: AccountSettingsRouterProtocol {
     close()
   }
 
-  func contactTappedInAccountSettings() {
-    let mailSender = MailSender()
-    self.mailSender = mailSender
-    mailSender.sendMessageWith(subject: "email.support.subject".podLocalized(),
-                               message: "",
-                               recipients: [self.projectConfiguration.supportEmailAddress])
-  }
+    func contactTappedInAccountSettings() {
+        let mailSender = MailSender()
+        self.mailSender = mailSender
+        if mailSender.canSendEmail() {
+            mailSender.sendMessageWith(subject: "email.support.subject".podLocalized(),
+                                       message: "",
+                                       recipients: [self.projectConfiguration.supportEmailAddress])
+        } else {
+            let gmailSender = GmailSender(recipient: String(self.projectConfiguration.supportEmailAddress ?? ""),
+                                          subject: "email.support.subject".podLocalized())
+            if gmailSender.canSendEmail() {
+                gmailSender.sendMessage()
+            } else {
+                UIApplication.topViewController()?.showMessage("account_settings.help.email_not_configured".podLocalized(), uiConfig: nil)
+            }
+        }
+    }
 
   func notificationsTappedInAccountSettings() {
     let module = serviceLocator.moduleLocator.notificationPreferencesModule()

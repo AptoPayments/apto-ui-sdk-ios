@@ -49,21 +49,18 @@ extension AptoPlatform {
   /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
   /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
   /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
-  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
-  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter initializationData: a `InitializationData` object that wraps additional user data. It can be nil.
   /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
   public func startCardFlow(from: UIViewController,
                             mode: AptoUISDKMode,
                             options: CardOptions? = nil,
                             initialUserData: DataPointList? = nil,
-                            userMetadata: String? = nil,
-                            cardMetadata: String? = nil,
+                            initializationData: InitializationData? = nil,
                             googleMapsApiKey: String? = nil,
                             completion: @escaping (Result<UIModule, NSError>.Callback)) {
     let launchOptions = CardModuleLaunchOptions(mode: mode,
                                                 initialUserData: initialUserData,
-                                                userMetadata: userMetadata,
-                                                cardMetadata: cardMetadata,
+                                                initializationData: initializationData,
                                                 googleMapsApiKey: googleMapsApiKey,
                                                 cardOptions: options,
                                                 initialFlow: .fullSDK)
@@ -77,19 +74,17 @@ extension AptoPlatform {
   /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
   /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
   /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
-  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
-  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter additionalData: a `AdditionalData` object that wraps additional user data. It can be nil.
   /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
   @objc public func startCardFlow(from: UIViewController,
                                   mode: AptoUISDKMode,
                                   options: CardOptions?,
                                   initialUserData: DataPointList?,
-                                  userMetadata: String? = nil,
-                                  cardMetadata: String? = nil,
+                                  initializationData: InitializationData? = nil,
                                   googleMapsApiKey: String?,
                                   completion: @escaping (_ module: UIModule?, _ error: NSError?) -> Void) {
     startCardFlow(from: from, mode: mode, options: options, initialUserData: initialUserData,
-                  userMetadata: userMetadata, cardMetadata: cardMetadata, googleMapsApiKey: googleMapsApiKey) { result in
+                  initializationData: initializationData, googleMapsApiKey: googleMapsApiKey) { result in
       switch result {
       case .failure(let error):
         completion(nil, error)
@@ -104,21 +99,18 @@ extension AptoPlatform {
   /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
   /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
   /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
-  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
-  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter initializationData: a `InitializationData` object that wraps additional user data. It can be nil.
   /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
   public func startNewCardApplicationFlow(from: UIViewController,
                                           mode: AptoUISDKMode,
                                           options: CardOptions? = nil,
                                           initialUserData: DataPointList? = nil,
-                                          userMetadata: String? = nil,
-                                          cardMetadata: String? = nil,
+                                          initializationData: InitializationData? = nil,
                                           googleMapsApiKey: String? = nil,
                                           completion: @escaping (Result<UIModule, NSError>.Callback)) {
     let launchOptions = CardModuleLaunchOptions(mode: mode,
                                                 initialUserData: initialUserData,
-                                                userMetadata: userMetadata,
-                                                cardMetadata: cardMetadata,
+                                                initializationData: initializationData,
                                                 googleMapsApiKey: googleMapsApiKey,
                                                 cardOptions: options,
                                                 initialFlow: .newCardApplication)
@@ -132,20 +124,17 @@ extension AptoPlatform {
   /// - Parameter mode: Specifies if the SDK will be open in embedded or standalone mode.
   /// - Parameter options: A set of flags that control whether some functions are available or not in the different screens.
   /// - Parameter initialUserData: User data that will be used in the sign up flow. If it's not provided, the SDK will ask for that data
-  /// - Parameter userMetadata: A string up to 256 characters that will be attached to the user after signing up.
-  /// - Parameter cardMetadata: A string up to 256 characters that will be attached to the card after issuance.
+  /// - Parameter initializationData: a `InitializationData` object that wraps additional user data. It can be nil.
   /// - Parameter googleMapsApiKey: The google maps api key that will be used to verify the user address.
   @objc public func startNewCardApplicationFlow(from: UIViewController,
                                                 mode: AptoUISDKMode,
                                                 options: CardOptions?,
                                                 initialUserData: DataPointList?,
-                                                userMetadata: String? = nil,
-                                                cardMetadata: String? = nil,
+                                                initializationData: InitializationData? = nil,
                                                 googleMapsApiKey: String?,
                                                 completion: @escaping (_ module: UIModule?, _ error: NSError?) -> Void) {
     startNewCardApplicationFlow(from: from, mode: mode, options: options, initialUserData: initialUserData,
-                                userMetadata: userMetadata, cardMetadata: cardMetadata,
-                                googleMapsApiKey: googleMapsApiKey) { result in
+                                initializationData: initializationData, googleMapsApiKey: googleMapsApiKey) { result in
       switch result {
       case .failure(let error):
         completion(nil, error)
@@ -163,8 +152,7 @@ extension AptoPlatform {
                                   completion: @escaping (Result<UIModule, NSError>.Callback)) {
     let launchOptions = CardModuleLaunchOptions(mode: mode,
                                                 initialUserData: nil,
-                                                userMetadata: nil,
-                                                cardMetadata: nil,
+                                                initializationData: nil,
                                                 googleMapsApiKey: googleMapsApiKey,
                                                 cardOptions: options,
                                                 initialFlow: .manageCard(cardId: cardId))
@@ -269,12 +257,6 @@ extension AptoPlatform {
     _googleMapsApiKey = launchOptions.googleMapsApiKey
     setUpUINotificationObservers()
     setCardOptions(launchOptions.cardOptions)
-    if let userMetadata = launchOptions.userMetadata {
-      serviceLocator.systemServicesLocator.userMetadata().set(userMetadata)
-    }
-    if let cardMetadata = launchOptions.cardMetadata {
-      serviceLocator.systemServicesLocator.cardMetadata().set(cardMetadata)
-    }
     registerCustomFonts()
     fetchContextConfiguration { [weak self] result in
       guard let self = self else { return }
@@ -282,7 +264,10 @@ extension AptoPlatform {
       case .failure(let error):
         completion(.failure(error))
       case .success(let contextConfiguration):
-        let cardModule = CardModule(launchOptions: launchOptions)
+        let initializationData = InitializationData(userMetadata: launchOptions.initializationData?.userMetadata,
+                                            cardMetadata: launchOptions.initializationData?.cardMetadata,
+                                            custodianId: launchOptions.initializationData?.custodianId)
+        let cardModule = CardModule(launchOptions: launchOptions, initializationData: initializationData)
         self.initialModule = cardModule
         cardModule.onClose = { [weak self, unowned from] module in
           from.dismiss(animated: true) {}

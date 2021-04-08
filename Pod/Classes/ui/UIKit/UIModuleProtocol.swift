@@ -55,6 +55,7 @@ public protocol UIModuleProtocol: class {
                animated: Bool,
                leftButtonMode: UIViewControllerLeftButtonMode,
                embedInNavigationController: Bool,
+               presenterController: UIViewController?,
                completion: @escaping Result<UIViewController, NSError>.Callback)
   func dismissViewController(animated: Bool,
                              completion: @escaping (() -> Void))

@@ -16,11 +16,13 @@ class WorkflowModuleFactoryImpl: WorkflowModuleFactory {
 
   let serviceLocator: ServiceLocatorProtocol
   let workflowObject: WorkflowObject
-
-  init(serviceLocator: ServiceLocatorProtocol, workflowObject: WorkflowObject) {
-    self.serviceLocator = serviceLocator
-    self.workflowObject = workflowObject
-  }
+    private let cardMetadata: String?
+    
+    init(serviceLocator: ServiceLocatorProtocol, workflowObject: WorkflowObject, cardMetadata: String?) {
+        self.serviceLocator = serviceLocator
+        self.workflowObject = workflowObject
+        self.cardMetadata = cardMetadata
+    }
 
   // swiftlint:disable:next cyclomatic_complexity
   func getModuleFor(workflowAction: WorkflowAction) -> UIModuleProtocol? {
@@ -39,7 +41,7 @@ class WorkflowModuleFactoryImpl: WorkflowModuleFactory {
         return nil
       }
       application.nextAction = workflowAction
-      return serviceLocator.moduleLocator.issueCardModule(application: application)
+      return serviceLocator.moduleLocator.issueCardModule(application: application, cardMetadata: cardMetadata)
     case .selectBalanceStore:
       guard var application = workflowObject as? CardApplication else {
         return nil

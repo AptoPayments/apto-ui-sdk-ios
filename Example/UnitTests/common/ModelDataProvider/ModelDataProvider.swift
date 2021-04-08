@@ -18,6 +18,8 @@ class ModelDataProvider {
 
   lazy var emptyJSON = JSON()
 
+    lazy var initializationData = InitializationData(userMetadata: "a user metadata", cardMetadata: "a card metadata", custodianId: "a custodian id")
+
   lazy var user = ShiftUser(userId: "userId",
                             metadata: nil,
                             accessToken: AccessToken(token: "AccessToken",
@@ -382,6 +384,40 @@ class ModelDataProvider {
                         features: features,
                         verified: nil)
         return card
+    }()
+    
+    lazy var cardWithDataToRenderACreditCardView: Card = {
+        let cardBackground = CardBackgroundStyle.color(color: UIColor.colorFromHexString("2f3237") ?? .black)
+        let style = CardStyle(background: cardBackground, textColor: "ffffff", balanceSelectorImage: nil, cardLogo: nil)
+        let card = Card(accountId: "crd_5a34ba3d58ca34d2",
+                        cardProductId: "entity_8760b321b6a4daba",
+                        cardNetwork: .mastercard,
+                        cardIssuer: .shift,
+                        cardBrand: nil,
+                        state: .active,
+                        cardHolder: "Neil Armstrong",
+                        lastFourDigits: "1234",
+                        spendableToday: nil,
+                        nativeSpendableToday: nil,
+                        totalBalance: nil,
+                        nativeTotalBalance: nil,
+                        kyc: .passed,
+                        orderedStatus: .available,
+                        features: nil,
+                        cardStyle: style,
+                        verified: nil)
+        return card
+    }()
+
+    lazy var physicalCardConfig: PhysicalCardConfig = {
+        let fee = Amount(value: 5.00, currency: "USD")
+        let address = Address(address: "Hollywood Avenue", apUnit: "10", country: Country(isoCode: "US"), city: "Los Angeles", region: "California", zip: "00154")
+        return PhysicalCardConfig(issuanceFee: fee, userAddress: address)
+    }()
+
+    lazy var physicalCardConfigNoFee: PhysicalCardConfig = {
+        let address = Address(address: "Hollywood Avenue", apUnit: "10", country: Country(isoCode: "US"), city: "Los Angeles", region: "California", zip: "00154")
+        return PhysicalCardConfig(issuanceFee: nil, userAddress: address)
     }()
 
     lazy var cardWithUnknownSource: Card = {

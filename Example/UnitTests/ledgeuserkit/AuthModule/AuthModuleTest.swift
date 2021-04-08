@@ -26,7 +26,8 @@ class AuthModuleTest: XCTestCase {
 
     sut = AuthModule(serviceLocator: serviceLocator,
                      config: authModuleConfig,
-                     initialUserData: initialUserData)
+                     initialUserData: initialUserData,
+                     initializationData: dataProvider.initializationData)
   }
 
   func testInitializeConfigurePresenter() {

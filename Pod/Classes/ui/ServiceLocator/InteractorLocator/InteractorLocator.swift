@@ -24,12 +24,12 @@ final class InteractorLocator: InteractorLocatorProtocol {
   }
 
   func authInteractor(initialUserData: DataPointList, authConfig: AuthModuleConfig,
-                      dataReceiver: AuthDataReceiver) -> AuthInteractorProtocol {
+                      dataReceiver: AuthDataReceiver, initializationData: InitializationData?) -> AuthInteractorProtocol {
     return AuthInteractor(platform: serviceLocator.platform,
                           initialUserData: initialUserData,
                           config: authConfig,
                           dataReceiver: dataReceiver,
-                          userMetadata: serviceLocator.systemServicesLocator.userMetadata())
+                          initializationData: initializationData)
   }
 
   func verifyPhoneInteractor(verificationType: VerificationParams<PhoneNumber, Verification>,
@@ -66,12 +66,12 @@ final class InteractorLocator: InteractorLocatorProtocol {
     return BiometricPermissionInteractor(platform: serviceLocator.platform)
   }
 
-  func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol {
+  func issueCardInteractor(application: CardApplication, cardMetadata: String?) -> IssueCardInteractorProtocol {
     return IssueCardInteractor(
       platform: serviceLocator.platform,
       application: application,
       cardAdditionalFields: serviceLocator.systemServicesLocator.cardAdditionalFields(),
-      cardMetadata: serviceLocator.systemServicesLocator.cardMetadata()
+      cardMetadata: cardMetadata
     )
   }
 

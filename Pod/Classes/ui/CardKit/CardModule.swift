@@ -21,17 +21,19 @@ open class CardModule: UIModule {
     return contextConfiguration.projectConfiguration
   }
   var userDataPoints: DataPointList
-
-  init(launchOptions: CardModuleLaunchOptions) {
-    if let initialUserData = launchOptions.initialUserData {
-      self.userDataPoints = initialUserData.copy() as! DataPointList // swiftlint:disable:this force_cast
+    var initializationData: InitializationData?
+    
+    init(launchOptions: CardModuleLaunchOptions, initializationData: InitializationData? = nil) {
+        if let initialUserData = launchOptions.initialUserData {
+            self.userDataPoints = initialUserData.copy() as! DataPointList // swiftlint:disable:this force_cast
+        }
+        else {
+            self.userDataPoints = DataPointList()
+        }
+        self.launchOptions = launchOptions
+        self.initializationData = initializationData
+        super.init(serviceLocator: ServiceLocator.shared)
     }
-    else {
-      self.userDataPoints = DataPointList()
-    }
-    self.launchOptions = launchOptions
-    super.init(serviceLocator: ServiceLocator.shared)
-  }
 
   // MARK: - Module Initialization
   override public func close() {
@@ -114,7 +116,8 @@ open class CardModule: UIModule {
     // Prepare the current user's data
     let authModuleConfig = AuthModuleConfig(projectConfiguration: projectConfiguration, mode: launchOptions.mode)
     let authModule = serviceLocator.moduleLocator.authModule(authConfig: authModuleConfig,
-                                                             initialUserData: userDataPoints)
+                                                             initialUserData: userDataPoints,
+                                                             initializationData: initializationData)
     authModule.onExistingUser = { [weak self] module, user in
       guard let wself = self else {
         return
@@ -309,7 +312,7 @@ open class CardModule: UIModule {
   private func showNewCardModule(addChild: Bool, cardProductId: String,
                                  completion: @escaping Result<UIViewController, NSError>.Callback) {
     let newCardModule = NewCardModule(serviceLocator: serviceLocator, initialDataPoints: userDataPoints,
-                                      cardProductId: cardProductId)
+                                      cardProductId: cardProductId, cardMetadata: initializationData?.cardMetadata)
     self.newCardModule = newCardModule
     if addChild {
       newCardModule.onClose = { [weak self] _ in

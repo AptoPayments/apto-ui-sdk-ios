@@ -129,14 +129,14 @@ private extension FormRowAddressView {
   func setUpLabel() {
     contentView.addSubview(label)
     label.snp.makeConstraints { make in
-      make.left.top.equalToSuperview()
+        make.left.top.right.equalToSuperview()
     }
   }
 
   func setUpTextField() {
     contentView.addSubview(textField)
     textField.snp.makeConstraints { make in
-      make.top.equalTo(label.snp.bottom).offset(6)
+      make.top.equalTo(label.snp.bottom).offset(12)
       make.left.right.equalToSuperview()
     }
     textField.adjustsFontSizeToFitWidth = true

@@ -13,6 +13,8 @@ final class AddFundsNavigator: AddFundsNavigatorType {
   private let softDescriptor: String
   private let cardNetworks: [CardNetwork]
 
+    var presentExtraContent: ((_: UIViewController) -> Void)?
+    
   init(from: UIViewController, uiConfig: UIConfig, softDescriptor: String, cardNetworks: [CardNetwork]) {
     self.cardNetworks = cardNetworks
     self.from = from
@@ -57,6 +59,10 @@ final class AddFundsNavigator: AddFundsNavigatorType {
       softDescriptor: softDescriptor
     )
     let viewController = TransferStatusViewController(viewModel: viewModel, uiConfig: uiConfig)
+    viewController.presentExtraContent = { [weak self] presenter in
+        self?.presentExtraContent?(presenter)
+    }
+    
     let navigationController = UINavigationController(
       rootViewController: viewController
     )

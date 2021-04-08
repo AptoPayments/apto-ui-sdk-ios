@@ -6,6 +6,8 @@ import AptoSDK
 
 final class AddFundsView: UIView {
   
+    static let maxAllowedDigit = 4
+
   private lazy var textField: UITextField = {
     let textField = ComponentCatalog.textFieldWith(placeholder: "$0",placeholderColor: uiConfig.textSecondaryColor, font: .boldSystemFont(ofSize: 44), textColor: uiConfig.textPrimaryColor)
     textField.keyboardType = .decimalPad
@@ -19,6 +21,14 @@ final class AddFundsView: UIView {
   private let disposeBag = DisposeBag()
   private var uiConfig: UIConfig
   
+    private(set) lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.font = uiConfig.fontProvider.formTextLink
+        label.textAlignment = .center
+        label.alpha = 0
+        return label
+    }()
+    
   private lazy var stackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
@@ -45,6 +55,7 @@ final class AddFundsView: UIView {
   
   private func setupView() {
     backgroundColor = .white
+    textField.addSubview(errorLabel)
     addSubview(textField)
 
     self.nextButton = .roundedButtonWith("load_funds.add_money.primary_cta".podLocalized(), backgroundColor: uiConfig.uiPrimaryColor, cornerRadius: 24) { [weak self] in
@@ -58,8 +69,7 @@ final class AddFundsView: UIView {
     addSubview(stackView)
     
     textField.becomeFirstResponder()
-    textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-    textField.addTarget(self, action: #selector(textFieldDidBeginEditing), for: .editingDidBegin)
+    textField.delegate = self
   }
   
   func set(current paymentSource: PaymentSource?) {
@@ -125,6 +135,10 @@ final class AddFundsView: UIView {
   }
   
   private func setupConstraints() {
+    errorLabel.snp.makeConstraints { make in
+        make.left.right.equalToSuperview().inset(16)
+        make.centerY.equalToSuperview().offset(38)
+    }
     textField.snp.makeConstraints { constraints in
       constraints.leading.equalToSuperview().inset(16)
       constraints.trailing.equalToSuperview().inset(16)
@@ -142,26 +156,49 @@ final class AddFundsView: UIView {
       constraints.height.equalTo(52)
     }
   }
+    
+    // MARK: Public method
+    func dailyLimitError(_ limit: String, show: Bool) {
+        if show {
+            errorLabel.text = "load_funds.add_money.monthly_max.reached".podLocalized().replace(["<<MAX>>" : limit])
+            UIView.animate(withDuration: 0.3) { [errorLabel] in
+                errorLabel.alpha = 1
+            }
+        } else {
+            errorLabel.alpha = 0
+        }
+    }
 }
 
 
 // MARK: - UITextField
-extension AddFundsView {
-  @objc private func textFieldDidChange(_ textField: UITextField) {
-    if let text = textField.text{
-        let textWithoutSymbol = String(text.dropFirst()).replacingOccurrences(of: ",", with: "")
-        let formattedNumber = Amount(value: (textWithoutSymbol as NSString).doubleValue , currency: "USD").text
-        let decimalTextWithSymbol = String(formattedNumber.dropLast(3)).replacingOccurrences(of: ",", with: "")
-        let decimalText = String(decimalTextWithSymbol.dropFirst())
-        self.textField.text = decimalTextWithSymbol
-        self.didChangeAmountValue?(decimalText)
-    }
-  }
-    @objc private func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.textAlignment = .center
-        if textField.text != nil {
-            let formattedNumber = Amount(value: ("0" as NSString).doubleValue , currency: "USD").text
-            let decimalTextWithSymbol = String(formattedNumber.dropLast(3))
-            self.textField.text = decimalTextWithSymbol
+extension AddFundsView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        dailyLimitError("", show: false)
+        if (!string.isEmpty && !Character(string).isNumber) {
+            return false
         }
-    }}
+
+        guard let text = textField.text else { return false }
+        
+        if text.count == 1 && string.isEmpty {
+            didChangeAmountValue?(nil)
+        } else {
+            if text.count + 1 <= AddFundsView.maxAllowedDigit {
+                didChangeAmountValue?(updateAmountIfNeeded(lastChar: string, text: text + string))
+            } else {
+                didChangeAmountValue?(updateAmountIfNeeded(lastChar: string, text: text))
+            }
+        }
+        
+        if string.isEmpty && text.count <= AddFundsView.maxAllowedDigit {
+            return true
+        }
+        return text.count < AddFundsView.maxAllowedDigit
+    }
+    
+    private func updateAmountIfNeeded(lastChar: String, text: String) -> String {
+        let amount = lastChar.isEmpty ? String(text.dropLast()) : text
+        return Double(amount) != nil ? amount : ""
+    }
+}

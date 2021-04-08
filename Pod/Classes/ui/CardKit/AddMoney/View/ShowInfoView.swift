@@ -55,7 +55,7 @@ public final class ShowInfoView: UIView {
             make.centerY.equalToSuperview()
         }
         valueLabel.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(20)
+            make.right.equalToSuperview().offset(-20)
             make.centerY.equalTo(infoLabel.snp.centerY)
         }
         dividerView.snp.makeConstraints { make in

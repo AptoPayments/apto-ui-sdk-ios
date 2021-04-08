@@ -24,16 +24,6 @@ class SystemServicesLocatorFake: SystemServicesLocatorProtocol {
     additionalFieldsSpy
   }
 
-  lazy var cardMetadataSpy = CardMetadataSpy()
-  func cardMetadata() -> CardMetadataProtocol {
-    cardMetadataSpy
-  }
-
-  lazy var userMetadataSpy = UserMetadataSpy()
-  func userMetadata() -> UserMetadataProtocol {
-    userMetadataSpy
-  }
-
   lazy var dateProviderFake = DateProviderFake()
   func dateProvider() -> DateProviderProtocol {
     return dateProviderFake

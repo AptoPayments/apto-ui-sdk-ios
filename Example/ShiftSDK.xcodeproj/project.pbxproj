@@ -235,18 +235,25 @@
 		D99BDF76F660A45FCC1CFD3A /* ShowDisclaimerActionTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDF72B85C701A643826E2 /* ShowDisclaimerActionTestDoubles.swift */; };
 		D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD37861B13BB4F50A836A /* CardWaitListModuleTest.swift */; };
 		E068F49835C36AE634935FEA /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C626AD8E822159591786DCC3 /* Pods_UnitTests.framework */; };
-		E50F539125D15C81002726C4 /* CardLoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50F539025D15C81002726C4 /* CardLoaderSpy.swift */; };
 		E5567DED25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5567DEC25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift */; };
 		E559808978340FABA714EBC0 /* Pods_SnapshotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA64FF7BC6649A5EE5D70C7 /* Pods_SnapshotTests.framework */; };
+		E571DB11260DE62600A5C533 /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */; };
+		E571DB16260DE64F00A5C533 /* UIControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */; };
 		E59923E425C19F6C0078B5DA /* DirectDepositViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59923E325C19F6C0078B5DA /* DirectDepositViewTests.swift */; };
 		E5A6933C25B5F49B00ED8149 /* ACHAccountStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A692C625B5D29700ED8149 /* ACHAccountStorageTests.swift */; };
 		E5A6934125B980C100ED8149 /* StorageTransportSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */; };
 		E5A6C4EE25C1F8CB0079009F /* DirectDepositViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6C4ED25C1F8CB0079009F /* DirectDepositViewControllerTests.swift */; };
 		E5A6C4F425C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6C4F325C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift */; };
+		E5B2E3092609EFE40095F997 /* OrderPhysicalCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B2E3082609EFE40095F997 /* OrderPhysicalCardViewTests.swift */; };
 		E5BE11E125D5524E0035F132 /* AgreementStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE11E025D5524E0035F132 /* AgreementStorageTests.swift */; };
+		E5D61E0E260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61E0D260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift */; };
+		E5D61E38260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61E37260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift */; };
 		E5DD0B6925BF2121005FDF08 /* AddMoneyViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD0B6825BF2121005FDF08 /* AddMoneyViewControllerTests.swift */; };
 		E5DD0B7525C0153C005FDF08 /* AddMoneyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD0B7425C0153C005FDF08 /* AddMoneyViewTests.swift */; };
-		E5F425B325ECF6E5003512E0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E5F425B225ECF6E5003512E0 /* SwiftPackageProductDependency */; };
+		E5ED3AED260CAA70008A8442 /* LocalCacheFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED3AEC260CAA70008A8442 /* LocalCacheFileManager.swift */; };
+		E5ED3AF8260CAEE0008A8442 /* CardLoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50F539025D15C81002726C4 /* CardLoaderSpy.swift */; };
+		E5ED3AFD260CAF8A008A8442 /* FinancialCardLoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED3AFC260CAF8A008A8442 /* FinancialCardLoaderSpy.swift */; };
+		E5F425B325ECF6E5003512E0 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = E5F425B225ECF6E5003512E0 /* Sentry */; };
 		E5F425C425ED1FA5003512E0 /* SentryLoggerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F425C325ED1FA5003512E0 /* SentryLoggerHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -560,15 +567,22 @@
 		D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinInteractorTest.swift; sourceTree = "<group>"; };
 		E50F539025D15C81002726C4 /* CardLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLoaderSpy.swift; sourceTree = "<group>"; };
 		E5567DEC25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeHelperTests.swift; sourceTree = "<group>"; };
+		E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
+		E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
 		E59923E325C19F6C0078B5DA /* DirectDepositViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectDepositViewTests.swift; sourceTree = "<group>"; };
 		E5A692C625B5D29700ED8149 /* ACHAccountStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACHAccountStorageTests.swift; sourceTree = "<group>"; };
 		E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTransportSpy.swift; sourceTree = "<group>"; };
 		E5A6C4ED25C1F8CB0079009F /* DirectDepositViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectDepositViewControllerTests.swift; sourceTree = "<group>"; };
 		E5A6C4F325C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		E5B2E3082609EFE40095F997 /* OrderPhysicalCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardViewTests.swift; sourceTree = "<group>"; };
 		E5BE11E025D5524E0035F132 /* AgreementStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementStorageTests.swift; sourceTree = "<group>"; };
+		E5D61E0D260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardSuccessViewTests.swift; sourceTree = "<group>"; };
+		E5D61E37260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardViewControllerTests.swift; sourceTree = "<group>"; };
 		E5DD0ABE25BB6590005FDF08 /* AgreementStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementStorageTests.swift; sourceTree = "<group>"; };
 		E5DD0B6825BF2121005FDF08 /* AddMoneyViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoneyViewControllerTests.swift; sourceTree = "<group>"; };
 		E5DD0B7425C0153C005FDF08 /* AddMoneyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoneyViewTests.swift; sourceTree = "<group>"; };
+		E5ED3AEC260CAA70008A8442 /* LocalCacheFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCacheFileManager.swift; sourceTree = "<group>"; };
+		E5ED3AFC260CAF8A008A8442 /* FinancialCardLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialCardLoaderSpy.swift; sourceTree = "<group>"; };
 		E5F425C325ED1FA5003512E0 /* SentryLoggerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryLoggerHelper.swift; sourceTree = "<group>"; };
 		EC2196586EFC4A6E319E36B9 /* Pods_Link.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Link.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED11BED063CB67EC457CA7C8 /* Pods_LedgeLink_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LedgeLink_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -593,7 +607,7 @@
 			files = (
 				2CA355BB1C5D5020000479DC /* CoreLocation.framework in Frameworks */,
 				6D2CB00674B36430AC59868C /* Pods_Demo.framework in Frameworks */,
-				E5F425B325ECF6E5003512E0 /* BuildFile in Frameworks */,
+				E5F425B325ECF6E5003512E0 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,6 +904,7 @@
 		338E36F124B887D30072C7CE /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				E5B2E3072609EF6A0095F997 /* OrderPhysicalCard */,
 				E5DD0B7325C0151C005FDF08 /* AddMoney */,
 			);
 			path = Features;
@@ -974,6 +989,7 @@
 			isa = PBXGroup;
 			children = (
 				3C96EB98238C0BF800B9C238 /* FileManagerFake.swift */,
+				E5ED3AEC260CAA70008A8442 /* LocalCacheFileManager.swift */,
 			);
 			path = FileManager;
 			sourceTree = "<group>";
@@ -1419,11 +1435,12 @@
 			isa = PBXGroup;
 			children = (
 				9A75992222410BD600E87E72 /* Analytics */,
-				D99BD29EE464522266103D24 /* ServiceLocator */,
+				D99BD004FD0593012D04F4FA /* Components */,
+				E5ED3AF1260CADC4008A8442 /* Loader */,
 				D99BD30E80C57D148F715B0D /* Manager */,
 				D99BD48126CFD855DDB5DF31 /* ModelDataProvider */,
-				D99BD004FD0593012D04F4FA /* Components */,
 				D99BD6F76575D5E4472481FC /* NetworkManager */,
+				D99BD29EE464522266103D24 /* ServiceLocator */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -1542,6 +1559,7 @@
 				D99BD0CB375DFF6344BECB10 /* IssueCardModule */,
 				2C61F4BE2551DDA700A0707E /* ManageCardModule */,
 				D99BD12889996B39EB4619D4 /* NotificationPreferences */,
+				E5D61E36260CA16C0085EA2B /* OrderPhysicalCard */,
 				3C65E0B8217E1083000207B1 /* PhysicalCardActivationSucceed */,
 				2C1C3C85258B6904008C7103 /* SetCodeModule */,
 				2C38C3D5258B75DD00D3DC48 /* SetPassCodeModule */,
@@ -1623,9 +1641,27 @@
 			isa = PBXGroup;
 			children = (
 				E5A6C4F325C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift */,
-				E50F539025D15C81002726C4 /* CardLoaderSpy.swift */,
+				E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */,
+				E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E5B2E3072609EF6A0095F997 /* OrderPhysicalCard */ = {
+			isa = PBXGroup;
+			children = (
+				E5B2E3082609EFE40095F997 /* OrderPhysicalCardViewTests.swift */,
+				E5D61E0D260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift */,
+			);
+			path = OrderPhysicalCard;
+			sourceTree = "<group>";
+		};
+		E5D61E36260CA16C0085EA2B /* OrderPhysicalCard */ = {
+			isa = PBXGroup;
+			children = (
+				E5D61E37260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift */,
+			);
+			path = OrderPhysicalCard;
 			sourceTree = "<group>";
 		};
 		E5DD0B6725BF2107005FDF08 /* AddMoney */ = {
@@ -1652,6 +1688,15 @@
 				E5DD0ABE25BB6590005FDF08 /* AgreementStorageTests.swift */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		E5ED3AF1260CADC4008A8442 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				E50F539025D15C81002726C4 /* CardLoaderSpy.swift */,
+				E5ED3AFC260CAF8A008A8442 /* FinancialCardLoaderSpy.swift */,
+			);
+			path = Loader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1681,7 +1726,6 @@
 			buildConfigurationList = 2C0F05C81C565F6F00F1C0E5 /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
 				A9C53688D151B72FC9314A20 /* [CP] Check Pods Manifest.lock */,
-				2C4052B01C747F9F0075B31D /* ShellScript */,
 				2C0F05B31C565F6F00F1C0E5 /* Sources */,
 				2C0F05B41C565F6F00F1C0E5 /* Frameworks */,
 				2C0F05B51C565F6F00F1C0E5 /* Resources */,
@@ -1696,7 +1740,7 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				E5F425B225ECF6E5003512E0 /* SwiftPackageProductDependency */,
+				E5F425B225ECF6E5003512E0 /* Sentry */,
 			);
 			productName = ledgelineExample;
 			productReference = 2C0F05B71C565F6F00F1C0E5 /* Demo.app */;
@@ -1797,7 +1841,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				E5F425B125ECF6E5003512E0 /* RemoteSwiftPackageReference */,
+				E5F425B125ECF6E5003512E0 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -1888,19 +1932,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomationTests/Pods-AutomationTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		2C4052B01C747F9F0075B31D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildPlist=${INFOPLIST_FILE}\nbuilddate=$(date -u +\"%a %b %d %T GMT %Y\")\nif [[ -n \"$builddate\" ]]; then\n/usr/libexec/PlistBuddy -c \"Set :BuildDate $builddate\" $buildPlist\nfi\nbuildtype=${BUNDLE_TYPE}\nif [[ -n \"$buildtype\" ]]; then\n/usr/libexec/PlistBuddy -c \"Set :BuildType $buildtype\" $buildPlist\nfi";
 		};
 		2CE8F2EF20BDC4A600F5952B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2144,11 +2175,14 @@
 				D99BD466641EDE6E07ABF939 /* ContentPresenterInteractorTest.swift in Sources */,
 				334E13232464479700BADC89 /* FundingSourceSelectorPresenterTest.swift in Sources */,
 				3C92D2102343964A00C48D90 /* MonthlyStatementsPeriodTest.swift in Sources */,
+				E5ED3AFD260CAF8A008A8442 /* FinancialCardLoaderSpy.swift in Sources */,
 				9A75992422410BFB00E87E72 /* AnalyticsManagerSpy.swift in Sources */,
+				E571DB16260DE64F00A5C533 /* UIControl+TestHelpers.swift in Sources */,
 				D99BD6F54655FC463A608CDA /* ContentPresenterPresenterTest.swift in Sources */,
 				3C1ECAB122D8E33400DBC484 /* TransactionDeclineCodeTest.swift in Sources */,
 				2C61F4C32551DDA700A0707E /* ManageCardPresenterTest.swift in Sources */,
 				E5567DED25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift in Sources */,
+				E5ED3AF8260CAEE0008A8442 /* CardLoaderSpy.swift in Sources */,
 				D99BDF698B2C2D89446637E1 /* ContentPresenterModuleTest.swift in Sources */,
 				3CF9F2E4230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift in Sources */,
 				D99BD88CD4E3FD4D66193BA8 /* ActionConfirmerFake.swift in Sources */,
@@ -2196,6 +2230,7 @@
 				D99BD40B54B9F02B27F45C37 /* NotificationGroupTest.swift in Sources */,
 				D99BD656AC57498ABC4E58D7 /* NotificationPreferencesTest.swift in Sources */,
 				3C05CD50238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift in Sources */,
+				E5ED3AED260CAA70008A8442 /* LocalCacheFileManager.swift in Sources */,
 				3C40FD2723868D9E008FE470 /* CreatePasscodeTestDoubles.swift in Sources */,
 				D99BD7BB4B39C6052930873C /* NotificationPreferencesTestDoubles.swift in Sources */,
 				D99BD555F653BD0BC06275D0 /* NotificationPreferencesInteractorTest.swift in Sources */,
@@ -2229,7 +2264,6 @@
 				D99BD10C4AF529884446BCD4 /* InMemoryUserDefaultsStorage.swift in Sources */,
 				2CBD246E25543DA600691D1E /* ExpirationDateValidatorTest.swift in Sources */,
 				D99BD9977D9A58EDE426D10D /* CardSettingsInteractorTest.swift in Sources */,
-				E50F539125D15C81002726C4 /* CardLoaderSpy.swift in Sources */,
 				3C05CD4C238D24BC00AA7CC9 /* VerifyPasscodeTestDoubles.swift in Sources */,
 				3C533F7F22EB0A80008B23BE /* CustodianSerializerTest.swift in Sources */,
 				3C96EBA1238C2D5600B9C238 /* DateProviderFake.swift in Sources */,
@@ -2243,6 +2277,8 @@
 				D99BD942147A6F566FBDA2C1 /* SelectBalanceStoreResultTest.swift in Sources */,
 				D99BDD1214CF2D5ADF035D16 /* JSONTransportTestDoubles.swift in Sources */,
 				D99BDBA789EADA58CD83689A /* UserStorageTest.swift in Sources */,
+				E571DB11260DE62600A5C533 /* UIButton+TestHelpers.swift in Sources */,
+				E5D61E38260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift in Sources */,
 				D99BD3C9CC8A77D392EFF77B /* UserStorageTestDoubles.swift in Sources */,
 				334E13252464483500BADC89 /* FundingSourceSelectorTestDoubles.swift in Sources */,
 				D99BDA7A23CCFD08FD554671 /* CoreServiceLocatorFake.swift in Sources */,
@@ -2319,9 +2355,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B2E3092609EFE40095F997 /* OrderPhysicalCardViewTests.swift in Sources */,
 				E59923E425C19F6C0078B5DA /* DirectDepositViewTests.swift in Sources */,
 				E5DD0B7525C0153C005FDF08 /* AddMoneyViewTests.swift in Sources */,
 				334E133C246461D500BADC89 /* ModelDataProvider.swift in Sources */,
+				E5D61E0E260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2621,7 +2659,7 @@
 			baseConfigurationReference = 43B59768FD5045E662D60208 /* Pods-Demo.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BRANCH_KEY = key_live_fctvserZdDqDxjjbCA0fnajgstdai1vp;
+				BRANCH_KEY = key_live_imMPL41uj4m1VCg5U15dZddmAraPhN2Z;
 				BUNDLE_DISPLAY_NAME_SUFFIX = "";
 				BUNDLE_ID_SUFFIX = .local;
 				BUNDLE_TYPE = Local;
@@ -2724,7 +2762,7 @@
 			baseConfigurationReference = F1860DEBF00CF83A5F626C6B /* Pods-Demo.sbx.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
-				BRANCH_KEY = key_live_ieCAscEsM2UWa6WlHAoXMpknsrhYB63E;
+				BRANCH_KEY = key_live_imMPL41uj4m1VCg5U15dZddmAraPhN2Z;
 				BUNDLE_DISPLAY_NAME_SUFFIX = "β";
 				BUNDLE_ID_SUFFIX = .beta;
 				BUNDLE_TYPE = Sandbox;
@@ -2828,7 +2866,7 @@
 			baseConfigurationReference = F258269171047B860B97EDB4 /* Pods-Demo.dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconAlpha;
-				BRANCH_KEY = key_live_bhuzrmEFQ9L7reGocYA64klpuBjXKohf;
+				BRANCH_KEY = key_live_imMPL41uj4m1VCg5U15dZddmAraPhN2Z;
 				BUNDLE_DISPLAY_NAME_SUFFIX = "α";
 				BUNDLE_ID_SUFFIX = .dev;
 				BUNDLE_TYPE = Dev;
@@ -2932,7 +2970,7 @@
 			baseConfigurationReference = 220D5DB5982A170B31DD7884 /* Pods-Demo.stg.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconAlpha;
-				BRANCH_KEY = key_live_kfxBi68VDYegHL2NYH1tLfndDFhh60Wk;
+				BRANCH_KEY = key_live_imMPL41uj4m1VCg5U15dZddmAraPhN2Z;
 				BUNDLE_DISPLAY_NAME_SUFFIX = "α";
 				BUNDLE_ID_SUFFIX = .alpha;
 				BUNDLE_TYPE = Staging;
@@ -3035,7 +3073,7 @@
 			baseConfigurationReference = F588B4461F1BF94E35849F2C /* Pods-Demo.prd.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BRANCH_KEY = key_live_pkAFEnrFS8V0FtCBSwH7siagvwiXIihZ;
+				BRANCH_KEY = key_live_imMPL41uj4m1VCg5U15dZddmAraPhN2Z;
 				BUNDLE_DISPLAY_NAME_SUFFIX = "β";
 				BUNDLE_ID_SUFFIX = "";
 				BUNDLE_TYPE = "";
@@ -3838,7 +3876,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E5F425B125ECF6E5003512E0 /* RemoteSwiftPackageReference */ = {
+		E5F425B125ECF6E5003512E0 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
 			requirement = {
@@ -3849,9 +3887,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E5F425B225ECF6E5003512E0 /* SwiftPackageProductDependency */ = {
+		E5F425B225ECF6E5003512E0 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5F425B125ECF6E5003512E0 /* RemoteSwiftPackageReference */;
+			package = E5F425B125ECF6E5003512E0 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
 		};
 /* End XCSwiftPackageProductDependency section */

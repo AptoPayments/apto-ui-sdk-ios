@@ -46,6 +46,7 @@ class AddressStep: DataCollectorBaseStep, DataCollectorStepProtocol {
     return [
       FormBuilder.separatorRow(height: 32),
       createAddressField(),
+        FormBuilder.separatorRow(height: 12),
       createAptUnitField()
     ]
   }

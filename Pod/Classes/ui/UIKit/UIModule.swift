@@ -187,6 +187,7 @@ open class UIModule: NSObject, UIModuleProtocol {
                       animated: Bool = true,
                       leftButtonMode: UIViewControllerLeftButtonMode = .close,
                       embedInNavigationController: Bool = true,
+                      presenterController: UIViewController? = nil,
                       completion: @escaping Result<UIViewController, NSError>.Callback) {
     guard let module = module as? UIModule else {
       fatalError("module must inherit from UIModule")
@@ -210,12 +211,17 @@ open class UIModule: NSObject, UIModuleProtocol {
         else {
           viewController = initialViewController
         }
-        let presenterController = wself.navigationController?.viewControllers.last ?? UIApplication.topViewController()
+        var presenterViewController: UIViewController?
+        if presenterController != nil {
+            presenterViewController = presenterController
+        } else {
+            presenterViewController = wself.navigationController?.viewControllers.last ?? UIApplication.topViewController()
+        }
         if #available(iOS 13.0, *), viewController.modalPresentationStyle != .overCurrentContext {
           viewController.isModalInPresentation = true
           viewController.modalPresentationStyle = .fullScreen
         }
-        presenterController?.present(viewController, animated: animated) { [weak self] in
+        presenterViewController?.present(viewController, animated: animated) { [weak self] in
           self?.presentedModule = module
           completion(.success(initialViewController))
         }

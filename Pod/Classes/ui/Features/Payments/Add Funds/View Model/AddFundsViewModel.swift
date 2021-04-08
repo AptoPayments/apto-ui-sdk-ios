@@ -8,7 +8,8 @@ final class AddFundsViewModel: ViewModel {
   
   var input: AddFundsViewModelInput { self }
   var output: AddFundsViewModelOutput { self }
-  
+    var exceedsDailyLimitsAmount: ((Double) -> Void)?
+
   var navigator: AddFundsNavigatorType?
   
   private let apto: AptoPlatformProtocol
@@ -19,7 +20,7 @@ final class AddFundsViewModel: ViewModel {
   
   private var currentPaymentSource: PaymentSource?
   private var amount: Double?
-  
+
   init(apto: AptoPlatformProtocol = AptoPlatform.defaultManager(),
        card: Card,
        formatter: NumberFormatter = .init(),
@@ -55,6 +56,16 @@ final class AddFundsViewModel: ViewModel {
     {
       self.nextButtonEnabled.send(false)
       return
+    }
+    
+    if let features = card.features, let fundings = features.funding {
+        let limits = fundings.limits.daily
+        if let max = limits.max.amount.value,
+           amount > max {
+            exceedsDailyLimitsAmount?(max)
+            self.nextButtonEnabled.send(false)
+            return
+        }
     }
     
     self.amount = amount

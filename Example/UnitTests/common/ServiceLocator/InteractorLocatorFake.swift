@@ -22,7 +22,7 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
 
   lazy var authInteractorSpy = AuthInteractorSpy()
   func authInteractor(initialUserData: DataPointList, authConfig: AuthModuleConfig,
-                      dataReceiver: AuthDataReceiver) -> AuthInteractorProtocol {
+                      dataReceiver: AuthDataReceiver, initializationData: InitializationData?) -> AuthInteractorProtocol {
     return authInteractorSpy
   }
 
@@ -63,7 +63,7 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
   }
 
   lazy var issueCardInteractorFake = IssueCardInteractorFake()
-  func issueCardInteractor(application: CardApplication) -> IssueCardInteractorProtocol {
+  func issueCardInteractor(application: CardApplication, cardMetadata: String?) -> IssueCardInteractorProtocol {
     return issueCardInteractorFake
   }
 

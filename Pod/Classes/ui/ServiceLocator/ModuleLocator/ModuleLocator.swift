@@ -30,8 +30,8 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return CountrySelectorModule(serviceLocator: serviceLocator, countries: countries)
   }
 
-  func authModule(authConfig: AuthModuleConfig, initialUserData: DataPointList) -> AuthModuleProtocol {
-    return AuthModule(serviceLocator: serviceLocator, config: authConfig, initialUserData: initialUserData)
+  func authModule(authConfig: AuthModuleConfig, initialUserData: DataPointList, initializationData: InitializationData?) -> AuthModuleProtocol {
+    return AuthModule(serviceLocator: serviceLocator, config: authConfig, initialUserData: initialUserData, initializationData: initializationData)
   }
 
   func verifyPhoneModule(verificationType: VerificationParams<PhoneNumber, Verification>) -> VerifyPhoneModuleProtocol {
@@ -100,9 +100,9 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return VerifyDocumentModule(serviceLocator: serviceLocator, workflowObject: workflowObject)
   }
 
-  func issueCardModule(application: CardApplication) -> UIModuleProtocol {
-    return IssueCardModule(serviceLocator: serviceLocator, application: application)
-  }
+    func issueCardModule(application: CardApplication, cardMetadata: String?) -> UIModuleProtocol {
+        return IssueCardModule(serviceLocator: serviceLocator, application: application, cardMetadata: cardMetadata)
+    }
 
   func waitListModule(application: CardApplication) -> WaitListModuleProtocol {
     return WaitListModule(serviceLocator: serviceLocator, cardApplication: application)

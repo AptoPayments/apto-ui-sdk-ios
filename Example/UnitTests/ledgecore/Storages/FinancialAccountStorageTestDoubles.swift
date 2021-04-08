@@ -110,6 +110,16 @@ class FinancialAccountsStorageSpy: FinancialAccountsStorageProtocol {
     lastIssueCardAdditionalFields = additionalFields
     lastIssueCardInitialFundingSourceId = initialFundingSourceId
   }
+    
+    func orderPhysicalCard(_ apiKey: String,
+                           userToken: String,
+                           accountId: String,
+                           completion: @escaping (Result<Card, NSError>) -> Void) {}
+    
+    func getOrderPhysicalCardConfig(_ apiKey: String,
+                                    userToken: String,
+                                    accountId: String,
+                                    completion: @escaping (Result<PhysicalCardConfig, NSError>) -> Void) {}
 }
 
 class FinancialAccountsStorageFake: FinancialAccountsStorageSpy {

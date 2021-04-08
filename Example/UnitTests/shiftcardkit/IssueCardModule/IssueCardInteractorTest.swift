@@ -19,7 +19,6 @@ class IssueCardInteractorTest: XCTestCase {
   private lazy var dataProvider = ModelDataProvider.provider
   private lazy var application: CardApplication = dataProvider.cardApplication
   private lazy var cardAdditionalFieldsSpy = CardAdditionalFieldsSpy()
-  private lazy var cardMetadataSpy = CardMetadataSpy()
 
   override func setUp() {
     super.setUp()
@@ -28,7 +27,7 @@ class IssueCardInteractorTest: XCTestCase {
       platform: platform,
       application: application,
       cardAdditionalFields: cardAdditionalFieldsSpy,
-      cardMetadata: cardMetadataSpy
+      cardMetadata: "card metadata"
     )
   }
 
@@ -47,14 +46,6 @@ class IssueCardInteractorTest: XCTestCase {
     
     // Then
     XCTAssertTrue(cardAdditionalFieldsSpy.getCalled)
-  }
-
-  func testGetStoredMetadataWhenIssueCard() {
-    // When
-    sut.issueCard { _ in }
-
-    // Then
-    XCTAssertTrue(cardMetadataSpy.getCalled)
   }
 
   func testIssueCardFailureCallbackError() {

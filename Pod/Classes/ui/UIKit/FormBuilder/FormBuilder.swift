@@ -134,7 +134,7 @@ class FormBuilder {
                                   addressManager: AddressManager,
                                   allowedCountries: [Country],
                                   uiConfig: UIConfig) -> FormRowAddressView {
-    let uiLabel = ComponentCatalog.formLabelWith(text: label, uiConfig: uiConfig)
+    let uiLabel = ComponentCatalog.formLabelWith(text: label, multiline: true, uiConfig: uiConfig)
     let textField = ComponentCatalog.formFieldWith(placeholder: placeholder,
                                                    value: value,
                                                    accessibilityLabel: accessibilityLabel,

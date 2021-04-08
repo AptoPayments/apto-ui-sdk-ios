@@ -70,9 +70,9 @@ class UserDataCollectorInteractor: UserDataCollectorInteractorProtocol {
         case .failure(let error):
           self?.dataReceiver.show(error: error)
         case .success(let newUser):
-          self?.dataReceiver.hideLoadingView()
           callback(.success(newUser))
         }
+        self?.dataReceiver.hideLoadingView()
       }
     }
     else {
@@ -84,9 +84,9 @@ class UserDataCollectorInteractor: UserDataCollectorInteractorProtocol {
           case .failure(let error):
             self?.dataReceiver.show(error: error)
           case .success(let updatedUser):
-            self?.dataReceiver.hideLoadingView()
             callback(.success(updatedUser))
           }
+            self?.dataReceiver.hideLoadingView()
         }
       }
       else {

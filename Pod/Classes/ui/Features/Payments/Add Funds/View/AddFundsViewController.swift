@@ -3,7 +3,7 @@ import ReactiveKit
 import AptoSDK
 
 final class AddFundsViewController: UIViewController {
-  private let viewModel: AddFundsViewModelType
+  private var viewModel: AddFundsViewModelType
   private var uiConfig: UIConfig
   private let disposeBag = DisposeBag()
   private lazy var addFundsView: AddFundsView = {
@@ -63,5 +63,9 @@ final class AddFundsViewController: UIViewController {
     }
     
     self.addFundsView.use(viewModel: viewModel)
+    
+    viewModel.exceedsDailyLimitsAmount = { [addFundsView] limit in
+        addFundsView.dailyLimitError(String(limit), show: true)
+    }
   }
 }

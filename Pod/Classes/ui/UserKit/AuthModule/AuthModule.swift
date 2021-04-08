@@ -19,13 +19,16 @@ class AuthModule: UIModule, AuthModuleProtocol {
   fileprivate var verifyBirthDateModule: VerifyBirthDateModuleProtocol?
   fileprivate var authPresenter: AuthPresenterProtocol?
 
+    private let initializationData: InitializationData?
+    
   // MARK: - Module Initialization
 
   init(serviceLocator: ServiceLocatorProtocol,
        config: AuthModuleConfig,
-       initialUserData: DataPointList) {
+       initialUserData: DataPointList, initializationData: InitializationData?) {
     self.config = config
     self.initialUserData = initialUserData
+    self.initializationData = initializationData
     super.init(serviceLocator: serviceLocator)
   }
 
@@ -41,7 +44,7 @@ class AuthModule: UIModule, AuthModuleProtocol {
                                            config: AuthModuleConfig) -> UIViewController {
     let presenter = serviceLocator.presenterLocator.authPresenter(authConfig: config, uiConfig: uiConfig)
     let interactor = serviceLocator.interactorLocator.authInteractor(initialUserData: initialUserData,
-                                                                     authConfig: config, dataReceiver: presenter)
+                                                                     authConfig: config, dataReceiver: presenter, initializationData: initializationData)
     let viewController = serviceLocator.viewLocator.authView(uiConfig: uiConfig, mode: config.mode, eventHandler: presenter)
 
     presenter.viewController = viewController

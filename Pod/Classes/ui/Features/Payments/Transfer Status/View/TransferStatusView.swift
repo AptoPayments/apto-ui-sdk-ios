@@ -22,7 +22,7 @@ final class TransferStatusView: UIView {
     return label
   }()
   
-  private lazy var disclaimerLabel: UILabel = {
+  private(set) lazy var disclaimerLabel: UILabel = {
     let label = UILabel()
     label.font = .systemFont(ofSize: 12)
     label.numberOfLines = 0

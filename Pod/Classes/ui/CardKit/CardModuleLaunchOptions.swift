@@ -9,22 +9,21 @@ import Foundation
 import AptoSDK
 
 @objc public enum AptoUISDKMode: Int {
-  case standalone
-  case embedded
+    case standalone
+    case embedded
 }
 
 enum CardModuleInitialFlow {
-  case newCardApplication
-  case manageCard(cardId: String)
-  case fullSDK
+    case newCardApplication
+    case manageCard(cardId: String)
+    case fullSDK
 }
 
 struct CardModuleLaunchOptions {
-  let mode: AptoUISDKMode
-  let initialUserData: DataPointList?
-  let userMetadata: String?
-  let cardMetadata: String?
-  let googleMapsApiKey: String?
-  let cardOptions: CardOptions?
-  let initialFlow: CardModuleInitialFlow
+    let mode: AptoUISDKMode
+    let initialUserData: DataPointList?
+    let initializationData: InitializationData?
+    let googleMapsApiKey: String?
+    let cardOptions: CardOptions?
+    let initialFlow: CardModuleInitialFlow
 }

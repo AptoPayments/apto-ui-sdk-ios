@@ -68,11 +68,18 @@ open class FormRowDatePickerView: FormRowTextInputView {
                uiConfig: uiConfig)
     textField.inputView = datePicker
     datePicker.addTarget(self, action: #selector(FormRowDatePickerView.datePickerValueChanged(_:)), for: .valueChanged)
+    if #available(iOS 14, *) {
+        datePicker.preferredDatePickerStyle = .wheels
+    } else if #available(iOS 13.4, *) {
+        datePicker.preferredDatePickerStyle = .wheels
+    }
+
     guard let date = self.date else {
       self.valid.send(false)
       return
     }
     datePicker.date = date
+
     if validator != nil {
       _ = self.bndValue.observeNext { _ in
         let delayTime = DispatchTime.now() + Double(Int64(0.01 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)

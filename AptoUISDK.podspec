@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "AptoUISDK"
-  s.version          = "2.9.0"
+  s.version          = "2.10.0"
   s.summary          = "The Apto UI platform iOS SDK."
   s.description      = <<-DESC
                         Apto iOS UI SDK provides a UI flow that allows to easily integrate the platform in your app.
@@ -16,19 +16,23 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/AptoPayments/apto-ui-sdk-ios.git"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.authors          = { "Ivan Oliver" => "ivan@aptopayments.com", "Takeichi Kanzaki" => "takeichi@aptopayments.com" }
-  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.9.0" }
+  s.source           = { :git => "https://github.com/AptoPayments/apto-ui-sdk-ios.git", :tag => "2.10.0" }
 
   s.platform = :ios
   s.ios.deployment_target = '10.0'
   s.swift_version = '5.0'
   s.requires_arc = true
 
+  s.xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+
   s.module_name = 'AptoUISDK'
   s.source_files = ['Pod/Classes/ui/**/*.swift']
   s.resources = ["Pod/Assets/*.png", "Pod/Assets/*.css", "Pod/Localization/*.lproj", "Pod/Assets/*.xcassets", "Pod/Fonts/*.ttf"]
 
   s.frameworks = 'UIKit', 'CoreLocation', 'Accelerate', 'AudioToolbox', 'AVFoundation', 'CoreGraphics', 'CoreMedia', 'CoreVideo', 'Foundation', 'MobileCoreServices', 'OpenGLES', 'QuartzCore', 'Security', 'LocalAuthentication', 'CallKit'
-  s.dependency 'AptoSDK', '3.1.0'
+  s.dependency 'AptoSDK', '3.2.0'
   s.dependency 'AptoPCI', '2.1.0'
   s.dependency 'SnapKit', '~> 5.0'
   s.dependency 'Bond', '~> 7.6'

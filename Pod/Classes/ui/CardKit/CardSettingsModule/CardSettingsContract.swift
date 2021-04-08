@@ -27,12 +27,13 @@ protocol CardSettingsRouterProtocol: class {
   func show(content: Content, title: String)
   func showMonthlyStatements()
   func authenticate(completion: @escaping (Bool) -> Void)
-  func showAddFunds(for card: Card)
+  func showAddFunds(for card: Card, extraContent: ExtraContent?)
     func showACHAccountAgreements(disclaimer: Content,
                                    cardId: String,
                                    acceptCompletion: @escaping () -> Void,
                                    declineCompletion: @escaping () -> Void)
-    func showAddMoneyBottomSheet(card: Card)
+    func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?)
+    func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?)
 }
 
 extension CardSettingsRouterProtocol {
@@ -80,13 +81,14 @@ struct CardSettingsButtonsVisibility {
   let isShowDetailedCardActivityEnabled: Bool
   let showMonthlyStatements: Bool
   let showAddFundsFeature: Bool
+    let showOrderPhysicalCard: Bool
 }
 
 extension CardSettingsButtonsVisibility {
   init() {
     self.init(showChangePin: false, showGetPin: false, showSetPassCode: false, showIVRSupport: false,
               showDetailedCardActivity: false, isShowDetailedCardActivityEnabled: false, showMonthlyStatements: false,
-              showAddFundsFeature: false)
+              showAddFundsFeature: false, showOrderPhysicalCard: false)
   }
 }
 
@@ -120,4 +122,10 @@ protocol CardSettingsPresenterProtocol: class {
   func showDetailedCardActivity(_ newValue: Bool)
   func monthlyStatementsTapped()
   func didTapOnLoadFunds()
+    func didTapOnOrderPhysicalCard()
+}
+
+public struct ExtraContent {
+    public let content: Content?
+    public let title: String
 }

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildDate</key>
-	<date>2021-03-08T10:40:23Z</date>
+	<date>2021-01-29T12:14:09Z</date>
 	<key>BuildType</key>
 	<string>Local</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -58,6 +58,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>com.coinbase.oauth-authorize</string>
+		<string>googlegmail</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -69,7 +70,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Card Scanning</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Reveal the card's data</string>
+	<string>Reveal the card&apos;s data</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Perform VoIP calls to retrieve PIN number</string>
 	<key>UIBackgroundModes</key>
