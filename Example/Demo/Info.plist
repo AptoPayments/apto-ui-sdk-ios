@@ -70,7 +70,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Card Scanning</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Reveal the card&apos;s data</string>
+	<string>Reveal the card's data</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Perform VoIP calls to retrieve PIN number</string>
 	<key>UIBackgroundModes</key>

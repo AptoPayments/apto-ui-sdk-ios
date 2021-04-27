@@ -100,8 +100,8 @@ final class ModuleLocator: ModuleLocatorProtocol {
     return VerifyDocumentModule(serviceLocator: serviceLocator, workflowObject: workflowObject)
   }
 
-    func issueCardModule(application: CardApplication, cardMetadata: String?) -> UIModuleProtocol {
-        return IssueCardModule(serviceLocator: serviceLocator, application: application, cardMetadata: cardMetadata)
+    func issueCardModule(application: CardApplication, initializationData: InitializationData?) -> UIModuleProtocol {
+        return IssueCardModule(serviceLocator: serviceLocator, application: application, initializationData: initializationData)
     }
 
   func waitListModule(application: CardApplication) -> WaitListModuleProtocol {

@@ -10,7 +10,7 @@
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "NO"
+            buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
@@ -147,7 +147,8 @@
       buildConfiguration = "Local">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Local"
+      buildConfiguration = "Prd"
+      customArchiveName = "Apto Card"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

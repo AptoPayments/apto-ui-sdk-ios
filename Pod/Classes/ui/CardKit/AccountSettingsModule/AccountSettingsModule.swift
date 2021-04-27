@@ -30,13 +30,11 @@ class AccountSettingsModule: UIModule {
 
   fileprivate func buildAccountSettingsViewController(uiConfig: UIConfig) -> AccountSettingsViewProtocol {
     let isNotificationPreferencesEnabled = platform.isFeatureEnabled(.showNotificationPreferences)
-    let isMonthlyStatementsEnabled = platform.isFeatureEnabled(.showMonthlyStatementsOption)
     let authManager = serviceLocator.systemServicesLocator.authenticationManager()
     let isChangePINEnabled = authManager.canChangeCode()
     let isAuthEnabled = platform.currentPCIAuthenticationType == .pinOrBiometrics || platform.currentPCIAuthenticationType == .biometrics
     let biometryType = isAuthEnabled ? authManager.biometryType : .none
     let config = AccountSettingsPresenterConfig(showNotificationPreferences: isNotificationPreferencesEnabled,
-                                                showMonthlyStatements: isMonthlyStatementsEnabled,
                                                 showChangePIN: isChangePINEnabled, biometryType: biometryType)
     let presenter = serviceLocator.presenterLocator.accountSettingsPresenter(config: config)
     let interactor = serviceLocator.interactorLocator.accountSettingsInteractor()

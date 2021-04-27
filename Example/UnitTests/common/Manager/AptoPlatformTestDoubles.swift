@@ -456,7 +456,7 @@ var nextIsShowDetailedCardActivityEnabledResult = true
   private(set) var issueCardCalled = false
   private(set) var lastIssueCardApplicationId: String?
   func issueCard(applicationId: String, additionalFields: [String : AnyObject]?, metadata: String?,
-                 callback: @escaping Result<Card, NSError>.Callback) {
+                 design: IssueCardDesign?, callback: @escaping Result<Card, NSError>.Callback) {
     issueCardCalled = true
     lastIssueCardApplicationId = applicationId
     if let result = nextIssueCardResult {

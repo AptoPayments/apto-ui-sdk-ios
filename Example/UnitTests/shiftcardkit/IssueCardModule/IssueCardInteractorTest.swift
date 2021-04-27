@@ -27,7 +27,7 @@ class IssueCardInteractorTest: XCTestCase {
       platform: platform,
       application: application,
       cardAdditionalFields: cardAdditionalFieldsSpy,
-      cardMetadata: "card metadata"
+        initializationData: ModelDataProvider.provider.initializationData
     )
   }
 

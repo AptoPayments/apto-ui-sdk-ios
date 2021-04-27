@@ -61,6 +61,7 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
                                                       privacyPolicy: cardProduct.privacyPolicy,
                                                       termsAndCondition: cardProduct.termsAndConditions,
                                                       faq: cardProduct.faq,
+                                                      exchangeRates: cardProduct.exchangeRates,
                                                       showDetailedCardActivity: isShowDetailedInfoEnabled,
                                                       showMonthlyStatements: isShowMonthlyStatementsEnabled)
     let recipients = [self.projectConfiguration.supportEmailAddress]

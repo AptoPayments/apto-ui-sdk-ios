@@ -312,7 +312,7 @@ open class CardModule: UIModule {
   private func showNewCardModule(addChild: Bool, cardProductId: String,
                                  completion: @escaping Result<UIViewController, NSError>.Callback) {
     let newCardModule = NewCardModule(serviceLocator: serviceLocator, initialDataPoints: userDataPoints,
-                                      cardProductId: cardProductId, cardMetadata: initializationData?.cardMetadata)
+                                      cardProductId: cardProductId, initializationData: initializationData)
     self.newCardModule = newCardModule
     if addChild {
       newCardModule.onClose = { [weak self] _ in

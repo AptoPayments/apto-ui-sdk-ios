@@ -27,7 +27,7 @@ protocol InteractorLocatorProtocol {
   func changePasscodeInteractor() -> ChangePasscodeInteractorProtocol
   func biometricPermissionInteractor() -> BiometricPermissionInteractorProtocol
 
-    func issueCardInteractor(application: CardApplication, cardMetadata: String?) -> IssueCardInteractorProtocol
+    func issueCardInteractor(application: CardApplication, initializationData: InitializationData?) -> IssueCardInteractorProtocol
   func waitListInteractor(application: CardApplication) -> WaitListInteractorProtocol
   func cardWaitListInteractor(card: Card) -> CardWaitListInteractorProtocol
   func serverMaintenanceErrorInteractor() -> ServerMaintenanceErrorInteractorProtocol

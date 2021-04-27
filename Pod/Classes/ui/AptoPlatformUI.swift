@@ -266,7 +266,8 @@ extension AptoPlatform {
       case .success(let contextConfiguration):
         let initializationData = InitializationData(userMetadata: launchOptions.initializationData?.userMetadata,
                                             cardMetadata: launchOptions.initializationData?.cardMetadata,
-                                            custodianId: launchOptions.initializationData?.custodianId)
+                                            custodianId: launchOptions.initializationData?.custodianId,
+                                            design: launchOptions.initializationData?.design)
         let cardModule = CardModule(launchOptions: launchOptions, initializationData: initializationData)
         self.initialModule = cardModule
         cardModule.onClose = { [weak self, unowned from] module in

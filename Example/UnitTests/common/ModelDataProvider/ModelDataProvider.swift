@@ -18,8 +18,17 @@ class ModelDataProvider {
 
   lazy var emptyJSON = JSON()
 
-    lazy var initializationData = InitializationData(userMetadata: "a user metadata", cardMetadata: "a card metadata", custodianId: "a custodian id")
+    lazy var design = IssueCardDesign(designKey: "a key", qrCode: "a code", extraEmbossingLine: "a line", imageURL: "an image", additionalImageURL: "another image")
+    lazy var initializationData = InitializationData(userMetadata: "a user metadata", cardMetadata: "a card metadata", custodianId: "a custodian id", design: design)
 
+    let aptoMetadata = "apto_metadata"
+    
+    lazy var issueCardRequest: [String: Any] = [
+        "application_id": "entity_XXXXXXXXXXXXXXXXX",
+        "metadata": aptoMetadata,
+        "design": design
+    ]
+        
   lazy var user = ShiftUser(userId: "userId",
                             metadata: nil,
                             accessToken: AccessToken(token: "AccessToken",
@@ -409,6 +418,27 @@ class ModelDataProvider {
         return card
     }()
 
+    lazy var cardWithMetadata: Card = {
+        let card = Card(accountId: "crd_5a34ba3d58ca34d2",
+                        cardProductId: nil,
+                        cardNetwork: nil,
+                        cardIssuer: .other,
+                        cardBrand: nil,
+                        state: .active,
+                        cardHolder: " ",
+                        lastFourDigits: "1234",
+                        spendableToday: nil,
+                        nativeSpendableToday: nil,
+                        totalBalance: nil,
+                        nativeTotalBalance: nil,
+                        kyc: nil,
+                        orderedStatus: .available,
+                        features: nil,
+                        cardStyle: nil,
+                        verified: nil, metadata: aptoMetadata)
+        return card
+    }()
+
     lazy var physicalCardConfig: PhysicalCardConfig = {
         let fee = Amount(value: 5.00, currency: "USD")
         let address = Address(address: "Hollywood Avenue", apUnit: "10", country: Country(isoCode: "US"), city: "Los Angeles", region: "California", zip: "00154")
@@ -633,7 +663,8 @@ class ModelDataProvider {
                                      waitListBackgroundImage: "image",
                                      waitListBackgroundColor: "color",
                                      waitListDarkBackgroundColor: "color",
-                                     waitListAsset: "asset")
+                                     waitListAsset: "asset",
+                                     exchangeRates: .plainText("exchange rates"))
   lazy var paymentSuccessfulGroup = NotificationGroup(groupId: .paymentSuccessful,
                                                       category: .cardActivity,
                                                       state: .disabled,

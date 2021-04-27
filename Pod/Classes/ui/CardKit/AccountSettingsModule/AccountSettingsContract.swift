@@ -13,7 +13,6 @@ protocol AccountSettingsRouterProtocol: class {
   func closeFromAccountSettings()
   func contactTappedInAccountSettings()
   func notificationsTappedInAccountSettings()
-  func showMonthlyStatements()
   func showChangePasscode()
 }
 
@@ -27,7 +26,6 @@ protocol AccountSettingsInteractorProtocol {
 
 class AccountSettingsViewModel {
   let showNotificationPreferences: Observable<Bool> = Observable(false)
-  let showMonthlyStatements: Observable<Bool> = Observable(false)
   let showChangePasscode: Observable<Bool> = Observable(false)
   let biometryType: Observable<BiometryType> = Observable(.none)
   let isBiometricEnabled: Observable<Bool> = Observable(false)
@@ -35,7 +33,6 @@ class AccountSettingsViewModel {
 
 struct AccountSettingsPresenterConfig {
   let showNotificationPreferences: Bool
-  let showMonthlyStatements: Bool
   let showChangePIN: Bool
   let biometryType: BiometryType
 }
@@ -51,7 +48,6 @@ protocol AccountSettingsPresenterProtocol: class {
   func logoutTapped()
   func contactTapped()
   func notificationsTapped()
-  func monthlyStatementsTapped()
   func changePasscodeTapped()
   func changeShowBiometricTapped(_ isEnabled: Bool)
 }

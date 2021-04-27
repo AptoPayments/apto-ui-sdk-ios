@@ -9,7 +9,7 @@ PODS:
   - AptoObjCSDK (1.1.0):
     - AptoSDK
   - AptoPCI (2.1.0)
-  - AptoSDK (3.2.0):
+  - AptoSDK (3.3.0):
     - Alamofire (~> 4.8)
     - AlamofireNetworkActivityIndicator (~> 2.2)
     - Bond (~> 7.6)
@@ -19,9 +19,9 @@ PODS:
     - PhoneNumberKit (~> 3.2)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.9.0):
+  - AptoUISDK (2.10.0):
     - AptoPCI (= 2.1.0)
-    - AptoSDK (= 3.2.0)
+    - AptoSDK (= 3.3.0)
     - Bond (~> 7.6)
     - Down (~> 0.8.0)
     - GoogleKit (~> 0.3)
@@ -125,8 +125,8 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityLogger: 6d3398c692d2c5d83b0c58793537860aca1e383d
   AptoObjCSDK: 818ed46d0b6328d9ec76f32ab39e51d8ed8dffb1
   AptoPCI: 8a85a014534b5d9036170e3698309de4fa51bc88
-  AptoSDK: 8313955d8537dacfcd327ae56a7d714a90ac5ba7
-  AptoUISDK: e3a2abaeb6a18854c1469e1f919fb7a2b72f813d
+  AptoSDK: 10edcc189cd9e7eff3da131f6a1a2460b31b6d60
+  AptoUISDK: 87f347546a55157bda75a1396a277e966cdc2f0f
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
   Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e

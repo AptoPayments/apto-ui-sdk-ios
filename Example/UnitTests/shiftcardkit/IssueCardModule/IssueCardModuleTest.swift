@@ -21,7 +21,7 @@ class IssueCardModuleTest: XCTestCase {
   override func setUp() {
     super.setUp()
 
-    sut = IssueCardModule(serviceLocator: serviceLocator, application: application, cardMetadata: "card metadata")
+    sut = IssueCardModule(serviceLocator: serviceLocator, application: application, initializationData: ModelDataProvider.provider.initializationData)
   }
 
   func testInitializeConfigurationSucceedCallCompletionBlockWithSuccess() {

@@ -66,12 +66,12 @@ final class InteractorLocator: InteractorLocatorProtocol {
     return BiometricPermissionInteractor(platform: serviceLocator.platform)
   }
 
-  func issueCardInteractor(application: CardApplication, cardMetadata: String?) -> IssueCardInteractorProtocol {
+  func issueCardInteractor(application: CardApplication, initializationData: InitializationData?) -> IssueCardInteractorProtocol {
     return IssueCardInteractor(
       platform: serviceLocator.platform,
       application: application,
       cardAdditionalFields: serviceLocator.systemServicesLocator.cardAdditionalFields(),
-      cardMetadata: cardMetadata
+      initializationData: initializationData
     )
   }
 

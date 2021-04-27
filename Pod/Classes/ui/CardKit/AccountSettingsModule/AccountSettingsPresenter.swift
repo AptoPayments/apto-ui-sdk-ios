@@ -24,7 +24,6 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
 
   func viewLoaded() {
     viewModel.showNotificationPreferences.send(config.showNotificationPreferences)
-    viewModel.showMonthlyStatements.send(config.showMonthlyStatements)
     viewModel.showChangePasscode.send(config.showChangePIN)
     viewModel.isBiometricEnabled.send(interactor.isBiometricEnabled())
     viewModel.biometryType.send(config.biometryType)
@@ -45,10 +44,6 @@ class AccountSettingsPresenter: AccountSettingsPresenterProtocol {
 
   func notificationsTapped() {
     router.notificationsTappedInAccountSettings()
-  }
-
-  func monthlyStatementsTapped() {
-    router.showMonthlyStatements()
   }
 
   func changePasscodeTapped() {

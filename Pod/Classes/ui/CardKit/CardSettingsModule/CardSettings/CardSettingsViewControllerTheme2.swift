@@ -152,7 +152,8 @@ private extension CardSettingsViewControllerTheme2 {
         self.createLegalTitle(legalDocuments: legalDocuments),
         self.createCardholderAgreementButton(legalDocuments.cardHolderAgreement),
         self.createTermsAndConditionsButton(legalDocuments.termsAndConditions),
-        self.createPrivacyPolicyButton(legalDocuments.privacyPolicy)
+        self.createPrivacyPolicyButton(legalDocuments.privacyPolicy),
+        self.createExchangeRatesButton(legalDocuments.exchangeRates)
       ].compactMap { return $0 }
       var rows: [FormRowView] = [
         FormRowSeparatorView(backgroundColor: .clear, height: 16)
@@ -260,6 +261,12 @@ private extension CardSettingsViewControllerTheme2 {
                             title: "card_settings.legal.privacy_policy.title".podLocalized(),
                             subtitle: "card_settings.legal.privacy_policy.description".podLocalized())
   }
+
+    func createExchangeRatesButton(_ privacyPolicy: Content?) -> FormRowView? {
+      return createContentRow(privacyPolicy,
+                              title: "card_settings.legal.exchange_rates.title".podLocalized(),
+                              subtitle: "card_settings.legal.exchange_rates.description".podLocalized())
+    }
 
   func createContentRow(_ content: Content?, title: String, subtitle: String) -> FormRowView? {
     guard let content = content else {

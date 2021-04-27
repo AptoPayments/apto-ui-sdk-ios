@@ -63,7 +63,7 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
   }
 
   lazy var issueCardInteractorFake = IssueCardInteractorFake()
-  func issueCardInteractor(application: CardApplication, cardMetadata: String?) -> IssueCardInteractorProtocol {
+  func issueCardInteractor(application: CardApplication, initializationData: InitializationData?) -> IssueCardInteractorProtocol {
     return issueCardInteractorFake
   }
 

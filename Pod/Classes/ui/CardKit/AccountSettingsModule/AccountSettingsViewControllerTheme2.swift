@@ -69,11 +69,10 @@ private extension AccountSettingsViewControllerTheme2 {
   func setUpViewModelSubscriptions() {
     let viewModel = presenter.viewModel
     combineLatest(viewModel.showNotificationPreferences,
-                  viewModel.showMonthlyStatements,
                   viewModel.showChangePasscode,
-                  viewModel.biometryType).observeNext { [unowned self] showNotification, showStatements,
+                  viewModel.biometryType).observeNext { [unowned self] showNotification,
                     showChangePasscode, biometryType in
-      self.updateUpFormViewContent(showNotification, showStatements, showChangePasscode, biometryType)
+      self.updateUpFormViewContent(showNotification, showChangePasscode, biometryType)
     }.dispose(in: disposeBag)
 
     viewModel.isBiometricEnabled.observeNext{ [unowned self] isBiometricEnabled in
@@ -81,7 +80,7 @@ private extension AccountSettingsViewControllerTheme2 {
     }.dispose(in: disposeBag)
   }
 
-  func updateUpFormViewContent(_ showNotificationPreferences: Bool, _ showMonthlyStatements: Bool,
+  func updateUpFormViewContent(_ showNotificationPreferences: Bool,
                                _ showChangePasscode: Bool, _ biometryType: BiometryType) {
     var rows: [FormRowView] = [FormRowSeparatorView(backgroundColor: .clear, height: 16)]
     if showChangePasscode || biometryType != .none {
@@ -103,9 +102,6 @@ private extension AccountSettingsViewControllerTheme2 {
       self.createSupportTitle(),
       self.createSupportButton()
     ]
-    if showMonthlyStatements {
-      rows += [createStatementsButton()]
-    }
     rows += [
       self.createVersionRow(),
       self.createLogoutButton()
@@ -226,16 +222,6 @@ private extension AccountSettingsViewControllerTheme2 {
                                    height: 72,
                                    uiConfig: uiConfiguration) { [unowned self] in
       self.presenter.contactTapped()
-    }
-  }
-
-  func createStatementsButton() -> FormRowView {
-    return FormBuilder.linkRowWith(title: "card_settings.help.monthly_statements.title".podLocalized(),
-                                   subtitle: "card_settings.help.monthly_statements.description".podLocalized(),
-                                   leftIcon: nil,
-                                   height: 72,
-                                   uiConfig: uiConfiguration) { [unowned self] in
-      self.presenter.monthlyStatementsTapped()
     }
   }
 

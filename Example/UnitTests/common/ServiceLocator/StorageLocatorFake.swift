@@ -81,4 +81,9 @@ class StorageLocatorFake: StorageLocatorProtocol {
     func achAccountStorage(transport: JSONTransport) -> ACHAccountStorageProtocol {
         return achAccountStorageSpy
     }
+    
+    lazy var cardApplicationStorageSpy = CardApplicationStorageSpy()
+    func cardApplicationStorage(transport: JSONTransport) -> CardApplicationsStorageProtocol {
+        return cardApplicationStorageSpy
+    }
 }

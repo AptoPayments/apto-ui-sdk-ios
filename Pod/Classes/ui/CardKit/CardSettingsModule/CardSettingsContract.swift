@@ -60,16 +60,17 @@ protocol CardSettingsInteractorProtocol {
 }
 
 struct LegalDocuments {
-  let cardHolderAgreement: Content?
-  let faq: Content?
-  let termsAndConditions: Content?
-  let privacyPolicy: Content?
+    let cardHolderAgreement: Content?
+    let faq: Content?
+    let termsAndConditions: Content?
+    let privacyPolicy: Content?
+    let exchangeRates: Content?
 }
 
 extension LegalDocuments {
-  init() {
-    self.init(cardHolderAgreement: nil, faq: nil, termsAndConditions: nil, privacyPolicy: nil)
-  }
+    init() {
+        self.init(cardHolderAgreement: nil, faq: nil, termsAndConditions: nil, privacyPolicy: nil, exchangeRates: nil)
+    }
 }
 
 struct CardSettingsButtonsVisibility {

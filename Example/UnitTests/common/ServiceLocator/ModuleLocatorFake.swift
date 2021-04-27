@@ -129,7 +129,7 @@ class ModuleLocatorFake: ModuleLocatorProtocol {
   lazy var issueCardModuleSpy: IssueCardModuleSpy = {
     return IssueCardModuleSpy(serviceLocator: serviceLocator)
   }()
-  func issueCardModule(application: CardApplication, cardMetadata: String?) -> UIModuleProtocol {
+    func issueCardModule(application: CardApplication, initializationData: InitializationData?) -> UIModuleProtocol {
     return issueCardModuleSpy
   }
 

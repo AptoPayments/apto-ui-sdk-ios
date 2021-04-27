@@ -17,7 +17,7 @@ class CardSettingsPresenterTest: XCTestCase {
   private lazy var platform = serviceLocator.platformFake
   private let card = ModelDataProvider.provider.card
   private let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
-                                                   faq: nil, showDetailedCardActivity: true,
+                                                   faq: nil, exchangeRates: nil, showDetailedCardActivity: true,
                                                    showMonthlyStatements: true)
   private let emailRecipients = ["email@aptopayments.com"]
   private let uiConfig = ModelDataProvider.provider.uiConfig
@@ -146,7 +146,7 @@ class CardSettingsPresenterTest: XCTestCase {
   func testViewLoadedWithoutShowDetailedCardActivityDoNotShowDetailedCardActivity() {
     // Given
     let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
-                                             faq: nil, showDetailedCardActivity: false, showMonthlyStatements: true)
+                                             faq: nil, exchangeRates: nil, showDetailedCardActivity: false, showMonthlyStatements: true)
     setUpSUT(card: card, config: config)
 
     // When
@@ -167,7 +167,7 @@ class CardSettingsPresenterTest: XCTestCase {
   func testViewLoadedWithoutShowMonthlyStatementsDoNotShowMonthlyStatements() {
     // Given
     let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
-                                             faq: nil, showDetailedCardActivity: false, showMonthlyStatements: false)
+                                             faq: nil, exchangeRates: nil, showDetailedCardActivity: false, showMonthlyStatements: false)
     setUpSUT(card: card, config: config)
 
     // When

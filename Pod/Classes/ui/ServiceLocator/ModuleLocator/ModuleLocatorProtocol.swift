@@ -39,7 +39,7 @@ protocol ModuleLocatorProtocol {
   func showDisclaimerActionModule(workflowObject: WorkflowObject,
                                   workflowAction: WorkflowAction) -> ShowDisclaimerActionModuleProtocol
   func verifyDocumentModule(workflowObject: WorkflowObject?) -> VerifyDocumentModule
-  func issueCardModule(application: CardApplication, cardMetadata: String?) -> UIModuleProtocol
+  func issueCardModule(application: CardApplication, initializationData: InitializationData?) -> UIModuleProtocol
   func waitListModule(application: CardApplication) -> WaitListModuleProtocol
   func cardWaitListModule(card: Card) -> CardWaitListModuleProtocol
 

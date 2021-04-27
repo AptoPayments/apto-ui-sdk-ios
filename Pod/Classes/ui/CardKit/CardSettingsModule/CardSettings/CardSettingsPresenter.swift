@@ -11,12 +11,13 @@ import AptoSDK
 import Bond
 
 struct CardSettingsPresenterConfig {
-  let cardholderAgreement: Content?
-  let privacyPolicy: Content?
-  let termsAndCondition: Content?
-  let faq: Content?
-  let showDetailedCardActivity: Bool
-  let showMonthlyStatements: Bool
+    let cardholderAgreement: Content?
+    let privacyPolicy: Content?
+    let termsAndCondition: Content?
+    let faq: Content?
+    let exchangeRates: Content?
+    let showDetailedCardActivity: Bool
+    let showMonthlyStatements: Bool
 }
 
 class CardSettingsPresenter: CardSettingsPresenterProtocol {
@@ -53,7 +54,8 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     legalDocuments = LegalDocuments(cardHolderAgreement: config.cardholderAgreement,
                                     faq: config.faq,
                                     termsAndConditions: config.termsAndCondition,
-                                    privacyPolicy: config.privacyPolicy)
+                                    privacyPolicy: config.privacyPolicy,
+                                    exchangeRates: config.exchangeRates)
     self.viewModel.legalDocuments.send(legalDocuments)
   }
 

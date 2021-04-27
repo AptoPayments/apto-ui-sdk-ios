@@ -10,11 +10,11 @@ import AptoSDK
 
 class IssueCardModule: UIModule, IssueCardModuleProtocol {
     private let application: CardApplication
-    private let cardMetadata: String?
+    private let initializationData: InitializationData?
     
-    init(serviceLocator: ServiceLocatorProtocol, application: CardApplication, cardMetadata: String?) {
+    init(serviceLocator: ServiceLocatorProtocol, application: CardApplication, initializationData: InitializationData?) {
         self.application = application
-        self.cardMetadata = cardMetadata
+        self.initializationData = initializationData
         super.init(serviceLocator: serviceLocator)
     }
     
@@ -24,7 +24,7 @@ class IssueCardModule: UIModule, IssueCardModuleProtocol {
     }
     
     private func buildIssueCardViewController(uiConfig: UIConfig) -> UIViewController {
-        let interactor = serviceLocator.interactorLocator.issueCardInteractor(application: application, cardMetadata: cardMetadata)
+        let interactor = serviceLocator.interactorLocator.issueCardInteractor(application: application, initializationData: initializationData)
         let configuration = (application.nextAction.configuration as? IssueCardActionConfiguration) ?? nil
         let presenter = serviceLocator.presenterLocator.issueCardPresenter(router: self, interactor: interactor,
                                                                            configuration: configuration)

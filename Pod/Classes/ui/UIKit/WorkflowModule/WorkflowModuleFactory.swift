@@ -16,12 +16,12 @@ class WorkflowModuleFactoryImpl: WorkflowModuleFactory {
 
   let serviceLocator: ServiceLocatorProtocol
   let workflowObject: WorkflowObject
-    private let cardMetadata: String?
+    private let initializationData: InitializationData?
     
-    init(serviceLocator: ServiceLocatorProtocol, workflowObject: WorkflowObject, cardMetadata: String?) {
+    init(serviceLocator: ServiceLocatorProtocol, workflowObject: WorkflowObject, initializationData: InitializationData?) {
         self.serviceLocator = serviceLocator
         self.workflowObject = workflowObject
-        self.cardMetadata = cardMetadata
+        self.initializationData = initializationData
     }
 
   // swiftlint:disable:next cyclomatic_complexity
@@ -41,7 +41,7 @@ class WorkflowModuleFactoryImpl: WorkflowModuleFactory {
         return nil
       }
       application.nextAction = workflowAction
-      return serviceLocator.moduleLocator.issueCardModule(application: application, cardMetadata: cardMetadata)
+      return serviceLocator.moduleLocator.issueCardModule(application: application, initializationData: initializationData)
     case .selectBalanceStore:
       guard var application = workflowObject as? CardApplication else {
         return nil

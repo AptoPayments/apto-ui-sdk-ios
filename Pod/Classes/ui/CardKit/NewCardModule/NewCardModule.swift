@@ -20,12 +20,12 @@ class NewCardModule: UIModule {
   }
   var cardProduct: CardProduct!
   // swiftlint:enable implicitly_unwrapped_optional
-    private let cardMetadata: String?
+    private let initializationData: InitializationData?
 
-  public init(serviceLocator: ServiceLocatorProtocol, initialDataPoints: DataPointList, cardProductId: String, cardMetadata: String?) {
+  public init(serviceLocator: ServiceLocatorProtocol, initialDataPoints: DataPointList, cardProductId: String, initializationData: InitializationData?) {
     self.initialDataPoints = initialDataPoints
     self.cardProductId = cardProductId
-    self.cardMetadata = cardMetadata
+    self.initializationData = initializationData
     super.init(serviceLocator: serviceLocator)
   }
 
@@ -84,7 +84,7 @@ class NewCardModule: UIModule {
   }
 
   private func workflowModuleFor(application: CardApplication) -> WorkflowModule {
-    let moduleFactory = WorkflowModuleFactoryImpl(serviceLocator: serviceLocator, workflowObject: application, cardMetadata: cardMetadata)
+    let moduleFactory = WorkflowModuleFactoryImpl(serviceLocator: serviceLocator, workflowObject: application, initializationData: initializationData)
 
     let workflowModule = WorkflowModule(serviceLocator: serviceLocator, workflowObject: application,
                                         workflowObjectStatusRequester: self, workflowModuleFactory: moduleFactory)
