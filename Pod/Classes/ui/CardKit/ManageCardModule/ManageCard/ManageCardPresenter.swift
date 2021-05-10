@@ -219,7 +219,6 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
 
   private func updateViewModelWith(card: Card) {
     router.update(card: card)
-    viewModel.cardInfoVisible.send(false)
     viewModel.card.send(card)
     viewModel.cardNetwork.send(card.cardNetwork)
     viewModel.fundingSource.send(card.fundingSource)

@@ -43,6 +43,11 @@ class ManageCardViewControllerTheme2: ShiftViewController, ManageCardViewProtoco
   private let navigationBarVisibilityThreshold: CGFloat = 4
   private let refreshTextAlpha: CGFloat = 0.7
 
+  private lazy var notifyViewLoaded: () -> Void = { [unowned self] in
+    self.presenter.viewLoaded()
+    return {}
+  }()
+
   init(mode: AptoUISDKMode, uiConfiguration: UIConfig, presenter: ManageCardEventHandler) {
     self.presenter = presenter
     self.mode = mode
@@ -66,7 +71,7 @@ class ManageCardViewControllerTheme2: ShiftViewController, ManageCardViewProtoco
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     setUpNavigationBar()
-    presenter.viewLoaded()
+    notifyViewLoaded()
   }
 
   override func closeTapped() {
