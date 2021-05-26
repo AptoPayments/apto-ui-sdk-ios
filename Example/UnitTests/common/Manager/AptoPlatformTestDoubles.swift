@@ -455,7 +455,7 @@ var nextIsShowDetailedCardActivityEnabledResult = true
   var nextIssueCardResult: Result<Card, NSError>?
   private(set) var issueCardCalled = false
   private(set) var lastIssueCardApplicationId: String?
-  func issueCard(applicationId: String, additionalFields: [String : AnyObject]?, metadata: String?,
+  func issueCard(applicationId: String, metadata: String?,
                  design: IssueCardDesign?, callback: @escaping Result<Card, NSError>.Callback) {
     issueCardCalled = true
     lastIssueCardApplicationId = applicationId
@@ -506,33 +506,6 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     lastFetchCardForceRefresh = forceRefresh
     lastFetchCardRetrieveBalances = retrieveBalances
     if let result = nextFetchCardResult {
-      callback(result)
-    }
-  }
-
-  var nextFetchfetchFinancialAccountResult: Result<FinancialAccount, NSError>?
-  private(set) var fetchfetchFinancialAccountCalled = false
-  private(set) var lastFetchfetchFinancialAccountAccountId: String?
-  private(set) var lastFetchfetchFinancialAccountForceRefresh: Bool?
-  private(set) var lastFetchfetchFinancialAccountRetrieveBalances: Bool?
-  func fetchFinancialAccount(_ accountId: String, forceRefresh: Bool, retrieveBalances: Bool,
-                             callback: @escaping Result<FinancialAccount, NSError>.Callback) {
-    fetchfetchFinancialAccountCalled = true
-    lastFetchfetchFinancialAccountAccountId = accountId
-    lastFetchfetchFinancialAccountForceRefresh = forceRefresh
-    lastFetchfetchFinancialAccountRetrieveBalances = retrieveBalances
-    if let result = nextFetchfetchFinancialAccountResult {
-      callback(result)
-    }
-  }
-
-  var nextFetchCardDetailsResult: Result<CardDetails, NSError>?
-  private(set) var fetchCardDetailsCalled = false
-  private(set) var lastFetchCardDetailsCardId: String?
-  func fetchCardDetails(_ cardId: String, callback: @escaping Result<CardDetails, NSError>.Callback) {
-    fetchCardDetailsCalled = true
-    lastFetchCardDetailsCardId = cardId
-    if let result = nextFetchCardDetailsResult {
       callback(result)
     }
   }
@@ -627,11 +600,6 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     if let result = nextFetchCardTransactionsResult {
       callback(result)
     }
-  }
-
-  func cardMonthlySpending(_ cardId: String, date: Date,
-                           callback: @escaping Result<MonthlySpending, NSError>.Callback) {
-    Swift.fatalError("Deprecated method. Use: fetchMonthlySpending(cardId:month:year:callback:) instead.")
   }
 
   var nextFetchMonthlySpendingResult: Result<MonthlySpending, NSError>?

@@ -206,4 +206,20 @@ extension FormRowView {
       self.validationMessage.send(reason)
     }
   }
+    
+    func validateAddress(_ validator: DataValidator<Address>?, address: Address?) {
+        guard let validator = validator else {
+            return
+        }
+        let result = validator.validate(address)
+        switch result {
+        case .pass:
+            self.valid.send(true)
+            self.validationMessage.send("")
+            self.presentPassedValidationResult()
+        case .fail(let reason):
+            self.valid.send(false)
+            self.validationMessage.send(reason)
+        }
+    }
 }

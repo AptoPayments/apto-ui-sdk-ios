@@ -183,7 +183,7 @@ class BackendErrorTest: XCTestCase {
     XCTAssertNil(backendError)
   }
 
-  func testJSONParsingInvalidCodeReturnsUndefinedError() {
+  func testJSONParsingInvalidCodeWithMessageReturnsUndefinedErrorWithReason() {
     // Given
     let json: JSON = ["code": 45, "message": "My Message"]
 
@@ -194,7 +194,22 @@ class BackendErrorTest: XCTestCase {
     XCTAssertNotNil(backendError)
     XCTAssertEqual(backendError?.code, BackendError.ErrorCodes.undefinedError.rawValue)
     XCTAssertEqual(backendError?.rawCode, 45)
+    XCTAssertTrue(backendError?.userInfo[NSLocalizedFailureReasonErrorKey]! as! String == "My Message")
   }
+    
+    func testJSONParsingInvalidCodeReturnsUndefinedError() {
+      // Given
+      let json: JSON = ["code": 45]
+
+      // When
+      let backendError = json.backendError
+
+      // Then
+      XCTAssertNotNil(backendError)
+      XCTAssertEqual(backendError?.code, BackendError.ErrorCodes.undefinedError.rawValue)
+      XCTAssertEqual(backendError?.rawCode, 45)
+      XCTAssertNil(backendError?.userInfo[NSLocalizedFailureReasonErrorKey] as? String)
+    }
 
   func testJSONParsingCorrectJSONReturnsBackendError() {
     // Given

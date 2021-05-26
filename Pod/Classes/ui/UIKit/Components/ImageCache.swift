@@ -10,20 +10,16 @@ import Foundation
 import AptoSDK
 
 class ImageCache {
-  private static var sharedInstance: ImageCache! // swiftlint:disable:this implicitly_unwrapped_optional
-  var cache: [URL: UIImage] = [:]
+  static var shared = ImageCache() // swiftlint:disable:this implicitly_unwrapped_optional
+  private var cache = NSCache<NSString, UIImage>()
 
-  class func defaultCache() -> ImageCache {
-    if sharedInstance == nil {
-      sharedInstance = ImageCache()
-    }
-    return sharedInstance
-  }
-
+    private init() {}
+    
   func imageWithUrl(_ url: URL, result: Result<UIImage, NSError>.Callback? = nil) {
-    guard let retVal = cache[url] else {
+    let cachedKey = url.absoluteString as NSString
+    guard let retVal = cache.object(forKey: cachedKey) else {
       let request: URLRequest = URLRequest(url: url)
-      let session = URLSession(configuration: .default)
+        let session = URLSession.shared
       let task = session.dataTask(with: request) { [weak self] (data, _, error) -> Void in
         guard let self = self else { return }
         if error == nil {
@@ -34,7 +30,7 @@ class ImageCache {
             self.returnResult(callback: result, result: .failure(ServiceError(code: .internalIncosistencyError)))
             return
           }
-          self.cache[url] = image
+            self.cache.setObject(image, forKey: cachedKey)
           self.returnResult(callback: result, result: .success(image))
         }
         else {

@@ -133,6 +133,7 @@ class FormBuilder {
                                   accessibilityLabel: String? = nil,
                                   addressManager: AddressManager,
                                   allowedCountries: [Country],
+                                  validator: DataValidator<Address>? = nil,
                                   uiConfig: UIConfig) -> FormRowAddressView {
     let uiLabel = ComponentCatalog.formLabelWith(text: label, multiline: true, uiConfig: uiConfig)
     let textField = ComponentCatalog.formFieldWith(placeholder: placeholder,
@@ -143,7 +144,8 @@ class FormBuilder {
                                     textField: textField,
                                     addressManager: addressManager,
                                     allowedCountries: allowedCountries,
-                                    uiConfig: uiConfig)
+                                    uiConfig: uiConfig,
+                                    validator: validator)
     retVal.unfocusedColor = uiConfig.textPrimaryColor
     retVal.focusedColor = uiConfig.textPrimaryColor
     retVal.backgroundColor = uiConfig.uiBackgroundPrimaryColor

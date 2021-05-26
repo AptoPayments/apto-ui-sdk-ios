@@ -44,6 +44,11 @@ class ManageCardInteractor: ManageCardInteractorProtocol {
     }
   }
 
+    func isUserLoggedIn() -> Bool {
+        guard let _ = platform.currentToken() else { return false }
+        return true
+    }
+    
   func loadCardInfo(_ callback: @escaping Result<Card, NSError>.Callback) {
     callback(.success(card))
   }

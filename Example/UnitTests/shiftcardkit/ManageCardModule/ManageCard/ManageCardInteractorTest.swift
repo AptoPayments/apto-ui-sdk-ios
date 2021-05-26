@@ -117,20 +117,6 @@ class ManageCardInteractorTest: XCTestCase {
     XCTAssertEqual(true, returnedResult?.isSuccess)
   }
 
-  func testLoadCardInfoGetFinancialAccountSucceedCallbackSuccess() {
-    // Given
-    platform.nextFetchCardDetailsResult = .success(dataProvider.cardDetails)
-    var returnedResult: Result<Card, NSError>?
-
-    // When
-    sut.loadCardInfo { result in
-      returnedResult = result
-    }
-
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
-
   func testActivateCardCallCardSession() {
     // When
     sut.activateCard { _ in }

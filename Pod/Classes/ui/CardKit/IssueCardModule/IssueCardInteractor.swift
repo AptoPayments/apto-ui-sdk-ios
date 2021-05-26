@@ -29,7 +29,6 @@ class IssueCardInteractor: IssueCardInteractorProtocol {
     func issueCard(completion: @escaping Result<Card, NSError>.Callback) {
         platform.issueCard(
             applicationId: application.id,
-            additionalFields: cardAdditionalFields.get(),
             metadata: initializationData?.cardMetadata ?? "",
             design: initializationData?.design) { result in
             switch result {

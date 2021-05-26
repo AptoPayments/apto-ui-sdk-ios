@@ -53,12 +53,14 @@ class AddressStep: DataCollectorBaseStep, DataCollectorStepProtocol {
 
   private func createAddressField() -> FormRowAddressView {
     let placeholder = "collect_user_data.address.address.placeholder".podLocalized()
+    let validator = ZipCodeNotEmptyValidator(failReasonMessage: "address-collector.zipcode.empty")
     let addressField = FormBuilder.addressInputRowWith(label: "collect_user_data.address.address.title".podLocalized(),
                                                        placeholder: placeholder,
                                                        value: "",
                                                        accessibilityLabel: "Address Input Field",
                                                        addressManager: addressManager,
                                                        allowedCountries: allowedCountries,
+                                                       validator: validator,
                                                        uiConfig: uiConfig)
     addressField.address.observeNext { [unowned self] address in
       self.address.address.send(address?.address.value)
@@ -67,9 +69,6 @@ class AddressStep: DataCollectorBaseStep, DataCollectorStepProtocol {
       self.address.city.send(address?.city.value)
       self.address.region.send(address?.region.value)
       self.address.zip.send(address?.zip.value)
-    }.dispose(in: disposeBag)
-    addressField.valid.observeNext { [unowned self] valid in
-      self.aptUnitField?.isHidden = !valid
     }.dispose(in: disposeBag)
     validatableRows.append(addressField)
     return addressField

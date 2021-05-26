@@ -1,17 +1,15 @@
 PODS:
-  - Alamofire (4.9.1)
-  - Alamofire-Synchronous (4.0.0):
-    - Alamofire (~> 4.0)
-  - AlamofireNetworkActivityIndicator (2.3.0):
-    - Alamofire (~> 4.7)
-  - AlamofireNetworkActivityLogger (2.4.0):
-    - Alamofire (~> 4.8)
+  - Alamofire (5.4.3)
+  - AlamofireNetworkActivityIndicator (3.1.0):
+    - Alamofire (~> 5.1)
+  - AlamofireNetworkActivityLogger (3.4.0):
+    - Alamofire (~> 5.4.0)
   - AptoObjCSDK (1.1.0):
     - AptoSDK
   - AptoPCI (2.1.0)
-  - AptoSDK (3.3.0):
-    - Alamofire (~> 4.8)
-    - AlamofireNetworkActivityIndicator (~> 2.2)
+  - AptoSDK (3.4.0):
+    - Alamofire (~> 5.4.3)
+    - AlamofireNetworkActivityIndicator (~> 3.1)
     - Bond (~> 7.6)
     - FTLinearActivityIndicator (= 1.2.1)
     - GoogleKit (~> 0.3)
@@ -19,9 +17,9 @@ PODS:
     - PhoneNumberKit (~> 3.2)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.11.0):
+  - AptoUISDK (2.11.1):
     - AptoPCI (= 2.1.0)
-    - AptoSDK (= 3.3.0)
+    - AptoSDK (= 3.4.0)
     - Bond (~> 7.6)
     - Down (~> 0.8.0)
     - GoogleKit (~> 0.3)
@@ -41,9 +39,6 @@ PODS:
   - Down (0.8.6)
   - FTLinearActivityIndicator (1.2.1)
   - GoogleKit (0.3.2)
-  - KIF (3.6.0):
-    - KIF/Core (= 3.6.0)
-  - KIF/Core (3.6.0)
   - Mixpanel-swift (2.8.1):
     - Mixpanel-swift/Complete (= 2.8.1)
   - Mixpanel-swift/Complete (2.8.1)
@@ -63,10 +58,9 @@ PODS:
   - TwilioVoice (5.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.8)
-  - Alamofire-Synchronous (= 4.0.0)
-  - AlamofireNetworkActivityIndicator (= 2.3.0)
-  - AlamofireNetworkActivityLogger (~> 2.0)
+  - Alamofire (~> 5.4.3)
+  - AlamofireNetworkActivityIndicator (= 3.1)
+  - AlamofireNetworkActivityLogger (~> 3.4.0)
   - AptoObjCSDK (from `../`)
   - AptoSDK (from `../`)
   - AptoUISDK (from `../`)
@@ -75,7 +69,6 @@ DEPENDENCIES:
   - Down (~> 0.8)
   - FTLinearActivityIndicator (= 1.2.1)
   - GoogleKit (= 0.3.2)
-  - KIF (= 3.6.0)
   - Mixpanel-swift (~> 2.7)
   - PhoneNumberKit (~> 3.2)
   - PullToRefreshKit (~> 0.8)
@@ -88,7 +81,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - Alamofire-Synchronous
     - AlamofireNetworkActivityIndicator
     - AlamofireNetworkActivityLogger
     - AptoPCI
@@ -98,7 +90,6 @@ SPEC REPOS:
     - Down
     - FTLinearActivityIndicator
     - GoogleKit
-    - KIF
     - Mixpanel-swift
     - PhoneNumberKit
     - PullToRefreshKit
@@ -119,21 +110,19 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  Alamofire-Synchronous: eedf1e6e961c3795a63c74990b3f7d9fbfac7e50
-  AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
-  AlamofireNetworkActivityLogger: 6d3398c692d2c5d83b0c58793537860aca1e383d
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
+  AlamofireNetworkActivityLogger: 162ab8aee00e6267a4304d7cc134e13ccfe3bcc5
   AptoObjCSDK: 818ed46d0b6328d9ec76f32ab39e51d8ed8dffb1
   AptoPCI: 8a85a014534b5d9036170e3698309de4fa51bc88
-  AptoSDK: 10edcc189cd9e7eff3da131f6a1a2460b31b6d60
-  AptoUISDK: 72aadb52ee3ea48355f53df782ff8464a4556d6e
+  AptoSDK: 95b488240ddf27c607a0b4189c22c4681aeaa308
+  AptoUISDK: 6a140476051a2212677187d8e170578bc7c1e84c
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
   Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
   FTLinearActivityIndicator: a3ef57034bd05bc80c1a7c62c8797c0361fa7bee
   GoogleKit: c4b00706a0b1091b295e59920bbd46fd30f74243
-  KIF: bd770edd8ce49bc7308501e4871e58a02d137be3
   Mixpanel-swift: 9d3a2597ef015f187abae0bfa5fda5997d5e4429
   PhoneNumberKit: ff153d5e299f6da566cb73c6aa71e354933b2932
   PullToRefreshKit: 7cc53e720e69f135cffa1a57784dfb534f0222ab
@@ -145,6 +134,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   TwilioVoice: b75c5120e1e6a7402fd1f9f4917e8215ce8d7baf
 
-PODFILE CHECKSUM: 1a9a8efa2a05f4b43b3592d3edc764c29e58ce4c
+PODFILE CHECKSUM: 1b2fca629e78563c2b0c2c3415b15b7078c415b3
 
 COCOAPODS: 1.10.1

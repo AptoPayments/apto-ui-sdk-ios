@@ -87,8 +87,9 @@ private extension BirthdaySSNStep {
     guard showBirthdate == true else { return nil }
 
     let birthDateDataPoint = userData.birthDateDataPoint
-    let failReason = "birthday-collector.birthday.warning.minimum-age".podLocalized()
-    let dateValidator = MaximumDateValidator(maximumDate: Date(), failReasonMessage: failReason)
+    let failReason = "issue_card.issue_card.error.dob_too_young".podLocalized()
+    let minimumDob = Calendar.current.date(byAdding: .year, value: -18, to: Date())
+    let dateValidator = MaximumDateValidator(maximumDate: minimumDob ?? Date(), failReasonMessage: failReason)
     birthdayField = FormBuilder.datePickerRowWith(label: "collect_user_data.dob.dob.title".podLocalized(),
                                                   placeholder: "collect_user_data.dob.dob.placeholder".podLocalized(),
                                                   format: .dateOnly,
@@ -154,7 +155,7 @@ private extension BirthdaySSNStep {
 
     let idDocumentDataPoint = userData.idDocumentDataPoint
     let initiallyReadOnly = mode == .updateUser
-    let validator = NonEmptyTextValidator(failReasonMessage: "birthday-collector.id-document.invalid".podLocalized())
+    let validator = SSNUSFormatValidator(failReasonMessage: "birthday-collector.id-document.invalid".podLocalized())
     let placeholder = "collect_user_data.dob.doc_id.placeholder".podLocalized()
     var label = "collect_user_data.dob.doc_id.title".podLocalized()
     let currentCountry = idDocumentDataPoint.country.value ?? allowedCountries[0]

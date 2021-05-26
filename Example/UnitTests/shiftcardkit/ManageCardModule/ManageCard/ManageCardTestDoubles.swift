@@ -79,6 +79,8 @@ class ManageCardInteractorSpy: ManageCardInteractorProtocol {
     reloadCardCalled = true
   }
 
+    func isUserLoggedIn() -> Bool { return true }
+    
   private(set) var loadCardInfoCalled = false
   func loadCardInfo(_ callback: @escaping Result<Card, NSError>.Callback) {
     loadCardInfoCalled = true
@@ -132,6 +134,10 @@ class ManageCardInteractorFake: ManageCardInteractorSpy {
     }
   }
 
+    override func isUserLoggedIn() -> Bool {
+        return true
+    }
+    
   var nextLoadCardInfoResult: Result<Card, NSError>?
   override func loadCardInfo(_ callback: @escaping Result<Card, NSError>.Callback) {
     super.loadCardInfo(callback)

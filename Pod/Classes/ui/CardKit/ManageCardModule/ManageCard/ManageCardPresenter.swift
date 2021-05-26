@@ -46,22 +46,11 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
     notificationHandler.removeObserver(self)
   }
 
-  func viewLoaded() {
-    interactor.provideFundingSource(forceRefresh: false) { [weak self] result in
-      switch result {
-      case .failure(let error):
-        self?.view.show(error: error)
-      case .success(let card):
-        if let wself = self {
-          wself.updateViewModelWith(card: card)
-          wself.refreshTransactions(forceRefresh: false) { [weak self] _ in
-            self?.backgroundRefresh()
-          }
+    func viewLoaded() {
+        if interactor.isUserLoggedIn() {
+            retrieveFundingSource()
         }
-      }
     }
-    analyticsManager?.track(event: Event.manageCard)
-  }
 
   func closeTapped() {
     router.closeFromManageCardViewer()
@@ -170,6 +159,23 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
 
   // MARK: - Private methods
 
+    func retrieveFundingSource() {
+        interactor.provideFundingSource(forceRefresh: false) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                self?.view.show(error: error)
+            case .success(let card):
+                if let wself = self {
+                    wself.updateViewModelWith(card: card)
+                    wself.refreshTransactions(forceRefresh: false) { [weak self] _ in
+                        self?.backgroundRefresh()
+                    }
+                }
+            }
+        }
+        analyticsManager?.track(event: Event.manageCard)
+    }
+    
   @objc private func backgroundRefresh() {
     hideCardInfoIfNecessary()
     refreshCard { [weak self] in
@@ -219,6 +225,7 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
 
   private func updateViewModelWith(card: Card) {
     router.update(card: card)
+    viewModel.cardInfoVisible.send(false)
     viewModel.card.send(card)
     viewModel.cardNetwork.send(card.cardNetwork)
     viewModel.fundingSource.send(card.fundingSource)

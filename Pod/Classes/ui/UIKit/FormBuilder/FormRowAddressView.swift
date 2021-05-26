@@ -14,6 +14,7 @@ class FormRowAddressView: FormRowView {
   private let disposeBag = DisposeBag()
   private let label: UILabel
   private let textField: UITextField
+    private let textColor: UIColor?
   private let addressManager: AddressManager
   private let allowedCountries: [Country]
   private let searchResults = UITableView(frame: .zero, style: .plain)
@@ -24,16 +25,25 @@ class FormRowAddressView: FormRowView {
   private var selectedPlace: Place?
   let address: Observable<Address?> = Observable(nil)
 
+    var addressValidator: DataValidator<Address>? {
+      didSet {
+        self.validateAddress(self.addressValidator, address: self.address.value)
+      }
+    }
+
   init(label: UILabel,
        textField: UITextField,
        addressManager: AddressManager,
        allowedCountries: [Country],
-       uiConfig: UIConfig) {
+       uiConfig: UIConfig,
+       validator: DataValidator<Address>? = nil) {
     self.label = label
     self.textField = textField
     self.addressManager = addressManager
     self.allowedCountries = allowedCountries
     self.uiConfig = uiConfig
+    self.textColor = textField.textColor
+    self.addressValidator = validator
     super.init(showSplitter: false)
 
     setUpUI()
@@ -68,8 +78,13 @@ private extension FormRowAddressView {
         }
       }
     }.dispose(in: disposeBag)
-    address.observeNext { [unowned self] address in
-      self.valid.send(address != nil)
+    address.observeNext { [weak self] address in
+        guard let self = self else { return }
+        if let address = address {
+            self.validateAddress(self.addressValidator, address: address)
+        } else {
+            self.valid.send(false)
+        }
     }.dispose(in: disposeBag)
   }
 }
@@ -173,4 +188,20 @@ private extension FormRowAddressView {
       make.bottom.equalToSuperview()
     }
   }
+}
+
+class ZipCodeNotEmptyValidator: DataValidator<Address> {
+    init(failReasonMessage: String) {
+        super.init(failReasonMessage: failReasonMessage) { address -> ValidationResult in
+            guard let address = address else {
+                return .fail(reason: failReasonMessage)
+            }
+            if let zipcode = address.zip.value, !zipcode.isEmpty {
+                return .pass
+            }
+            else {
+                return .fail(reason: failReasonMessage)
+            }
+        }
+    }
 }

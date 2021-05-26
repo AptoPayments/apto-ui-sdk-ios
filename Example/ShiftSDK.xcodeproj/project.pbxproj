@@ -240,6 +240,7 @@
 		E559808978340FABA714EBC0 /* Pods_SnapshotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA64FF7BC6649A5EE5D70C7 /* Pods_SnapshotTests.framework */; };
 		E571DB11260DE62600A5C533 /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */; };
 		E571DB16260DE64F00A5C533 /* UIControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */; };
+		E57DF760265CECA000E2A9CC /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57DF75F265CECA000E2A9CC /* ImageCacheTests.swift */; };
 		E59923E425C19F6C0078B5DA /* DirectDepositViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59923E325C19F6C0078B5DA /* DirectDepositViewTests.swift */; };
 		E5A6933C25B5F49B00ED8149 /* ACHAccountStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A692C625B5D29700ED8149 /* ACHAccountStorageTests.swift */; };
 		E5A6934125B980C100ED8149 /* StorageTransportSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */; };
@@ -571,6 +572,7 @@
 		E5567DEC25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeHelperTests.swift; sourceTree = "<group>"; };
 		E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
 		E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
+		E57DF75F265CECA000E2A9CC /* ImageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		E59923E325C19F6C0078B5DA /* DirectDepositViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectDepositViewTests.swift; sourceTree = "<group>"; };
 		E5A692C625B5D29700ED8149 /* ACHAccountStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACHAccountStorageTests.swift; sourceTree = "<group>"; };
 		E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTransportSpy.swift; sourceTree = "<group>"; };
@@ -1450,6 +1452,7 @@
 		D99BDB05A6B1068895FC89F7 /* ledgefoundation */ = {
 			isa = PBXGroup;
 			children = (
+				E57DF75E265CEC7D00E2A9CC /* Components */,
 				D99BD7DC49993979DBF809FB /* Manager */,
 				2C8F9B8321DC1285000D650C /* Model */,
 				D99BD3D35DA74F5728CB855F /* Helpers */,
@@ -1640,6 +1643,14 @@
 			path = WaitListModule;
 			sourceTree = "<group>";
 		};
+		E57DF75E265CEC7D00E2A9CC /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E57DF75F265CECA000E2A9CC /* ImageCacheTests.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		E5A6C4F225C2BC4E0079009F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1756,7 +1767,6 @@
 				2CD2B86A1F45E6BF005B85D0 /* Sources */,
 				2CD2B86B1F45E6BF005B85D0 /* Frameworks */,
 				2CD2B86C1F45E6BF005B85D0 /* Resources */,
-				1C1879011840A075E3F21B13 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1909,28 +1919,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1C1879011840A075E3F21B13 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomationTests/Pods-AutomationTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
-				"${BUILT_PRODUCTS_DIR}/KIF/KIF.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KIF.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomationTests/Pods-AutomationTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2CEC752120C5947700A2802C /* Run Linter */ = {
@@ -2106,6 +2094,7 @@
 				2C0CEEF91E6EFD1D0095DA3A /* LinkTests.swift in Sources */,
 				D99BDDB0ECA66C340B635B14 /* ServiceLocatorFake.swift in Sources */,
 				D99BD3BE1018BB59A43BD780 /* ModuleLocatorFake.swift in Sources */,
+				E57DF760265CECA000E2A9CC /* ImageCacheTests.swift in Sources */,
 				D99BD4D2A74CC4948F8AFD42 /* PresenterLocatorFake.swift in Sources */,
 				D99BD249397C573CA4FD2382 /* InteractorLocatorFake.swift in Sources */,
 				D99BD87CD9142422A2ED7FA4 /* ViewLocatorFake.swift in Sources */,

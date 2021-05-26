@@ -52,6 +52,12 @@ public class CreditCardView: UIView {
     }
   }
 
+    private(set) var logoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
   // MARK: - Lifecycle
   public init(uiConfiguration: UIConfig, cardStyle: CardStyle?) {
     self.uiConfiguration = uiConfiguration
@@ -62,6 +68,7 @@ public class CreditCardView: UIView {
     setUpShadow()
     setupFrontView()
     setupBackView()
+    setupCardLogo()
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -207,6 +214,17 @@ private extension CreditCardView {
     setUpLockImageView()
   }
 
+    private func setupCardLogo() {
+        logoImageView.layer.masksToBounds = true
+        addSubview(logoImageView)
+        logoImageView.snp.makeConstraints { make in
+            make.width.equalTo(56)
+            make.height.equalTo(44)
+            make.right.equalToSuperview().offset(-20)
+            make.top.equalToSuperview().offset(30)
+        }
+    }
+    
   func setUpLockImageView() {
     addSubview(lockImageView)
     lockImageView.contentMode = .center
@@ -309,6 +327,9 @@ private extension CreditCardView {
         self?.textColor = color
         self?.pciView.setStyle(style: PCIConfigStyle(textColor: "#\(rawColor)"))
       }
+        if let logo = cardStyle.cardLogo {
+            self?.logoImageView.setImageUrl(logo)
+        }
     }
   }
 

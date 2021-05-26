@@ -68,6 +68,9 @@ extension UIView {
     guard parentViewController === topViewController else { return }
     topViewController?.show(message: message, title: title, animated: animated, isError: isError, uiConfig: uiConfig,
                             tapHandler: tapHandler)
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        topViewController?.view.endEditing(true)
+    }
   }
 
   func hideMessage(animated: Bool = true) {

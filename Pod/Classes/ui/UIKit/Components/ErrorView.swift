@@ -99,7 +99,7 @@ private extension ErrorView {
 
   func setUpAssetImageView() {
     guard let url = assetURL else { return }
-    ImageCache.defaultCache().imageWithUrl(url) { [unowned self] result in
+    ImageCache.shared.imageWithUrl(url) { [unowned self] result in
       switch result {
       case .failure:
         self.assetImageView.image = nil

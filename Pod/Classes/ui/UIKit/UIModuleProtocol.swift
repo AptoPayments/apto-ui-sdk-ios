@@ -121,6 +121,7 @@ public extension UIModuleProtocol {
             animated: animated,
             leftButtonMode: leftButtonMode,
             embedInNavigationController: embedInNavigationController,
+            presenterController: nil,
             completion: completion)
   }
 

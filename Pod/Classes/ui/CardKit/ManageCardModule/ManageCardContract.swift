@@ -40,6 +40,7 @@ protocol ManageCardInteractorProtocol: TransactionsProvider {
   func activateCard(_ callback: @escaping Result<Card, NSError>.Callback)
   func activatePhysicalCard(code: String, callback: @escaping Result<Void, NSError>.Callback)
   func loadFundingSources(callback: @escaping Result<[FundingSource], NSError>.Callback)
+    func isUserLoggedIn() -> Bool
 }
 
 protocol ManageCardEventHandler: class {

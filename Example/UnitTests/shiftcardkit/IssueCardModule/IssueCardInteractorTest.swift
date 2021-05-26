@@ -40,14 +40,6 @@ class IssueCardInteractorTest: XCTestCase {
     XCTAssertEqual(platform.lastIssueCardApplicationId, application.id)
   }
   
-  func testGetStoredAdditionalFieldsWhenIssueCard() {
-    // When
-    sut.issueCard { _ in }
-    
-    // Then
-    XCTAssertTrue(cardAdditionalFieldsSpy.getCalled)
-  }
-
   func testIssueCardFailureCallbackError() {
     // Given
     let error = BackendError(code: .undefinedError)

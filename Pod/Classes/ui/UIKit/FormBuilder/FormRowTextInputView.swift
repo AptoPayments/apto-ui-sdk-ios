@@ -161,6 +161,10 @@ open class FormRowTextInputView: FormRowLeftLabelView, UITextFieldDelegate {
     super.presentNonPassedValidationResult(reason)
     textField.textColor = uiConfig.uiErrorColor
     shakeTextField()
+    textField.show(message: reason,
+                   title: "",
+                   isError: true,
+                   uiConfig: UIConfig.default, tapHandler: nil)
   }
 
   override func presentPassedValidationResult() {
@@ -291,6 +295,21 @@ class NonEmptyTextValidator: DataValidator<String> {
       }
     }
   }
+}
+
+class SSNUSFormatValidator: DataValidator<String> {
+    init(failReasonMessage: String) {
+        super.init(failReasonMessage: failReasonMessage) { text -> ValidationResult in
+            guard let ssn = text else {
+              return .fail(reason: failReasonMessage)
+            }
+            let regex = NSRegularExpression("^(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$")
+            if regex.matches(ssn) {
+                return .pass
+            }
+            return .fail(reason: failReasonMessage)
+        }
+    }
 }
 
 class ZipCodeValidator: PatternTextValidator {

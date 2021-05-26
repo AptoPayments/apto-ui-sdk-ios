@@ -28,7 +28,6 @@ class CardApplicationStorageTests: XCTestCase {
         sut.issueCard(apiKey(),
                       userToken: userToken(),
                       applicationId: anyApplicationId(),
-                      additionalFields: anyAdditionalFields(),
                       metadata: anyMetadata(),
                       design: anyDesign()) { _ in }
         
@@ -43,13 +42,11 @@ class CardApplicationStorageTests: XCTestCase {
         sut.issueCard(apiKey(),
                       userToken: userToken(),
                       applicationId: anyApplicationId(),
-                      additionalFields: anyAdditionalFields(),
                       metadata: anyMetadata(),
                       design: anyDesign()) { _ in }
         sut.issueCard(apiKey(),
                       userToken: userToken(),
                       applicationId: anyApplicationId(),
-                      additionalFields: anyAdditionalFields(),
                       metadata: anyMetadata(),
                       design: anyDesign()) { _ in }
 
@@ -81,7 +78,6 @@ class CardApplicationStorageTests: XCTestCase {
         sut.issueCard(apiKey(),
                       userToken: userToken(),
                       applicationId: anyApplicationId(),
-                      additionalFields: anyAdditionalFields(),
                       metadata: anyMetadata(),
                       design: anyDesign()) { capturedResults.append($0) }
         transport.complete(withResult: item.json)
@@ -110,7 +106,6 @@ class CardApplicationStorageTests: XCTestCase {
         sut.issueCard(apiKey,
                       userToken: userToken,
                       applicationId: applicationId,
-                      additionalFields: additionalFields,
                       metadata: metadata,
                       design: design) { capturedResults.append($0) }
         
@@ -152,5 +147,5 @@ class CardApplicationStorageSpy: CardApplicationsStorageProtocol {
     
     func cancelCardApplication(_ apiKey: String, userToken: String, applicationId: String, callback: @escaping Result<Void, NSError>.Callback) {}
     
-    func issueCard(_ apiKey: String, userToken: String, applicationId: String, additionalFields: [String : AnyObject]?, metadata: String?, design: IssueCardDesign?, callback: @escaping Result<Card, NSError>.Callback) {}
+    func issueCard(_ apiKey: String, userToken: String, applicationId: String, metadata: String?, design: IssueCardDesign?, callback: @escaping Result<Card, NSError>.Callback) {}
 }

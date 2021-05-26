@@ -59,7 +59,7 @@ class WaitListView: UIView {
       assetImageView.image = nil
       return
     }
-    ImageCache.defaultCache().imageWithUrl(url) { [unowned self] result in
+    ImageCache.shared.imageWithUrl(url) { [unowned self] result in
       switch result {
       case .failure:
         self.assetImageView.image = nil
@@ -74,7 +74,7 @@ class WaitListView: UIView {
       backgroundImageView.image = nil
       return
     }
-    ImageCache.defaultCache().imageWithUrl(url) { [unowned self] result in
+    ImageCache.shared.imageWithUrl(url) { [unowned self] result in
       switch result {
       case .failure:
         self.backgroundImageView.image = nil

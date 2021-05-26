@@ -22,7 +22,7 @@ public extension UIImageView {
 
   func setImageUrl(_ url: URL, result: Result<Void, NSError>.Callback? = nil) {
     self.imageUrl = url
-    ImageCache.defaultCache().imageWithUrl(url) { [weak self] response in
+    ImageCache.shared.imageWithUrl(url) { [weak self] response in
       if self?.imageUrl != url {
         return
       }
