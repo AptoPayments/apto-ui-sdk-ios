@@ -73,6 +73,7 @@ final class AddFundsNavigator: AddFundsNavigatorType {
       self?.from.navigationController?.popViewController(animated: true)
     }
     viewModel.navigator = transferStatusNavigator
+    navigationController.modalPresentationStyle = .fullScreen
     from.navigationController?.present(navigationController, animated: true)
   }
 }

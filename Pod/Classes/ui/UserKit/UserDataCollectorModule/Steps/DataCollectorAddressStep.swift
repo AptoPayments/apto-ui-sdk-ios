@@ -70,6 +70,9 @@ class AddressStep: DataCollectorBaseStep, DataCollectorStepProtocol {
       self.address.region.send(address?.region.value)
       self.address.zip.send(address?.zip.value)
     }.dispose(in: disposeBag)
+    addressField.valid.observeNext { [unowned self] valid in
+      self.aptUnitField?.isHidden = !valid
+    }.dispose(in: disposeBag)
     validatableRows.append(addressField)
     return addressField
   }

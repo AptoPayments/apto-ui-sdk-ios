@@ -133,8 +133,9 @@ private extension CardSettingsViewControllerTheme2 {
         self.createGetPinRow(showButton: buttonsVisibility.showGetPin),
         self.createSetPassCodeRow(showButton: buttonsVisibility.showSetPassCode),
         self.setUpShowCardInfoRow(),
-        self.setUpLockCardRow(lastItem: buttonsVisibility.showOrderPhysicalCard == false),
-        self.addShowOrderPhysicalCardRow(showButton: buttonsVisibility.showOrderPhysicalCard)
+        self.showAppleWallet(showButton: buttonsVisibility.showAppleWalletRow),
+        self.addShowOrderPhysicalCardRow(showButton: buttonsVisibility.showOrderPhysicalCard),
+        self.setUpLockCardRow(),
       ].compactMap { return $0 }
       let transactionsRows = [
         self.createTransactionsTitle(showDetailedCardActivity: buttonsVisibility.showDetailedCardActivity),
@@ -314,7 +315,7 @@ private extension CardSettingsViewControllerTheme2 {
     }
   }
 
-  func setUpLockCardRow(lastItem: Bool) -> FormRowSwitchTitleSubtitleView? {
+  func setUpLockCardRow() -> FormRowSwitchTitleSubtitleView? {
     let title = "card_settings.settings.lock_card.title".podLocalized()
     let subtitle = "card_settings.settings.lock_card.description".podLocalized()
     lockCardRow = FormBuilder.titleSubtitleSwitchRowWith(title: title,
@@ -327,7 +328,7 @@ private extension CardSettingsViewControllerTheme2 {
     if let locked = presenter.viewModel.locked.value {
       set(lockedSwitch: locked)
     }
-    lockCardRow?.showSplitter = !lastItem
+    lockCardRow?.showSplitter = false
     return lockCardRow
   }
 
@@ -386,7 +387,17 @@ private extension CardSettingsViewControllerTheme2 {
             uiConfig: uiConfiguration) { [weak self] in
                 self?.presenter.didTapOnOrderPhysicalCard()
         }
-        addOrderPhysicalCardRow.showSplitter = false
+        addOrderPhysicalCardRow.showSplitter = true
         return addOrderPhysicalCardRow
+    }
+    
+    func showAppleWallet(showButton: Bool) -> FormRowView? {
+        guard showButton else { return nil }
+        let applePayRow = ApplePayRowItemView(with: "card_settings.apple_pay.add_to_wallet.title".podLocalized(),
+                                              uiconfig: uiConfiguration) { [presenter] in
+            presenter.didTapOnApplePayIAP()
+        }
+        applePayRow.showSplitter = true
+        return applePayRow
     }
 }

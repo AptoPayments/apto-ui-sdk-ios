@@ -135,19 +135,21 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     }
   }
 
-  fileprivate func refreshData() {
-    viewModel.locked.send(card.state != .active)
-    viewModel.buttonsVisibility.send(CardSettingsButtonsVisibility(
-      showChangePin: card.features?.setPin?.status == .enabled,
-      showGetPin: card.features?.getPin?.status == .enabled,
-      showSetPassCode: card.features?.passCode?.status == .enabled,
-      showIVRSupport: card.features?.ivrSupport?.status == .enabled,
-      showDetailedCardActivity: config.showDetailedCardActivity,
-      isShowDetailedCardActivityEnabled: interactor.isShowDetailedCardActivityEnabled(),
-      showMonthlyStatements: config.showMonthlyStatements,
-      showAddFundsFeature: card.features?.funding?.status == .enabled,
-      showOrderPhysicalCard: card.orderedStatus == .available))
-  }
+    fileprivate func refreshData() {
+        viewModel.locked.send(card.state != .active)
+        let iapEnabled = card.features?.inAppProvisioning?.status == .enabled
+        viewModel.buttonsVisibility.send(CardSettingsButtonsVisibility(
+                                            showChangePin: card.features?.setPin?.status == .enabled,
+                                            showGetPin: card.features?.getPin?.status == .enabled,
+                                            showSetPassCode: card.features?.passCode?.status == .enabled,
+                                            showIVRSupport: card.features?.ivrSupport?.status == .enabled,
+                                            showDetailedCardActivity: config.showDetailedCardActivity,
+                                            isShowDetailedCardActivityEnabled: interactor.isShowDetailedCardActivityEnabled(),
+                                            showMonthlyStatements: config.showMonthlyStatements,
+                                            showAddFundsFeature: card.features?.funding?.status == .enabled,
+                                            showOrderPhysicalCard: card.orderedStatus == .available,
+                                            showAppleWalletRow: InAppProvisioningHelper().shouldShowAppleWalletButton(iapEnabled: iapEnabled)))
+    }
 
   func closeTapped() {
     router.closeFromShiftCardSettings()
@@ -220,6 +222,13 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
             if let cardId = self?.card.accountId {
                 self?.refreshCardData(cardId)
             }
+        }
+    }
+    
+    func didTapOnApplePayIAP() {
+        let cardId = card.accountId
+        router.showApplePayIAP(cardId: cardId) { [weak self] in
+            self?.refreshCardData(cardId)
         }
     }
     

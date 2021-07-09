@@ -182,8 +182,34 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
   }
   
     func showAddFunds(for card: Card, extraContent: ExtraContent? = nil) {
+        let viewController = addFundsUIComposer(with: card, extraContent: extraContent)
+        navigationController?.pushViewController(viewController, animated: true, completion: nil)
+    }
+    
+    private func addFundsUIComposer(with card: Card, extraContent: ExtraContent? = nil) -> AddFundsViewController {
         let viewModel = AddFundsViewModel(card: card)
         let viewController = AddFundsViewController(viewModel: viewModel, uiConfig: uiConfig)
+        viewController.onPaymentSourceLoaded = {
+            if LoadFundsOnBoardingHelper.shouldPresentOnBoarding() {
+                
+                let actionCompletion = { [weak self] in
+                    if let addCardController = self?.addCardUIComposer() {
+                        self?.present(viewController: addCardController, animated: true, embedInNavigationController: true, completion: {})
+                    }
+                }
+                let closeCompletion: AddCardOnboardingViewController.CloseCompletionResult = { controller in
+                    if let nc = controller.presentingViewController as? UINavigationController {
+                        nc.popViewController(animated: false)
+                    }
+                }
+                let controller = AddCardOnBoardingUIComposer.compose(with: card,
+                                                                     extraContent: extraContent,
+                                                                     platform: self.serviceLocator.platform,
+                                                                     actionCompletion: actionCompletion,
+                                                                     closeCompletion:  closeCompletion)
+                self.present(viewController: controller, animated: true, embedInNavigationController: true, completion: {})
+            }
+        }
         let fundsNavigator = AddFundsNavigator(
             from: viewController,
             uiConfig: uiConfig,
@@ -197,7 +223,17 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
             }
         }
         viewModel.navigator = fundsNavigator
-        navigationController?.pushViewController(viewController, animated: true, completion: nil)
+        return viewController
+    }
+    
+    private func addCardUIComposer() -> AddCardViewController {
+        let cardNetworks = card.features?.funding?.cardNetworks ?? []
+        let viewModel = AddCardViewModel(cardNetworks: cardNetworks)
+        let controller = AddCardViewController(viewModel: viewModel, uiConfig: uiConfig, cardNetworks: cardNetworks)
+        controller.closeCompletion = { addCardController in
+            addCardController.dismiss(animated: true)
+        }
+        return controller
     }
     
     func showACHAccountAgreements(disclaimer: Content,
@@ -258,5 +294,12 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
                           cardOrderedCompletion: completion,
                           cardConfigErrorCompletion: errorCompletion)
         present(viewController: viewController, animated: true, embedInNavigationController: true, completion: {})
+    }
+    
+    func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion? = nil) {
+        let viewController = ApplePayIAPUIComposer.composedWith(cardId: cardId,
+                                                                cardLoader: serviceLocator.platform, uiConfiguration: UIConfig.default,
+                                                                iapCompletion: completion)
+        present(viewController: viewController, animated: true, completion: {})
     }
 }

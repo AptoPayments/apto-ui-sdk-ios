@@ -52,12 +52,19 @@ class UserDataCollectorStepFactory {
                          uiConfig: uiConfig,
                          googleGeocodingApiKey: googleGeocodingAPIKey)
     case .birthDaySSN:
-      return BirthdaySSNStep(requiredData: requiredData,
+      return BirthdayStep(requiredData: requiredData,
                              secondaryCredentialType: secondaryCredentialType,
                              userData: userData,
                              mode: mode,
                              uiConfig: uiConfig,
                              linkHandler: linkHandler)
+    case .ssn:
+        return SSNStep(requiredData: requiredData,
+                       secondaryCredentialType: secondaryCredentialType,
+                       userData: userData,
+                       mode: mode,
+                       uiConfig: uiConfig,
+                       linkHandler: linkHandler)
     }
   }
 }

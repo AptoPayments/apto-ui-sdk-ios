@@ -23,6 +23,8 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
 
     func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?) {}
     
+    func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion?) {}
+    
   private(set) var closeFromShiftCardSettingsCalled = false
   func closeFromShiftCardSettings() {
     closeFromShiftCardSettingsCalled = true
@@ -159,6 +161,7 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
   }
   
     func didTapOnOrderPhysicalCard() {}
+    func didTapOnApplePayIAP() {}
     
   private(set) var viewLoadedCalled = false
   func viewLoaded() {

@@ -52,7 +52,9 @@ final class AddFundsViewModel: ViewModel {
     guard self.currentPaymentSource != nil,
       let value = value,
       let amount = Double(value),
-      amount > 0 else
+      amount > 0,
+      let lastChar = value.last,
+      lastChar != "." else
     {
       self.nextButtonEnabled.send(false)
       return

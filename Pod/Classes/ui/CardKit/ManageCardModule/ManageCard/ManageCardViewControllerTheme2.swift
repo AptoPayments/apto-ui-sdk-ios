@@ -333,21 +333,36 @@ private extension ManageCardViewControllerTheme2 {
     }
   }
 
-  func setUpEmptyCaseView() {
-    emptyCaseView.subviews.forEach { $0.removeFromSuperview() }
-    emptyCaseView.backgroundColor = .clear
-    let message = "manage_card.transaction_list.empty_case.title".podLocalized()
-    let label = ComponentCatalog.sectionTitleLabelWith(text: message, textAlignment: .center, uiConfig: uiConfiguration)
-    label.textColor = uiConfiguration.textTertiaryColor
-    label.numberOfLines = 0
-    emptyCaseView.addSubview(label)
-    label.snp.makeConstraints { make in
-      make.left.right.equalToSuperview().inset(16)
-      make.centerY.equalToSuperview().offset(-16)
+    func setUpEmptyCaseView(iapEnabled: Bool) {
+        emptyCaseView.subviews.forEach { $0.removeFromSuperview() }
+        emptyCaseView.backgroundColor = .clear
+        let message = "manage_card.transaction_list.empty_case.title".podLocalized()
+        let label = ComponentCatalog.sectionTitleLabelWith(text: message, textAlignment: .center, uiConfig: uiConfiguration)
+        label.textColor = uiConfiguration.textTertiaryColor
+        label.numberOfLines = 0
+        emptyCaseView.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(16)
+            make.centerY.equalToSuperview().offset(-16)
+        }
+        view.bringSubviewToFront(emptyCaseView)
+        
+        if InAppProvisioningHelper().shouldShowAppleWalletButton(iapEnabled: iapEnabled) {
+            setupAppleWalletButton()
+        }
     }
-    view.bringSubviewToFront(emptyCaseView)
-  }
 
+    private func setupAppleWalletButton() {
+        let button = InAppProvisioningHelper().appleWalletButton()
+        emptyCaseView.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(30)
+            make.centerX.equalToSuperview()
+        }
+        button.bringSubviewToFront(emptyCaseView)
+        button.addTarget(self, action: #selector(didTapOnWalletButton), for: .touchUpInside)
+    }
+    
   func setUpActivateCardView() {
     activateCardView.delegate = self
     activateCardView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
@@ -372,6 +387,10 @@ private extension ManageCardViewControllerTheme2 {
       navigationItem.rightBarButtonItems = items
     }
   }
+    
+    @objc func didTapOnWalletButton() {
+        presenter.initInAppProvisioningEnrollProcess()
+    }
 }
 
 // MARK: - View model subscriptions
@@ -457,6 +476,14 @@ private extension ManageCardViewControllerTheme2 {
       self.setUpNavigationBarActions(isStatsFeatureEnabled: isStatsFeatureEnabled,
                                      isAccountSettingsEnabled: isAccountSettingsEnabled)
     }.dispose(in: disposeBag)
+    
+    combineLatest(viewModel.transactionsLoaded, viewModel.card).observeNext { [weak self, viewModel] transactionLoaded, card in
+        guard let self = self else { return }
+        if transactionLoaded && viewModel.transactions.numberOfItemsInAllSections == 0,
+           let iapStatus = card?.features?.inAppProvisioning?.status {
+            self.showEmptyCase(iapEnabled: iapStatus == .enabled)
+        }
+    }.dispose(in: disposeBag)
   }
 
   func updateUI() {
@@ -471,7 +498,6 @@ private extension ManageCardViewControllerTheme2 {
       emptyCaseView.isHidden = !shouldShowEmptyCase
       if shouldShowEmptyCase {
         view.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
-        showEmptyCase()
       }
       else {
         view.backgroundColor = uiConfiguration.uiNavigationSecondaryColor
@@ -480,18 +506,18 @@ private extension ManageCardViewControllerTheme2 {
     }
   }
 
-  func showEmptyCase() {
-    bottomBackgroundView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
-    emptyCaseView.removeFromSuperview()
-    emptyCaseView.snp.removeConstraints()
-    view.addSubview(emptyCaseView)
-    emptyCaseView.snp.makeConstraints { make in
-      let topConstraint = transactionsList.visibleCells.last?.snp.bottom ?? view.snp.top
-      make.top.equalTo(topConstraint)
-      make.left.right.bottom.equalToSuperview()
+    func showEmptyCase(iapEnabled: Bool) {
+        bottomBackgroundView.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
+        emptyCaseView.removeFromSuperview()
+        emptyCaseView.snp.removeConstraints()
+        view.addSubview(emptyCaseView)
+        emptyCaseView.snp.makeConstraints { make in
+            let topConstraint = transactionsList.visibleCells.last?.snp.bottom ?? view.snp.top
+            make.top.equalTo(topConstraint)
+            make.left.right.bottom.equalToSuperview()
+        }
+        setUpEmptyCaseView(iapEnabled: iapEnabled)
     }
-    setUpEmptyCaseView()
-  }
 
   func buildActivatePhysicalCardButtonItem() -> UIBarButtonItem {
     let topBarButtonItem = TopBarButtonItem(
