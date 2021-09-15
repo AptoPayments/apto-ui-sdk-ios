@@ -8,7 +8,7 @@
 import Foundation
 import AptoSDK
 
-final class ApplePayIAPViewModel {
+public final class ApplePayIAPViewModel {
     typealias Observer<T> = (T) -> Void
 
     private let loader: AptoPlatformProtocol

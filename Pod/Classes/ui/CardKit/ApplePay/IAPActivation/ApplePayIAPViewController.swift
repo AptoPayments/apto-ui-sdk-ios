@@ -9,20 +9,22 @@ import AptoSDK
 import SnapKit
 import PassKit
 
-final class ApplePayIAPViewController: ShiftViewController {
+public final class ApplePayIAPViewController: UIViewController {
     var onCompletion: (() -> Void)?
     private let viewModel: ApplePayIAPViewModel
     var didFinishInAppProvisioning: ((PKAddPaymentPassViewController, PKPaymentPass?, Error?) -> Void)?
+    private let uiConfig: UIConfig
     
     init(viewModel: ApplePayIAPViewModel, uiConfiguration: UIConfig) {
         self.viewModel = viewModel
-        super.init(uiConfiguration: uiConfiguration)
+        self.uiConfig = uiConfiguration
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.setHidesBackButton(true, animated: false)
         setupBindings()
@@ -30,20 +32,21 @@ final class ApplePayIAPViewController: ShiftViewController {
     }
     
     private func setupBindings() {
-        viewModel.onCardFetched = { [weak self] card in            
+        viewModel.onCardFetched = { [weak self] card in
+            guard let self = self else { return }
             guard let configuration = PKAddPaymentPassRequestConfiguration(encryptionScheme: .ECC_V2) else {
-                self?.show(error: BackendError(code: .incorrectParameters))
+                AlertDialog.showToast(to: self, error: BackendError(code: .incorrectParameters), uiConfig: self.uiConfig)
                 return
             }
             configuration.cardholderName = card.cardHolder
             configuration.primaryAccountSuffix = card.lastFourDigits
             
             guard let paymentPassViewController = PKAddPaymentPassViewController(requestConfiguration: configuration, delegate: self) else {
-                self?.show(error: BackendError(code: .undefinedError))
+                AlertDialog.showToast(to: self, error: BackendError(code: .undefinedError), uiConfig: self.uiConfig)
                 return
             }
-            self?.addChild(paymentPassViewController)
-            self?.view.addSubview(paymentPassViewController.view)
+            self.addChild(paymentPassViewController)
+            self.view.addSubview(paymentPassViewController.view)
             paymentPassViewController.didMove(toParent: self)
         }
     }
@@ -54,7 +57,7 @@ final class ApplePayIAPViewController: ShiftViewController {
 }
 
 extension ApplePayIAPViewController: PKAddPaymentPassViewControllerDelegate {
-    func addPaymentPassViewController(_ controller: PKAddPaymentPassViewController,
+    public func addPaymentPassViewController(_ controller: PKAddPaymentPassViewController,
                                       generateRequestWithCertificateChain certificates: [Data],
                                       nonce: Data, nonceSignature: Data,
                                       completionHandler handler: @escaping (PKAddPaymentPassRequest) -> Void) {
@@ -67,7 +70,7 @@ extension ApplePayIAPViewController: PKAddPaymentPassViewControllerDelegate {
         }
     }
     
-    func addPaymentPassViewController(_ controller: PKAddPaymentPassViewController, didFinishAdding pass: PKPaymentPass?, error: Error?) {
+    public func addPaymentPassViewController(_ controller: PKAddPaymentPassViewController, didFinishAdding pass: PKPaymentPass?, error: Error?) {
         didFinishInAppProvisioning?(controller, pass, error)
     }
 }

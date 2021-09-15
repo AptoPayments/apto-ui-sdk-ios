@@ -347,9 +347,15 @@ private extension ManageCardViewControllerTheme2 {
         }
         view.bringSubviewToFront(emptyCaseView)
         
-        if InAppProvisioningHelper().shouldShowAppleWalletButton(iapEnabled: iapEnabled) {
-            setupAppleWalletButton()
-        }
+        combineLatest(presenter.viewModel.card, presenter.viewModel.cardLoaded).observeNext { [weak self] card, cardLoaded in
+          guard cardLoaded == true,
+                iapEnabled == true,
+                let card = card else { return }
+            let iapChecker = IAPCardEnrolmentChecker()
+            if iapChecker.isCardEnrolled(lastFourDigits: card.lastFourDigits) {
+                self?.setupAppleWalletButton()
+            }
+        }.dispose(in: disposeBag)
     }
 
     private func setupAppleWalletButton() {

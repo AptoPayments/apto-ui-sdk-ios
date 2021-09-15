@@ -1,5 +1,9 @@
 ## CHANGELOG AptoUISDK
 
+# 2021-09-15 Version 2.14.0
+- improvement: improved In-App Provisioning
+- improvement: allowed load funds to transfer cents
+
 # 2021-07-09 Version 2.13.0
 - feature: add alpha version of In App Card Provisioning. Add a card to Apple Wallet. 
 - improvement: added Load Funds Disclosure screen

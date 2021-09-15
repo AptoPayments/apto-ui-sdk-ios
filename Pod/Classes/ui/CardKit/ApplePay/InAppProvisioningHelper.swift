@@ -9,7 +9,6 @@ import PassKit
 import AptoSDK
 
 public protocol ApplePayInAppProvisioningProtocol {
-    func shouldShowAppleWalletButton(iapEnabled: Bool) -> Bool
     func appleWalletButton() -> UIButton
 }
 
@@ -22,16 +21,10 @@ public class InAppProvisioningHelper: ApplePayInAppProvisioningProtocol {
 
     public init() {}
     
-    public func shouldShowAppleWalletButton(iapEnabled: Bool) -> Bool {
-        let pLib = PKPassLibrary()
-        let passes = pLib.passes(of: .payment)
-        return iapEnabled && PKAddPaymentPassViewController.canAddPaymentPass() && passes.count == 0
-    }
-    
     public func appleWalletButton() -> UIButton {
         let button = PKAddPassButton(addPassButtonStyle: .blackOutline)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = InAppProvisioningHelper.appleWalletButtonTag
         return button
-    }    
+    }
 }

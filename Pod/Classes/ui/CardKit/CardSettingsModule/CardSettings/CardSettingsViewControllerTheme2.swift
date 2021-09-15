@@ -393,7 +393,7 @@ private extension CardSettingsViewControllerTheme2 {
     
     func showAppleWallet(showButton: Bool) -> FormRowView? {
         guard showButton else { return nil }
-        let applePayRow = ApplePayRowItemView(with: "card_settings.apple_pay.add_to_wallet.title".podLocalized(),
+        let applePayRow = ApplePayRowItemView(with: presenter.iapRowTitle(),
                                               uiconfig: uiConfiguration) { [presenter] in
             presenter.didTapOnApplePayIAP()
         }

@@ -9,9 +9,8 @@ import Foundation
 
 import AptoSDK
 
-final class ApplePayIAPUIComposer {
+public final class ApplePayIAPUIComposer {
     private init() {}
-    public typealias ContinueCompletion = (() -> Void)
     public typealias IAPCompletion = (() -> Void)
 
     public static func composedWith(cardId: String,

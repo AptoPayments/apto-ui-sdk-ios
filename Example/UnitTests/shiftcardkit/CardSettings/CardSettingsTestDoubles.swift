@@ -236,6 +236,8 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
   func monthlyStatementsTapped() {
     monthlyStatementsTappedCalled = true
   }
+    
+    func iapRowTitle() -> String { return "" }
 }
 
 class CardSettingsViewSpy: ViewControllerSpy, CardSettingsViewProtocol {

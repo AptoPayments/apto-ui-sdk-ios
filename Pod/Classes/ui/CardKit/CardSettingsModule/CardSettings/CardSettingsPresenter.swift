@@ -18,6 +18,7 @@ struct CardSettingsPresenterConfig {
     let exchangeRates: Content?
     let showDetailedCardActivity: Bool
     let showMonthlyStatements: Bool
+    let iapRowTitle: String
 }
 
 class CardSettingsPresenter: CardSettingsPresenterProtocol {
@@ -138,6 +139,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     fileprivate func refreshData() {
         viewModel.locked.send(card.state != .active)
         let iapEnabled = card.features?.inAppProvisioning?.status == .enabled
+        let shouldShowAppleWalletButton = IAPCardEnrolmentChecker().isCardEnrolled(lastFourDigits: card.lastFourDigits) == false
         viewModel.buttonsVisibility.send(CardSettingsButtonsVisibility(
                                             showChangePin: card.features?.setPin?.status == .enabled,
                                             showGetPin: card.features?.getPin?.status == .enabled,
@@ -148,7 +150,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                                             showMonthlyStatements: config.showMonthlyStatements,
                                             showAddFundsFeature: card.features?.funding?.status == .enabled,
                                             showOrderPhysicalCard: card.orderedStatus == .available,
-                                            showAppleWalletRow: InAppProvisioningHelper().shouldShowAppleWalletButton(iapEnabled: iapEnabled)))
+                                            showAppleWalletRow: iapEnabled && shouldShowAppleWalletButton))
     }
 
   func closeTapped() {
@@ -285,4 +287,8 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   func monthlyStatementsTapped() {
     router.showMonthlyStatements()
   }
+    
+    func iapRowTitle() -> String {
+        config.iapRowTitle
+    }
 }

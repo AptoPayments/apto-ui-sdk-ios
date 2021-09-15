@@ -127,6 +127,7 @@ protocol CardSettingsPresenterProtocol: class {
   func didTapOnLoadFunds()
     func didTapOnOrderPhysicalCard()
     func didTapOnApplePayIAP()
+    func iapRowTitle() -> String
 }
 
 public struct ExtraContent {
