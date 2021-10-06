@@ -9,5 +9,11 @@
 		<string>vs5sa.test-app.link</string>
 		<string>vs5sa-alternate.test-app.link</string>
 	</array>
+    <key>com.apple.developer.payment-pass-provisioning</key>
+    <true/>
+    <key>com.apple.developer.pass-type-identifiers</key>
+    <array>
+        <string>$(TeamIdentifierPrefix)*</string>
+    </array>
 </dict>
 </plist>

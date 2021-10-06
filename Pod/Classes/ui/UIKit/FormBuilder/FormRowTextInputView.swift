@@ -161,10 +161,6 @@ open class FormRowTextInputView: FormRowLeftLabelView, UITextFieldDelegate {
     super.presentNonPassedValidationResult(reason)
     textField.textColor = uiConfig.uiErrorColor
     shakeTextField()
-    textField.show(message: reason,
-                   title: "",
-                   isError: true,
-                   uiConfig: UIConfig.default, tapHandler: nil)
   }
 
   override func presentPassedValidationResult() {
@@ -190,6 +186,10 @@ open class FormRowTextInputView: FormRowLeftLabelView, UITextFieldDelegate {
     }
   }
 
+    public func updateValidator(validator: DataValidator<String>) {
+        textValidator = validator
+    }
+    
   // MARK: - Private methods and attributes
 
   private func setUpTextField() {

@@ -6,7 +6,8 @@ import AptoSDK
 
 final class AddFundsView: UIView {
   
-    static let maxAllowedDigit = 4
+    static let maxAllowedDigit = 5
+    static let maxAllowedDigitAfterDot = 2
 
   private lazy var textField: UITextField = {
     let textField = ComponentCatalog.textFieldWith(placeholder: "$0",placeholderColor: uiConfig.textSecondaryColor, font: .boldSystemFont(ofSize: 44), textColor: uiConfig.textPrimaryColor)
@@ -175,14 +176,25 @@ final class AddFundsView: UIView {
 extension AddFundsView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         dailyLimitError("", show: false)
-        if (!string.isEmpty && !Character(string).isNumber) {
+
+        let decimalSeparator: String = NSLocale.current.decimalSeparator ?? "."
+
+        guard let text = textField.text else { return false }
+        if !shouldAllowDecimalSeparator(lastChar: string, text: text, decimalSeparator: decimalSeparator) {
+            return false
+        }
+        if (!string.isEmpty && !Character(string).isNumber && string != decimalSeparator) {
             return false
         }
 
-        guard let text = textField.text else { return false }
-        
-        if text.count == 1 && string.isEmpty {
-            didChangeAmountValue?(nil)
+        if text.contains(decimalSeparator) {
+            let sides = text.split(separator: Character(decimalSeparator))
+            let rightSideCnt = sides.count == 2 ? sides[1].count + 1 : 1
+            if rightSideCnt <= AddFundsView.maxAllowedDigitAfterDot {
+                didChangeAmountValue?(updateAmountIfNeeded(lastChar: string, text: text + string))
+            } else {
+                didChangeAmountValue?(updateAmountIfNeeded(lastChar: string, text: text))
+            }
         } else {
             if text.count + 1 <= AddFundsView.maxAllowedDigit {
                 didChangeAmountValue?(updateAmountIfNeeded(lastChar: string, text: text + string))
@@ -190,15 +202,39 @@ extension AddFundsView: UITextFieldDelegate {
                 didChangeAmountValue?(updateAmountIfNeeded(lastChar: string, text: text))
             }
         }
-        
-        if string.isEmpty && text.count <= AddFundsView.maxAllowedDigit {
-            return true
-        }
-        return text.count < AddFundsView.maxAllowedDigit
+
+        if string.isEmpty { return true }
+        return shouldAddCharacter(lastChar: string, text: text, decimalSeparator: decimalSeparator)
     }
     
     private func updateAmountIfNeeded(lastChar: String, text: String) -> String {
         let amount = lastChar.isEmpty ? String(text.dropLast()) : text
-        return Double(amount) != nil ? amount : ""
+        let formatter = NumberFormatter()
+        let numericAmount = formatter.number(from: amount)
+        if let double = numericAmount?.doubleValue,
+           let stringAmount = numericAmount?.stringValue {
+            return stringAmount
+        } else {
+            return ""
+        }
+    }
+    
+    private func shouldAllowDecimalSeparator(lastChar: String, text: String, decimalSeparator: String) -> Bool {
+        let input = text + lastChar
+        let dotCount = input.filter { $0 == Character(decimalSeparator) }.count
+        return dotCount <= 1
+    }
+    
+    private func shouldAddCharacter(lastChar: String, text: String, decimalSeparator: String) -> Bool {
+        let input = text + lastChar
+        let sides = input.split(separator: Character(decimalSeparator))
+        switch sides.count {
+        case 1:
+            return sides[0].count < AddFundsView.maxAllowedDigit
+        case 2:
+            return sides[0].count < AddFundsView.maxAllowedDigit && sides[1].count <= AddFundsView.maxAllowedDigitAfterDot
+        default:
+            return false
+        }
     }
 }

@@ -49,10 +49,14 @@ final class AddFundsViewModel: ViewModel {
   }
   
   func didChangeAmount(value: String?) {
+    let decimalSeparator: String = NSLocale.current.decimalSeparator ?? "."
+
     guard self.currentPaymentSource != nil,
       let value = value,
       let amount = Double(value),
-      amount > 0 else
+      amount > 0,
+      let lastChar = value.last,
+      lastChar != Character(decimalSeparator) else
     {
       self.nextButtonEnabled.send(false)
       return
@@ -63,7 +67,7 @@ final class AddFundsViewModel: ViewModel {
         if let max = limits.max.amount.value,
            amount > max {
             exceedsDailyLimitsAmount?(max)
-            self.nextButtonEnabled.send(false)
+            self.nextButtonEnabled.send(true)
             return
         }
     }

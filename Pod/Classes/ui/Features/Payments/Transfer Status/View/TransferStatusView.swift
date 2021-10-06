@@ -105,46 +105,54 @@ final class TransferStatusView: UIView {
     self.transferStateLabel.text = title
   }
   
-  private func setupConstraints() {
-    scrollView.snp.makeConstraints { constraints in
-      constraints.leading.equalToSuperview()
-      constraints.trailing.equalToSuperview()
-      constraints.top.equalToSuperview()
-      constraints.bottom.equalTo(closeButton.snp.top).inset(16)
+    private func setupConstraints() {
+        scrollView.snp.makeConstraints { constraints in
+            constraints.leading.equalToSuperview()
+            constraints.trailing.equalToSuperview()
+            constraints.top.equalToSuperview()
+            constraints.bottom.equalTo(closeButton.snp.top).inset(16)
+        }
+        
+        statusIcon.snp.makeConstraints { constraints in
+            constraints.size.equalTo(CGSize(width: 64, height: 64))
+            constraints.centerX.equalToSuperview()
+            constraints.top.equalToSuperview().inset(self.statusIconTopConstraint())
+        }
+        
+        transferStateLabel.snp.makeConstraints { constraints in
+            constraints.centerX.equalToSuperview()
+            constraints.leading.greaterThanOrEqualToSuperview().offset(16)
+            constraints.trailing.lessThanOrEqualToSuperview().offset(16)
+            constraints.top.equalTo(statusIcon.snp.bottom).offset(16)
+        }
+        
+        disclaimerLabel.snp.makeConstraints { constraints in
+            constraints.leading.equalTo(self).offset(16)
+            constraints.trailing.equalTo(self).inset(16)
+            constraints.top.equalTo(tableView.snp.bottom).offset(16)
+            constraints.bottom.lessThanOrEqualToSuperview().inset(32)
+        }
+        
+        tableView.snp.makeConstraints { constraints in
+            constraints.leading.equalTo(self)
+            constraints.trailing.equalTo(self)
+            constraints.height.equalTo(250)
+            constraints.top.equalTo(transferStateLabel.snp.bottom).offset(self.tableViewTopConstraint())
+        }
+        
+        closeButton.snp.makeConstraints { constraints in
+            constraints.leading.equalToSuperview().inset(16)
+            constraints.trailing.equalToSuperview().inset(16)
+            constraints.bottom.equalToSuperview().inset(32)
+            constraints.height.equalTo(52)
+        }
     }
     
-    statusIcon.snp.makeConstraints { constraints in
-      constraints.size.equalTo(CGSize(width: 64, height: 64))
-      constraints.centerX.equalToSuperview()
-      constraints.top.equalToSuperview().inset(100)
+    private func statusIconTopConstraint() -> CGFloat {
+        UIScreen.main.bounds.height > 667 ? 100 : 30
     }
-    
-    transferStateLabel.snp.makeConstraints { constraints in
-      constraints.centerX.equalToSuperview()
-      constraints.leading.greaterThanOrEqualToSuperview().offset(16)
-      constraints.trailing.lessThanOrEqualToSuperview().offset(16)
-      constraints.top.equalTo(statusIcon.snp.bottom).offset(16)
+
+    private func tableViewTopConstraint() -> CGFloat {
+        UIScreen.main.bounds.height > 667 ? 100 : 60
     }
-    
-    disclaimerLabel.snp.makeConstraints { constraints in
-      constraints.leading.equalTo(self).offset(16)
-      constraints.trailing.equalTo(self).inset(16)
-      constraints.top.equalTo(tableView.snp.bottom).offset(16)
-      constraints.bottom.lessThanOrEqualToSuperview().inset(32)
-    }
-    
-    tableView.snp.makeConstraints { constraints in
-      constraints.leading.equalTo(self)
-      constraints.trailing.equalTo(self)
-      constraints.height.equalTo(250)
-      constraints.top.equalTo(transferStateLabel.snp.bottom).offset(100)
-    }
-    
-    closeButton.snp.makeConstraints { constraints in
-      constraints.leading.equalToSuperview().inset(16)
-      constraints.trailing.equalToSuperview().inset(16)
-      constraints.bottom.equalToSuperview().inset(32)
-      constraints.height.equalTo(52)
-    }
-  }
 }

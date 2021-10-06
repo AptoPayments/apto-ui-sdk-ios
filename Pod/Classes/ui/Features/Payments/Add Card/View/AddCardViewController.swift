@@ -11,7 +11,8 @@ final class AddCardViewController: UIViewController {
     let addCardView = AddCardView(uiConfig: uiConfig, cardNetworks: self.cardNetworks)
     return addCardView
   }()
-  
+    var closeCompletion: ((UIViewController) -> Void)?
+    
   init(viewModel: AddCardViewModelType, uiConfig: UIConfig, cardNetworks: [CardNetwork]) {
     self.viewModel = viewModel
     self.uiConfig = uiConfig
@@ -48,7 +49,11 @@ final class AddCardViewController: UIViewController {
   }
   
   override func closeTapped() {
-    viewModel.input.didTapOnClose()
+    if let closeCompletion = closeCompletion {
+        closeCompletion(self)
+    } else {
+        viewModel.input.didTapOnClose()
+    }
   }
   
   private func configureNavigationBar() {

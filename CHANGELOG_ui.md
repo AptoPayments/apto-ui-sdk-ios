@@ -1,5 +1,8 @@
 ## CHANGELOG AptoUISDK
 
+# 2021-10-06 Version 2.14.1
+- fix: fixed issue with building demo with Xcode 13.
+
 # 2021-09-15 Version 2.14.0
 - improvement: improved In-App Provisioning
 - improvement: allowed load funds to transfer cents
