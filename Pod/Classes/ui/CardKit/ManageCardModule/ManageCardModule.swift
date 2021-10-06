@@ -347,13 +347,6 @@ extension ManageCardModule: ManageCardRouterProtocol {
     self.transactionDetailsPresenter = presenter
     return viewController
   }
-    
-    func enrollApplePayProvisioning() {
-        let iapController = ApplePayIAPUIComposer.composedWith(cardId: card.accountId,
-                                                               cardLoader: platform,
-                                                               uiConfiguration: UIConfig.default)
-        present(viewController: iapController, animated: true) {  }
-    }
 }
 
 extension ManageCardModule: ShiftCardTransactionDetailsRouterProtocol {

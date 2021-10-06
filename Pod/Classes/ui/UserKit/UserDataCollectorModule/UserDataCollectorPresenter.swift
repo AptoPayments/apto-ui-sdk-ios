@@ -46,7 +46,6 @@ enum DataCollectorStep: Int {
   case info
   case address
   case birthDaySSN
-    case ssn
 }
 
 class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollectorEventHandler {
@@ -312,10 +311,8 @@ private extension UserDataCollectorPresenter {
       return [.info]
     case .address:
       return [.address]
-    case .birthDate:
+    case .birthDate, .idDocument:
       return [.birthDaySSN]
-    case .idDocument:
-        return [.ssn]
     case .financialAccount:
       fatalError("Unsupported data point type financialAccount")
     }

@@ -230,7 +230,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -258,7 +258,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
                                 getPin: FeatureAction(source: .voIP, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -286,7 +286,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .api, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -314,7 +314,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -343,7 +343,7 @@ class ModelDataProvider {
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
                                 passCode: PassCode(status: .enabled, passCodeSet: false, verificationRequired: true),
-                                achAccount: nil, inAppProvisioning: nil)
+                                achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -375,8 +375,7 @@ class ModelDataProvider {
                                              isAccountProvisioned: true,
                                              disclaimer: disclaimer,
                                              achAccountDetails: accountDetails)
-        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil,
-                                    passCode: nil, achAccount: bankAccount, inAppProvisioning: nil)
+        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil, passCode: nil, achAccount: bankAccount)
         let card = Card(accountId: "card_id",
                         cardProductId: "card_product_id",
                         cardNetwork: .visa,
@@ -395,34 +394,7 @@ class ModelDataProvider {
                         verified: nil)
         return card
     }()
-
-    lazy var cardWithFunding: Card = {
-        let keys = ["evolve_eua"]
-        let url = URL(string: "https://public-media-prd-usw1-shift.s3-us-west-1.amazonaws.com/developer_portal/disclaimers/instance_issuance_disclaimer.html")!
-        let content = Content.externalURL(url)
-        let funding = Funding(status: .enabled,
-                              cardNetworks: [.mastercard],
-                              limits: FundingLimits(daily: FundingSingleLimit(max: Amount(value: 1000, currency: "EUR"))), softDescriptor: "Soft Descriptor")
-        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil, passCode: nil, achAccount: nil, inAppProvisioning: nil)
-        let card = Card(accountId: "card_id",
-                        cardProductId: "card_product_id",
-                        cardNetwork: .visa,
-                        cardIssuer: .shift,
-                        cardBrand: "Marvel Card",
-                        state: .active,
-                        cardHolder: "Holder Name",
-                        lastFourDigits: "7890",
-                        spendableToday: nil,
-                        nativeSpendableToday: nil,
-                        totalBalance: nil,
-                        nativeTotalBalance: nil,
-                        kyc: .passed,
-                        orderedStatus: .ordered,
-                        features: features,
-                        verified: nil)
-        return card
-    }()
-
+    
     lazy var cardWithDataToRenderACreditCardView: Card = {
         let cardBackground = CardBackgroundStyle.color(color: UIColor.colorFromHexString("2f3237") ?? .black)
         let style = CardStyle(background: cardBackground, textColor: "ffffff", balanceSelectorImage: nil, cardLogo: nil)
@@ -484,7 +456,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
                                 getPin: FeatureAction(source: .unknown, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,

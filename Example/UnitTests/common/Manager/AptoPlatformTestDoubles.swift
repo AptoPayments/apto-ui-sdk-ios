@@ -757,6 +757,4 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     func orderPhysicalCard(_ cardId: String, callback: @escaping (Result<Card, NSError>) -> Void) {}
     func getOrderPhysicalCardConfig(_ cardId: String, callback: @escaping (Result<PhysicalCardConfig, NSError>) -> Void) {}
 
-    func startApplePayInAppProvisioning(cardId: String, certificates: [Data], nonce: Data, nonceSignature: Data, callback: @escaping (ApplePayIAPResult) -> Void) {}
-
 }

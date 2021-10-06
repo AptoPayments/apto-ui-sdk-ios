@@ -17,7 +17,6 @@ protocol ManageCardRouterProtocol: class {
   func showCardStatsTappedInManageCardViewer()
   func showTransactionDetails(transaction: Transaction)
   func physicalActivationSucceed()
-    func enrollApplePayProvisioning()
 }
 
 protocol ManageCardViewProtocol: ViewControllerProtocol {
@@ -62,7 +61,6 @@ protocol ManageCardEventHandler: class {
   func moreTransactionsTapped(completion: @escaping (_ noMoreTransactions: Bool) -> Void)
   func transactionSelected(indexPath: IndexPath)
   func activatePhysicalCardTapped()
-    func initInAppProvisioningEnrollProcess()
 }
 
 open class ManageCardViewModel {

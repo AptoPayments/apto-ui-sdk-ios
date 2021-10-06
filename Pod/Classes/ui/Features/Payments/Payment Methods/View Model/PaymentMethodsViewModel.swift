@@ -77,6 +77,7 @@ final class PaymentMethodsViewModel: ViewModel {
     let addCardItem = PaymentMethodItem(id: "add_card", type: .addCard, title: "load_funds.add_card.primary_cta".podLocalized(), subtitle: "load_funds.add_card.secondary_cta".podLocalized(), icon: .imageFromPodBundle("credit_debit_card"), action: { [weak self] _ in
       self?.navigator?.didTapOnAddCard()
     })
+    var items: [PaymentMethodItem] = []
     var newPaymentMethod: PaymentMethodItem?{
         didSet {
             guard let newValue = newPaymentMethod else { return }
@@ -87,7 +88,7 @@ final class PaymentMethodsViewModel: ViewModel {
             navigator?.close()
         }
     }
-    var items = self.mapper.map(elements: paymentMethods, action: { item in
+    items = self.mapper.map(elements: paymentMethods, action: { item in
         newPaymentMethod = PaymentMethodItem(id: item.id,
                                              type: item.type,
                                              title: item.title,

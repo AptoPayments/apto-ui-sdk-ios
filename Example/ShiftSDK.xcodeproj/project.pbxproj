@@ -127,6 +127,7 @@
 		D99BD09BF570ED3CE7A53606 /* IssueCardInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDCF7398ED5703351D598 /* IssueCardInteractorTest.swift */; };
 		D99BD0AE38A93FD6A99C6C96 /* VoIPModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD00B83C53D45044B1FA1 /* VoIPModuleTest.swift */; };
 		D99BD0C95CE9E838E24A3C30 /* WebBrowserTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDB8C13937EEAD8C14217 /* WebBrowserTestDoubles.swift */; };
+		D99BD0D3B76E2A681556D3A1 /* AptoPlatformTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDE8FA3C180E4E7030125 /* AptoPlatformTestDoubles.swift */; };
 		D99BD0FA5F61BF9AEA515941 /* CardSettingsTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDCC0B321CDE36B8C93E5 /* CardSettingsTestDoubles.swift */; };
 		D99BD106FA7689F59B3B745F /* IssueCardModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD042115A0913247DF648 /* IssueCardModuleTest.swift */; };
 		D99BD10C4AF529884446BCD4 /* InMemoryUserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD5D1CAEA83B9B60373F1 /* InMemoryUserDefaultsStorage.swift */; };
@@ -235,18 +236,11 @@
 		D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD37861B13BB4F50A836A /* CardWaitListModuleTest.swift */; };
 		E068F49835C36AE634935FEA /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C626AD8E822159591786DCC3 /* Pods_UnitTests.framework */; };
 		E5343E1C26341807001007D8 /* CardApplicationStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5343E1B26341807001007D8 /* CardApplicationStorageTests.swift */; };
-		E53D331926973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D331826973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift */; };
 		E5567DED25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5567DEC25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift */; };
 		E559808978340FABA714EBC0 /* Pods_SnapshotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA64FF7BC6649A5EE5D70C7 /* Pods_SnapshotTests.framework */; };
 		E571DB11260DE62600A5C533 /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */; };
 		E571DB16260DE64F00A5C533 /* UIControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */; };
 		E57DF760265CECA000E2A9CC /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57DF75F265CECA000E2A9CC /* ImageCacheTests.swift */; };
-		E59879D426263412008CFDBA /* ApplePayRowItemViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59879D326263412008CFDBA /* ApplePayRowItemViewTests.swift */; };
-		E5987A3D2627287E008CFDBA /* ApplePayButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5987A3C2627287E008CFDBA /* ApplePayButtonTests.swift */; };
-		E5987A88262831D2008CFDBA /* ApplePayIAPStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5987A87262831D2008CFDBA /* ApplePayIAPStorageTests.swift */; };
-		E5987BB42629C692008CFDBA /* ApplePayIAPViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5987BB32629C692008CFDBA /* ApplePayIAPViewControllerTests.swift */; };
-		E5987BD52629CCDB008CFDBA /* AptoPlatformTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDE8FA3C180E4E7030125 /* AptoPlatformTestDoubles.swift */; };
-		E5987BD92629CD99008CFDBA /* AptoPlatformTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDE8FA3C180E4E7030125 /* AptoPlatformTestDoubles.swift */; };
 		E59923E425C19F6C0078B5DA /* DirectDepositViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59923E325C19F6C0078B5DA /* DirectDepositViewTests.swift */; };
 		E5A6933C25B5F49B00ED8149 /* ACHAccountStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A692C625B5D29700ED8149 /* ACHAccountStorageTests.swift */; };
 		E5A6934125B980C100ED8149 /* StorageTransportSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */; };
@@ -254,8 +248,6 @@
 		E5A6C4F425C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6C4F325C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift */; };
 		E5B2E3092609EFE40095F997 /* OrderPhysicalCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B2E3082609EFE40095F997 /* OrderPhysicalCardViewTests.swift */; };
 		E5BE11E125D5524E0035F132 /* AgreementStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE11E025D5524E0035F132 /* AgreementStorageTests.swift */; };
-		E5C7A3BF267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7A3BE267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift */; };
-		E5CF2E292678EA8D005516B0 /* AddCardOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF2E282678EA8D005516B0 /* AddCardOnboardingViewTests.swift */; };
 		E5D61E0E260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61E0D260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift */; };
 		E5D61E38260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61E37260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift */; };
 		E5DD0B6925BF2121005FDF08 /* AddMoneyViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD0B6825BF2121005FDF08 /* AddMoneyViewControllerTests.swift */; };
@@ -577,15 +569,10 @@
 		D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinInteractorTest.swift; sourceTree = "<group>"; };
 		E50F539025D15C81002726C4 /* CardLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLoaderSpy.swift; sourceTree = "<group>"; };
 		E5343E1B26341807001007D8 /* CardApplicationStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardApplicationStorageTests.swift; sourceTree = "<group>"; };
-		E53D331826973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPCardEnrolmentCheckerTests.swift; sourceTree = "<group>"; };
 		E5567DEC25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeHelperTests.swift; sourceTree = "<group>"; };
 		E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
 		E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
 		E57DF75F265CECA000E2A9CC /* ImageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
-		E59879D326263412008CFDBA /* ApplePayRowItemViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayRowItemViewTests.swift; sourceTree = "<group>"; };
-		E5987A3C2627287E008CFDBA /* ApplePayButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayButtonTests.swift; sourceTree = "<group>"; };
-		E5987A87262831D2008CFDBA /* ApplePayIAPStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayIAPStorageTests.swift; sourceTree = "<group>"; };
-		E5987BB32629C692008CFDBA /* ApplePayIAPViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayIAPViewControllerTests.swift; sourceTree = "<group>"; };
 		E59923E325C19F6C0078B5DA /* DirectDepositViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectDepositViewTests.swift; sourceTree = "<group>"; };
 		E5A692C625B5D29700ED8149 /* ACHAccountStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACHAccountStorageTests.swift; sourceTree = "<group>"; };
 		E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTransportSpy.swift; sourceTree = "<group>"; };
@@ -593,8 +580,6 @@
 		E5A6C4F325C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		E5B2E3082609EFE40095F997 /* OrderPhysicalCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardViewTests.swift; sourceTree = "<group>"; };
 		E5BE11E025D5524E0035F132 /* AgreementStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementStorageTests.swift; sourceTree = "<group>"; };
-		E5C7A3BE267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardOnboardingViewControllerTests.swift; sourceTree = "<group>"; };
-		E5CF2E282678EA8D005516B0 /* AddCardOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardOnboardingViewTests.swift; sourceTree = "<group>"; };
 		E5D61E0D260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardSuccessViewTests.swift; sourceTree = "<group>"; };
 		E5D61E37260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardViewControllerTests.swift; sourceTree = "<group>"; };
 		E5DD0ABE25BB6590005FDF08 /* AgreementStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementStorageTests.swift; sourceTree = "<group>"; };
@@ -923,8 +908,6 @@
 		338E36F124B887D30072C7CE /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				E5CF2E272678EA76005516B0 /* AddCardOnboarding */,
-				E59879D2262633F9008CFDBA /* ApplePayProvisioning */,
 				E5B2E3072609EF6A0095F997 /* OrderPhysicalCard */,
 				E5DD0B7325C0151C005FDF08 /* AddMoney */,
 			);
@@ -1573,7 +1556,6 @@
 		D99BDE7810FD4CC74825371B /* shiftcardkit */ = {
 			isa = PBXGroup;
 			children = (
-				E5987BB22629C67D008CFDBA /* ApplePay */,
 				E5DD0B6725BF2107005FDF08 /* AddMoney */,
 				D99BDB13D84D77B629D014BB /* CardMonthlyStats */,
 				D99BDE0EE5E45792839A1209 /* CardProductSelector */,
@@ -1632,7 +1614,6 @@
 				D99BD1889D23F50523AE94F8 /* UserStorageTestDoubles.swift */,
 				3C58BF36242A6A9300175697 /* UserTokenStorageTest.swift */,
 				D99BD4B61FB3A0D943C778B8 /* UserTokenStorageTestDoubles.swift */,
-				E5987A87262831D2008CFDBA /* ApplePayIAPStorageTests.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -1670,24 +1651,6 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		E59879D2262633F9008CFDBA /* ApplePayProvisioning */ = {
-			isa = PBXGroup;
-			children = (
-				E59879D326263412008CFDBA /* ApplePayRowItemViewTests.swift */,
-				E5987A3C2627287E008CFDBA /* ApplePayButtonTests.swift */,
-			);
-			path = ApplePayProvisioning;
-			sourceTree = "<group>";
-		};
-		E5987BB22629C67D008CFDBA /* ApplePay */ = {
-			isa = PBXGroup;
-			children = (
-				E5987BB32629C692008CFDBA /* ApplePayIAPViewControllerTests.swift */,
-				E53D331826973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift */,
-			);
-			path = ApplePay;
-			sourceTree = "<group>";
-		};
 		E5A6C4F225C2BC4E0079009F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1707,14 +1670,6 @@
 			path = OrderPhysicalCard;
 			sourceTree = "<group>";
 		};
-		E5CF2E272678EA76005516B0 /* AddCardOnboarding */ = {
-			isa = PBXGroup;
-			children = (
-				E5CF2E282678EA8D005516B0 /* AddCardOnboardingViewTests.swift */,
-			);
-			path = AddCardOnboarding;
-			sourceTree = "<group>";
-		};
 		E5D61E36260CA16C0085EA2B /* OrderPhysicalCard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1728,7 +1683,6 @@
 			children = (
 				E5DD0B6825BF2121005FDF08 /* AddMoneyViewControllerTests.swift */,
 				E5A6C4ED25C1F8CB0079009F /* DirectDepositViewControllerTests.swift */,
-				E5C7A3BE267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift */,
 			);
 			path = AddMoney;
 			sourceTree = "<group>";
@@ -1879,6 +1833,7 @@
 					};
 					334E132B2464606100BADC89 = {
 						CreatedOnToolsVersion = 11.4.1;
+						DevelopmentTeam = 3ZGLM2XX3U;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2C0F05B61C565F6F00F1C0E5;
 					};
@@ -2148,16 +2103,13 @@
 				3C05CD54238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift in Sources */,
 				3C05CD5A238D85F600AA7CC9 /* VerifyPasscodeModuleTest.swift in Sources */,
 				33BC263F24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift in Sources */,
-				E5C7A3BF267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift in Sources */,
 				3CEBF04E215A908000B077BD /* DataConfirmationPresenterTest.swift in Sources */,
 				D99BD19670282880C2D4670B /* FullScreenDisclaimerTestDoubles.swift in Sources */,
 				2C61F4C42551DDA700A0707E /* ManageCardTestDoubles.swift in Sources */,
-				E5987A88262831D2008CFDBA /* ApplePayIAPStorageTests.swift in Sources */,
 				D99BD62AFD7D84FCA5EAB0ED /* FullScreenDisclaimerPresenterTest.swift in Sources */,
 				3C65E0BA217E10BB000207B1 /* PhysicalCardActivationSucceedTestDoubles.swift in Sources */,
 				D99BD99B174D90E4B8C97F85 /* FullScreenDisclaimerModuleTest.swift in Sources */,
 				D99BD23C6667DB4E1566431C /* AuthModuleTest.swift in Sources */,
-				E5987BB42629C692008CFDBA /* ApplePayIAPViewControllerTests.swift in Sources */,
 				3C03E9072338F36C00C565F1 /* MonthlyStatementsListTestDoubles.swift in Sources */,
 				3CD2DBF723F55E1A00C2EDE1 /* ChangePasscodePresenterTest.swift in Sources */,
 				D99BD18C7F82C6C36CC05F59 /* ModelDataProvider.swift in Sources */,
@@ -2194,6 +2146,7 @@
 				D99BD4B1C65D30B428CA97DD /* ServerMaintenanceErrorPresenterTest.swift in Sources */,
 				D99BD5DE2B51A91002A694EB /* ServerMaintenanceErrorModuleTest.swift in Sources */,
 				D99BD687B765050BE2C7F994 /* StorageLocatorFake.swift in Sources */,
+				D99BD0D3B76E2A681556D3A1 /* AptoPlatformTestDoubles.swift in Sources */,
 				2C38C3D7258B761B00D3DC48 /* SetPassCodeInteractorTest.swift in Sources */,
 				D99BD31F56E362E159AACE4F /* ContentPresenterTestDoubles.swift in Sources */,
 				D99BD466641EDE6E07ABF939 /* ContentPresenterInteractorTest.swift in Sources */,
@@ -2252,7 +2205,6 @@
 				E5A6C4EE25C1F8CB0079009F /* DirectDepositViewControllerTests.swift in Sources */,
 				D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */,
 				D99BD40B54B9F02B27F45C37 /* NotificationGroupTest.swift in Sources */,
-				E5987BD52629CCDB008CFDBA /* AptoPlatformTestDoubles.swift in Sources */,
 				D99BD656AC57498ABC4E58D7 /* NotificationPreferencesTest.swift in Sources */,
 				3C05CD50238D38BC00AA7CC9 /* VerifyPasscodeInteractorTest.swift in Sources */,
 				E5ED3AED260CAA70008A8442 /* LocalCacheFileManager.swift in Sources */,
@@ -2310,7 +2262,6 @@
 				D99BD6D66DA5D930264CBC6A /* ConfigurationStorageTestDoubles.swift in Sources */,
 				D99BDD46695FD43EE8DA3570 /* UserTokenStorageTestDoubles.swift in Sources */,
 				33F840CC246A930B00D9DCB8 /* DataPointFormatterTest.swift in Sources */,
-				E53D331926973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift in Sources */,
 				3C13E531238FCEF200C9F0D3 /* Authenticator.swift in Sources */,
 				D99BD9F9C025FE53F050804E /* MonthlyStatementReportTest.swift in Sources */,
 				3C92D217234623D000C48D90 /* CardSettingsModuleTest.swift in Sources */,
@@ -2381,14 +2332,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5987BD92629CD99008CFDBA /* AptoPlatformTestDoubles.swift in Sources */,
 				E5B2E3092609EFE40095F997 /* OrderPhysicalCardViewTests.swift in Sources */,
 				E59923E425C19F6C0078B5DA /* DirectDepositViewTests.swift in Sources */,
-				E59879D426263412008CFDBA /* ApplePayRowItemViewTests.swift in Sources */,
 				E5DD0B7525C0153C005FDF08 /* AddMoneyViewTests.swift in Sources */,
-				E5987A3D2627287E008CFDBA /* ApplePayButtonTests.swift in Sources */,
 				334E133C246461D500BADC89 /* ModelDataProvider.swift in Sources */,
-				E5CF2E292678EA8D005516B0 /* AddCardOnboardingViewTests.swift in Sources */,
 				E5D61E0E260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2697,8 +2644,8 @@
 				CODE_SIGN_ENTITLEMENTS = Link/Link.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2718,13 +2665,13 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aptopayments.aptocard.local;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Apto Card Development with Apple Pay";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_LINTER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Demo/tools/Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Local;
 		};
@@ -2802,7 +2749,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -2829,7 +2776,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Sbx;
 		};
@@ -2907,7 +2854,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2935,7 +2882,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Dev;
 		};
@@ -3013,7 +2960,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -3039,7 +2986,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Stg;
 		};
@@ -3117,9 +3064,10 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				ENABLE_TESTABILITY = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -3134,19 +3082,19 @@
 					"${PODS_ROOT}",
 				);
 				MARKETING_VERSION = 1.0.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.aptopayments.aptocard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Apto Payments Card App with Apple Pay";
+				PROVISIONING_PROFILE_SPECIFIER = "Apto Payments Demo App";
 				RUN_LINTER = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "Demo/tools/Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Prd;
 		};
@@ -3474,7 +3422,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3ZGLM2XX3U;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

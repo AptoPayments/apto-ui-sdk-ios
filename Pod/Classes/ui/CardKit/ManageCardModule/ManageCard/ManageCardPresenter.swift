@@ -157,10 +157,6 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
     analyticsManager?.track(event: Event.manageCardGetPINNue)
   }
 
-    func initInAppProvisioningEnrollProcess() {
-        router.enrollApplePayProvisioning()
-    }
-    
   // MARK: - Private methods
 
     func retrieveFundingSource() {

@@ -57,8 +57,6 @@ class ManageCardModuleSpy: UIModuleSpy, ManageCardRouterProtocol {
   func physicalActivationSucceed() {
     physicalActivationSucceedCalled = true
   }
-    
-    func enrollApplePayProvisioning() {}
 }
 
 class ManageCardInteractorSpy: ManageCardInteractorProtocol {
@@ -285,8 +283,6 @@ class ManageCardPresenterSpy: ManageCardPresenterProtocol {
   func activatePhysicalCardTapped() {
     activatePhysicalCardTappedCalled = true
   }
-    
-    func initInAppProvisioningEnrollProcess() {}
 }
 
 class ManageCardViewSpy: ViewControllerSpy, ManageCardViewProtocol {

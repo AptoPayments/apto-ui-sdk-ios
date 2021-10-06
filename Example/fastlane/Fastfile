@@ -271,7 +271,6 @@ def update_core_repo
   sh("cp -r ../../Pod/Localization #{repo_loc}")
   sh("mkdir -p #{repo_code}")
   sh("cp -r ../../Pod/Classes/core #{repo_code}")
-  sh("cp ../../Pod/CHANGELOG_core.md #{repo}/CHANGELOG_core.md")
 end
 
 def update_ui_repo
@@ -296,7 +295,7 @@ def update_ui_repo
   sh("mkdir -p #{repo_code}")
   sh("cp -r ../../Pod/Classes/ui #{repo_code}")
   sh("cp -r ../../Example #{repo}")
-  sh("cp ../../Pod/CHANGELOG_ui.md #{repo}/CHANGELOG_ui.md")
+  sh("cp ../../README-UI.md #{repo}/README.md")
 
   # Clean Example App
   sh("rm -rf #{repo}/Example/Pods | true")

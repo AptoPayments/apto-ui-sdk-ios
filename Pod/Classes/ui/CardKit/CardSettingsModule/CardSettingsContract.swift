@@ -34,7 +34,6 @@ protocol CardSettingsRouterProtocol: class {
                                    declineCompletion: @escaping () -> Void)
     func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?)
     func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?)
-    func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion?)
 }
 
 extension CardSettingsRouterProtocol {
@@ -84,14 +83,13 @@ struct CardSettingsButtonsVisibility {
   let showMonthlyStatements: Bool
   let showAddFundsFeature: Bool
     let showOrderPhysicalCard: Bool
-    let showAppleWalletRow: Bool
 }
 
 extension CardSettingsButtonsVisibility {
   init() {
     self.init(showChangePin: false, showGetPin: false, showSetPassCode: false, showIVRSupport: false,
               showDetailedCardActivity: false, isShowDetailedCardActivityEnabled: false, showMonthlyStatements: false,
-              showAddFundsFeature: false, showOrderPhysicalCard: false, showAppleWalletRow: false)
+              showAddFundsFeature: false, showOrderPhysicalCard: false)
   }
 }
 
@@ -126,8 +124,6 @@ protocol CardSettingsPresenterProtocol: class {
   func monthlyStatementsTapped()
   func didTapOnLoadFunds()
     func didTapOnOrderPhysicalCard()
-    func didTapOnApplePayIAP()
-    func iapRowTitle() -> String
 }
 
 public struct ExtraContent {

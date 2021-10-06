@@ -10,8 +10,6 @@ final class AddFundsViewController: UIViewController {
       let addFundsView = AddFundsView(uiConfig: uiConfig)
       return addFundsView
   }()
-    var onPaymentSourceLoaded: (() -> Void)?
-    
     
   init(viewModel: AddFundsViewModelType, uiConfig: UIConfig) {
     self.viewModel = viewModel
@@ -50,9 +48,6 @@ final class AddFundsViewController: UIViewController {
       case .loading:
         self?.showLoadingView(uiConfig: self?.uiConfig)
       case .loaded(let paymentSource):
-        if paymentSource == nil {
-            self?.onPaymentSourceLoaded?()
-        }
         self?.addFundsView.set(current: paymentSource)
       case .error(let error):
         self?.show(error: error, uiConfig: self?.uiConfig)
@@ -60,7 +55,7 @@ final class AddFundsViewController: UIViewController {
     }.dispose(in: disposeBag)
     
     addFundsView.didTapOnChangeCurrentCard = { [weak self] in
-        self?.showAddCardScreen()
+      self?.viewModel.input.didTapOnChangeCard()
     }
     
     addFundsView.didChangeAmountValue = { [weak self] value in
@@ -73,8 +68,4 @@ final class AddFundsViewController: UIViewController {
         addFundsView.dailyLimitError(String(limit), show: true)
     }
   }
-    
-    func showAddCardScreen() {
-        viewModel.input.didTapOnChangeCard()
-    }
 }

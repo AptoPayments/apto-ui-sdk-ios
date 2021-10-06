@@ -18,7 +18,7 @@ class CardSettingsPresenterTest: XCTestCase {
   private let card = ModelDataProvider.provider.card
   private let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
                                                    faq: nil, exchangeRates: nil, showDetailedCardActivity: true,
-                                                   showMonthlyStatements: true, iapRowTitle: "")
+                                                   showMonthlyStatements: true)
   private let emailRecipients = ["email@aptopayments.com"]
   private let uiConfig = ModelDataProvider.provider.uiConfig
   private let view = CardSettingsViewSpy()
@@ -146,7 +146,7 @@ class CardSettingsPresenterTest: XCTestCase {
   func testViewLoadedWithoutShowDetailedCardActivityDoNotShowDetailedCardActivity() {
     // Given
     let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
-                                             faq: nil, exchangeRates: nil, showDetailedCardActivity: false, showMonthlyStatements: true, iapRowTitle: "")
+                                             faq: nil, exchangeRates: nil, showDetailedCardActivity: false, showMonthlyStatements: true)
     setUpSUT(card: card, config: config)
 
     // When
@@ -167,7 +167,7 @@ class CardSettingsPresenterTest: XCTestCase {
   func testViewLoadedWithoutShowMonthlyStatementsDoNotShowMonthlyStatements() {
     // Given
     let config = CardSettingsPresenterConfig(cardholderAgreement: nil, privacyPolicy: nil, termsAndCondition: nil,
-                                             faq: nil, exchangeRates: nil, showDetailedCardActivity: false, showMonthlyStatements: false, iapRowTitle: "")
+                                             faq: nil, exchangeRates: nil, showDetailedCardActivity: false, showMonthlyStatements: false)
     setUpSUT(card: card, config: config)
 
     // When

@@ -178,8 +178,8 @@ private extension AccountSettingsViewControllerTheme2 {
 
   func createBiometricButton(_ biometryType: BiometryType) -> FormRowView {
     let title = biometryType == .faceID
-        ? "account_settings.security.face_id.title".podLocalized()
-        : "account_settings.security.touch_id.title".podLocalized()
+      ? "account_settings.security.face_id.title".podLocalized()
+      : "account_settings.security.touch_id.title"
     let subtitle = biometryType == .faceID
       ? "account_settings.security.face_id.description".podLocalized()
       : "account_settings.security.touch_id.description".podLocalized()
