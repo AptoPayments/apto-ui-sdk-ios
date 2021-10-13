@@ -12,7 +12,7 @@ import Bond
 import ReactiveKit
 import SnapKit
 
-class FullScreenDisclaimerViewControllerTheme2: ShiftViewController {
+class FullScreenDisclaimerViewControllerTheme2: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let eventHandler: FullScreenDisclaimerEventHandler
   private let titleLabel: UILabel

@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 import Alamofire_Synchronous
-import ShiftSDK
+import AptoSDK
 
 class TestProvisioner {
 
@@ -331,7 +331,7 @@ extension TestProvisioner {
     _ url: String,
     baseURL: String = TestProvisioner.apiBaseURL,
     headers: [String : String])
-    -> ShiftSDK.Result<JSON,NSError>
+    -> AptoSDK.Result<JSON,NSError>
   {
     var headers = headers
     headers["Content-Type"] = "application/json"
@@ -353,7 +353,7 @@ extension TestProvisioner {
     baseURL: String = TestProvisioner.apiBaseURL,
     parameters: [String : Any]?,
     headers: [String : String])
-    -> ShiftSDK.Result<JSON,NSError>
+    -> AptoSDK.Result<JSON,NSError>
   {
     var headers = headers
     headers["Content-Type"] = "application/json"
@@ -375,7 +375,7 @@ extension TestProvisioner {
     baseURL: String = TestProvisioner.apiBaseURL,
     parameters: [String : Any]?,
     headers: [String : String])
-    -> ShiftSDK.Result<JSON,NSError>
+    -> AptoSDK.Result<JSON,NSError>
   {
     var headers = headers
     headers["Content-Type"] = "application/json"
@@ -396,7 +396,7 @@ extension TestProvisioner {
     baseURL: String = TestProvisioner.apiBaseURL,
     parameters: [String : Any]?,
     headers: [String : String])
-    -> ShiftSDK.Result<JSON,NSError>
+    -> AptoSDK.Result<JSON,NSError>
   {
     var headers = headers
     headers["Content-Type"] = "application/json"

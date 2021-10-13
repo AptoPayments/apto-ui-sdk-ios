@@ -174,7 +174,7 @@ class InteractorLocatorFake: InteractorLocatorProtocol {
   }
 
   // MARK: - Transaction Details
-  func transactionDetailsInteractor(transaction: Transaction) -> ShiftCardTransactionDetailsInteractorProtocol {
+  func transactionDetailsInteractor(transaction: Transaction) -> AptoCardTransactionDetailsInteractorProtocol {
     Swift.fatalError("transactionDetailsInteractor(transaction:) has not been implemented")
   }
 }

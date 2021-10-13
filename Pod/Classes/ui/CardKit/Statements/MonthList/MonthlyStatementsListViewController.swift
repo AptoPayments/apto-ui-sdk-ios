@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class MonthlyStatementsListViewController: ShiftViewController {
+class MonthlyStatementsListViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: MonthlyStatementsListPresenterProtocol
   private let tableView = UITableView(frame: .zero, style: .grouped)

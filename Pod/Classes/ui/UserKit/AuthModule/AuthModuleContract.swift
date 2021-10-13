@@ -15,7 +15,7 @@ protocol AuthRouterProtocol: class {
                                 completion: (Result<Verification, NSError>.Callback)?)
   func presentBirthdateVerification(verificationType: VerificationParams<BirthDate, Verification>,
                                     completion: (Result<Verification, NSError>.Callback)?)
-  func returnExistingUser(_ user: ShiftUser)
+  func returnExistingUser(_ user: AptoUser)
 }
 
 protocol AuthInteractorProtocol {
@@ -44,7 +44,7 @@ protocol AuthViewProtocol {
   func hideLoadingView()
 }
 
-typealias AuthViewControllerProtocol = ShiftViewController & AuthViewProtocol
+typealias AuthViewControllerProtocol = AptoViewController & AuthViewProtocol
 
 protocol AuthDataReceiver: class {
   func set(_ userData: DataPointList,
@@ -54,7 +54,7 @@ protocol AuthDataReceiver: class {
   func showPhoneVerification(verificationType: VerificationParams<PhoneNumber, Verification>)
   func showEmailVerification(verificationType: VerificationParams<Email, Verification>)
   func showBirthdateVerification(verificationType: VerificationParams<BirthDate, Verification>)
-  func returnExistingUser(_ user: ShiftUser)
+  func returnExistingUser(_ user: AptoUser)
   func showLoadingView()
   func hideLoadingView()
 }
@@ -75,5 +75,5 @@ protocol AuthPresenterProtocol: AuthDataReceiver, AuthEventHandler {
 }
 
 protocol AuthModuleProtocol: UIModuleProtocol, AuthRouterProtocol {
-  var onExistingUser: ((_ authModule: AuthModule, _ user: ShiftUser) -> Void)? { get set }
+  var onExistingUser: ((_ authModule: AuthModule, _ user: AptoUser) -> Void)? { get set }
 }

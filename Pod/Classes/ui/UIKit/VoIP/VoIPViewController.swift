@@ -12,7 +12,7 @@ import Bond
 import ReactiveKit
 import AVFoundation
 
-class VoIPViewController: ShiftViewController {
+class VoIPViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: VoIPPresenterProtocol
   private let titleLabel: UILabel

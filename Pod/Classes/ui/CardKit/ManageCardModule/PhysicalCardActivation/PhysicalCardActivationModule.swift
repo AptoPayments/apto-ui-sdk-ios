@@ -37,7 +37,7 @@ class PhysicalCardActivationModule: UIModule, PhysicalCardActivationModuleProtoc
     finish()
   }
 
-  private func buildViewController() -> ShiftViewController {
+  private func buildViewController() -> AptoViewController {
     let interactor = serviceLocator.interactorLocator.physicalCardActivationInteractor(card: card)
     let presenter = serviceLocator.presenterLocator.physicalCardActivationPresenter()
     let viewController = serviceLocator.viewLocator.physicalCardActivation(presenter: presenter)

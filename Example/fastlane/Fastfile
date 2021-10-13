@@ -2,7 +2,7 @@ require 'tmpdir'
 
 default_platform(:ios)
 
-WORKSPACE = "ShiftSDK.xcworkspace"
+WORKSPACE = "AptoCardDemo.xcworkspace"
 SCHEME = {
   :unit => "AptoUISDK Demo Local",
   :ui => "AptoUISDK Automation Tests",

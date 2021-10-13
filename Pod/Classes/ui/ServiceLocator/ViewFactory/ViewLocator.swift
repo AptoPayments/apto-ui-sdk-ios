@@ -31,7 +31,7 @@ final class ViewLocator: ViewLocatorProtocol {
                                                      cancelActionTitle: cancelActionTitle)
   }
 
-  func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController {
+  func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> AptoViewController {
     return CountrySelectorViewControllerTheme2(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
   }
 
@@ -53,19 +53,19 @@ final class ViewLocator: ViewLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> ShiftViewController {
+  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> AptoViewController {
     return CreatePasscodeViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> ShiftViewController {
+  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> AptoViewController {
     return VerifyPasscodeViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> ShiftViewController {
+  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> AptoViewController {
     return ChangePasscodeViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> ShiftViewController {
+  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> AptoViewController {
     return BiometricPermissionViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -73,7 +73,7 @@ final class ViewLocator: ViewLocatorProtocol {
     return IssueCardViewControllerTheme2(uiConfiguration: uiConfig, presenter: eventHandler)
   }
 
-  func waitListView(presenter: WaitListPresenterProtocol) -> ShiftViewController {
+  func waitListView(presenter: WaitListPresenterProtocol) -> AptoViewController {
     return WaitListViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -93,7 +93,7 @@ final class ViewLocator: ViewLocatorProtocol {
   }
 
   func dataConfirmationView(uiConfig: UIConfig,
-                            presenter: DataConfirmationPresenterProtocol) -> ShiftViewController {
+                            presenter: DataConfirmationPresenterProtocol) -> AptoViewController {
     return DataConfirmationViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -109,7 +109,7 @@ final class ViewLocator: ViewLocatorProtocol {
      return ManageCardViewControllerTheme2(mode: mode, uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> ShiftViewController {
+  func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> AptoViewController {
      return FundingSourceSelectorViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -121,36 +121,36 @@ final class ViewLocator: ViewLocatorProtocol {
    return KYCViewControllerTheme2(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
   }
 
-  func cardMonthlyView(presenter: CardMonthlyStatsPresenterProtocol) -> ShiftViewController {
+  func cardMonthlyView(presenter: CardMonthlyStatsPresenterProtocol) -> AptoViewController {
      return CardMonthlyStatsViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func transactionListView(presenter: TransactionListPresenterProtocol) -> ShiftViewController {
+  func transactionListView(presenter: TransactionListPresenterProtocol) -> AptoViewController {
     return TransactionListViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> ShiftViewController {
+  func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> AptoViewController {
     return NotificationPreferencesViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> ShiftViewController {
+  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> AptoViewController {
     return SetCodeViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter, texts: texts)
   }
 
-  func voIPView(presenter: VoIPPresenterProtocol) -> ShiftViewController {
+  func voIPView(presenter: VoIPPresenterProtocol) -> AptoViewController {
     return VoIPViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
   }
 
-  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> ShiftViewController {
+  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> AptoViewController {
     return MonthlyStatementsListViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
   }
 
-  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> ShiftViewController {
+  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> AptoViewController {
     return MonthlyStatementsReportViewController(uiConfiguration: serviceLocator.uiConfig, presenter: presenter)
   }
 
   // MARK: - Physical card activation
-  func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> ShiftViewController {
+  func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> AptoViewController {
     return PhysicalCardActivationViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -161,9 +161,9 @@ final class ViewLocator: ViewLocatorProtocol {
   }
 
   // MARK: - Transaction Details
-  func transactionDetailsView(presenter: ShiftCardTransactionDetailsPresenterProtocol)
-    -> ShiftCardTransactionDetailsViewControllerProtocol {
-    return ShiftCardTransactionDetailsViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
+  func transactionDetailsView(presenter: AptoCardTransactionDetailsPresenterProtocol)
+    -> AptoCardTransactionDetailsViewControllerProtocol {
+    return AptoCardTransactionDetailsViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
 }

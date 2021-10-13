@@ -10,7 +10,7 @@ import AptoSDK
 import SnapKit
 import ReactiveKit
 
-class PhysicalCardActivationViewController: ShiftViewController {
+class PhysicalCardActivationViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: PhysicalCardActivationPresenterProtocol
   private let titleLabel: UILabel

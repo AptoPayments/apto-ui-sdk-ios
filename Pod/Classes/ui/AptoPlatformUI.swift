@@ -270,8 +270,8 @@ extension AptoPlatform {
                                             design: launchOptions.initializationData?.design)
         let cardModule = CardModule(launchOptions: launchOptions, initializationData: initializationData)
         self.initialModule = cardModule
-        cardModule.onClose = { [weak self, unowned from] module in
-          from.dismiss(animated: true) {}
+        cardModule.onClose = { [weak self, weak from] module in
+          from?.dismiss(animated: true) {}
           self?.initialModule = nil
         }
         let uiConfig = UIConfig(projectConfiguration: contextConfiguration.projectConfiguration,

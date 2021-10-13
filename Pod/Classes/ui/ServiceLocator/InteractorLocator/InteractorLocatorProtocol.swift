@@ -57,5 +57,5 @@ protocol InteractorLocatorProtocol {
   func physicalCardActivationSucceedInteractor(card: Card) -> PhysicalCardActivationSucceedInteractorProtocol
 
   // MARK: - Transaction Details
-  func transactionDetailsInteractor(transaction: Transaction) -> ShiftCardTransactionDetailsInteractorProtocol
+  func transactionDetailsInteractor(transaction: Transaction) -> AptoCardTransactionDetailsInteractorProtocol
 }

@@ -67,7 +67,7 @@ class FundingSourceSelectorModule: UIModule, FundingSourceSelectorModuleProtocol
   }
 
   // MARK: - Private methods
-  private func buildViewController() -> ShiftViewController {
+  private func buildViewController() -> AptoViewController {
     let presenterConfig = FundingSourceSelectorPresenterConfig(
       hideFundingSourcesReconnectButton: platform.isFeatureEnabled(.hideFundingSourcesReconnectButton)
     )

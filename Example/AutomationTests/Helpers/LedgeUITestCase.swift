@@ -1,5 +1,5 @@
 //
-//  ShiftUITestCase.swift
+//  AptoUITestCase.swift
 //  AptoSDK
 //
 //  Created by Ivan Oliver Martínez on 17/08/2017.
@@ -8,7 +8,7 @@
 import Foundation
 import KIF
 
-class ShiftUITest: KIFTestCase {
+class AptoUITest: KIFTestCase {
 
   var helper: TestHelper!
 

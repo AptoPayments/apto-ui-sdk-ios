@@ -165,7 +165,7 @@ final class InteractorLocator: InteractorLocatorProtocol {
   }
 
   // MARK: - Transaction Details
-  func transactionDetailsInteractor(transaction: Transaction) -> ShiftCardTransactionDetailsInteractorProtocol {
-    return ShiftCardTransactionDetailsInteractor(transaction: transaction)
+  func transactionDetailsInteractor(transaction: Transaction) -> AptoCardTransactionDetailsInteractorProtocol {
+    return AptoCardTransactionDetailsInteractor(transaction: transaction)
   }
 }

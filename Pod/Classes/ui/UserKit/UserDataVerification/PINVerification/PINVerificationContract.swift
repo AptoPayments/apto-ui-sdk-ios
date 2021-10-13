@@ -15,7 +15,7 @@ protocol PINVerificationView: ViewControllerProtocol {
   func show(error: Error)
 }
 
-typealias PINVerificationViewControllerProtocol = ShiftViewController & PINVerificationView
+typealias PINVerificationViewControllerProtocol = AptoViewController & PINVerificationView
 
 public enum PINEntryState {
   case enabled

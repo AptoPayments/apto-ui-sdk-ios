@@ -18,7 +18,7 @@ class ManageCardModule: UIModule {
   private var mailSender: MailSender?
   private var presenter: ManageCardPresenterProtocol?
   private var kycPresenter: KYCPresenterProtocol?
-  private var transactionDetailsPresenter: ShiftCardTransactionDetailsPresenterProtocol?
+  private var transactionDetailsPresenter: AptoCardTransactionDetailsPresenterProtocol?
   private var physicalCardActivationSucceedModule: PhysicalCardActivationSucceedModuleProtocol?
   private var physicalCardActivationModule: PhysicalCardActivationModuleProtocol?
   private var fundingSourceSelectorModule: FundingSourceSelectorModuleProtocol?
@@ -225,35 +225,36 @@ class ManageCardModule: UIModule {
 }
 
 extension ManageCardModule: ManageCardRouterProtocol {
-  func update(card newCard: Card) {
-    if newCard.state != .cancelled {
-      self.card = newCard
-    }
-    else {
-      // Card has been cancelled, look for other user cards that are not closed, if any. If there are no non-closed
-      // cards, close the SDK
-      self.showLoadingView()
-      platform.fetchCards(page: 0, rows: 100) { [unowned self] result in
-        self.hideLoadingView()
-        switch result {
-        case .failure(let error):
-          // Close the SDK
-          self.show(error: error)
-          self.close()
-        case .success(let cards):
-          let nonClosedCards = cards.filter { $0.state != .cancelled }
-          if let card = nonClosedCards.first {
-            self.card = card
-            self.showManageCard(addChild: false) { _ in }
-          }
-          else {
-            // Close the SDK
-            self.close()
-          }
+    func update(card newCard: Card) {
+        if newCard.state != .cancelled {
+            self.card = newCard
         }
-      }
+        else {
+            // Card has been cancelled, look for other user cards that are not closed, if any. If there are no non-closed
+            // cards, close the SDK
+            self.showLoadingView()
+            platform.fetchCards(pagination: nil) { [weak self] result in
+                guard let self = self else { return }
+                self.hideLoadingView()
+                switch result {
+                case .failure(let error):
+                    // Close the SDK
+                    self.show(error: error)
+                    self.close()
+                case .success(let paginatedCards):
+                    let nonClosedCards = paginatedCards.list.filter { $0.state != .cancelled }
+                    if let card = nonClosedCards.first {
+                        self.card = card
+                        self.showManageCard(addChild: false) { _ in }
+                    }
+                    else {
+                        // Close the SDK
+                        self.close()
+                    }
+                }
+            }
+        }
     }
-  }
 
   func closeFromManageCardViewer() {
     self.close()
@@ -356,7 +357,7 @@ extension ManageCardModule: ManageCardRouterProtocol {
     }
 }
 
-extension ManageCardModule: ShiftCardTransactionDetailsRouterProtocol {
+extension ManageCardModule: AptoCardTransactionDetailsRouterProtocol {
   func backFromTransactionDetails() {
     self.dismissViewController {}
   }

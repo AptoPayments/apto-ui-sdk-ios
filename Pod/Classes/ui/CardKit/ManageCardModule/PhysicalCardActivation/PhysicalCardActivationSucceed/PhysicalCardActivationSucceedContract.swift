@@ -8,7 +8,7 @@
 import AptoSDK
 import Bond
 
-typealias PhysicalCardActivationSucceedViewControllerProtocol = ShiftViewController
+typealias PhysicalCardActivationSucceedViewControllerProtocol = AptoViewController
 
 class PhysicalCardActivationSucceedViewModel {
   let showGetPinButton: Observable<Bool> = Observable(false)

@@ -152,7 +152,7 @@ final class PresenterLocator: PresenterLocatorProtocol {
   }
 
   // MARK: - Transaction Details
-  func transactionDetailsPresenter() -> ShiftCardTransactionDetailsPresenterProtocol {
-    return ShiftCardTransactionDetailsPresenter()
+  func transactionDetailsPresenter() -> AptoCardTransactionDetailsPresenterProtocol {
+    return AptoCardTransactionDetailsPresenter()
   }
 }

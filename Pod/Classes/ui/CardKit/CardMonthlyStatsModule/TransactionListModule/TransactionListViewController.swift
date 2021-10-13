@@ -12,7 +12,7 @@ import ReactiveKit
 import PullToRefreshKit
 import SnapKit
 
-class TransactionListViewController: ShiftViewController {
+class TransactionListViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: TransactionListPresenterProtocol
   private let transactionsList = UITableView(frame: .zero, style: .grouped)

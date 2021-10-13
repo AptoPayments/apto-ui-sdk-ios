@@ -1,5 +1,5 @@
 //
-//  NewShiftCardModule.swift
+//  NewCardModule.swift
 //  AptoSDK
 //
 //  Created by Ivan Oliver Martínez on 08/03/2018.

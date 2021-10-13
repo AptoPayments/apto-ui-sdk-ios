@@ -11,7 +11,7 @@ import Bond
 import ReactiveKit
 import SnapKit
 
-class DataConfirmationViewControllerTheme2: ShiftViewController {
+class DataConfirmationViewControllerTheme2: AptoViewController {
   private let disposeBag = DisposeBag()
   private let presenter: DataConfirmationPresenterProtocol
   private let formView = MultiStepForm()

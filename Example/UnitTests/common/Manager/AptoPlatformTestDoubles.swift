@@ -161,13 +161,13 @@ var nextIsShowDetailedCardActivityEnabledResult = true
 
   // MARK: - User handling
 
-  var nextCreateUserResult: Result<ShiftUser, NSError>?
+  var nextCreateUserResult: Result<AptoUser, NSError>?
   private(set) var createUserCalled = false
   private(set) var lastCreateUserUserData: DataPointList?
   private(set) var lastCreateUserMetadata: String?
   private(set) var lastCreateUserCustodianUid: String?
   func createUser(userData: DataPointList, custodianUid: String?, metadata: String?,
-                  callback: @escaping Result<ShiftUser, NSError>.Callback) {
+                  callback: @escaping Result<AptoUser, NSError>.Callback) {
     createUserCalled = true
     lastCreateUserUserData = userData
     lastCreateUserCustodianUid = custodianUid
@@ -177,10 +177,10 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     }
   }
 
-  var nextLoginUserResult: Result<ShiftUser, NSError>?
+  var nextLoginUserResult: Result<AptoUser, NSError>?
   private(set) var loginUserCalled = false
   private(set) var lastLoginUserVerifications: [Verification]?
-  func loginUserWith(verifications: [Verification], callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  func loginUserWith(verifications: [Verification], callback: @escaping Result<AptoUser, NSError>.Callback) {
     loginUserCalled = true
     lastLoginUserVerifications = verifications
     if let result = nextLoginUserResult {
@@ -188,12 +188,12 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     }
   }
 
-  var nextFetchCurrentUserInfoResult: Result<ShiftUser, NSError>?
+  var nextFetchCurrentUserInfoResult: Result<AptoUser, NSError>?
   private(set) var fetchCurrentUserInfoCalled = false
   private(set) var lastFetchCurrentUserForceRefresh: Bool?
   private(set) var lastFetchCurrentUserInfoFilterInvalidTokenResult: Bool?
   func fetchCurrentUserInfo(forceRefresh: Bool, filterInvalidTokenResult: Bool,
-                            callback: @escaping Result<ShiftUser, NSError>.Callback) {
+                            callback: @escaping Result<AptoUser, NSError>.Callback) {
     fetchCurrentUserInfoCalled = true
     lastFetchCurrentUserForceRefresh = forceRefresh
     lastFetchCurrentUserInfoFilterInvalidTokenResult = filterInvalidTokenResult
@@ -202,10 +202,10 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     }
   }
 
-  var nextUpdateUserInfoResult: Result<ShiftUser, NSError>?
+  var nextUpdateUserInfoResult: Result<AptoUser, NSError>?
   private(set) var updateUserInfoCalled = false
   private(set) var lastUpdateUserInfoUserData: DataPointList?
-  func updateUserInfo(_ userData: DataPointList, callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  func updateUserInfo(_ userData: DataPointList, callback: @escaping Result<AptoUser, NSError>.Callback) {
     updateUserInfoCalled = true
     lastUpdateUserInfoUserData = userData
     if let result = nextUpdateUserInfoResult {
@@ -494,6 +494,15 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     }
   }
 
+    var nextFetchPaginatedCardsResult: Result<PaginatedCardList, NSError>?
+    private(set) var fetchPaginatedCardsCalled = false
+    func fetchCards(pagination: PaginationQuery?, callback: @escaping (Result<PaginatedCardList, NSError>) -> Void) {
+        fetchPaginatedCardsCalled = true
+        if let result = nextFetchPaginatedCardsResult {
+          callback(result)
+        }
+    }
+    
   var nextFetchCardResult: Result<Card, NSError>?
   private(set) var fetchCardCalled = false
   private(set) var lastFetchCardCardId: String?

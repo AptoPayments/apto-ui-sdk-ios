@@ -29,7 +29,7 @@ class ModelDataProvider {
         "design": design
     ]
         
-  lazy var user = ShiftUser(userId: "userId",
+  lazy var user = AptoUser(userId: "userId",
                             metadata: nil,
                             accessToken: AccessToken(token: "AccessToken",
                                                      primaryCredential: .email,
@@ -177,6 +177,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
                     verified: true)
@@ -199,6 +200,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
                     verified: true)
@@ -220,6 +222,7 @@ class ModelDataProvider {
                                            nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                                            kyc: .passed,
                                            orderedStatus: .received,
+                                           issuedAt: Date(),
                                            panToken: "pan_token",
                                            cvvToken: "cvv_token",
                                            verified: true)
@@ -245,6 +248,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     features: features,
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
@@ -273,6 +277,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     features: features,
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
@@ -301,6 +306,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     features: features,
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
@@ -329,6 +335,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     features: features,
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
@@ -358,6 +365,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     features: features,
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
@@ -391,6 +399,7 @@ class ModelDataProvider {
                         nativeTotalBalance: nil,
                         kyc: .passed,
                         orderedStatus: .ordered,
+                        issuedAt: Date(),
                         features: features,
                         verified: nil)
         return card
@@ -418,6 +427,7 @@ class ModelDataProvider {
                         nativeTotalBalance: nil,
                         kyc: .passed,
                         orderedStatus: .ordered,
+                        issuedAt: Date(),
                         features: features,
                         verified: nil)
         return card
@@ -440,6 +450,7 @@ class ModelDataProvider {
                         nativeTotalBalance: nil,
                         kyc: .passed,
                         orderedStatus: .available,
+                        issuedAt: Date(),
                         features: nil,
                         cardStyle: style,
                         verified: nil)
@@ -461,6 +472,7 @@ class ModelDataProvider {
                         nativeTotalBalance: nil,
                         kyc: nil,
                         orderedStatus: .available,
+                        issuedAt: Date(),
                         features: nil,
                         cardStyle: nil,
                         verified: nil, metadata: aptoMetadata)
@@ -499,6 +511,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .received,
+                    issuedAt: Date(),
                     features: features,
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
@@ -521,6 +534,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .ordered,
+                    issuedAt: Date(),
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
                     verified: true)
@@ -542,6 +556,7 @@ class ModelDataProvider {
                     nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
                     kyc: .passed,
                     orderedStatus: .ordered,
+                    issuedAt: Date(),
                     panToken: "pan_token",
                     cvvToken: "cvv_token",
                     verified: true,
@@ -555,7 +570,7 @@ class ModelDataProvider {
                     spendableToday: Amount(value: 12.34, currency: "GBP"), 
                     nativeSpendableToday: Amount(value: 0.034, currency: "BTC"), 
                     totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"), kyc: .passed, orderedStatus: .received,
+                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"), kyc: .passed, orderedStatus: .received, issuedAt: Date(),
                     panToken: "pan_token", cvvToken: "cvv_token", verified: true)
     card.details = cardDetails
     return card

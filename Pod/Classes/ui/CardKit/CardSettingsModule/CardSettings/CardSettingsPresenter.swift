@@ -18,7 +18,6 @@ struct CardSettingsPresenterConfig {
     let exchangeRates: Content?
     let showDetailedCardActivity: Bool
     let showMonthlyStatements: Bool
-    let iapRowTitle: String
 }
 
 class CardSettingsPresenter: CardSettingsPresenterProtocol {
@@ -37,7 +36,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
   private let helpAction: HelpAction
   private let config: CardSettingsPresenterConfig
   private let phoneHelper = PhoneHelper.sharedHelper()
-    private let legalDocuments: LegalDocuments
+  private let legalDocuments: LegalDocuments
     
   init(platform: AptoPlatformProtocol,
        card: Card,
@@ -58,6 +57,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                                     privacyPolicy: config.privacyPolicy,
                                     exchangeRates: config.exchangeRates)
     self.viewModel.legalDocuments.send(legalDocuments)
+    
   }
 
   func viewLoaded() {
@@ -123,7 +123,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
 
   func updateCardNewStatus() {
     self.router.cardStateChanged()
-    self.router.closeFromShiftCardSettings()
+    self.router.closeFromCardSettings()
   }
 
   func didTapOnShowCardInfo() {
@@ -131,30 +131,33 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
       guard let self = self else { return }
       if accessGranted {
         self.router.showCardInfo()
-        self.router.closeFromShiftCardSettings()
+        self.router.closeFromCardSettings()
       }
     }
   }
 
-    fileprivate func refreshData() {
-        viewModel.locked.send(card.state != .active)
-        let iapEnabled = card.features?.inAppProvisioning?.status == .enabled
-        let shouldShowAppleWalletButton = IAPCardEnrolmentChecker().isCardEnrolled(lastFourDigits: card.lastFourDigits) == false
-        viewModel.buttonsVisibility.send(CardSettingsButtonsVisibility(
-                                            showChangePin: card.features?.setPin?.status == .enabled,
-                                            showGetPin: card.features?.getPin?.status == .enabled,
-                                            showSetPassCode: card.features?.passCode?.status == .enabled,
-                                            showIVRSupport: card.features?.ivrSupport?.status == .enabled,
-                                            showDetailedCardActivity: config.showDetailedCardActivity,
-                                            isShowDetailedCardActivityEnabled: interactor.isShowDetailedCardActivityEnabled(),
-                                            showMonthlyStatements: config.showMonthlyStatements,
-                                            showAddFundsFeature: card.features?.funding?.status == .enabled,
-                                            showOrderPhysicalCard: card.orderedStatus == .available,
-                                            showAppleWalletRow: iapEnabled && shouldShowAppleWalletButton))
-    }
+  fileprivate func refreshData() {
+    viewModel.locked.send(card.state != .active)
+    let iapEnabled = card.features?.inAppProvisioning?.status == .enabled
+    viewModel.buttonsVisibility.send(CardSettingsButtonsVisibility(
+                                        showChangePin: card.features?.setPin?.status == .enabled,
+                                        showGetPin: card.features?.getPin?.status == .enabled,
+                                        showSetPassCode: card.features?.passCode?.status == .enabled,
+                                        showIVRSupport: card.features?.ivrSupport?.status == .enabled,
+                                        showDetailedCardActivity: config.showDetailedCardActivity,
+                                        isShowDetailedCardActivityEnabled: interactor.isShowDetailedCardActivityEnabled(),
+                                        showMonthlyStatements: config.showMonthlyStatements,
+                                        showAddFundsFeature: card.features?.funding?.status == .enabled,
+                                        showOrderPhysicalCard: card.orderedStatus == .available,
+                                        showAppleWalletRow: iapEnabled))
+    
+    let cardShippingStatusResult = CardShippingStatus().formatShippingStatus(orderedStatus: card.orderedStatus, issuedAt: card.issuedAt)
+    
+    viewModel.cardShipping.send(CardShipping(showShipping: cardShippingStatusResult.show, title: cardShippingStatusResult.title, subtitle: cardShippingStatusResult.subtitle))
+  }
 
   func closeTapped() {
-    router.closeFromShiftCardSettings()
+    router.closeFromCardSettings()
   }
 
   func callIvrTapped() {
@@ -288,7 +291,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
     router.showMonthlyStatements()
   }
     
-    func iapRowTitle() -> String {
-        config.iapRowTitle
+    func cardLastFourDigits() -> String {
+        card.lastFourDigits
     }
 }

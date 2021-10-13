@@ -19,7 +19,7 @@ protocol ShowGenericMessageEventHandler {
   func linkTapped(_ url: URL)
 }
 
-class ShowGenericMessageViewController: ShiftViewController, ShowGenericMessageViewProtocol {
+class ShowGenericMessageViewController: AptoViewController, ShowGenericMessageViewProtocol {
 
   var eventHandler: ShowGenericMessageEventHandler
   fileprivate var logoImageView: UIImageView!

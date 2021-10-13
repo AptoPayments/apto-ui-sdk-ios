@@ -1,5 +1,5 @@
 //
-//  ShiftSessionTest.swift
+//  TransactionTest.swift
 //  AptoSDK
 //
 //  Created by Takeichi Kanzaki on 20/08/2018.

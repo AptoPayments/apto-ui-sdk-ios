@@ -39,7 +39,7 @@ class ServiceLocatorFake: AptoUISDK.ServiceLocatorProtocol {
   lazy var notificationHandler: NotificationHandler = notificationHandlerFake
 }
 
-// ShiftSession configuration methods
+// Session configuration methods
 extension ServiceLocatorFake {
   func setUpSessionForContextConfigurationSuccess() {
     let dataProvider = ModelDataProvider.provider

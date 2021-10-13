@@ -11,15 +11,20 @@ import WatchConnectivity
 public protocol WatchConnectingSession {
     var isSupported: Bool { get }
     var isPaired: Bool { get }
+    var delegate: WCSessionDelegate? { get set }
+    func activate()
 }
 
-public class IAPCardEnrolmentChecker {
+public class IAPCardEnrolmentChecker: NSObject, WCSessionDelegate {
     private let passLibraryManager: InAppPassLibrary
-    private let session: WatchConnectingSession
+    private var session: WatchConnectingSession
     
     public init(with manager: InAppPassLibrary = IAPPassLibraryManager(), session: WatchConnectingSession = WCSession.default) {
         self.passLibraryManager = manager
         self.session = session
+        super.init()
+        self.session.delegate = self
+        self.session.activate()
     }
     
     public func isCardEnrolledInPhoneWallet(lastFourDigits: String) -> Bool {
@@ -50,6 +55,13 @@ public class IAPCardEnrolmentChecker {
         guard session.isSupported else { return false }
         return session.isPaired
     }
+    
+    // MARK: WCSessionDelegate methods
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    
+    public func sessionDidBecomeInactive(_ session: WCSession) {}
+    
+    public func sessionDidDeactivate(_ session: WCSession) {}
 }
 
 extension WCSession: WatchConnectingSession {

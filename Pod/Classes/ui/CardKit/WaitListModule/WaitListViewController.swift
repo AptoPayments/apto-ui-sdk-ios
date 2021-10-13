@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class WaitListViewController: ShiftViewController {
+class WaitListViewController: AptoViewController {
   private unowned let presenter: WaitListPresenterProtocol
   private let waitListView: WaitListView
   private let disposeBag = DisposeBag()

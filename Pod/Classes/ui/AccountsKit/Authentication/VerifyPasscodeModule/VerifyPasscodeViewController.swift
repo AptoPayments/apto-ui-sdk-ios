@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class VerifyPasscodeViewController: ShiftViewController {
+class VerifyPasscodeViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: VerifyPasscodePresenterProtocol
   private let logoImageView = UIImageView()

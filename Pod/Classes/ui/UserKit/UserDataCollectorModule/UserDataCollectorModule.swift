@@ -25,7 +25,7 @@ class UserDataCollectorModule: UIModule {
   var config: UserDataCollectorConfig!
   // swiftlint:enable implicitly_unwrapped_optional
 
-  open var onUserDataCollected: ((_ userDataCollectorModule: UserDataCollectorModule, _ user: ShiftUser) -> Void)?
+  open var onUserDataCollected: ((_ userDataCollectorModule: UserDataCollectorModule, _ user: AptoUser) -> Void)?
 
   fileprivate var verifyPhoneModule: VerifyPhoneModuleProtocol?
   fileprivate var verifyEmailModule: VerifyEmailModule?
@@ -148,7 +148,7 @@ extension UserDataCollectorModule: UserDataCollectorRouterProtocol {
     self.present(module: verifyBirthDateModule) { _ in }
   }
 
-  func userDataCollected(_ user: ShiftUser) {
+  func userDataCollected(_ user: AptoUser) {
     onUserDataCollected?(self, user)
     finish()
   }

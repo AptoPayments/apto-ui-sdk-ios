@@ -9,7 +9,7 @@ import Foundation
 import AptoSDK
 import Bond
 
-typealias KYCViewControllerProtocol = ShiftViewController & KYCViewProtocol
+typealias KYCViewControllerProtocol = AptoViewController & KYCViewProtocol
 
 protocol KYCViewProtocol: ViewControllerProtocol {
   func showLoadingSpinner()

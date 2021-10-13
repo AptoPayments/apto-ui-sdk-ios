@@ -32,7 +32,7 @@ class PhysicalCardActivationInteractor: PhysicalCardActivationInteractorProtocol
     }
   }
 
-  func fetchCurrentUser(callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  func fetchCurrentUser(callback: @escaping Result<AptoUser, NSError>.Callback) {
     platform.fetchCurrentUserInfo(callback: callback)
   }
 

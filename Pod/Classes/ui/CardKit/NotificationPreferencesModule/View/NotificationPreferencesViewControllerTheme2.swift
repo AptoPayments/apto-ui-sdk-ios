@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class NotificationPreferencesViewControllerTheme2: ShiftViewController {
+class NotificationPreferencesViewControllerTheme2: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: NotificationPreferencesPresenterProtocol
   private lazy var pushImage = UIImage.imageFromPodBundle("ico_notifications_push")?.asTemplate()

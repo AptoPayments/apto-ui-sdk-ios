@@ -1,7 +1,7 @@
 import AptoSDK
 import CoreLocation.CLLocation
 
-internal struct TransactionDetailRouter: ShiftCardTransactionDetailsRouterProtocol {
+internal struct TransactionDetailRouter: AptoCardTransactionDetailsRouterProtocol {
   
   private let screenEvents: TransactionScreenEvents?
 

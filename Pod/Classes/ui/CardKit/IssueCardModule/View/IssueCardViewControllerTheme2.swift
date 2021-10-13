@@ -11,7 +11,7 @@ import Bond
 import ReactiveKit
 import SnapKit
 
-class IssueCardViewControllerTheme2: ShiftViewController {
+class IssueCardViewControllerTheme2: AptoViewController {
   private let disposeBag = DisposeBag()
   private let presenter: IssueCardPresenterProtocol
   private let errorViewContainer = UIView()

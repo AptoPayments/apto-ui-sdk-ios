@@ -16,7 +16,7 @@ protocol AccountSettingsRouterProtocol: class {
   func showChangePasscode()
 }
 
-typealias AccountSettingsViewProtocol = ShiftViewController
+typealias AccountSettingsViewProtocol = AptoViewController
 
 protocol AccountSettingsInteractorProtocol {
   func isBiometricEnabled() -> Bool

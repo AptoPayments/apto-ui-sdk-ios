@@ -3,7 +3,7 @@
 //  AptoSDK
 //
 //  Created by Ivan Oliver Martínez on 25/01/16.
-//  Copyright © 2018 Shift. All rights reserved.
+//  Copyright © 2018 Apto. All rights reserved.
 //
 
 import AptoSDK
@@ -16,7 +16,7 @@ protocol UserDataCollectorEventHandler: class {
   func previousStepTapped()
 }
 
-class UserDataCollectorViewController: ShiftViewController, UserDataCollectorViewProtocol {
+class UserDataCollectorViewController: AptoViewController, UserDataCollectorViewProtocol {
   private unowned let eventHandler: UserDataCollectorEventHandler
   fileprivate let formView: MultiStepForm
   fileprivate let progressView: ProgressView

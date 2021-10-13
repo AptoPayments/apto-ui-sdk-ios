@@ -24,7 +24,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
                                                     cancelActionTitle: cancelActionTitle)
   }
 
-  func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController {
+  func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> AptoViewController {
     return CountrySelectorViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -46,27 +46,27 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   // MARK: - Biometrics
-  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
-  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
-  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
-  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   } 
 
   func issueCardView(uiConfig: UIConfig, eventHandler: IssueCardPresenterProtocol) -> UIViewController {
     return IssueCardViewControllerTheme2(uiConfiguration: uiConfig, presenter: eventHandler)
   }
 
-  func waitListView(presenter: WaitListPresenterProtocol) -> ShiftViewController {
+  func waitListView(presenter: WaitListPresenterProtocol) -> AptoViewController {
     return WaitListViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -86,7 +86,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   func dataConfirmationView(uiConfig: UIConfig,
-                            presenter: DataConfirmationPresenterProtocol) -> ShiftViewController {
+                            presenter: DataConfirmationPresenterProtocol) -> AptoViewController {
     return DataConfirmationViewControllerTheme2(uiConfiguration: uiConfig, presenter: presenter)
   }
 
@@ -102,7 +102,7 @@ class ViewLocatorFake: ViewLocatorProtocol {
     Swift.fatalError("manageCardView(mode:presenter:) has not been implemented")
   }
 
-  func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> ShiftViewController {
+  func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> AptoViewController {
     Swift.fatalError("fundingSourceSelectorView(presenter:) has not been implemented")
   }
 
@@ -114,36 +114,36 @@ class ViewLocatorFake: ViewLocatorProtocol {
     Swift.fatalError("kycView(presenter:) has not been implemented")
   }
 
-  func cardMonthlyView(presenter: CardMonthlyStatsPresenterProtocol) -> ShiftViewController {
+  func cardMonthlyView(presenter: CardMonthlyStatsPresenterProtocol) -> AptoViewController {
     return CardMonthlyStatsViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func transactionListView(presenter: TransactionListPresenterProtocol) -> ShiftViewController {
+  func transactionListView(presenter: TransactionListPresenterProtocol) -> AptoViewController {
     return TransactionListViewController(uiConfiguration: uiConfig, presenter: presenter)
   }
 
-  func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
-  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
-  func voIPView(presenter: VoIPPresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func voIPView(presenter: VoIPPresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
-  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
-  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> ShiftViewController {
-    return ShiftViewController(uiConfiguration: uiConfig)
+  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> AptoViewController {
+    return AptoViewController(uiConfiguration: uiConfig)
   }
 
   // MARK: - Physical card activation
-  func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> ShiftViewController {
+  func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> AptoViewController {
     Swift.fatalError("physicalCardActivation(presenter:) has not been implemented")
   }
 
@@ -154,8 +154,8 @@ class ViewLocatorFake: ViewLocatorProtocol {
   }
 
   // MARK: - Transaction Details
-  func transactionDetailsView(presenter: ShiftCardTransactionDetailsPresenterProtocol)
-    -> ShiftCardTransactionDetailsViewControllerProtocol {
+  func transactionDetailsView(presenter: AptoCardTransactionDetailsPresenterProtocol)
+    -> AptoCardTransactionDetailsViewControllerProtocol {
       Swift.fatalError("transactionDetailsView(presenter:) has not been implemented")
   }
 }

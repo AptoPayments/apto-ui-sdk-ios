@@ -12,7 +12,7 @@ import Bond
 protocol PhysicalCardActivationInteractorProtocol: class {
   func fetchCard(callback: @escaping Result<Card, NSError>.Callback)
   func fetchUpdatedCard(callback: @escaping Result<Card?, NSError>.Callback)
-  func fetchCurrentUser(callback: @escaping Result<ShiftUser, NSError>.Callback)
+  func fetchCurrentUser(callback: @escaping Result<AptoUser, NSError>.Callback)
   func activatePhysicalCard(code: String, callback: @escaping Result<Void, NSError>.Callback)
 }
 

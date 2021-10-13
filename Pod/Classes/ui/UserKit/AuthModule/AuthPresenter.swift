@@ -135,7 +135,7 @@ class AuthPresenter: AuthPresenterProtocol {
     viewController.show(error: error)
   }
 
-  func returnExistingUser(_ user: ShiftUser) {
+  func returnExistingUser(_ user: AptoUser) {
     router.returnExistingUser(user)
   }
 

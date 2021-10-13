@@ -322,7 +322,7 @@ private extension PieChartView {
    :returns: the total value
   */
   func computeTotal() -> CGFloat {
-    var total: CGFloat = 0
+    var total: CGFloat = 0.001
     for index in 0..<dataSource.numberOfSlices() {
       total += dataSource.valueForSlice(at: index)
     }

@@ -227,7 +227,7 @@ private extension AccountSettingsViewControllerTheme2 {
 
   func createVersionRow() -> FormRowView {
     return FormBuilder.linkRowWith(title: "account_settings.app.version.title".podLocalized(),
-                                   subtitle: ShiftSDK.fullVersion,
+                                   subtitle: AptoSDK.fullVersion,
                                    leftIcon: nil,
                                    height: 72,
                                    showAccessoryView: false,

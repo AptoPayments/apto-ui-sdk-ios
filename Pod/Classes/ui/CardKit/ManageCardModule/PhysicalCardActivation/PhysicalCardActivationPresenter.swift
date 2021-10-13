@@ -107,7 +107,7 @@ class PhysicalCardActivationPresenter: PhysicalCardActivationPresenterProtocol {
     viewModel.cardNetwork.send(card.cardNetwork)
   }
 
-  private func updateViewModel(with user: ShiftUser) {
+  private func updateViewModel(with user: AptoUser) {
     viewModel.address.send(user.userData.addressDataPoint)
   }
 

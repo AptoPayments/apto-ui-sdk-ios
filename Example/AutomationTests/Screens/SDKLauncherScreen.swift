@@ -24,7 +24,7 @@ class SDKLauncherScreen: Screen {
     return isViewPresentWith(accessibilityLabel: Labels.GetStarted) && isViewPresentWith(accessibilityLabel: Labels.Settings)
   }
 
-  @discardableResult func startShiftSDK() -> Self {
+  @discardableResult func startAptoSDK() -> Self {
     tapView(withAccessibilityLabel: Labels.GetStarted)
     return self
   }

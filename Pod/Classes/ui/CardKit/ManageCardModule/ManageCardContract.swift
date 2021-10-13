@@ -26,7 +26,7 @@ protocol ManageCardViewProtocol: ViewControllerProtocol {
   func requestPhysicalActivationCode(completion: @escaping (_ code: String) -> Void)
 }
 
-typealias ManageCardViewControllerProtocol = ShiftViewController & ManageCardViewProtocol
+typealias ManageCardViewControllerProtocol = AptoViewController & ManageCardViewProtocol
 
 protocol TransactionsProvider {
   func isShowDetailedCardActivityEnabled() -> Bool

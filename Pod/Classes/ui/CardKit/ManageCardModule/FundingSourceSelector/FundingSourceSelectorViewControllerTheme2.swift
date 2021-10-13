@@ -11,7 +11,7 @@ import Bond
 import ReactiveKit
 import SnapKit
 
-class FundingSourceSelectorViewControllerTheme2: ShiftViewController {
+class FundingSourceSelectorViewControllerTheme2: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: FundingSourceSelectorPresenterProtocol
   private let containerView = UIView()

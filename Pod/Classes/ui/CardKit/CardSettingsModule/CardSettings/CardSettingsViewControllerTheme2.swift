@@ -11,7 +11,7 @@ import Bond
 import ReactiveKit
 import SnapKit
 
-class CardSettingsViewControllerTheme2: ShiftViewController, CardSettingsViewProtocol {
+class CardSettingsViewControllerTheme2: AptoViewController, CardSettingsViewProtocol {
   private let disposeBag = DisposeBag()
   private unowned let presenter: CardSettingsPresenterProtocol
   private let titleContainerView = UIView()
@@ -124,8 +124,8 @@ private extension CardSettingsViewControllerTheme2 {
 private extension CardSettingsViewControllerTheme2 {
   func setupViewModelSubscriptions() { // swiftlint:disable:this function_body_length
     let viewModel = presenter.viewModel
-    combineLatest(viewModel.legalDocuments, viewModel.buttonsVisibility).observeNext { [unowned self] legalDocuments,
-      buttonsVisibility in
+    combineLatest(viewModel.legalDocuments, viewModel.buttonsVisibility, viewModel.cardShipping).observeNext { [unowned self] legalDocuments,
+      buttonsVisibility, cardShipping in
       let settingsRows = [
         self.setUpAddFundsRow(showButton: buttonsVisibility.showAddFundsFeature),
         self.createSettingsTitle(),
@@ -143,6 +143,7 @@ private extension CardSettingsViewControllerTheme2 {
       ].compactMap { return $0 }
       let helpRows = [
         self.createSupportTitle(),
+        self.createCardShippingProgress(cardShipping.showShipping, title: cardShipping.title, subtitle: cardShipping.subtitle),
         self.createIvrSupport(buttonsVisibility.showIVRSupport),
         self.createHelpButton(),
         self.createLostCardButton(),
@@ -183,6 +184,18 @@ private extension CardSettingsViewControllerTheme2 {
 
   func createSupportTitle() -> FormRowView {
     return FormRowSectionTitleViewTheme2(title: "card_settings.help.title".podLocalized(), uiConfig: uiConfiguration)
+  }
+    
+  func createCardShippingProgress(_ showProgress: Bool, title: String?, subtitle: String?) -> FormRowView? {
+    guard showProgress else { return nil }
+    return FormBuilder.linkRowWith(title: title ?? "",
+                                   subtitle: subtitle ?? "",
+                                   leftIcon: nil,
+                                   height: 72,
+                                   showAccessoryView: false,
+                                   uiConfig: uiConfiguration) { [unowned self] in
+      
+    }
   }
 
   func createIvrSupport(_ showButton: Bool) -> FormRowView? {
@@ -393,11 +406,26 @@ private extension CardSettingsViewControllerTheme2 {
     
     func showAppleWallet(showButton: Bool) -> FormRowView? {
         guard showButton else { return nil }
-        let applePayRow = ApplePayRowItemView(with: presenter.iapRowTitle(),
+        let  shouldEnableTap = shouldEnableAppleWalletTap()
+        let applePayRow = ApplePayRowItemView(with: iapCardSettingRowTitle(!shouldEnableTap),
                                               uiconfig: uiConfiguration) { [presenter] in
-            presenter.didTapOnApplePayIAP()
+            if shouldEnableTap {
+                presenter.didTapOnApplePayIAP()
+            }
         }
         applePayRow.showSplitter = true
+        applePayRow.showAddedCardIcon(show: !shouldEnableTap)
         return applePayRow
+    }
+    
+    private func shouldEnableAppleWalletTap() -> Bool {
+        let helper = IAPCardEnrolmentChecker()
+        return helper.isCardEnrolledInPhoneWallet(lastFourDigits: presenter.cardLastFourDigits()) == false ||
+            helper.isCardEnrolledInPairedWatchDevice(lastFourDigits: presenter.cardLastFourDigits()) == false
+    }
+    
+    private func iapCardSettingRowTitle(_ cardAdded: Bool) -> String {
+        cardAdded ? "card_settings.apple_pay.added_to_wallet.title".podLocalized()
+        : "card_settings.apple_pay.add_to_wallet.title".podLocalized()
     }
 }

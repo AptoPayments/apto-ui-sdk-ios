@@ -7,7 +7,7 @@
 
 import AptoSDK
 
-class DirectDepositViewController: ShiftViewController {
+class DirectDepositViewController: AptoViewController {
     private(set) lazy var mainView = DirectDepositView(uiconfig: uiConfiguration)
     private let viewModel: DirectDepositViewModel
     typealias CardProductsResult = Result<CardProduct, NSError>

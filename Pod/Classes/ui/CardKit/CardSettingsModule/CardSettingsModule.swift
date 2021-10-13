@@ -54,7 +54,7 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
 
   fileprivate func buildShiftCardSettingsViewController(_ uiConfig: UIConfig,
                                                         cardProduct: CardProduct,
-                                                        card: Card) -> ShiftViewController {
+                                                        card: Card) -> AptoViewController {
     let isShowDetailedInfoEnabled = platform.isFeatureEnabled(.showDetailedCardActivityOption)
     let isShowMonthlyStatementsEnabled = platform.isFeatureEnabled(.showMonthlyStatementsOption)
     let presenterConfig = CardSettingsPresenterConfig(cardholderAgreement: cardProduct.cardholderAgreement,
@@ -63,8 +63,7 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
                                                       faq: cardProduct.faq,
                                                       exchangeRates: cardProduct.exchangeRates,
                                                       showDetailedCardActivity: isShowDetailedInfoEnabled,
-                                                      showMonthlyStatements: isShowMonthlyStatementsEnabled,
-                                                      iapRowTitle: iapCardSettingRowTitle())
+                                                      showMonthlyStatements: isShowMonthlyStatementsEnabled)
     let recipients = [self.projectConfiguration.supportEmailAddress]
     let presenter = serviceLocator.presenterLocator.cardSettingsPresenter(card: card, config: presenterConfig,
                                                                           emailRecipients: recipients,
@@ -89,21 +88,10 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
         }
         return module
     }
-    
-    private func iapCardSettingRowTitle() -> String {
-        let checker = IAPCardEnrolmentChecker()
-        if checker.isCardEnrolledInPhoneWallet(lastFourDigits: card.lastFourDigits) == false {
-            return "card_settings.apple_pay.add_to_wallet.title".podLocalized()
-        }
-        if checker.isCardEnrolledInPairedWatchDevice(lastFourDigits: card.lastFourDigits) == false {
-            return "card_settings.apple_pay.add_to_watch.title".podLocalized()
-        }
-        return ""
-    }
 }
 
 extension CardSettingsModule: CardSettingsRouterProtocol {
-  func closeFromShiftCardSettings() {
+  func closeFromCardSettings() {
     close()
   }
 

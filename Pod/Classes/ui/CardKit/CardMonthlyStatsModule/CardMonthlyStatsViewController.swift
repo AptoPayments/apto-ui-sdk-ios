@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class CardMonthlyStatsViewController: ShiftViewController {
+class CardMonthlyStatsViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: CardMonthlyStatsPresenterProtocol
   private static let yearDateFormatter = DateFormatter.customDateFormatter(dateFormat: "yyyy")

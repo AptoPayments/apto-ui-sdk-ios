@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class CountrySelectorViewControllerTheme2: ShiftViewController {
+class CountrySelectorViewControllerTheme2: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: CountrySelectorPresenterProtocol
   private let titleLabel: UILabel

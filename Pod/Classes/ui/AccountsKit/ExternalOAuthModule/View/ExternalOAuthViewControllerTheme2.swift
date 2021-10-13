@@ -10,7 +10,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class ExternalOAuthViewControllerTheme2: ShiftViewController {
+class ExternalOAuthViewControllerTheme2: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: ExternalOAuthPresenterProtocol
   // swiftlint:disable implicitly_unwrapped_optional

@@ -12,7 +12,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class ContentPresenterViewController: ShiftViewController {
+class ContentPresenterViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: ContentPresenterPresenterProtocol
   private let contentView: ContentPresenterView

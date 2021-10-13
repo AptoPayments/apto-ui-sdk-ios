@@ -12,7 +12,7 @@ import ReactiveKit
 import SnapKit
 import PullToRefreshKit
 
-class ManageCardViewControllerTheme2: ShiftViewController, ManageCardViewProtocol {
+class ManageCardViewControllerTheme2: AptoViewController, ManageCardViewProtocol {
   private unowned let presenter: ManageCardEventHandler
   private let containerView = UIScrollView()
   private let topBackgroundView = UIView()

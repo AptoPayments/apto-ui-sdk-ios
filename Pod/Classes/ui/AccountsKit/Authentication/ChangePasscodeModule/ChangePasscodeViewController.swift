@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class ChangePasscodeViewController: ShiftViewController {
+class ChangePasscodeViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: ChangePasscodePresenterProtocol
   private let titleLabel: UILabel

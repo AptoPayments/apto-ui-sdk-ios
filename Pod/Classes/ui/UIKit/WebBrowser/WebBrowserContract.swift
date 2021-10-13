@@ -13,7 +13,7 @@ protocol WebBrowserViewProtocol {
   func load(url: URL, headers: [String: String]?)
 }
 
-typealias WebBrowserViewControllerProtocol = ShiftViewController & WebBrowserViewProtocol
+typealias WebBrowserViewControllerProtocol = AptoViewController & WebBrowserViewProtocol
 
 protocol WebBrowserInteractorProtocol {
   func provideUrl()

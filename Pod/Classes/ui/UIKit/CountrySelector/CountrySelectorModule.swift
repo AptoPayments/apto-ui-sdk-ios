@@ -24,7 +24,7 @@ class CountrySelectorModule: UIModule, CountrySelectorModuleProtocol {
     completion(.success(viewController))
   }
 
-  private func buildViewController() -> ShiftViewController {
+  private func buildViewController() -> AptoViewController {
     let interactor = serviceLocator.interactorLocator.countrySelectorInteractor(countries: countries)
     let presenter = serviceLocator.presenterLocator.countrySelectorPresenter()
     presenter.interactor = interactor

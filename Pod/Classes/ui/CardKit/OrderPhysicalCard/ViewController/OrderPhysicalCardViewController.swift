@@ -9,7 +9,7 @@ import Foundation
 import AptoSDK
 import SnapKit
 
-final class OrderPhysicalCardViewController: ShiftViewController {
+final class OrderPhysicalCardViewController: AptoViewController {
     private var viewModel: OrderPhysicalCardViewModel
     private(set) lazy var activityIndicator: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .gray)

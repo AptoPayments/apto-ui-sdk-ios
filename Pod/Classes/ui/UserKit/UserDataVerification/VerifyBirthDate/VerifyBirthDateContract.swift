@@ -50,4 +50,4 @@ protocol VerifyBirthDateViewProtocol: ViewControllerProtocol {
   func show(error: Error)
 }
 
-typealias VerifyBirthDateViewControllerProtocol = VerifyBirthDateViewProtocol & ShiftViewController
+typealias VerifyBirthDateViewControllerProtocol = VerifyBirthDateViewProtocol & AptoViewController

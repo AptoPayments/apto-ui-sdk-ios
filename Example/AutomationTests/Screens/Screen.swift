@@ -7,15 +7,15 @@
 
 import Foundation
 import ReactiveKit
-import ShiftSDK
+import AptoSDK
 import KIF
 
 class Screen {
 
-  let uiTest: ShiftUITest
+  let uiTest: AptoUITest
   let tester: KIFUITestActor
 
-  init(_ uiTest: ShiftUITest) {
+  init(_ uiTest: AptoUITest) {
     self.uiTest = uiTest
     self.tester = uiTest.tester()
   }

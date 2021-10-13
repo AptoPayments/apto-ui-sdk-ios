@@ -20,7 +20,7 @@ protocol ViewLocatorProtocol {
                                 disclaimerTitle: String,
                                 callToActionTitle: String,
                                 cancelActionTitle: String) -> UIViewController
-  func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> ShiftViewController
+  func countrySelectorView(presenter: CountrySelectorPresenterProtocol) -> AptoViewController
 
   // MARK: - Auth
   func authView(uiConfig: UIConfig, mode: AptoUISDKMode, eventHandler: AuthEventHandler) -> AuthViewControllerProtocol
@@ -30,13 +30,13 @@ protocol ViewLocatorProtocol {
                          eventHandler: ExternalOAuthPresenterProtocol) -> UIViewController
 
   // MARK: - Biometrics
-  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> ShiftViewController
-  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> ShiftViewController
-  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> ShiftViewController
-  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> ShiftViewController
+  func createPasscodeView(presenter: CreatePasscodePresenterProtocol) -> AptoViewController
+  func verifyPasscodeView(presenter: VerifyPasscodePresenterProtocol) -> AptoViewController
+  func changePasscodeView(presenter: ChangePasscodePresenterProtocol) -> AptoViewController
+  func biometricPermissionView(presenter: BiometricPermissionPresenterProtocol) -> AptoViewController
 
   func issueCardView(uiConfig: UIConfig, eventHandler: IssueCardPresenterProtocol) -> UIViewController
-  func waitListView(presenter: WaitListPresenterProtocol) -> ShiftViewController
+  func waitListView(presenter: WaitListPresenterProtocol) -> AptoViewController
   func serverMaintenanceErrorView(uiConfig: UIConfig?,
                                   eventHandler: ServerMaintenanceErrorEventHandler) -> UIViewController
   func accountsSettingsView(uiConfig: UIConfig,
@@ -44,30 +44,30 @@ protocol ViewLocatorProtocol {
   func contentPresenterView(uiConfig: UIConfig,
                             presenter: ContentPresenterPresenterProtocol) -> ContentPresenterViewController
   func dataConfirmationView(uiConfig: UIConfig,
-                            presenter: DataConfirmationPresenterProtocol) -> ShiftViewController
+                            presenter: DataConfirmationPresenterProtocol) -> AptoViewController
   func webBrowserView(alternativeTitle: String?,
                       eventHandler: WebBrowserEventHandlerProtocol) -> WebBrowserViewControllerProtocol
 
   // MARK: - Manage card
   func manageCardView(mode: AptoUISDKMode, presenter: ManageCardEventHandler) -> ManageCardViewControllerProtocol
-  func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> ShiftViewController
+  func fundingSourceSelectorView(presenter: FundingSourceSelectorPresenterProtocol) -> AptoViewController
   func cardSettingsView(presenter: CardSettingsPresenterProtocol) -> CardSettingsViewControllerProtocol
   func kycView(presenter: KYCPresenterProtocol) -> KYCViewControllerProtocol
-  func cardMonthlyView(presenter: CardMonthlyStatsPresenterProtocol) -> ShiftViewController
-  func transactionListView(presenter: TransactionListPresenterProtocol) -> ShiftViewController
-  func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> ShiftViewController
-  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> ShiftViewController
-  func voIPView(presenter: VoIPPresenterProtocol) -> ShiftViewController
-  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> ShiftViewController
-  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> ShiftViewController
+  func cardMonthlyView(presenter: CardMonthlyStatsPresenterProtocol) -> AptoViewController
+  func transactionListView(presenter: TransactionListPresenterProtocol) -> AptoViewController
+  func notificationPreferencesView(presenter: NotificationPreferencesPresenterProtocol) -> AptoViewController
+  func setCodeView(presenter: SetCodePresenterProtocol, texts: SetCodeViewControllerTexts) -> AptoViewController
+  func voIPView(presenter: VoIPPresenterProtocol) -> AptoViewController
+  func monthlyStatementsListView(presenter: MonthlyStatementsListPresenterProtocol) -> AptoViewController
+  func monthlyStatementsReportView(presenter: MonthlyStatementsReportPresenterProtocol) -> AptoViewController
 
   // MARK: - Physical card activation
-  func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> ShiftViewController
+  func physicalCardActivation(presenter: PhysicalCardActivationPresenterProtocol) -> AptoViewController
   func physicalCardActivationSucceedView(uiConfig: UIConfig,
                                          presenter: PhysicalCardActivationSucceedPresenterProtocol)
     -> PhysicalCardActivationSucceedViewControllerProtocol
 
   // MARK: - Transaction Details
-  func transactionDetailsView(presenter: ShiftCardTransactionDetailsPresenterProtocol)
-    -> ShiftCardTransactionDetailsViewControllerProtocol
+  func transactionDetailsView(presenter: AptoCardTransactionDetailsPresenterProtocol)
+    -> AptoCardTransactionDetailsViewControllerProtocol
 }

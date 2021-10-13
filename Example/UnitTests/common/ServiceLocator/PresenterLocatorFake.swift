@@ -172,7 +172,7 @@ class PresenterLocatorFake: PresenterLocatorProtocol {
   }
 
   // MARK: - Transaction Details
-  func transactionDetailsPresenter() -> ShiftCardTransactionDetailsPresenterProtocol {
+  func transactionDetailsPresenter() -> AptoCardTransactionDetailsPresenterProtocol {
     Swift.fatalError("transactionDetailsPresenter() has not been implemented")
   }
 }

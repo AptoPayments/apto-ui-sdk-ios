@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class SetCodeViewController: ShiftViewController {
+class SetCodeViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: SetCodePresenterProtocol
   private let texts: SetCodeViewControllerTexts

@@ -303,7 +303,7 @@ class SSNUSFormatValidator: DataValidator<String> {
             guard let ssn = text else {
               return .fail(reason: failReasonMessage)
             }
-            let regex = NSRegularExpression("^(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$")
+            let regex = NSRegularExpression("^(?!666|000|9\\d{2})\\d{3}(?!00)\\d{2}(?!0{4})\\d{4}$")
             if regex.matches(ssn) {
                 return .pass
             }

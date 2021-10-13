@@ -8,7 +8,7 @@
 import AptoSDK
 import SnapKit
 
-final class OrderPhysicalCardSuccessViewController: ShiftViewController {
+final class OrderPhysicalCardSuccessViewController: AptoViewController {
     private(set) lazy var mainView = OrderPhysicalCardSuccessView(uiconfig: uiConfiguration)
     var onCompletion: (() -> Void)?
     private let card: Card

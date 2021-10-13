@@ -11,7 +11,7 @@ import SnapKit
 import Bond
 import ReactiveKit
 
-class BiometricPermissionViewController: ShiftViewController {
+class BiometricPermissionViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: BiometricPermissionPresenterProtocol
   private let titleLabel: UILabel

@@ -1,5 +1,5 @@
 //
-//  ShiftCardModule.swift
+//  CardModule.swift
 //  AptoSDK
 //
 //  Created by Ivan Oliver Martínez on 02/18/2018.
@@ -13,7 +13,7 @@ open class CardModule: UIModule {
   let launchOptions: CardModuleLaunchOptions
   var welcomeScreenModule: ShowGenericMessageModule?
   var authModule: AuthModuleProtocol?
-  var existingShiftCardModule: UIModuleProtocol?
+  var existingCardModule: UIModuleProtocol?
   var newCardModule: NewCardModule?
 
   var contextConfiguration: ContextConfiguration! // swiftlint:disable:this implicitly_unwrapped_optional
@@ -163,21 +163,22 @@ open class CardModule: UIModule {
   private func launchFullFlow(addChild: Bool = false, pushModule: Bool = false,
                               completion: @escaping Result<UIViewController, NSError>.Callback) {
     showLoadingView()
-    platform.fetchCards(page: 0, rows: 100) { [unowned self] result in
-      self.hideLoadingView()
-      switch result {
-      case .failure(let error):
-        completion(.failure(error))
-      case .success(let cards):
-        let nonClosedCards = cards.filter { $0.state != .cancelled }
-        if let card = nonClosedCards.first {
-          self.showManageCardModule(card: card, addChild: addChild, pushModule: pushModule, completion: completion)
+    platform.fetchCards(pagination: nil) { [weak self] result in
+        guard let self = self else { return }
+        self.hideLoadingView()
+        switch result {
+        case .failure(let error):
+            completion(.failure(error))
+        case .success(let paginatedCards):
+            let nonClosedCards = paginatedCards.list.filter { $0.state != .cancelled }
+            if let card = nonClosedCards.first {
+                self.showManageCardModule(card: card, addChild: addChild, pushModule: pushModule, completion: completion)
+            }
+            else {
+                self.showCardProductSelector(addChild: addChild, completion: completion)
+            }
         }
-        else {
-          self.showCardProductSelector(addChild: addChild, completion: completion)
-        }
-      }
-    }
+    }    
   }
 
   private func launchNewCardApplicationFlow(addChild: Bool = false,
@@ -255,7 +256,7 @@ open class CardModule: UIModule {
                                     completion: @escaping Result<UIViewController, NSError>.Callback) {
     self.handleAuthentication { [unowned self] in
       let existingCardModule = self.serviceLocator.moduleLocator.manageCardModule(card: card, mode: self.launchOptions.mode)
-      self.existingShiftCardModule = existingCardModule
+      self.existingCardModule = existingCardModule
       let leftButtonMode: UIViewControllerLeftButtonMode = self.launchOptions.mode == .standalone ? .none : .close
       if addChild {
         existingCardModule.onClose = { [unowned self] _ in

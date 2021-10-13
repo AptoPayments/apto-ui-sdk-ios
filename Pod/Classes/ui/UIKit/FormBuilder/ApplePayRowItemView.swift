@@ -12,7 +12,12 @@ import AptoSDK
 final class ApplePayRowItemView: FormRowView {
     private(set) lazy var titleLabel = ComponentCatalog.mainItemLightLabelWith(text: title, uiConfig: uiconfig)
     private let appleMarkImageView = UIImageView(image: UIImage.imageFromPodBundle("apple_pay_mark"))
-    
+    private let cardAddedImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage.imageFromPodBundle("payment_method_selected"))
+        imageView.alpha = 0
+        return imageView
+    }()
+
     private let title: String
     private let uiconfig: UIConfig
     
@@ -34,7 +39,7 @@ final class ApplePayRowItemView: FormRowView {
     
     private func setupViews() {
         backgroundColor = .white
-        [titleLabel, appleMarkImageView].forEach(addSubview)
+        [titleLabel, appleMarkImageView, cardAddedImageView].forEach(addSubview)
     }
     
     private func setupConstraints() {
@@ -49,11 +54,23 @@ final class ApplePayRowItemView: FormRowView {
             make.left.equalTo(appleMarkImageView.snp.right).offset(16)
             make.centerY.equalToSuperview()
         }
+        
+        cardAddedImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(20)
+            make.width.height.equalTo(24)
+        }
     }
     
     private func setupBinding(handler: ClickHandlerAction?) {
         if let handler = handler {
             addTapGestureRecognizer(action: handler)
+        }
+    }
+    
+    public func showAddedCardIcon(show: Bool) {
+        UIView.animate(withDuration: 0.5) {
+            self.cardAddedImageView.alpha = show ? 1 : 0
         }
     }
 }

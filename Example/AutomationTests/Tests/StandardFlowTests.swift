@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import ShiftSDK
+import AptoSDK
 
-class StandardFlowTests: ShiftUITest {
+class StandardFlowTests: AptoUITest {
   
   func testStandardFlow() {
     
@@ -42,7 +42,7 @@ class StandardFlowTests: ShiftUITest {
     // Then
     SDKLauncherScreen(self)
       .waitForScreen()
-      .startShiftSDK()
+      .startAptoSDK()
     
     InputPhoneScreen(self)
       .waitForScreen()
@@ -129,7 +129,7 @@ class StandardFlowTests: ShiftUITest {
     
     SDKLauncherScreen(self)
       .waitForScreen()
-      .startShiftSDK()
+      .startAptoSDK()
     
     CollectLoanDataScreen(self)
       .waitForScreen()

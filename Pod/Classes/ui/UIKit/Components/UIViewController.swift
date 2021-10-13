@@ -58,7 +58,7 @@ public extension ViewControllerProtocol {
   }
 }
 
-extension ViewControllerProtocol where Self: ShiftViewController {
+extension ViewControllerProtocol where Self: AptoViewController {
   func show(error: Error, uiConfig: UIConfig? = nil) {
     show(error: error, uiConfig: uiConfig ?? uiConfiguration)
   }
@@ -74,7 +74,7 @@ extension ViewControllerProtocol where Self: ShiftViewController {
   }
 }
 
-extension ShiftViewController {
+extension AptoViewController {
   func show(error: Error) {
     show(error: error, uiConfig: uiConfiguration)
   }

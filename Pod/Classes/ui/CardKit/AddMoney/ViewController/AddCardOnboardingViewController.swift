@@ -7,7 +7,7 @@
 
 import AptoSDK
 
-class AddCardOnboardingViewController: ShiftViewController {
+class AddCardOnboardingViewController: AptoViewController {
     private(set) lazy var mainView = AddCardOnboardingView(uiconfig: uiConfiguration)
     private let viewModel: AddCardOnboardingViewModel
     public typealias CloseCompletionResult = ((UIViewController) -> Void)

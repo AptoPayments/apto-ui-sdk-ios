@@ -25,13 +25,13 @@ protocol UserDataCollectorRouterProtocol: URLHandlerProtocol {
   func presentBirthdateVerification(verificationType: VerificationParams<BirthDate, Verification>,
                                     modally: Bool?,
                                     completion: (Result<Verification, NSError>.Callback)?)
-  func userDataCollected(_ user: ShiftUser)
+  func userDataCollected(_ user: AptoUser)
 }
 
 protocol UserDataCollectorInteractorProtocol {
   func provideDataCollectorData()
   func nextStepTapped(fromStep: DataCollectorStep)
-  func allUserDataCollected(_ userData: DataPointList, callback: @escaping Result<ShiftUser, NSError>.Callback)
+  func allUserDataCollected(_ userData: DataPointList, callback: @escaping Result<AptoUser, NSError>.Callback)
 }
 
 protocol UserDataCollectorViewProtocol: ViewControllerProtocol {
@@ -157,7 +157,7 @@ class UserDataCollectorPresenter: UserDataCollectorDataReceiver, UserDataCollect
     viewController.hideLoadingView()
   }
 
-  func userReady(_ user: ShiftUser) {
+  func userReady(_ user: AptoUser) {
     router.userDataCollected(user)
   }
 

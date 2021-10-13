@@ -16,7 +16,7 @@ protocol CardSettingsModuleDelegate: class {
 }
 
 protocol CardSettingsRouterProtocol: class {
-  func closeFromShiftCardSettings()
+  func closeFromCardSettings()
   func changeCardPin()
   func setPassCode()
   func showVoIP(actionSource: VoIPActionSource)
@@ -28,13 +28,13 @@ protocol CardSettingsRouterProtocol: class {
   func showMonthlyStatements()
   func authenticate(completion: @escaping (Bool) -> Void)
   func showAddFunds(for card: Card, extraContent: ExtraContent?)
-    func showACHAccountAgreements(disclaimer: Content,
-                                   cardId: String,
-                                   acceptCompletion: @escaping () -> Void,
-                                   declineCompletion: @escaping () -> Void)
-    func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?)
-    func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?)
-    func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion?)
+  func showACHAccountAgreements(disclaimer: Content,
+                                 cardId: String,
+                                 acceptCompletion: @escaping () -> Void,
+                                 declineCompletion: @escaping () -> Void)
+  func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?)
+  func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?)
+  func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion?)
 }
 
 extension CardSettingsRouterProtocol {
@@ -53,7 +53,7 @@ protocol CardSettingsViewProtocol: ViewControllerProtocol {
   func showClosedCardErrorAlert(title: String)
 }
 
-typealias CardSettingsViewControllerProtocol = ShiftViewController & CardSettingsViewProtocol
+typealias CardSettingsViewControllerProtocol = AptoViewController & CardSettingsViewProtocol
 
 protocol CardSettingsInteractorProtocol {
   func isShowDetailedCardActivityEnabled() -> Bool
@@ -72,6 +72,18 @@ extension LegalDocuments {
     init() {
         self.init(cardHolderAgreement: nil, faq: nil, termsAndConditions: nil, privacyPolicy: nil, exchangeRates: nil)
     }
+}
+
+struct CardShipping {
+  let showShipping: Bool
+  let title: String?
+  let subtitle: String?
+}
+
+extension CardShipping {
+  init() {
+    self.init(showShipping: false, title: nil, subtitle: nil)
+  }
 }
 
 struct CardSettingsButtonsVisibility {
@@ -98,6 +110,7 @@ extension CardSettingsButtonsVisibility {
 class CardSettingsViewModel {
   let locked: Observable<Bool?> = Observable(nil)
   let legalDocuments: Observable<LegalDocuments> = Observable(LegalDocuments())
+  let cardShipping: Observable<CardShipping> = Observable(CardShipping())
   let buttonsVisibility: Observable<CardSettingsButtonsVisibility> = Observable(CardSettingsButtonsVisibility())
 }
 
@@ -127,7 +140,7 @@ protocol CardSettingsPresenterProtocol: class {
   func didTapOnLoadFunds()
     func didTapOnOrderPhysicalCard()
     func didTapOnApplePayIAP()
-    func iapRowTitle() -> String
+    func cardLastFourDigits() -> String
 }
 
 public struct ExtraContent {

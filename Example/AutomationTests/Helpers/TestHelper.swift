@@ -7,14 +7,14 @@
 
 import Foundation
 import SwiftyJSON
-import ShiftSDK
+import AptoSDK
 
 class TestHelper {
 
   let testProvisioner = TestProvisioner()
   var teams: [String: Team] = [:]
   var projects: [String: Project] = [:]
-  var users: [String: ShiftUser] = [:]
+  var users: [String: AptoUser] = [:]
 
   // MARK: - Cache Cleaning
 
@@ -82,7 +82,7 @@ class TestHelper {
                          countryCode: Int = 1,
                          phoneNumber: String = "9366669999",
                          email: String = "test@aptopayments.com",
-                         verifiedPhone: Bool = false) -> ShiftUser? {
+                         verifiedPhone: Bool = false) -> AptoUser? {
 
     let userJSON = testProvisioner.provisionRandomTestUser(teamKey:teamKey,
                                                            projectKey:projectKey,
@@ -91,7 +91,7 @@ class TestHelper {
                                                            email: email,
                                                            verifiedPhone: verifiedPhone)
 
-    guard let userData = userJSON, let user = userData.linkObject as? ShiftUser else {
+    guard let userData = userJSON, let user = userData.linkObject as? AptoUser else {
       return nil
     }
 

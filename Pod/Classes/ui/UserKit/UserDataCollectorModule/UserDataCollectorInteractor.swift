@@ -24,7 +24,7 @@ protocol UserDataCollectorDataReceiver: class {
            secondaryCredentialType: DataPointType,
            googleGeocodingAPIKey: String?)
   func show(error: NSError)
-  func userReady(_ user: ShiftUser)
+  func userReady(_ user: AptoUser)
 }
 
 class UserDataCollectorInteractor: UserDataCollectorInteractorProtocol {
@@ -62,7 +62,7 @@ class UserDataCollectorInteractor: UserDataCollectorInteractorProtocol {
 
   // User data collection
 
-  func allUserDataCollected(_ userData: DataPointList, callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  func allUserDataCollected(_ userData: DataPointList, callback: @escaping Result<AptoUser, NSError>.Callback) {
     if self.shouldCreateUserAccount() {
       dataReceiver.showLoadingView()
       self.createUser(userData) { [weak self] result in
@@ -124,7 +124,7 @@ extension UserDataCollectorInteractor {
     }
   }
 
-  fileprivate func createUser(_ userData: DataPointList, callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  fileprivate func createUser(_ userData: DataPointList, callback: @escaping Result<AptoUser, NSError>.Callback) {
     platform.createUser(userData: userData.filterNonCompletedDataPoints()) { result in
       switch result {
       case .failure(let error):
@@ -135,7 +135,7 @@ extension UserDataCollectorInteractor {
     }
   }
 
-  fileprivate func updateUser(_ userData: DataPointList, callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  fileprivate func updateUser(_ userData: DataPointList, callback: @escaping Result<AptoUser, NSError>.Callback) {
     platform.updateUserInfo(userData.filterNonCompletedDataPoints()) { result in
       switch result {
       case .failure(let error):
@@ -146,7 +146,7 @@ extension UserDataCollectorInteractor {
     }
   }
 
-  fileprivate func getCurrentUser(_ callback: @escaping Result<ShiftUser, NSError>.Callback) {
+  fileprivate func getCurrentUser(_ callback: @escaping Result<AptoUser, NSError>.Callback) {
     platform.fetchCurrentUserInfo(callback: callback)
   }
 }

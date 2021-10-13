@@ -12,7 +12,7 @@ class AuthModule: UIModule, AuthModuleProtocol {
   private let config: AuthModuleConfig
   private let initialUserData: DataPointList
 
-  open var onExistingUser: ((_ authModule: AuthModule, _ user: ShiftUser) -> Void)?
+  open var onExistingUser: ((_ authModule: AuthModule, _ user: AptoUser) -> Void)?
 
   fileprivate var verifyPhoneModule: VerifyPhoneModuleProtocol?
   fileprivate var verifyEmailModule: VerifyEmailModuleProtocol?
@@ -58,7 +58,7 @@ class AuthModule: UIModule, AuthModuleProtocol {
 
   // MARK: - AuthRouterProtocol protocol
 
-  func returnExistingUser(_ user: ShiftUser) {
+  func returnExistingUser(_ user: AptoUser) {
     onExistingUser?(self, user)
   }
 

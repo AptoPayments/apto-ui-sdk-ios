@@ -12,7 +12,7 @@ import Bond
 import ReactiveKit
 import WebKit
 
-class MonthlyStatementsReportViewController: ShiftViewController {
+class MonthlyStatementsReportViewController: AptoViewController {
   private let disposeBag = DisposeBag()
   private unowned let presenter: MonthlyStatementsReportPresenterProtocol
   private var url: URL?

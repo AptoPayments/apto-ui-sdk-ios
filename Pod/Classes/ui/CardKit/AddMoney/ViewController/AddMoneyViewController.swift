@@ -8,7 +8,7 @@
 import AptoSDK
 import SnapKit
 
-class AddMoneyViewController: ShiftViewController {
+class AddMoneyViewController: AptoViewController {
     private(set) lazy var addMoneyView = AddMoneyView(uiconfig: self.uiConfiguration)
     private(set) var activityIndicator: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .white)

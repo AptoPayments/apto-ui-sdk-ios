@@ -46,7 +46,7 @@ class CardMonthlyStatsModule: UIModule, CardMonthlyStatsModuleProtocol {
   }
 
   // MARK: - Private methods
-  private func buildViewController() -> ShiftViewController {
+  private func buildViewController() -> AptoViewController {
     let presenter = serviceLocator.presenterLocator.cardMonthlyStatsPresenter()
     let interactor = serviceLocator.interactorLocator.cardMonthlyStatsInteractor(card: card)
     let viewController = serviceLocator.viewLocator.cardMonthlyView(presenter: presenter)

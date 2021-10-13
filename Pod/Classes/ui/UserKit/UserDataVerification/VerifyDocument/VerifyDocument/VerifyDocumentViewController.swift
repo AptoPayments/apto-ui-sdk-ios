@@ -18,7 +18,7 @@ protocol VerifyDocumentEventHandler {
   func retakeSelfieTapped()
 }
 
-class VerifyDocumentViewController: ShiftViewController {
+class VerifyDocumentViewController: AptoViewController {
   private let eventHandler: VerifyDocumentEventHandler
   private var icon = UIImageView()
   private var explanationLabel: UILabel! // swiftlint:disable:this implicitly_unwrapped_optional

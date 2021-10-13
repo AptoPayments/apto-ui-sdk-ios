@@ -1,6 +1,6 @@
 //
 //  DisclaimerScreen.swift
-//  ShiftAutomationTests
+//  AutomationTests
 //
 //  Created by Ivan Oliver Martínez on 06/02/2018.
 //

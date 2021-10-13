@@ -56,5 +56,5 @@ protocol PresenterLocatorProtocol {
   func physicalCardActivationSucceedPresenter() -> PhysicalCardActivationSucceedPresenterProtocol
 
   // MARK: - Transaction Details
-  func transactionDetailsPresenter() -> ShiftCardTransactionDetailsPresenterProtocol
+  func transactionDetailsPresenter() -> AptoCardTransactionDetailsPresenterProtocol
 }

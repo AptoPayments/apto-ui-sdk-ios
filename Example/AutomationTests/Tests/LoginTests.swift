@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import ShiftSDK
+import AptoSDK
 
-class LoginTests: ShiftUITest {
+class LoginTests: AptoUITest {
   
   func skipTestNonExistingUserShowsSignupFlow() {
     
@@ -23,7 +23,7 @@ class LoginTests: ShiftUITest {
     // When
     SDKLauncherScreen(self)
       .waitForScreen()
-      .startShiftSDK()
+      .startAptoSDK()
     
     WelcomeScreenScreen(self)
       .waitForScreen()
@@ -71,7 +71,7 @@ class LoginTests: ShiftUITest {
     // When
     SDKLauncherScreen(self)
       .waitForScreen()
-      .startShiftSDK()
+      .startAptoSDK()
     
     WelcomeScreenScreen(self)
       .waitForScreen()

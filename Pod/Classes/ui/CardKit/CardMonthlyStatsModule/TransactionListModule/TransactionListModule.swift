@@ -13,7 +13,7 @@ class TransactionListModule: UIModule, TransactionListModuleProtocol {
   private let card: Card
   private let config: TransactionListModuleConfig
   private var presenter: TransactionListPresenterProtocol?
-  private var transactionDetailsPresenter: ShiftCardTransactionDetailsPresenterProtocol?
+  private var transactionDetailsPresenter: AptoCardTransactionDetailsPresenterProtocol?
 
   init(serviceLocator: ServiceLocatorProtocol, card: Card, config: TransactionListModuleConfig) {
     self.card = card
@@ -52,7 +52,7 @@ class TransactionListModule: UIModule, TransactionListModuleProtocol {
   }
 }
 
-extension TransactionListModule: ShiftCardTransactionDetailsRouterProtocol {
+extension TransactionListModule: AptoCardTransactionDetailsRouterProtocol {
   func backFromTransactionDetails() {
     popViewController {}
   }

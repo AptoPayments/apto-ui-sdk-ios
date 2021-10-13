@@ -22,7 +22,7 @@ protocol InputDocumentEventHandler {
   var viewModel: InputDocumentViewModel { get }
 }
 
-class InputDocumentViewController: ShiftViewController {
+class InputDocumentViewController: AptoViewController {
   private let eventHandler: InputDocumentEventHandler
   private var cameraView = CameraView()
   private var imagePreviewView = UIView()

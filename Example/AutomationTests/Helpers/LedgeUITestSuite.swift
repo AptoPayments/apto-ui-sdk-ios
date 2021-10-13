@@ -1,5 +1,5 @@
 //
-//  ShiftUITestSuite.swift
+//  AptoUITestSuite.swift
 //  AptoSDK
 //
 //  Created by Ivan Oliver Martínez on 31/10/2017.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension ShiftUITest {
+extension AptoUITest {
 
   func resetSDK() {
 
