@@ -112,7 +112,7 @@ platform :ios do
     update_ui_pod_version(version)
 
     # Update public repo
-    reference_remote_repos
+    #reference_remote_repos
     update_ui_repo
     validate_ui_pod
     publish_ui_repo(version)

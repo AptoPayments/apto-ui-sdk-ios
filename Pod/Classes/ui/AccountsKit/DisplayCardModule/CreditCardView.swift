@@ -45,7 +45,8 @@ public class CreditCardView: UIView {
   private var cardNetwork: CardNetwork?
   private var cardInfoShown = false
   private var hasValidFundingSource = true
-
+    private var lastPCIConfiguration: PCIConfiguration?
+    
   public var textColor: UIColor = .white {
     didSet {
       imageView.tintColor = textColor
@@ -78,32 +79,38 @@ public class CreditCardView: UIView {
   // MARK: - Public methods
   
   func configure(with pciConfiguration: PCIConfiguration) {
-    addSubview(pciView)
-    pciView.snp.makeConstraints { constraints in
-      constraints.edges.equalToSuperview()
-    }
-
-
-    let configAuth = PCIConfigAuth(cardId: pciConfiguration.cardId,
-                                   apiKey: pciConfiguration.apiKey,
-                                   userToken: pciConfiguration.userToken,
-                                   environment: pciConfiguration.environment.pciEnvironment())
-    let configCard = PCIConfigCard(lastFour: pciConfiguration.lastFour,
-                                   nameOnCard: pciConfiguration.name)
-    let config = PCIConfig(configAuth: configAuth,
-                           configCard: configCard,
-                           theme: "light")
-    pciView.initialise(config: config)
-
-    pciView.alertTexts = [
-      "inputCode.message": "credit_card_view.input_code.message".podLocalized(),
-      "inputCode.okAction": "credit_card_view.input_code.ok_action".podLocalized(),
-      "inputCode.cancelAction": "credit_card_view.input_code.cancel_action".podLocalized(),
-      "wrongCode.message": "credit_card_view.wrong_code.message".podLocalized(),
-      "wrongCode.okAction": "credit_card_view.wrong_code.ok_action".podLocalized()
-    ]
-    let configStyle = PCIConfigStyle(textColor:  "#\(textColor.toHex ?? "ffffff")")
-    pciView.setStyle(style: configStyle)
+      if let lastConfiguration = lastPCIConfiguration,
+         lastConfiguration == pciConfiguration {
+          return
+      }
+      lastPCIConfiguration = pciConfiguration
+      
+      addSubview(pciView)
+      pciView.snp.makeConstraints { constraints in
+          constraints.edges.equalToSuperview()
+      }
+      
+      
+      let configAuth = PCIConfigAuth(cardId: pciConfiguration.cardId,
+                                     apiKey: pciConfiguration.apiKey,
+                                     userToken: pciConfiguration.userToken,
+                                     environment: pciConfiguration.environment.pciEnvironment())
+      let configCard = PCIConfigCard(lastFour: pciConfiguration.lastFour,
+                                     nameOnCard: pciConfiguration.name)
+      let config = PCIConfig(configAuth: configAuth,
+                             configCard: configCard,
+                             theme: "light")
+      pciView.initialise(config: config)
+      
+      pciView.alertTexts = [
+        "inputCode.message": "credit_card_view.input_code.message".podLocalized(),
+        "inputCode.okAction": "credit_card_view.input_code.ok_action".podLocalized(),
+        "inputCode.cancelAction": "credit_card_view.input_code.cancel_action".podLocalized(),
+        "wrongCode.message": "credit_card_view.wrong_code.message".podLocalized(),
+        "wrongCode.okAction": "credit_card_view.wrong_code.ok_action".podLocalized()
+      ]
+      let configStyle = PCIConfigStyle(textColor:  "#\(textColor.toHex ?? "ffffff")")
+      pciView.setStyle(style: configStyle)
   }
 
   public func set(cardState: FinancialAccountState) {

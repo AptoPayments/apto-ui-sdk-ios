@@ -3,9 +3,9 @@ source 'https://cdn.cocoapods.org/'
 use_frameworks!
 
 def runtimepods
-  pod 'AptoSDK'
-  pod 'AptoUISDK'
-  pod 'AptoObjCSDK'
+  pod 'AptoSDK', :path => '../'
+  pod 'AptoUISDK', :path => '../'
+  pod 'AptoObjCSDK', :path => '../'
   pod 'Alamofire', '~> 5.4.3'
   pod 'AlamofireNetworkActivityIndicator', '3.1'
   pod 'FTLinearActivityIndicator', '1.2.1'

@@ -33,6 +33,8 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
     return cardInfoRetrieved && transactionsInfoRetrieved
   }
   private var cardInfoDataTimeout: Date?
+    private var currentCardState: FinancialAccountState = .unknown
+    private var currentOrderStatus: OrderedStatus = .notApplicable
 
   init(config: ManageCardPresenterConfig, notificationHandler: NotificationHandler) {
     self.config = config
@@ -180,16 +182,16 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
         analyticsManager?.track(event: Event.manageCard)
     }
     
-  @objc private func backgroundRefresh() {
-    hideCardInfoIfNecessary()
-    refreshCard { [weak self] in
-      self?.cardInfoRetrieved = true
+    @objc private func backgroundRefresh() {
+        hideCardInfoIfNecessary()
+        backgroundRefreshCard { [weak self] in
+            self?.cardInfoRetrieved = true
+        }
+        backgroundRefreshTransactions { [weak self] in
+            self?.transactionsInfoRetrieved = true
+        }
+        interactor.loadFundingSources { _ in }
     }
-    backgroundRefreshTransactions { [weak self] in
-      self?.transactionsInfoRetrieved = true
-    }
-    interactor.loadFundingSources { _ in }
-  }
 
   private func hideCardInfoIfNecessary() {
     if let timeout = cardInfoDataTimeout, timeout.timeIntervalSinceNow <= 0 {
@@ -227,41 +229,68 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
     }
   }
 
-  private func updateViewModelWith(card: Card) {
-    router.update(card: card)
-    viewModel.cardInfoVisible.send(false)
-    viewModel.card.send(card)
-    viewModel.cardNetwork.send(card.cardNetwork)
-    viewModel.fundingSource.send(card.fundingSource)
-    if card.orderedStatus == .ordered && card.orderedStatus != viewModel.orderedStatus.value {
-      viewModel.showPhysicalCardActivationMessage.send(true)
+    private func backgroundRefreshCard(completion: @escaping () -> Void) {
+        interactor.reloadCard { [weak self] result in
+            switch result {
+            case .failure(let error):
+                self?.view.show(error: error)
+                completion()
+            case .success(let card):
+                if let wself = self {
+                    if  wself.shouldRefreshCard(card) {
+                        wself.performViewModelUpdate(with: card)
+                    }
+                    completion()
+                }
+            }
+        }
     }
-    else {
-      viewModel.showPhysicalCardActivationMessage.send(false)
+    
+    private func shouldRefreshCard(_ card: Card) -> Bool {
+        currentCardState != card.state || currentOrderStatus != card.orderedStatus
     }
-    viewModel.orderedStatus.send(card.orderedStatus)
-    viewModel.spendableToday.send(card.spendableToday)
-    viewModel.nativeSpendableToday.send(card.nativeSpendableToday)
-    viewModel.cardStyle.send(card.cardStyle)
-    viewModel.state.send(card.state)
-    if let showActivateCardButton = config.showActivateCardButton {
-      viewModel.isActivateCardFeatureEnabled.send(showActivateCardButton)
+    
+    private func updateViewModelWith(card: Card) {
+        viewModel.cardInfoVisible.send(false)
+        performViewModelUpdate(with: card)
     }
-    else {
-      viewModel.isActivateCardFeatureEnabled.send(false)
-    }
-    if viewModel.cardLoaded.value == false {
-      viewModel.cardLoaded.send(true)
-    }
-    if let showStatsButton = config.showStatsButton {
-      viewModel.isStatsFeatureEnabled.send(showStatsButton)
-    }
-    else {
-      viewModel.isStatsFeatureEnabled.send(false)
-    }
-    viewModel.isAccountSettingsEnabled.send(config.showAccountSettingsButton ?? true)
-  }
 
+    private func performViewModelUpdate(with card: Card) {
+        router.update(card: card)
+        viewModel.card.send(card)
+        viewModel.cardNetwork.send(card.cardNetwork)
+        viewModel.fundingSource.send(card.fundingSource)
+        if card.orderedStatus == .ordered && card.orderedStatus != viewModel.orderedStatus.value {
+          viewModel.showPhysicalCardActivationMessage.send(true)
+        }
+        else {
+          viewModel.showPhysicalCardActivationMessage.send(false)
+        }
+        viewModel.orderedStatus.send(card.orderedStatus)
+        viewModel.spendableToday.send(card.spendableToday)
+        viewModel.nativeSpendableToday.send(card.nativeSpendableToday)
+        viewModel.cardStyle.send(card.cardStyle)
+        viewModel.state.send(card.state)
+        if let showActivateCardButton = config.showActivateCardButton {
+          viewModel.isActivateCardFeatureEnabled.send(showActivateCardButton)
+        }
+        else {
+          viewModel.isActivateCardFeatureEnabled.send(false)
+        }
+        if viewModel.cardLoaded.value == false {
+          viewModel.cardLoaded.send(true)
+        }
+        if let showStatsButton = config.showStatsButton {
+          viewModel.isStatsFeatureEnabled.send(showStatsButton)
+        }
+        else {
+          viewModel.isStatsFeatureEnabled.send(false)
+        }
+        viewModel.isAccountSettingsEnabled.send(config.showAccountSettingsButton ?? true)
+        currentCardState = card.state
+        currentOrderStatus = card.orderedStatus
+    }
+    
   fileprivate func refreshTransactions(forceRefresh: Bool = true,
                                        completion: @escaping (_ transactionsLoaded: Int) -> Void) {
     viewModel.transactionsLoaded.send(false)
