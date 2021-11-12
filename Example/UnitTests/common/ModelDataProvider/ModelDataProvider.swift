@@ -42,11 +42,11 @@ class ModelDataProvider {
   lazy var workflowAction: WorkflowAction = {
     let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [balanceType],
                                                               assetUrl: nil)
-    return WorkflowAction(actionId: nil,
-                          name: nil,
-                          order: nil,
-                          status: nil,
-                          actionType: .selectBalanceStore,
+    return WorkflowAction(actionId: "entity_XXXXXXXXXXXXXXXX",
+                          name: "collect_user_data",
+                          order: 1,
+                          status: WorkflowActionStatus.enabled,
+                          actionType: .collectUserData,
                           configuration: configuration)
   }()
 
@@ -148,10 +148,10 @@ class ModelDataProvider {
     return list
   }()
 
-  lazy var cardApplication: CardApplication = CardApplication(id: "id",
-                                                              status: .created,
-                                                              applicationDate: Date(),
-                                                              workflowObjectId: "workflow_id",
+  lazy var cardApplication: CardApplication = CardApplication(id: "entity_XXXXXXXXXXXXXXXX",
+                                                              status: .approved,
+                                                              applicationDate: Date(timeIntervalSince1970: 1601665324),
+                                                              workflowObjectId: "entity_XXXXXXXXXXXXXXXX",
                                                               nextAction: workflowAction)
 
   lazy var waitListCardApplication = CardApplication(id: "id",
@@ -236,7 +236,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -266,7 +266,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
                                 getPin: FeatureAction(source: .voIP, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -296,7 +296,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .api, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -326,7 +326,7 @@ class ModelDataProvider {
     let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -357,7 +357,7 @@ class ModelDataProvider {
                                 getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
                                 passCode: PassCode(status: .enabled, passCodeSet: false, verificationRequired: true),
-                                achAccount: nil, inAppProvisioning: nil)
+                                achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -391,8 +391,8 @@ class ModelDataProvider {
                                              isAccountProvisioned: true,
                                              disclaimer: disclaimer,
                                              achAccountDetails: accountDetails)
-        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil,
-                                    passCode: nil, achAccount: bankAccount, inAppProvisioning: nil)
+        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil,
+                                    funding: nil, passCode: nil, achAccount: bankAccount, inAppProvisioning: nil, p2pTransfer: nil)
         let card = Card(accountId: "card_id",
                         cardProductId: "card_product_id",
                         cardNetwork: .visa,
@@ -421,7 +421,7 @@ class ModelDataProvider {
         let funding = Funding(status: .enabled,
                               cardNetworks: [.mastercard],
                               limits: FundingLimits(daily: FundingSingleLimit(max: Amount(value: 1000, currency: "EUR"))), softDescriptor: "Soft Descriptor")
-        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil, passCode: nil, achAccount: nil, inAppProvisioning: nil)
+        let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil, funding: nil, passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
         let card = Card(accountId: "card_id",
                         cardProductId: "card_product_id",
                         cardNetwork: .visa,
@@ -502,13 +502,29 @@ class ModelDataProvider {
         return PhysicalCardConfig(issuanceFee: nil, userAddress: address)
     }()
 
+    lazy var recipient: CardholderData = {
+        let recipient = CardholderData(firstName: "Barak", lastName: "Obama", cardholderId: "crd_12345678")
+        return recipient
+    }()
+    
+    lazy var transferResponse: P2PTransferResponse = {
+        let response = P2PTransferResponse(transferId: "11111",
+                                           status: PaymentResultStatus.processed,
+                                           sourceId: "22222",
+                                           amount: Amount(value: 123.32, currency: "USD"),
+                                           recipientFirstName: "Barak",
+                                           recipientLastName: "Obama",
+                                           createdAt: Date())
+        return response
+    }()
+    
     lazy var cardWithUnknownSource: Card = {
     let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
     let ivr = IVR(status: .enabled, phone: phoneNumber)
     let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
                                 getPin: FeatureAction(source: .unknown, status: .enabled),
                                 allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil)
+                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
     let card = Card(accountId: "card_id",
                     cardProductId: "card_product_id",
                     cardNetwork: .other,
@@ -641,8 +657,14 @@ class ModelDataProvider {
                                                                  assetUrl: url,
                                                                  oauthErrorMessageKeys: nil)
 
-  lazy var custodian = Custodian(custodianType: "custodian", name: "Custodian")
-
+    lazy var custodian: Custodian = {
+        let custodian = Custodian(custodianType: "custodian", name: "Custodian")
+        custodian.externalCredentials = .oauth(OauthCredential(oauthTokenId: oauthCredential.oauthTokenId))
+        return custodian
+    }()
+    
+    lazy var selectBalanceStoreResult = SelectBalanceStoreResult(result: .valid, errorCode: 0)
+    
   lazy var oauthCredential = OauthCredential(oauthTokenId: "oauth_token_id")
 
   lazy var oauthAttempt = OauthAttempt(id: "attempt_id",

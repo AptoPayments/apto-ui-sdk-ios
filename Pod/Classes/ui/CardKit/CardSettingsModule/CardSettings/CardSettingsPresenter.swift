@@ -18,6 +18,7 @@ struct CardSettingsPresenterConfig {
     let exchangeRates: Content?
     let showDetailedCardActivity: Bool
     let showMonthlyStatements: Bool
+    let iapRowTitle: String
 }
 
 class CardSettingsPresenter: CardSettingsPresenterProtocol {
@@ -149,6 +150,7 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                                         showMonthlyStatements: config.showMonthlyStatements,
                                         showAddFundsFeature: card.features?.funding?.status == .enabled,
                                         showOrderPhysicalCard: card.orderedStatus == .available,
+                                        showP2PTransferFeature: card.features?.p2pTransfer?.status == .enabled,
                                         showAppleWalletRow: iapEnabled))
     
     let cardShippingStatusResult = CardShippingStatus().formatShippingStatus(orderedStatus: card.orderedStatus, issuedAt: card.issuedAt)
@@ -228,6 +230,18 @@ class CardSettingsPresenter: CardSettingsPresenterProtocol {
                 self?.refreshCardData(cardId)
             }
         }
+    }
+    
+    func didTapOnP2PTransfer() {
+        AptoPlatform
+            .defaultManager()
+            .fetchContextConfiguration(false) { [router] result in
+                switch result {
+                case .success(let config):
+                    router?.showP2PTransferScreen(with: config.projectConfiguration)
+                default: break
+                }
+            }
     }
     
     func didTapOnApplePayIAP() {

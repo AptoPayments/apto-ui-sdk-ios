@@ -15,4 +15,10 @@ extension UIView {
         }
         return self.snp.bottom
     }
+    var snpTopConstraint: ConstraintItem {
+        if #available(iOS 11, *) {
+            return self.safeAreaLayoutGuide.snp.top
+        }
+        return self.snp.top
+    }
 }

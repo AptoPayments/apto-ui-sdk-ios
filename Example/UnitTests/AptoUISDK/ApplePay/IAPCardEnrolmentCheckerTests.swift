@@ -103,6 +103,7 @@ private class IAPCardEnrolmentCheckerStub: InAppPassLibrary {
 private class MockWatchConnectingSession: WatchConnectingSession {
     private let paired: Bool
     private let supported: Bool
+    var delegate: WCSessionDelegate?
     
     init(supported: Bool, paired: Bool) {
         self.paired = paired
@@ -116,7 +117,6 @@ private class MockWatchConnectingSession: WatchConnectingSession {
     var isPaired: Bool {
         paired
     }
-
-    var delegate: WCSessionDelegate?
+    
     func activate() {}
 }

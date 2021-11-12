@@ -91,4 +91,9 @@ class StorageLocatorFake: StorageLocatorProtocol {
     func cardApplicationStorage(transport: JSONTransport) -> CardApplicationsStorageProtocol {
         return cardApplicationStorageSpy
     }
+    
+    lazy var p2pTransferStorageSpy = P2PTransferStorageSpy()
+    func p2pTransferStorage(transport: JSONTransport) -> P2PTransferProtocol {
+        p2pTransferStorageSpy
+    }
 }

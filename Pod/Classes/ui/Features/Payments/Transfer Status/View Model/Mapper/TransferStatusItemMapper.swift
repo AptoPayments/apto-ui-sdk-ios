@@ -10,7 +10,7 @@ struct TransferStatusItemMapper {
   }
   
   func map(paymentResult: PaymentResult, paymentSource: PaymentSource) -> [TransferStatusItem] {
-    let paymentSourceItem = paymentSourceMapper.map(paymentSource, action: nil)
+    let paymentSourceItem = paymentSourceMapper.map(paymentSource, action: nil, deleteAction: nil)
     
     return [
       TransferStatusItem(title: "load_funds.transaction.status.title".podLocalized(), subtitle: paymentResult.status.rawValue.capitalized),

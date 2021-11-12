@@ -17,11 +17,14 @@ class DirectDepositViewTests: XCTestCase {
     func test_infoView_rendersViewWithInfoAndValue() {
         let view = ShowInfoView(uiconfig: UIConfig.default)
         view.configure(with: "Bank Name", valueText: "Evolve Bank & Trust")
-        view.snp.makeConstraints { make in
-            make.height.equalTo(56)
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
+            make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
     func test_directDepositView_rendersViewWithInformation() {
@@ -31,10 +34,13 @@ class DirectDepositViewTests: XCTestCase {
                                              description: "Login to your external account to submit a direct deposit account request or ACH bank transfer. You'll need the information below to complete the set up:",
                                              footer: "The [appName] account is offered by Evolve Bank & Trust.")
         view.configure(with: viewData)
-        view.snp.makeConstraints { make in
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }

@@ -16,20 +16,26 @@ class AddMoneyViewTests: XCTestCase {
     
     func test_headerTextView_rendersViewWithText() {
         let view = HeaderTextView(uiconfig: UIConfig.default, text: "Add Money")
-        view.snp.makeConstraints { make in
-            make.height.equalTo(58)
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
+            make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
     func test_actionDetailView_rendersViewWithTitleSubtitleAndChevron() {
         let view = DetailActionView(uiconfig: UIConfig.default, textTitle: "Debit card transfer", textSubTitle: "Instant deposit with a credit card")
-        view.snp.makeConstraints { make in
-            make.height.equalTo(72)
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
+            make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
     func test_addMoneyView_rendersView() {
@@ -44,11 +50,13 @@ class AddMoneyViewTests: XCTestCase {
             make.bottom.equalToSuperview().inset(10)
             make.height.equalTo(200)
         }
-        backgroundView.snp.makeConstraints { make in
+        let vc = HostViewController(with: backgroundView)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
         
-        assertSnapshot(matching: backgroundView, as: .image)
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }

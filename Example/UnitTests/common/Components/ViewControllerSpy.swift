@@ -142,7 +142,7 @@ class ViewControllerSpy: ViewControllerProtocol {
             animated: Bool,
             isError: Bool,
             uiConfig: UIConfig,
-            tapHandler: (() -> Void)?) {
+            tapHandler: (() -> Void)?, onMessageDismissed: (() -> Void)?) {
     showMessageWithTitleCalled = true
     lastMessageWithTitleShown = message
     lastMessageTitleShown = title

@@ -12,6 +12,8 @@ class CardSettingsModuleSpy: UIModuleSpy, CardSettingsRouterProtocol, CardSettin
  
   var delegate: CardSettingsModuleDelegate?
   
+    func showP2PTransferScreen(with config: ProjectConfiguration?) {}
+    
   func showAddFunds(for card: Card, extraContent: ExtraContent?) {}
   
     func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?) {}
@@ -156,9 +158,9 @@ class CardSettingsPresenterSpy: CardSettingsPresenterProtocol {
   // swiftlint:enable implicitly_unwrapped_optional
   var analyticsManager: AnalyticsServiceProtocol?
 
-  func didTapOnLoadFunds() {
-      
-  }
+    func didTapOnP2PTransfer() {}
+    
+  func didTapOnLoadFunds() {}
   
     func didTapOnOrderPhysicalCard() {}
     func didTapOnApplePayIAP() {}

@@ -53,9 +53,9 @@ public final class AptoCardView: UIView {
         }
 
         logoImageView.snp.makeConstraints { make in
-            make.width.equalTo(60)
+            make.width.equalTo(51)
             make.height.equalTo(40)
-            make.right.equalTo(backgroundImageView).inset(20)
+            make.right.equalTo(backgroundImageView).inset(24.5)
             make.top.equalTo(backgroundImageView).inset(16)
         }
     }

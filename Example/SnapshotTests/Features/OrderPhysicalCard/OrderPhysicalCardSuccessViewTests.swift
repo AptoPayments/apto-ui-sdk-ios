@@ -21,10 +21,13 @@ class OrderPhysicalCardSuccessViewTests: XCTestCase {
         let card = ModelDataProvider.provider.cardWithDataToRenderACreditCardView
         view.configure(card: card)
 
-        view.snp.makeConstraints { make in
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }

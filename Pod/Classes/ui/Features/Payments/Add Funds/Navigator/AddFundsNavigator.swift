@@ -37,7 +37,7 @@ final class AddFundsNavigator: AddFundsNavigatorType {
     func navigateToPaymentMethods(defaultSelectedPaymentMethod: PaymentSource? = nil) {
         let viewModel = PaymentMethodsViewModel()
         if let defaultSelectedItem = defaultSelectedPaymentMethod {
-            viewModel.selectedPaymentMethod = PaymentSourceMapper().map(defaultSelectedItem, action: nil)
+          viewModel.selectedPaymentMethod = PaymentSourceMapper().map(defaultSelectedItem, action: nil, deleteAction: nil)
         }
         
         let viewController = PaymentMethodsViewController(viewModel: viewModel)

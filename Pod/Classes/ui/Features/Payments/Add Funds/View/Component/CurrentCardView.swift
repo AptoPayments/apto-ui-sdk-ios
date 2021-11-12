@@ -106,7 +106,7 @@ final class CurrentCardView: UIView {
     titleLabel.text = config.title
     subtitleLabel.text = config.subtitle
     
-    let font: UIFont = config.subtitle == nil ? .systemFont(ofSize: 14) : .systemFont(ofSize: 13, weight: .semibold)
+    let font: UIFont = config.subtitle == nil ? .systemFont(ofSize: 14, weight: .semibold) : .systemFont(ofSize: 13, weight: .semibold)
     let color: UIColor = config.subtitle == nil ? .gray : .black
     
     titleLabel.font = font

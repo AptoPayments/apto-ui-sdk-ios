@@ -73,6 +73,18 @@ final class PaymentMethodsViewModel: ViewModel {
     }
   }
   
+  private func deletePaymentMethod(paymentSourceId: String) {
+    self.state.send(.loading)
+    self.apto.deletePaymentSource(paymentSourceId: paymentSourceId) { [weak self] result in
+      switch result {
+        case .success:
+          self?.refreshPaymentMethods()
+        case .failure(let error):
+          self?.state.send(.error(error))
+      }
+    }
+  }
+  
   private func handle(_ paymentMethods: [PaymentSource]) {
     let addCardItem = PaymentMethodItem(id: "add_card", type: .addCard, title: "load_funds.add_card.primary_cta".podLocalized(), subtitle: "load_funds.add_card.secondary_cta".podLocalized(), icon: .imageFromPodBundle("credit_debit_card"), action: { [weak self] _ in
       self?.navigator?.didTapOnAddCard()
@@ -94,7 +106,10 @@ final class PaymentMethodsViewModel: ViewModel {
                                              title: item.title,
                                              subtitle: item.subtitle,
                                              isSelected: true,
-                                             icon: item.icon, action: item.action)
+                                             icon: item.icon,
+                                             action: item.action)
+    }, deleteAction: { item in
+      self.deletePaymentMethodConfirm(item: item)
     })
     
     items.append(addCardItem)
@@ -115,7 +130,20 @@ final class PaymentMethodsViewModel: ViewModel {
                                      subtitle: item.subtitle,
                                      isSelected: selectedPaymentMethod.id == item.id,
                                      icon: item.icon,
-                                     action: item.action)
+                                     action: item.action,
+                                     deleteAction: item.deleteAction)
         }
+    }
+  
+  private func deletePaymentMethodConfirm(item: PaymentMethodItem) {
+      UIAlertController.confirm(title: "load_funds.payment_methods.delete_dialog.title".podLocalized(),
+                                message: "load_funds.payment_methods.delete_dialog.message".podLocalized(),
+                                okTitle: "load_funds.payment_methods.delete_dialog.cta".podLocalized(),
+                                cancelTitle: "load_funds.payment_methods.delete_dialog.cancel".podLocalized()) { [weak self] action in
+        
+        if action.title == "load_funds.payment_methods.delete_dialog.cta".podLocalized() {
+          self?.deletePaymentMethod(paymentSourceId: item.id)
+        }
+      }
     }
 }

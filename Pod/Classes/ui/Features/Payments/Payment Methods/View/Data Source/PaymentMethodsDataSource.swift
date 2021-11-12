@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 final class PaymentMethodsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
   
@@ -38,8 +39,22 @@ final class PaymentMethodsDataSource: NSObject, UITableViewDataSource, UITableVi
     item.action?(item)
   }
   
+  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    guard let item = self.item(at: indexPath) else { return false }
+    return (item.type == .card || item.type == .bankAccount) && !item.isSelected
+  }
+  
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+      if editingStyle == .delete {
+        guard let item = self.item(at: indexPath) else { return }
+        item.deleteAction?(item)
+      }
+  }
+  
   private func item(at indexPath: IndexPath) -> PaymentMethodItem? {
     guard indexPath.row <= items.count else { return nil }
     return items[indexPath.row]
   }
+  
 }
+   

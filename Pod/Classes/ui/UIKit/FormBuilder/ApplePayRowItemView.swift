@@ -38,7 +38,7 @@ final class ApplePayRowItemView: FormRowView {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     private func setupViews() {
-        backgroundColor = .white
+        backgroundColor = uiconfig.uiSecondaryColor
         [titleLabel, appleMarkImageView, cardAddedImageView].forEach(addSubview)
     }
     

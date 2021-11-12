@@ -69,6 +69,7 @@ class UIModuleSpy: UIModule {
   private(set) var lastViewControllerPresentedEmbedded: Bool?
   private(set) var lastViewControllerPresentedCompletion: (() -> Void)?
   override func present(viewController: UIViewController, animated: Bool, embedInNavigationController: Bool,
+                        showNavigationBar: Bool = true, presentationStyle: UIModalPresentationStyle? = nil,
                         completion: @escaping (() -> Void)) {
     presentViewControllerCalled = true
     lastViewControllerPresented = viewController

@@ -127,7 +127,8 @@ private extension CardSettingsViewControllerTheme2 {
     combineLatest(viewModel.legalDocuments, viewModel.buttonsVisibility, viewModel.cardShipping).observeNext { [unowned self] legalDocuments,
       buttonsVisibility, cardShipping in
       let settingsRows = [
-        self.setUpAddFundsRow(showButton: buttonsVisibility.showAddFundsFeature),
+        self.setUpAddFundsRow(showButton: buttonsVisibility.showAddFundsFeature, lastItem: buttonsVisibility.showP2PTransferFeature == false),
+        self.setupP2PTransferRow(showItem: buttonsVisibility.showP2PTransferFeature),
         self.createSettingsTitle(),
         self.createChangePinRow(showButton: buttonsVisibility.showChangePin),
         self.createGetPinRow(showButton: buttonsVisibility.showGetPin),
@@ -177,7 +178,20 @@ private extension CardSettingsViewControllerTheme2 {
     }.dispose(in: disposeBag)
   }
 
-  func createSettingsTitle() -> FormRowView {
+    func setupP2PTransferRow(showItem: Bool) -> FormRowView? {
+        guard showItem else { return nil }
+        let p2pRow = FormBuilder.linkRowWith(title: "card_settings.item.p2p_transfer.title".podLocalized(),
+                                             subtitle: "card_settings.item.p2p_transfer.description".podLocalized(),
+                                             leftIcon: nil,
+                                             height: 72,
+                                             uiConfig: uiConfiguration) { [weak self] in
+            self?.presenter.didTapOnP2PTransfer()
+        }
+        p2pRow.showSplitter = false
+        return p2pRow
+    }
+
+    func createSettingsTitle() -> FormRowView {
     return FormRowSectionTitleViewTheme2(title: "card_settings.settings.title".podLocalized(),
                                          uiConfig: uiConfiguration)
   }
@@ -365,17 +379,18 @@ private extension CardSettingsViewControllerTheme2 {
   }
 
   
-  func setUpAddFundsRow(showButton: Bool) -> FormRowView? {
-    guard showButton else { return nil }
-    let addFundsRow = FormBuilder.linkRowWith(
-      title: "card_settings.settings.card_add_funds.title".podLocalized(),
-      subtitle: "card_settings.settings.card_add_funds.description".podLocalized(),
-      leftIcon: nil,
-      height: 72,
-      uiConfig: uiConfiguration) { [weak self] in
-        self?.presenter.didTapOnLoadFunds()
-    }
-    return addFundsRow
+    func setUpAddFundsRow(showButton: Bool, lastItem: Bool) -> FormRowView? {
+        guard showButton else { return nil }
+        let addFundsRow = FormBuilder.linkRowWith(
+            title: "card_settings.settings.card_add_funds.title".podLocalized(),
+            subtitle: "card_settings.settings.card_add_funds.description".podLocalized(),
+            leftIcon: nil,
+            height: 72,
+            uiConfig: uiConfiguration) { [weak self] in
+            self?.presenter.didTapOnLoadFunds()
+        }
+        addFundsRow.showSplitter = !lastItem
+        return addFundsRow
   }
 
   func setUpShowCardInfoRow() -> FormRowView? {

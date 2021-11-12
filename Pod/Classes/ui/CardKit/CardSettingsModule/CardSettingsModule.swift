@@ -63,7 +63,8 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
                                                       faq: cardProduct.faq,
                                                       exchangeRates: cardProduct.exchangeRates,
                                                       showDetailedCardActivity: isShowDetailedInfoEnabled,
-                                                      showMonthlyStatements: isShowMonthlyStatementsEnabled)
+                                                      showMonthlyStatements: isShowMonthlyStatementsEnabled,
+                                                      iapRowTitle: iapCardSettingRowTitle())
     let recipients = [self.projectConfiguration.supportEmailAddress]
     let presenter = serviceLocator.presenterLocator.cardSettingsPresenter(card: card, config: presenterConfig,
                                                                           emailRecipients: recipients,
@@ -87,6 +88,17 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
             }
         }
         return module
+    }
+    
+    private func iapCardSettingRowTitle() -> String {
+        let checker = IAPCardEnrolmentChecker()
+        if checker.isCardEnrolledInPhoneWallet(lastFourDigits: card.lastFourDigits) == false {
+            return "card_settings.apple_pay.add_to_wallet.title".podLocalized()
+        }
+        if checker.isCardEnrolledInPairedWatchDevice(lastFourDigits: card.lastFourDigits) == false {
+            return "card_settings.apple_pay.add_to_watch.title".podLocalized()
+        }
+        return ""
     }
 }
 
@@ -290,10 +302,23 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
             .composedWith(card: card,
                           cardLoader: serviceLocator.platform,
                           analyticsManager: serviceLocator.analyticsManager,
-                          uiConfiguration: UIConfig.default,
+                          uiConfiguration: uiConfig,
                           cardOrderedCompletion: completion,
                           cardConfigErrorCompletion: errorCompletion)
         present(viewController: viewController, animated: true, embedInNavigationController: true, completion: {})
+    }
+    
+    func showP2PTransferScreen(with config: ProjectConfiguration?) {
+        let controller = P2PTransferUIComposer.compose(with: uiConfig, platform: serviceLocator.platform, projectConfig: config)
+        controller.navigationController?.navigationBar.setUpWith(uiConfig: self.uiConfig)
+
+        controller.continueTransferCompletion = { [weak self, controller] transferModel in
+            if let transferFundsVC = self?.createTransferVC(transferModel) {
+                controller.navigationController?.pushViewController(transferFundsVC, animated: true)
+            }
+        }
+        
+        present(viewController: controller, animated: true, embedInNavigationController: true, showNavigationBar: true, presentationStyle: .pageSheet, completion: {})
     }
     
     func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion? = nil) {
@@ -302,4 +327,23 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
                                                                 iapCompletion: completion)
         present(viewController: viewController, animated: true, completion: {})
     }
+
+    private func createTransferVC(_ transferModel: P2PTransferModel) -> P2PTransferFundsViewController {
+        let controller = P2PTransferUIComposer.compose(with: self.uiConfig,
+                                                       platform: self.serviceLocator.platform,
+                                                       transferModel: transferModel,
+                                                       cardId: self.card.accountId)
+        controller.onTransferCompletion = { [weak self, controller] transferResponse in
+            if let resultVC = self?.createResultScreen(response: transferResponse) {
+                controller.navigationController?.pushViewController(resultVC, animated: true)
+            }
+        }
+        return controller
+    }
+    
+    private func createResultScreen(response: P2PTransferResponse) -> P2PTransferResultViewController {
+        let controller = P2PTransferUIComposer.composeSuccess(with: uiConfig, transferResponse: response)
+        return controller
+    }
+    
 }

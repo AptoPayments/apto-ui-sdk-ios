@@ -104,18 +104,28 @@ open class UIModule: NSObject, UIModuleProtocol {
   }
 
   public func present(viewController: UIViewController, animated: Bool = true,
-                      embedInNavigationController: Bool = false, completion: @escaping (() -> Void)) {
+                      embedInNavigationController: Bool = false,
+                      showNavigationBar: Bool = true,
+                      presentationStyle: UIModalPresentationStyle? = nil,
+                      completion: @escaping (() -> Void)) {
     var controller = viewController
     if embedInNavigationController {
       let newNavigationController = UINavigationController(rootViewController: controller)
-      newNavigationController.navigationBar.setUpWith(uiConfig: uiConfig)
-      controller.configureLeftNavButton(mode: .close, uiConfig: uiConfig)
+        if showNavigationBar {
+            newNavigationController.navigationBar.setUpWith(uiConfig: uiConfig)
+            controller.configureLeftNavButton(mode: .close, uiConfig: uiConfig)
+        }
       controller = newNavigationController
     }
-    if #available(iOS 13.0, *), viewController.modalPresentationStyle != .overCurrentContext {
-      controller.isModalInPresentation = true
-      controller.modalPresentationStyle = .fullScreen
+    if let presentationStyle = presentationStyle {
+        controller.modalPresentationStyle = presentationStyle
+    } else {
+        if #available(iOS 13.0, *), viewController.modalPresentationStyle != .overCurrentContext {
+          controller.isModalInPresentation = true
+          controller.modalPresentationStyle = .fullScreen
+        }
     }
+    
     navigationController?.viewControllers.last?.present(controller, animated: animated) { [weak self] in
       self?.presentedViewController = controller
       completion()

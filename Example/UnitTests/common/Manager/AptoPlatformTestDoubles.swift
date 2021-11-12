@@ -766,6 +766,16 @@ var nextIsShowDetailedCardActivityEnabledResult = true
     func orderPhysicalCard(_ cardId: String, callback: @escaping (Result<Card, NSError>) -> Void) {}
     func getOrderPhysicalCardConfig(_ cardId: String, callback: @escaping (Result<PhysicalCardConfig, NSError>) -> Void) {}
 
+    func p2pFindRecipient(phone: PhoneNumber?,
+                          email: String?,
+                          callback: @escaping (P2PTransferRecipientResult) -> Void) {}
+    
+    func inviteUser(phone: PhoneNumber?,
+                    email: String?,
+                    callback: @escaping (P2PInviteResult) -> Void) {}
+    
+    func p2pMakeTransfer(transferRequest: P2PTransferRequest,
+                         callback: @escaping (P2PTransferResult) -> Void) {}
     func startApplePayInAppProvisioning(cardId: String, certificates: [Data], nonce: Data, nonceSignature: Data, callback: @escaping (ApplePayIAPResult) -> Void) {}
 
 }

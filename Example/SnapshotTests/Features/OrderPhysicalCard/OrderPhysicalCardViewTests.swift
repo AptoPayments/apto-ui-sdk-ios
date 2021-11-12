@@ -19,11 +19,14 @@ class OrderPhysicalCardViewTests: XCTestCase {
         let card = makeCard()
         view.configure(card: card, cardFee: "$9.95")
         
-        view.snp.makeConstraints { make in
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
     func test_orderPhysicalCardView_rendersViewWithoutFeeWhenFeeIsNotPreset() {
@@ -31,11 +34,14 @@ class OrderPhysicalCardViewTests: XCTestCase {
         let card = makeCard()
         view.configure(card: card, cardFee: nil)
         
-        view.snp.makeConstraints { make in
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
     
     func test_orderPhysicalCardView_rendersViewWithoutFeeWhenFeeIsZero() {
@@ -43,11 +49,14 @@ class OrderPhysicalCardViewTests: XCTestCase {
         let card = makeCard()
         view.configure(card: card, cardFee: "$0.00")
         
-        view.snp.makeConstraints { make in
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
     // MARK: Private methods

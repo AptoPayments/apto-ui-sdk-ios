@@ -36,14 +36,16 @@ class TitleSubtitleToastView: UIView, ToastViewProtocol {
   private let closeButton: UIButton
 
   var tapHandler: (() -> Void)?
-
-  init(uiConfig: UIConfig) {
-    self.uiConfig = uiConfig
-    self.titleLabel = ComponentCatalog.sectionTitleLabelWith(text: "", uiConfig: uiConfig)
-    self.messageLabel = ComponentCatalog.mainItemRegularLabelWith(text: "", multiline: true, uiConfig: uiConfig)
-    self.closeButton = UIButton(type: .custom)
-    super.init(frame: .zero)
-  }
+    var onToastViewDismissed: (() -> Void)?
+    
+    init(uiConfig: UIConfig, onMessageDismissed: (() -> Void)? = nil) {
+        self.uiConfig = uiConfig
+        self.titleLabel = ComponentCatalog.sectionTitleLabelWith(text: "", uiConfig: uiConfig)
+        self.messageLabel = ComponentCatalog.mainItemRegularLabelWith(text: "", multiline: true, uiConfig: uiConfig)
+        self.closeButton = UIButton(type: .custom)
+        self.onToastViewDismissed = onMessageDismissed
+        super.init(frame: .zero)
+    }
 
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -133,4 +135,8 @@ extension TitleSubtitleToastView: ToastDelegate {
   public func toastDidTouchUpInside(_ toast: ToastProtocol) {
     tapHandler?()
   }
+    
+    public func toastDismissed(_ toast: ToastProtocol) {
+        onToastViewDismissed?()
+    }
 }

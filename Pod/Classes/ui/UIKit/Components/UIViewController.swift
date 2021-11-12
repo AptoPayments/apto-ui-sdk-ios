@@ -34,7 +34,7 @@ public protocol ViewControllerProtocol {
   func showMessage(_ message: String, uiConfig: UIConfig?)
   // swiftlint:disable:next function_parameter_count
   func show(message: String, title: String, animated: Bool, isError: Bool, uiConfig: UIConfig,
-            tapHandler: (() -> Void)?)
+            tapHandler: (() -> Void)?, onMessageDismissed: (() -> Void)?)
   func showLoadingSpinner(tintColor: UIColor, position: SubviewPosition)
   func hideLoadingSpinner()
   func showLoadingView(uiConfig: UIConfig?)
@@ -68,9 +68,9 @@ extension ViewControllerProtocol where Self: AptoViewController {
   }
 
   func show(message: String, title: String, animated: Bool = true, isError: Bool = false,
-            tapHandler: (() -> Void)? = nil) {
+            tapHandler: (() -> Void)? = nil, onMessageDismissed: (() -> Void)? = nil) {
     show(message: message, title: title, animated: animated, isError: isError, uiConfig: uiConfiguration,
-         tapHandler: tapHandler)
+         tapHandler: tapHandler, onMessageDismissed: onMessageDismissed)
   }
 }
 
@@ -279,8 +279,8 @@ extension UIViewController: ViewControllerProtocol {
   }
 
   public func show(message: String, title: String, animated: Bool = true, isError: Bool = false, uiConfig: UIConfig,
-                   tapHandler: (() -> Void)?) {
-    let toastView = TitleSubtitleToastView(uiConfig: uiConfig)
+                   tapHandler: (() -> Void)?, onMessageDismissed: (() -> Void)? = nil) {
+      let toastView = TitleSubtitleToastView(uiConfig: uiConfig, onMessageDismissed: onMessageDismissed)
     let backgroundColor = isError ? uiConfig.uiErrorColor : uiConfig.uiPrimaryColor
     let toast = TitleSubtitleToast(title: uiConfig.showToastTitle ? title : nil, message: message,
                                    backgroundColor: backgroundColor, duration: tapHandler == nil ? 5 : nil,

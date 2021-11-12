@@ -3,9 +3,9 @@ source 'https://cdn.cocoapods.org/'
 use_frameworks!
 
 def runtimepods
-  pod 'AptoSDK', :path => '../'
-  pod 'AptoUISDK', :path => '../'
-  pod 'AptoObjCSDK', :path => '../'
+  pod 'AptoSDK'
+  pod 'AptoUISDK'
+  pod 'AptoObjCSDK'
   pod 'Alamofire', '~> 5.4.3'
   pod 'AlamofireNetworkActivityIndicator', '3.1'
   pod 'FTLinearActivityIndicator', '1.2.1'
@@ -13,7 +13,7 @@ def runtimepods
   pod 'SnapKit', '~> 5.0'
   pod 'Bond', '~> 7.6', :inhibit_warnings => true
   pod 'GoogleKit', '0.3.2', :inhibit_warnings => true
-  pod 'PhoneNumberKit', '~> 3.2'
+  pod 'PhoneNumberKit', '~> 3.3.3'
   pod 'TTTAttributedLabel', '2.0.0', :inhibit_warnings => true
   pod 'TrustKit', '~> 1.6'
   pod 'Down', '~> 0.8'

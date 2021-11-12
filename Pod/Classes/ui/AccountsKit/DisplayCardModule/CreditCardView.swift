@@ -355,7 +355,7 @@ private extension CreditCardView {
 
   func lockedImage() -> UIImage? {
     if !hasValidFundingSource {
-      return UIImage.imageFromPodBundle("error_backend")?.asTemplate()
+      return UIImage.imageFromPodBundle("ic_error")?.asTemplate()
     }
     return cardState == .created
       ? UIImage.imageFromPodBundle("icon-card-activate")?.asTemplate()

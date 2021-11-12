@@ -19,10 +19,13 @@ class ApplePayRowItemViewTests: XCTestCase {
         let view = ApplePayRowItemView(with: "card_settings.apple_pay.add_to_wallet.title".podLocalized(),
                                        uiconfig: UIConfig.default)
         
-        view.snp.makeConstraints { make in
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }

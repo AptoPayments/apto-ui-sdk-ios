@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2010AE902714A81400C5323C /* BasicTypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2010AE8F2714A81400C5323C /* BasicTypeTest.swift */; };
 		207B021926F50E2F00AB11DA /* CardShippingStatusTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207B021826F50E2F00AB11DA /* CardShippingStatusTest.swift */; };
 		2C0CEEF91E6EFD1D0095DA3A /* LinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0CEEF81E6EFD1D0095DA3A /* LinkTests.swift */; };
 		2C1127761EC6508100567792 /* DataPointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1127751EC6508100567792 /* DataPointsTests.swift */; };
@@ -235,8 +236,11 @@
 		D99BDF76F660A45FCC1CFD3A /* ShowDisclaimerActionTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDF72B85C701A643826E2 /* ShowDisclaimerActionTestDoubles.swift */; };
 		D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD37861B13BB4F50A836A /* CardWaitListModuleTest.swift */; };
 		E068F49835C36AE634935FEA /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C626AD8E822159591786DCC3 /* Pods_UnitTests.framework */; };
+		E502A39326DD22950082EC73 /* P2pTransferFundsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E502A39226DD22950082EC73 /* P2pTransferFundsViewTests.swift */; };
+		E52130E727196A4400C3AD18 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52130E627196A4400C3AD18 /* HostViewController.swift */; };
 		E5343E1C26341807001007D8 /* CardApplicationStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5343E1B26341807001007D8 /* CardApplicationStorageTests.swift */; };
 		E53D331926973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D331826973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift */; };
+		E54077932713208E00B5D63F /* P2PTransferFundsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54077922713208E00B5D63F /* P2PTransferFundsViewControllerTests.swift */; };
 		E5567DED25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5567DEC25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift */; };
 		E559808978340FABA714EBC0 /* Pods_SnapshotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA64FF7BC6649A5EE5D70C7 /* Pods_SnapshotTests.framework */; };
 		E571DB11260DE62600A5C533 /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */; };
@@ -253,12 +257,26 @@
 		E5A6934125B980C100ED8149 /* StorageTransportSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */; };
 		E5A6C4EE25C1F8CB0079009F /* DirectDepositViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6C4ED25C1F8CB0079009F /* DirectDepositViewControllerTests.swift */; };
 		E5A6C4F425C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6C4F325C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift */; };
+		E5AEA70A270DA543008EF867 /* P2PTransferViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AEA709270DA543008EF867 /* P2PTransferViewControllerTests.swift */; };
+		E5AFF96826A4626D003AF4A2 /* P2PTransferStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFF96726A4626D003AF4A2 /* P2PTransferStorageTests.swift */; };
+		E5AFFADE26A977A8003AF4A2 /* P2PTransferViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFFADD26A977A8003AF4A2 /* P2PTransferViewTests.swift */; };
+		E5B0543626B1CC1F001BEBAC /* P2PTransferLoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0543526B1CC1F001BEBAC /* P2PTransferLoaderSpy.swift */; };
+		E5B0549E26BAD888001BEBAC /* GenericResultScreenViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0549D26BAD888001BEBAC /* GenericResultScreenViewTests.swift */; };
 		E5B2E3092609EFE40095F997 /* OrderPhysicalCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B2E3082609EFE40095F997 /* OrderPhysicalCardViewTests.swift */; };
 		E5BE11E125D5524E0035F132 /* AgreementStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE11E025D5524E0035F132 /* AgreementStorageTests.swift */; };
 		E5C7A3BF267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7A3BE267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift */; };
 		E5CF2E292678EA8D005516B0 /* AddCardOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF2E282678EA8D005516B0 /* AddCardOnboardingViewTests.swift */; };
 		E5D61E0E260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61E0D260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift */; };
 		E5D61E38260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61E37260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift */; };
+		E5D8168A27282AA4002C141E /* XCTestCase+IssueCardSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D8168927282AA4002C141E /* XCTestCase+IssueCardSpecs.swift */; };
+		E5D8168D27282CE8002C141E /* CardApplicationSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D8168C27282CE8002C141E /* CardApplicationSpecs.swift */; };
+		E5D8168F27282E0B002C141E /* TestDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D8168E27282E0B002C141E /* TestDataHelper.swift */; };
+		E5D8169127283399002C141E /* CardApplicationStorageSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D8169027283399002C141E /* CardApplicationStorageSpy.swift */; };
+		E5D8169327284E68002C141E /* XCTestCase+CreateApplicationSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D8169227284E68002C141E /* XCTestCase+CreateApplicationSpecs.swift */; };
+		E5D8169527293FEB002C141E /* XCTestCase+ApplicationStatusSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D8169427293FEB002C141E /* XCTestCase+ApplicationStatusSpecs.swift */; };
+		E5D816972729AD9F002C141E /* XCTestCase+SetBalanceStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D816962729AD9F002C141E /* XCTestCase+SetBalanceStoreSpecs.swift */; };
+		E5D81699272AA5D0002C141E /* XCTestCase+AcceptDisclaimerSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D81698272AA5D0002C141E /* XCTestCase+AcceptDisclaimerSpecs.swift */; };
+		E5D8169B272AE063002C141E /* XCTestCase+CancelCardApplicationSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D8169A272AE063002C141E /* XCTestCase+CancelCardApplicationSpecs.swift */; };
 		E5DD0B6925BF2121005FDF08 /* AddMoneyViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD0B6825BF2121005FDF08 /* AddMoneyViewControllerTests.swift */; };
 		E5DD0B7525C0153C005FDF08 /* AddMoneyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD0B7425C0153C005FDF08 /* AddMoneyViewTests.swift */; };
 		E5ED3AED260CAA70008A8442 /* LocalCacheFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED3AEC260CAA70008A8442 /* LocalCacheFileManager.swift */; };
@@ -306,6 +324,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2010AE8F2714A81400C5323C /* BasicTypeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTypeTest.swift; sourceTree = "<group>"; };
 		207B021826F50E2F00AB11DA /* CardShippingStatusTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShippingStatusTest.swift; sourceTree = "<group>"; };
 		220D5DB5982A170B31DD7884 /* Pods-Demo.stg.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.stg.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.stg.xcconfig"; sourceTree = "<group>"; };
 		26B5310056A694FA9CC1FB85 /* Pods_ledgeline_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ledgeline_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -577,9 +596,12 @@
 		D99BDF936A709E75178B60D3 /* CardSettingsPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSettingsPresenterTest.swift; sourceTree = "<group>"; };
 		D99BDFAEC0A452DD70C262B8 /* SelectBalanceStoreModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectBalanceStoreModuleTest.swift; sourceTree = "<group>"; };
 		D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinInteractorTest.swift; sourceTree = "<group>"; };
+		E502A39226DD22950082EC73 /* P2pTransferFundsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2pTransferFundsViewTests.swift; sourceTree = "<group>"; };
 		E50F539025D15C81002726C4 /* CardLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLoaderSpy.swift; sourceTree = "<group>"; };
+		E52130E627196A4400C3AD18 /* HostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
 		E5343E1B26341807001007D8 /* CardApplicationStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardApplicationStorageTests.swift; sourceTree = "<group>"; };
 		E53D331826973C7F00A0BE87 /* IAPCardEnrolmentCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPCardEnrolmentCheckerTests.swift; sourceTree = "<group>"; };
+		E54077922713208E00B5D63F /* P2PTransferFundsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PTransferFundsViewControllerTests.swift; sourceTree = "<group>"; };
 		E5567DEC25C8BC42000E8048 /* AuthenticationTypeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeHelperTests.swift; sourceTree = "<group>"; };
 		E571DB10260DE62600A5C533 /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
 		E571DB15260DE64F00A5C533 /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
@@ -593,13 +615,28 @@
 		E5A6934025B980C100ED8149 /* StorageTransportSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTransportSpy.swift; sourceTree = "<group>"; };
 		E5A6C4ED25C1F8CB0079009F /* DirectDepositViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectDepositViewControllerTests.swift; sourceTree = "<group>"; };
 		E5A6C4F325C2BC730079009F /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		E5AEA709270DA543008EF867 /* P2PTransferViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = P2PTransferViewControllerTests.swift; sourceTree = "<group>"; };
+		E5AFF96726A4626D003AF4A2 /* P2PTransferStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PTransferStorageTests.swift; sourceTree = "<group>"; };
+		E5AFFADD26A977A8003AF4A2 /* P2PTransferViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PTransferViewTests.swift; sourceTree = "<group>"; };
+		E5B0542726B1985C001BEBAC /* P2PRecipientResultViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PRecipientResultViewTests.swift; sourceTree = "<group>"; };
+		E5B0543526B1CC1F001BEBAC /* P2PTransferLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PTransferLoaderSpy.swift; sourceTree = "<group>"; };
+		E5B0549D26BAD888001BEBAC /* GenericResultScreenViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResultScreenViewTests.swift; sourceTree = "<group>"; };
 		E5B2E3082609EFE40095F997 /* OrderPhysicalCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardViewTests.swift; sourceTree = "<group>"; };
 		E5BE11E025D5524E0035F132 /* AgreementStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementStorageTests.swift; sourceTree = "<group>"; };
 		E5C7A3BE267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardOnboardingViewControllerTests.swift; sourceTree = "<group>"; };
 		E5CF2E282678EA8D005516B0 /* AddCardOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardOnboardingViewTests.swift; sourceTree = "<group>"; };
 		E5D61E0D260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardSuccessViewTests.swift; sourceTree = "<group>"; };
 		E5D61E37260CA1AB0085EA2B /* OrderPhysicalCardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPhysicalCardViewControllerTests.swift; sourceTree = "<group>"; };
-		E5DD0ABE25BB6590005FDF08 /* AgreementStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementStorageTests.swift; sourceTree = "<group>"; };
+		E5D8168927282AA4002C141E /* XCTestCase+IssueCardSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+IssueCardSpecs.swift"; sourceTree = "<group>"; };
+		E5D8168C27282CE8002C141E /* CardApplicationSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardApplicationSpecs.swift; sourceTree = "<group>"; };
+		E5D8168E27282E0B002C141E /* TestDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataHelper.swift; sourceTree = "<group>"; };
+		E5D8169027283399002C141E /* CardApplicationStorageSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardApplicationStorageSpy.swift; sourceTree = "<group>"; };
+		E5D8169227284E68002C141E /* XCTestCase+CreateApplicationSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+CreateApplicationSpecs.swift"; sourceTree = "<group>"; };
+		E5D8169427293FEB002C141E /* XCTestCase+ApplicationStatusSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ApplicationStatusSpecs.swift"; sourceTree = "<group>"; };
+		E5D816962729AD9F002C141E /* XCTestCase+SetBalanceStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+SetBalanceStoreSpecs.swift"; sourceTree = "<group>"; };
+		E5D81698272AA5D0002C141E /* XCTestCase+AcceptDisclaimerSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AcceptDisclaimerSpecs.swift"; sourceTree = "<group>"; };
+		E5D8169A272AE063002C141E /* XCTestCase+CancelCardApplicationSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+CancelCardApplicationSpecs.swift"; sourceTree = "<group>"; };
+		E5DD0ABE25BB6590005FDF08 /* AgreementStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AgreementStorageTests.swift; path = ../../AptoSDK/Storages/AgreementStorageTests.swift; sourceTree = "<group>"; };
 		E5DD0B6825BF2121005FDF08 /* AddMoneyViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoneyViewControllerTests.swift; sourceTree = "<group>"; };
 		E5DD0B7425C0153C005FDF08 /* AddMoneyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoneyViewTests.swift; sourceTree = "<group>"; };
 		E5ED3AEC260CAA70008A8442 /* LocalCacheFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCacheFileManager.swift; sourceTree = "<group>"; };
@@ -662,14 +699,14 @@
 		2C0CEEF71E6EFD1D0095DA3A /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				E5A6C4F225C2BC4E0079009F /* Helpers */,
-				338E36F524B88C030072C7CE /* Features */,
 				2CF425F91E7FF1BB00ABAB94 /* AptoSDK */,
-				2C0CEEF81E6EFD1D0095DA3A /* LinkTests.swift */,
-				2C0CEEFA1E6EFD1D0095DA3A /* Info.plist */,
-				2CF426011E7FF47900ABAB94 /* XCTestCase+ProgrammerAssertions.swift */,
 				D99BD44D9505EB968BB6B904 /* AptoUISDK */,
 				D99BDA978445168647765E9E /* common */,
+				338E36F524B88C030072C7CE /* Features */,
+				E5A6C4F225C2BC4E0079009F /* Helpers */,
+				2C0CEEFA1E6EFD1D0095DA3A /* Info.plist */,
+				2C0CEEF81E6EFD1D0095DA3A /* LinkTests.swift */,
+				2CF426011E7FF47900ABAB94 /* XCTestCase+ProgrammerAssertions.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -873,6 +910,7 @@
 		2CF425FA1E7FF1BB00ABAB94 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				2010AE8F2714A81400C5323C /* BasicTypeTest.swift */,
 				2CF425FB1E7FF1D100ABAB94 /* ServiceErrorTest.swift */,
 				2CF426031E807A2200ABAB94 /* BackendErrorTests.swift */,
 			);
@@ -883,6 +921,7 @@
 			isa = PBXGroup;
 			children = (
 				2CF426061E80859C00ABAB94 /* NSDateTests.swift */,
+				E5D8168E27282E0B002C141E /* TestDataHelper.swift */,
 			);
 			name = Helpers;
 			path = Base/Helpers;
@@ -912,6 +951,7 @@
 			isa = PBXGroup;
 			children = (
 				334E133E246462A100BADC89 /* Font */,
+				E52130E627196A4400C3AD18 /* HostViewController.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -936,6 +976,8 @@
 		338E36F124B887D30072C7CE /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				E5B0549C26BAD873001BEBAC /* Components */,
+				E5AFFADC26A97790003AF4A2 /* P2PTransfer */,
 				E5CF2E272678EA76005516B0 /* AddCardOnboarding */,
 				E59879D2262633F9008CFDBA /* ApplePayProvisioning */,
 				E5B2E3072609EF6A0095F997 /* OrderPhysicalCard */,
@@ -1287,35 +1329,36 @@
 		D99BD44D9505EB968BB6B904 /* AptoUISDK */ = {
 			isa = PBXGroup;
 			children = (
-				D99BD902F96A4CBF719FF524 /* ExternalOAuthModule */,
-				D99BD4F2C00DF97C62D59D7B /* SelectBalanceStore */,
-				D99BDD191E6CB743CF900890 /* Authentication */,
-				E5987BB22629C67D008CFDBA /* ApplePay */,
 				E5DD0B6725BF2107005FDF08 /* AddMoney */,
+				E5987BB22629C67D008CFDBA /* ApplePay */,
+				D99BDD191E6CB743CF900890 /* Authentication */,
+				D99BDF651C6CD1F5F97F164A /* AuthModule */,
+				D99BD7626B446FC612E69E82 /* Base */,
 				D99BDB13D84D77B629D014BB /* CardMonthlyStats */,
 				D99BDE0EE5E45792839A1209 /* CardProductSelector */,
 				D99BD8DC429CBB2C8869B97F /* CardSettings */,
+				D99BDC137CEB9D88652E5702 /* ContentPresenter */,
+				D99BD697BF2DD2865A422C28 /* CountrySelector */,
+				D99BD902F96A4CBF719FF524 /* ExternalOAuthModule */,
+				D99BDF9112039F4A799F55AC /* FullScreenDisclaimer */,
 				334E13212464477C00BADC89 /* FundingSource */,
 				D99BD0CB375DFF6344BECB10 /* IssueCardModule */,
 				2C61F4BE2551DDA700A0707E /* ManageCardModule */,
 				D99BD12889996B39EB4619D4 /* NotificationPreferences */,
 				E5D61E36260CA16C0085EA2B /* OrderPhysicalCard */,
+				E5AEA708270DA543008EF867 /* P2PTransfer */,
 				3C65E0B8217E1083000207B1 /* PhysicalCardActivationSucceed */,
+				D99BD4F2C00DF97C62D59D7B /* SelectBalanceStore */,
+				D99BDB88F55A79DB8F64EFC4 /* ServerMaintenanceError */,
 				2C1C3C85258B6904008C7103 /* SetCodeModule */,
 				2C38C3D5258B75DD00D3DC48 /* SetPassCodeModule */,
 				D99BD5AE8596C20C9D11900D /* SetPinModule */,
 				D99BDCA9ED15BB20C3BD366B /* ShowDisclaimerActionModule */,
 				D99BD908FB7C8073C49F897F /* Statements */,
-				D99BDFC6D1261BC749829121 /* WaitListModule */,
-				D99BDF651C6CD1F5F97F164A /* AuthModule */,
 				D99BDB4B61A81BD39BC3E27E /* UserDataVerification */,
-				D99BDF9112039F4A799F55AC /* FullScreenDisclaimer */,
-				D99BDB88F55A79DB8F64EFC4 /* ServerMaintenanceError */,
-				D99BDC137CEB9D88652E5702 /* ContentPresenter */,
-				D99BD7626B446FC612E69E82 /* Base */,
-				D99BD75223B79B7EA0E9614D /* WebBrowser */,
-				D99BD697BF2DD2865A422C28 /* CountrySelector */,
 				D99BD83D5B4FB7E74C3FD9DD /* VoIP */,
+				D99BDFC6D1261BC749829121 /* WaitListModule */,
+				D99BD75223B79B7EA0E9614D /* WebBrowser */,
 			);
 			path = AptoUISDK;
 			sourceTree = "<group>";
@@ -1430,6 +1473,7 @@
 		D99BD8A57695355ECF72677B /* Storages */ = {
 			isa = PBXGroup;
 			children = (
+				E5DD0ABE25BB6590005FDF08 /* AgreementStorageTests.swift */,
 				D99BD1D9819277323E6E63DA /* FeaturesStorageTest.swift */,
 				D99BDA24C738D0CF91D50310 /* UserPreferencesStorageTest.swift */,
 				D99BD5D1CAEA83B9B60373F1 /* InMemoryUserDefaultsStorage.swift */,
@@ -1600,20 +1644,21 @@
 		D99BDF83BEC08EA6841166C3 /* Storages */ = {
 			isa = PBXGroup;
 			children = (
+				E5D8168B27282C59002C141E /* CardApplicationStorage */,
 				E5A692C625B5D29700ED8149 /* ACHAccountStorageTests.swift */,
 				E5BE11E025D5524E0035F132 /* AgreementStorageTests.swift */,
-				E5343E1B26341807001007D8 /* CardApplicationStorageTests.swift */,
+				E5987A87262831D2008CFDBA /* ApplePayIAPStorageTests.swift */,
 				D99BDC06BB45ECE27778587B /* ConfigurationStorageTestDoubles.swift */,
 				3CF9F2E7230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift */,
 				3CF9F2E3230C85ED005CD2F4 /* FinancialAccountsStorageTest.swift */,
 				3CF9F2E5230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift */,
+				E5AFF96726A4626D003AF4A2 /* P2PTransferStorageTests.swift */,
 				33BC263E24CB0348002E32EB /* PaymentSourcesStorageTestDoubles.swift */,
 				3CD2DBEE23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift */,
 				D99BD84CFCBDF9CF46D3EA3D /* UserStorageTest.swift */,
 				D99BD1889D23F50523AE94F8 /* UserStorageTestDoubles.swift */,
 				3C58BF36242A6A9300175697 /* UserTokenStorageTest.swift */,
 				D99BD4B61FB3A0D943C778B8 /* UserTokenStorageTestDoubles.swift */,
-				E5987A87262831D2008CFDBA /* ApplePayIAPStorageTests.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -1679,6 +1724,33 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		E5AEA708270DA543008EF867 /* P2PTransfer */ = {
+			isa = PBXGroup;
+			children = (
+				E5AEA709270DA543008EF867 /* P2PTransferViewControllerTests.swift */,
+				E54077922713208E00B5D63F /* P2PTransferFundsViewControllerTests.swift */,
+			);
+			path = P2PTransfer;
+			sourceTree = "<group>";
+		};
+		E5AFFADC26A97790003AF4A2 /* P2PTransfer */ = {
+			isa = PBXGroup;
+			children = (
+				E5AFFADD26A977A8003AF4A2 /* P2PTransferViewTests.swift */,
+				E5B0542726B1985C001BEBAC /* P2PRecipientResultViewTests.swift */,
+				E502A39226DD22950082EC73 /* P2pTransferFundsViewTests.swift */,
+			);
+			path = P2PTransfer;
+			sourceTree = "<group>";
+		};
+		E5B0549C26BAD873001BEBAC /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E5B0549D26BAD888001BEBAC /* GenericResultScreenViewTests.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		E5B2E3072609EF6A0095F997 /* OrderPhysicalCard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1704,12 +1776,28 @@
 			path = OrderPhysicalCard;
 			sourceTree = "<group>";
 		};
+		E5D8168B27282C59002C141E /* CardApplicationStorage */ = {
+			isa = PBXGroup;
+			children = (
+				E5D8168C27282CE8002C141E /* CardApplicationSpecs.swift */,
+				E5D8169027283399002C141E /* CardApplicationStorageSpy.swift */,
+				E5343E1B26341807001007D8 /* CardApplicationStorageTests.swift */,
+				E5D81698272AA5D0002C141E /* XCTestCase+AcceptDisclaimerSpecs.swift */,
+				E5D8169427293FEB002C141E /* XCTestCase+ApplicationStatusSpecs.swift */,
+				E5D8169A272AE063002C141E /* XCTestCase+CancelCardApplicationSpecs.swift */,
+				E5D8169227284E68002C141E /* XCTestCase+CreateApplicationSpecs.swift */,
+				E5D8168927282AA4002C141E /* XCTestCase+IssueCardSpecs.swift */,
+				E5D816962729AD9F002C141E /* XCTestCase+SetBalanceStoreSpecs.swift */,
+			);
+			path = CardApplicationStorage;
+			sourceTree = "<group>";
+		};
 		E5DD0B6725BF2107005FDF08 /* AddMoney */ = {
 			isa = PBXGroup;
 			children = (
+				E5C7A3BE267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift */,
 				E5DD0B6825BF2121005FDF08 /* AddMoneyViewControllerTests.swift */,
 				E5A6C4ED25C1F8CB0079009F /* DirectDepositViewControllerTests.swift */,
-				E5C7A3BE267B54480065BFD0 /* AddCardOnboardingViewControllerTests.swift */,
 			);
 			path = AddMoney;
 			sourceTree = "<group>";
@@ -1726,7 +1814,6 @@
 		E5DEE77D25D2BEA0007BAACE /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				E5DD0ABE25BB6590005FDF08 /* AgreementStorageTests.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1736,6 +1823,7 @@
 			children = (
 				E50F539025D15C81002726C4 /* CardLoaderSpy.swift */,
 				E5ED3AFC260CAF8A008A8442 /* FinancialCardLoaderSpy.swift */,
+				E5B0543526B1CC1F001BEBAC /* P2PTransferLoaderSpy.swift */,
 			);
 			path = Loader;
 			sourceTree = "<group>";
@@ -1856,7 +1944,6 @@
 						CreatedOnToolsVersion = 8.3.3;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 2C0F05B61C565F6F00F1C0E5;
 					};
 					334E132B2464606100BADC89 = {
 						CreatedOnToolsVersion = 11.4.1;
@@ -2124,6 +2211,7 @@
 				D99BD4D2A74CC4948F8AFD42 /* PresenterLocatorFake.swift in Sources */,
 				D99BD249397C573CA4FD2382 /* InteractorLocatorFake.swift in Sources */,
 				D99BD87CD9142422A2ED7FA4 /* ViewLocatorFake.swift in Sources */,
+				E5AEA70A270DA543008EF867 /* P2PTransferViewControllerTests.swift in Sources */,
 				D99BD4119BE5F49FB1D31A51 /* FullScreenDisclaimerInteractorTest.swift in Sources */,
 				338E36F824B88C220072C7CE /* CardDetectorTest.swift in Sources */,
 				3C05CD54238D63E800AA7CC9 /* VerifyPasscodePresenterTest.swift in Sources */,
@@ -2166,6 +2254,7 @@
 				D99BDE1E2A95F86112A63746 /* ExternalOAuthPresenterTest.swift in Sources */,
 				D99BD6D836E171312774F482 /* SelectBalanceStoreModuleTest.swift in Sources */,
 				3CD2DBF323F55A5000C2EDE1 /* ChangePasscodeInteractorTest.swift in Sources */,
+				E5D8168A27282AA4002C141E /* XCTestCase+IssueCardSpecs.swift in Sources */,
 				D99BD2137BA65D58FF6DEA55 /* NetworkLocatorFake.swift in Sources */,
 				D99BDD2CCEDB1BFFFA95898B /* ServerMaintenanceErrorInteractorTest.swift in Sources */,
 				E5343E1C26341807001007D8 /* CardApplicationStorageTests.swift in Sources */,
@@ -2179,8 +2268,11 @@
 				D99BD31F56E362E159AACE4F /* ContentPresenterTestDoubles.swift in Sources */,
 				D99BD466641EDE6E07ABF939 /* ContentPresenterInteractorTest.swift in Sources */,
 				334E13232464479700BADC89 /* FundingSourceSelectorPresenterTest.swift in Sources */,
+				E5D8169B272AE063002C141E /* XCTestCase+CancelCardApplicationSpecs.swift in Sources */,
+				E5AFF96826A4626D003AF4A2 /* P2PTransferStorageTests.swift in Sources */,
 				3C92D2102343964A00C48D90 /* MonthlyStatementsPeriodTest.swift in Sources */,
 				E5ED3AFD260CAF8A008A8442 /* FinancialCardLoaderSpy.swift in Sources */,
+				E5D8169527293FEB002C141E /* XCTestCase+ApplicationStatusSpecs.swift in Sources */,
 				9A75992422410BFB00E87E72 /* AnalyticsManagerSpy.swift in Sources */,
 				E571DB16260DE64F00A5C533 /* UIControl+TestHelpers.swift in Sources */,
 				D99BD6F54655FC463A608CDA /* ContentPresenterPresenterTest.swift in Sources */,
@@ -2206,6 +2298,7 @@
 				D99BD68B9F302FB06D638D1F /* CardMonthlyStatsPresenterTest.swift in Sources */,
 				D99BDBEDD079F7A2F4E61F1C /* CardMonthlyStatsInteractorTest.swift in Sources */,
 				D99BDC0DEDE682DBD6CCA310 /* CardMonthlyStatsModuleTest.swift in Sources */,
+				E5D8169127283399002C141E /* CardApplicationStorageSpy.swift in Sources */,
 				3CF7F8EC228B00BB00D0729E /* FeaturesStorageTest.swift in Sources */,
 				D99BDC0CE6BAACB9344AA5A7 /* TransactionListTestDoubles.swift in Sources */,
 				3CD2DBE723F2BC0000C2EDE1 /* BiometricPermissionPresenterTest.swift in Sources */,
@@ -2215,6 +2308,7 @@
 				3CF9F2E6230D2224005CD2F4 /* FinancialAccountStorageTestDoubles.swift in Sources */,
 				3CD2DBEF23F42F2F00C2EDE1 /* UserPreferencesStorageTestDoubles.swift in Sources */,
 				D99BDDA85B3744B65F544481 /* DoubleTest.swift in Sources */,
+				E5B0543626B1CC1F001BEBAC /* P2PTransferLoaderSpy.swift in Sources */,
 				D99BD676A369BA5631FDF6D6 /* AmountTest.swift in Sources */,
 				3C1A61E42369AB9200883EC3 /* NotificationHandlerTestDoubles.swift in Sources */,
 				3C40FD2623868AFB008FE470 /* CreatePasscodeInteractorTest.swift in Sources */,
@@ -2230,8 +2324,10 @@
 				D99BD5648E64479ACA8F7BAF /* CardWaitListPresenterTest.swift in Sources */,
 				3CEF43A42386CE6D007537F7 /* CreatePasscodePresenterTest.swift in Sources */,
 				3C96EB9C238C155000B9C238 /* AuthenticationManagerTest.swift in Sources */,
+				E54077932713208E00B5D63F /* P2PTransferFundsViewControllerTests.swift in Sources */,
 				3CD3CF6C2417D44C00906AE1 /* CardDetailsTest.swift in Sources */,
 				E5A6C4EE25C1F8CB0079009F /* DirectDepositViewControllerTests.swift in Sources */,
+				E5D8169327284E68002C141E /* XCTestCase+CreateApplicationSpecs.swift in Sources */,
 				D99BDFFC7AD558DB67D945B7 /* CardWaitListModuleTest.swift in Sources */,
 				D99BD40B54B9F02B27F45C37 /* NotificationGroupTest.swift in Sources */,
 				E5987BD52629CCDB008CFDBA /* AptoPlatformTestDoubles.swift in Sources */,
@@ -2240,6 +2336,7 @@
 				E5ED3AED260CAA70008A8442 /* LocalCacheFileManager.swift in Sources */,
 				3C40FD2723868D9E008FE470 /* CreatePasscodeTestDoubles.swift in Sources */,
 				D99BD7BB4B39C6052930873C /* NotificationPreferencesTestDoubles.swift in Sources */,
+				E5D8168F27282E0B002C141E /* TestDataHelper.swift in Sources */,
 				D99BD555F653BD0BC06275D0 /* NotificationPreferencesInteractorTest.swift in Sources */,
 				3CF9F2E8230D29A3005CD2F4 /* FeaturesStorageTestDoubles.swift in Sources */,
 				3C3FB2182386D3B60061025A /* CreatePasscodeModuleTest.swift in Sources */,
@@ -2251,12 +2348,15 @@
 				D99BD0540AF9361B8B0FEC00 /* CountrySelectorModuleTest.swift in Sources */,
 				D99BDA158AC88FA0C9BEB9B5 /* CountrySelectorTestDoubles.swift in Sources */,
 				D99BD9C779CB8F62FEFA0E47 /* CountrySelectorInteractorTest.swift in Sources */,
+				E5D81699272AA5D0002C141E /* XCTestCase+AcceptDisclaimerSpecs.swift in Sources */,
 				D99BDB2CD01601378EF98EBC /* CountrySelectorPresenterTest.swift in Sources */,
+				E5D8168D27282CE8002C141E /* CardApplicationSpecs.swift in Sources */,
 				D99BD4A755759998FD86B09B /* SetPinInteractorTest.swift in Sources */,
 				D99BDE9FFB16559DDC2A9CBD /* SetCodeTestDoubles.swift in Sources */,
 				2C38C3DC258B7E5100D3DC48 /* SetPassCodeModuleTest.swift in Sources */,
 				D99BD65D17206BD083AAAB41 /* SetCodePresenterTest.swift in Sources */,
 				D99BDAF4F0A593DEEF908090 /* SetPinModuleTest.swift in Sources */,
+				E5D816972729AD9F002C141E /* XCTestCase+SetBalanceStoreSpecs.swift in Sources */,
 				D99BD058DF3974DAFDD8063F /* VoIPTestDoubles.swift in Sources */,
 				2C61F4C52551DDA700A0707E /* ManageCardInteractorTest.swift in Sources */,
 				D99BD5DBCBBD701D3AADDC49 /* VoIPInteractorTest.swift in Sources */,
@@ -2304,6 +2404,7 @@
 				D99BD439EEED95737B310293 /* MonthlyStatementsReportPresenterTest.swift in Sources */,
 				D99BD562F10CBEDAA8DDE470 /* MonthlyStatementsReportModuleTest.swift in Sources */,
 				E5A6933C25B5F49B00ED8149 /* ACHAccountStorageTests.swift in Sources */,
+				2010AE902714A81400C5323C /* BasicTypeTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2365,12 +2466,16 @@
 			files = (
 				E5987BD92629CD99008CFDBA /* AptoPlatformTestDoubles.swift in Sources */,
 				E5B2E3092609EFE40095F997 /* OrderPhysicalCardViewTests.swift in Sources */,
+				E5B0549E26BAD888001BEBAC /* GenericResultScreenViewTests.swift in Sources */,
 				E59923E425C19F6C0078B5DA /* DirectDepositViewTests.swift in Sources */,
 				E59879D426263412008CFDBA /* ApplePayRowItemViewTests.swift in Sources */,
 				E5DD0B7525C0153C005FDF08 /* AddMoneyViewTests.swift in Sources */,
 				E5987A3D2627287E008CFDBA /* ApplePayButtonTests.swift in Sources */,
 				334E133C246461D500BADC89 /* ModelDataProvider.swift in Sources */,
 				E5CF2E292678EA8D005516B0 /* AddCardOnboardingViewTests.swift in Sources */,
+				E52130E727196A4400C3AD18 /* HostViewController.swift in Sources */,
+				E502A39326DD22950082EC73 /* P2pTransferFundsViewTests.swift in Sources */,
+				E5AFFADE26A977A8003AF4A2 /* P2PTransferViewTests.swift in Sources */,
 				E5D61E0E260B986F0085EA2B /* OrderPhysicalCardSuccessViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2680,7 +2785,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2784,7 +2889,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -2889,7 +2994,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2995,7 +3100,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -3099,7 +3204,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				ENABLE_TESTABILITY = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3137,7 +3242,6 @@
 			baseConfigurationReference = 53AADFDC269B7B832C1CC1C5 /* Pods-AutomationTests.local.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3191,7 +3295,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "AutomationTests/Helpers/AutomationTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Link.app/Link";
 			};
 			name = Local;
 		};
@@ -3200,7 +3303,6 @@
 			baseConfigurationReference = 3CB1E242D7BF2DA7660FAF84 /* Pods-AutomationTests.dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3246,7 +3348,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "AutomationTests/Helpers/AutomationTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Link.app/Link";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Dev;
@@ -3256,7 +3357,6 @@
 			baseConfigurationReference = 5CEE43EEF492E879B1DBFA2B /* Pods-AutomationTests.stg.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3302,7 +3402,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "AutomationTests/Helpers/AutomationTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Link.app/Link";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Stg;
@@ -3312,7 +3411,6 @@
 			baseConfigurationReference = 889C2ED069EC0F11EA953CC9 /* Pods-AutomationTests.sbx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3358,7 +3456,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "AutomationTests/Helpers/AutomationTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Link.app/Link";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Sbx;
@@ -3368,7 +3465,6 @@
 			baseConfigurationReference = C7D487B53E1093D77AC4E2A6 /* Pods-AutomationTests.prd.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3414,7 +3510,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "AutomationTests/Helpers/AutomationTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Link.app/Link";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Prd;

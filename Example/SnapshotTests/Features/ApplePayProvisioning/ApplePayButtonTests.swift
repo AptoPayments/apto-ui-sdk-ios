@@ -24,10 +24,13 @@ class ApplePayButtonTests: XCTestCase {
         view.addSubview(buttonView)
         
         buttonView.snp.makeConstraints { $0.center.equalToSuperview() }
-        view.snp.makeConstraints { make in
+        let vc = HostViewController(with: view)
+
+        vc.view.snp.makeConstraints { make in
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        assertSnapshot(matching: view, as: .image)
+        
+        assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }

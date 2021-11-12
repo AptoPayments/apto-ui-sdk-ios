@@ -28,13 +28,14 @@ protocol CardSettingsRouterProtocol: class {
   func showMonthlyStatements()
   func authenticate(completion: @escaping (Bool) -> Void)
   func showAddFunds(for card: Card, extraContent: ExtraContent?)
-  func showACHAccountAgreements(disclaimer: Content,
-                                 cardId: String,
-                                 acceptCompletion: @escaping () -> Void,
-                                 declineCompletion: @escaping () -> Void)
-  func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?)
-  func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?)
-  func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion?)
+    func showACHAccountAgreements(disclaimer: Content,
+                                   cardId: String,
+                                   acceptCompletion: @escaping () -> Void,
+                                   declineCompletion: @escaping () -> Void)
+    func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent?)
+    func showOrderPhysicalCard(_ card: Card, completion: OrderPhysicalCardUIComposer.OrderedCompletion?)
+    func showP2PTransferScreen(with config: ProjectConfiguration?)
+    func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion?)
 }
 
 extension CardSettingsRouterProtocol {
@@ -96,6 +97,7 @@ struct CardSettingsButtonsVisibility {
   let showMonthlyStatements: Bool
   let showAddFundsFeature: Bool
     let showOrderPhysicalCard: Bool
+    let showP2PTransferFeature: Bool
     let showAppleWalletRow: Bool
 }
 
@@ -103,7 +105,7 @@ extension CardSettingsButtonsVisibility {
   init() {
     self.init(showChangePin: false, showGetPin: false, showSetPassCode: false, showIVRSupport: false,
               showDetailedCardActivity: false, isShowDetailedCardActivityEnabled: false, showMonthlyStatements: false,
-              showAddFundsFeature: false, showOrderPhysicalCard: false, showAppleWalletRow: false)
+              showAddFundsFeature: false, showOrderPhysicalCard: false, showP2PTransferFeature: false, showAppleWalletRow: false)
   }
 }
 
@@ -139,6 +141,7 @@ protocol CardSettingsPresenterProtocol: class {
   func monthlyStatementsTapped()
   func didTapOnLoadFunds()
     func didTapOnOrderPhysicalCard()
+    func didTapOnP2PTransfer()
     func didTapOnApplePayIAP()
     func cardLastFourDigits() -> String
 }
