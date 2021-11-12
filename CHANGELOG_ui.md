@@ -1,15 +1,17 @@
 ## CHANGELOG AptoUISDK
 
-# 2021-10-11 Version 3.8.0
+# 2021-10-11 Version 2.16.0
 - feature: added Peer to Peer transfer. Now it is possible to transfer money from within users in the same card program. 
 - feature: now it is possible to remove any payment method if the cardholder has more than one.
 - improvement: changed company logo aspect ratio on card.
 - improvement: the alert buttons are now positioned correctly. 
-- fix: resolved the OTP bug issue.
 - fix: removed unused copies.
 - fix: added missing asset to identify an invalid card.
 
-# 2021-13-10 Version 3.7.0
+# 2021-21-10 Version 2.15.1
+- fix: resolved the OTP bug issue.
+
+# 2021-13-10 Version 2.15.0
 - feature: added new card shipping progress bar.
 
 # 2021-09-15 Version 2.14.0
