@@ -31,7 +31,7 @@ platform :ios do
   lane :unit_tests do
     scan(
       workspace: WORKSPACE,
-      device: "iPhone 11 Pro Max (15.0)",
+      device: "iPhone 11 Pro Max",
       scheme: SCHEME[:unit],
       clean: true,
       reset_simulator: true,
@@ -89,6 +89,16 @@ platform :ios do
 
     # Push repos to cocoapods
     update_core_cocoapods
+    
+    update_ui_mobile_version(current_core_pod_version, version)
+    commit_local_ui_repo(version)
+  end
+
+  desc "test_implementation"
+  lane :test_implementation do
+    version = prompt(text: "New Core SDK version (Current version #{current_core_pod_version}): ")
+    update_ui_mobile_version(current_core_pod_version, version)
+    commit_local_ui_repo(version)
   end
 
   desc "Publish UI SDK"
@@ -415,4 +425,16 @@ def reference_remote_repos
   text = File.read("../Podfile")
   text.gsub! ", :path => '../'", ""
   File.open("../Podfile", "w") {|file| file.puts text }
+end
+
+def update_ui_mobile_version(old_version, new_version)
+  text = File.read("#{POD_SPECS[:ui]}")
+  old_version.gsub! "\"", ""
+  text.sub! "s.dependency 'AptoSDK', '#{old_version}'", "s.dependency 'AptoSDK', '#{new_version}'"
+  File.open("#{POD_SPECS[:ui]}", "w") {|file| file.puts text }
+end
+
+def commit_local_ui_repo(version)
+  sh("git add #{POD_SPECS[:ui]}")
+  sh("git commit -m \"Upgrade Mobile SDK version on AptoUISDK.podspec to #{version}\"")
 end

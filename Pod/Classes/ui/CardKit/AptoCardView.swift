@@ -25,16 +25,18 @@ public final class AptoCardView: UIView {
         imageView.contentMode = .bottomRight
         return imageView
     }()
-    
+
     init() {
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
     }
-    
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     // MARK: Private methods
+
     private func setupSubviews() {
         [backgroundImageView, logoImageView, networkImageView].forEach(addSubview)
         backgroundColor = .clear
@@ -44,7 +46,7 @@ public final class AptoCardView: UIView {
 
     private func setupConstraints() {
         backgroundImageView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        
+
         networkImageView.snp.makeConstraints { make in
             make.width.equalTo(60)
             make.height.equalTo(40)
@@ -59,25 +61,26 @@ public final class AptoCardView: UIView {
             make.top.equalTo(backgroundImageView).inset(16)
         }
     }
-    
+
     private func setCardBackground(_ cardStyle: CardStyle?, _ cardNetwork: CardNetwork?) {
         guard let cardStyle = cardStyle else { return }
         switch cardStyle.background {
-        case .color(let color):
+        case let .color(color):
             backgroundImageView.image = nil
             backgroundImageView.backgroundColor = color
             setNetworkImage(cardStyle, cardNetwork)
-        case .image(let url):
+        case let .image(url):
             backgroundImageView.setImageUrl(url)
         }
     }
-    
+
     private func setNetworkImage(_ cardStyle: CardStyle?, _ cardNetwork: CardNetwork?) {
         guard let cardStyle = cardStyle else { return }
         if let logo = getLogoForNetwork(cardNetwork) {
             networkImageView.image = logo
             if let rawColor = cardStyle.textColor,
-               let color = UIColor.colorFromHexString(rawColor) {
+               let color = UIColor.colorFromHexString(rawColor)
+            {
                 networkImageView.tintColor = color
             }
         }
@@ -105,6 +108,7 @@ public final class AptoCardView: UIView {
     }
 
     // MARK: Public methods
+
     public func configure(with cardStyle: CardStyle?, cardNetwork: CardNetwork?) {
         setCardBackground(cardStyle, cardNetwork)
         setCompanyLogo(cardStyle)

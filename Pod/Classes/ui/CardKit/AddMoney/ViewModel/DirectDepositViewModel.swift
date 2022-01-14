@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 4/2/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 final class DirectDepositViewModel {
     private let loader: AptoPlatformProtocol
@@ -23,7 +23,8 @@ final class DirectDepositViewModel {
         self.cardId = cardId
         self.analyticsManager = analyticsManager
     }
-    
+
+    // swiftlint:disable trailing_closure
     public func load() {
         onCardLoadingStateChange?(true)
         loader
@@ -31,20 +32,22 @@ final class DirectDepositViewModel {
                        forceRefresh: false,
                        retrieveBalances: false,
                        callback: { [weak self] cardResult in
-                        switch cardResult {
-                        case .success(let card):
-                            if let viewData = DirectDepositViewDataMapper.map(card: card) {
-                                self?.onCardLoadedSuccessfully?(viewData)
-                            } else {
-                                self?.onErrorCardLoading?(BackendError(code: .incorrectParameters))
-                            }
-                        case .failure(let error):
-                            self?.onErrorCardLoading?(error)
-                        }
-                        self?.onCardLoadingStateChange?(false)
+                           switch cardResult {
+                           case let .success(card):
+                               if let viewData = DirectDepositViewDataMapper.map(card: card) {
+                                   self?.onCardLoadedSuccessfully?(viewData)
+                               } else {
+                                   self?.onErrorCardLoading?(BackendError(code: .incorrectParameters))
+                               }
+                           case let .failure(error):
+                               self?.onErrorCardLoading?(error)
+                           }
+                           self?.onCardLoadingStateChange?(false)
                        })
     }
-    
+
+    // swiftlint:enable trailing_closure
+
     public func trackEvent() {
         analyticsManager.track(event: .directDepositStart)
     }

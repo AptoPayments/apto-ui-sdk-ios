@@ -8,5 +8,4 @@
 import AptoSDK
 @testable import AptoUISDK
 
-class SelectBalanceStoreModuleSpy: UIModuleSpy, SelectBalanceStoreModuleProtocol {
-}
+class SelectBalanceStoreModuleSpy: UIModuleSpy, SelectBalanceStoreModuleProtocol {}

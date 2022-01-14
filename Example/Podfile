@@ -21,6 +21,7 @@ def runtimepods
   pod 'Mixpanel-swift', '~> 2.7', :inhibit_warnings => true
   pod 'Branch', '~> 0.33.1'
   pod 'AlamofireNetworkActivityLogger', '~> 3.4.0'
+  pod 'SwiftLint'
 end
 
 target :Demo do

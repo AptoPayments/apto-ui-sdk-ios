@@ -8,30 +8,29 @@
 import AptoSDK
 import Bond
 
-protocol ContentPresenterRouter: class {
-  func close()
-  func show(url: URL)
+protocol ContentPresenterRouter: AnyObject {
+    func close()
+    func show(url: URL)
 }
 
-protocol ContentPresenterModuleProtocol: UIModuleProtocol, ContentPresenterRouter {
-}
+protocol ContentPresenterModuleProtocol: UIModuleProtocol, ContentPresenterRouter {}
 
 protocol ContentPresenterInteractorProtocol {
-  func provideContent(completion: (_ content: Content) -> Void)
+    func provideContent(completion: (_ content: Content) -> Void)
 }
 
 class ContentPresenterViewModel {
-  var content: Observable<Content?> = Observable(nil)
+    var content: Observable<Content?> = Observable(nil)
 }
 
-protocol ContentPresenterPresenterProtocol: class {
-  var viewModel: ContentPresenterViewModel { get }
-  // swiftlint:disable implicitly_unwrapped_optional
-  var interactor: ContentPresenterInteractorProtocol! { get set }
-  var router: ContentPresenterRouter! { get set }
-  // swiftlint:enable implicitly_unwrapped_optional
+protocol ContentPresenterPresenterProtocol: AnyObject {
+    var viewModel: ContentPresenterViewModel { get }
+    // swiftlint:disable implicitly_unwrapped_optional
+    var interactor: ContentPresenterInteractorProtocol! { get set }
+    var router: ContentPresenterRouter! { get set }
+    // swiftlint:enable implicitly_unwrapped_optional
 
-  func viewLoaded()
-  func closeTapped()
-  func linkTapped(_ url: URL)
+    func viewLoaded()
+    func closeTapped()
+    func linkTapped(_ url: URL)
 }

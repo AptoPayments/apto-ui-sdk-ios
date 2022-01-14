@@ -9,34 +9,34 @@ import AptoSDK
 import Bond
 
 protocol VoIPModuleProtocol: UIModuleProtocol {
-  func callFinished()
+    func callFinished()
 }
 
 protocol VoIPInteractorProtocol {
-  func fetchVoIPToken(callback: @escaping Result<VoIPToken, NSError>.Callback)
+    func fetchVoIPToken(callback: @escaping Result<VoIPToken, NSError>.Callback)
 }
 
 enum CallState: Equatable {
-  case starting
-  case established
-  case finished
+    case starting
+    case established
+    case finished
 }
 
 class VoIPViewModel {
-  let callState: Observable<CallState?> = Observable(nil)
-  let timeElapsed: Observable<String?> = Observable(nil)
-  let error: Observable<NSError?> = Observable(nil)
+    let callState: Observable<CallState?> = Observable(nil)
+    let timeElapsed: Observable<String?> = Observable(nil)
+    let error: Observable<NSError?> = Observable(nil)
 }
 
-protocol VoIPPresenterProtocol: class {
-  var router: VoIPModuleProtocol? { get set }
-  var interactor: VoIPInteractorProtocol? { get set }
-  var viewModel: VoIPViewModel { get }
-  var analyticsManager: AnalyticsServiceProtocol? { get set }
+protocol VoIPPresenterProtocol: AnyObject {
+    var router: VoIPModuleProtocol? { get set }
+    var interactor: VoIPInteractorProtocol? { get set }
+    var viewModel: VoIPViewModel { get }
+    var analyticsManager: AnalyticsServiceProtocol? { get set }
 
-  func viewLoaded()
-  func muteCallTapped()
-  func unmuteCallTapped()
-  func hangupCallTapped()
-  func keyboardDigitTapped(_ digit: String)
+    func viewLoaded()
+    func muteCallTapped()
+    func unmuteCallTapped()
+    func hangupCallTapped()
+    func keyboardDigitTapped(_ digit: String)
 }

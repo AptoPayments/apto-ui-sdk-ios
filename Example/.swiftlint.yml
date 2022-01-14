@@ -1,5 +1,10 @@
 disabled_rules:
   - statement_position
+  - identifier_name
+  - trailing_whitespace
+  - file_length
+  - type_body_length
+  - function_parameter_count
 
 opt_in_rules:
   - control_statement

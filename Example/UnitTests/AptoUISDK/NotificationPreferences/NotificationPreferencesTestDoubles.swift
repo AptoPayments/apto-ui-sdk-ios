@@ -8,65 +8,66 @@
 import AptoSDK
 @testable import AptoUISDK
 
-class NotificationPreferencesModuleSpy: UIModuleSpy, NotificationPreferencesModuleProtocol {
-}
+class NotificationPreferencesModuleSpy: UIModuleSpy, NotificationPreferencesModuleProtocol {}
 
 class NotificationPreferencesInteractorSpy: NotificationPreferencesInteractorProtocol {
-  private(set) var fetchPreferencesCalled = false
-  func fetchPreferences(completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
-    fetchPreferencesCalled = true
-  }
+    private(set) var fetchPreferencesCalled = false
+    func fetchPreferences(completion _: @escaping Result<NotificationPreferences, NSError>.Callback) {
+        fetchPreferencesCalled = true
+    }
 
-  private(set) var updatePreferencesCalled = false
-  private(set) var lastPreferencesToUpdate: NotificationPreferences?
-  func updatePreferences(_ preferences: NotificationPreferences,
-                         completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
-    updatePreferencesCalled = true
-    lastPreferencesToUpdate = preferences
-  }
+    private(set) var updatePreferencesCalled = false
+    private(set) var lastPreferencesToUpdate: NotificationPreferences?
+    func updatePreferences(_ preferences: NotificationPreferences,
+                           completion _: @escaping Result<NotificationPreferences, NSError>.Callback)
+    {
+        updatePreferencesCalled = true
+        lastPreferencesToUpdate = preferences
+    }
 }
 
 class NotificationPreferencesInteractorFake: NotificationPreferencesInteractorSpy {
-  var nextFetchPreferencesResult: Result<NotificationPreferences, NSError>?
-  override func fetchPreferences(completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
-    super.fetchPreferences(completion: completion)
+    var nextFetchPreferencesResult: Result<NotificationPreferences, NSError>?
+    override func fetchPreferences(completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
+        super.fetchPreferences(completion: completion)
 
-    if let result = nextFetchPreferencesResult {
-      completion(result)
+        if let result = nextFetchPreferencesResult {
+            completion(result)
+        }
     }
-  }
 
-  var nextUpdatePreferencesResult: Result<NotificationPreferences, NSError>?
-  override func updatePreferences(_ preferences: NotificationPreferences,
-                                  completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
-    super.updatePreferences(preferences, completion: completion)
+    var nextUpdatePreferencesResult: Result<NotificationPreferences, NSError>?
+    override func updatePreferences(_ preferences: NotificationPreferences,
+                                    completion: @escaping Result<NotificationPreferences, NSError>.Callback)
+    {
+        super.updatePreferences(preferences, completion: completion)
 
-    if let result = nextUpdatePreferencesResult {
-      completion(result)
+        if let result = nextUpdatePreferencesResult {
+            completion(result)
+        }
     }
-  }
 }
 
 class NotificationPreferencesPresenterSpy: NotificationPreferencesPresenterProtocol {
-  var router: NotificationPreferencesModuleProtocol?
-  var interactor: NotificationPreferencesInteractorProtocol?
-  let viewModel = NotificationPreferencesViewModel()
-  var analyticsManager: AnalyticsServiceProtocol?
+    var router: NotificationPreferencesModuleProtocol?
+    var interactor: NotificationPreferencesInteractorProtocol?
+    let viewModel = NotificationPreferencesViewModel()
+    var analyticsManager: AnalyticsServiceProtocol?
 
-  private(set) var viewLoadedCalled = false
-  func viewLoaded() {
-    viewLoadedCalled = true
-  }
+    private(set) var viewLoadedCalled = false
+    func viewLoaded() {
+        viewLoadedCalled = true
+    }
 
-  private(set) var closeTappedCalled = false
-  func closeTapped() {
-    closeTappedCalled = true
-  }
+    private(set) var closeTappedCalled = false
+    func closeTapped() {
+        closeTappedCalled = true
+    }
 
-  private(set) var didUpdateNotificationRowCalled = false
-  private(set) var lastRowUpdated: NotificationRow?
-  func didUpdateNotificationRow(_ row: NotificationRow) {
-    didUpdateNotificationRowCalled = true
-    lastRowUpdated = row
-  }
+    private(set) var didUpdateNotificationRowCalled = false
+    private(set) var lastRowUpdated: NotificationRow?
+    func didUpdateNotificationRow(_ row: NotificationRow) {
+        didUpdateNotificationRowCalled = true
+        lastRowUpdated = row
+    }
 }

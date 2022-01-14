@@ -5,15 +5,14 @@
 //  Created by Fabio Cuomo on 27/1/21.
 //
 
-import XCTest
-import SnapshotTesting
 import SnapKit
+import SnapshotTesting
+import XCTest
 
-@testable import AptoUISDK
 @testable import AptoSDK
+@testable import AptoUISDK
 
 class DirectDepositViewTests: XCTestCase {
-    
     func test_infoView_rendersViewWithInfoAndValue() {
         let view = ShowInfoView(uiconfig: UIConfig.default)
         view.configure(with: "Bank Name", valueText: "Evolve Bank & Trust")
@@ -23,7 +22,7 @@ class DirectDepositViewTests: XCTestCase {
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        
+
         assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
@@ -40,7 +39,7 @@ class DirectDepositViewTests: XCTestCase {
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        
+
         assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }

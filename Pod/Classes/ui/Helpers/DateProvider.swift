@@ -8,11 +8,11 @@
 import Foundation
 
 protocol DateProviderProtocol {
-  func currentDate() -> Date
+    func currentDate() -> Date
 }
 
 class DateProvider: DateProviderProtocol {
-  func currentDate() -> Date {
-    return Date()
-  }
+    func currentDate() -> Date {
+        return Date()
+    }
 }

@@ -8,11 +8,9 @@
 import UIKit
 
 extension UITextField {
-
-  func positionCursor(atIndex: Int) {
-    if let newPosition = position(from: beginningOfDocument, offset: atIndex) {
-      selectedTextRange = textRange(from: newPosition, to: newPosition)
+    func positionCursor(atIndex: Int) {
+        if let newPosition = position(from: beginningOfDocument, offset: atIndex) {
+            selectedTextRange = textRange(from: newPosition, to: newPosition)
+        }
     }
-  }
-
 }

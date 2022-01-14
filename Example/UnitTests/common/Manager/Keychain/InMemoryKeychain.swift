@@ -8,21 +8,21 @@
 @testable import AptoSDK
 
 class InMemoryKeychain: KeychainProtocol {
-  var cache = [String: Data?]()
+    var cache = [String: Data?]()
 
-  @discardableResult
-  func save(value: Data?, for key: String) -> Bool {
-    cache[key] = value
-    return true
-  }
+    @discardableResult
+    func save(value: Data?, for key: String) -> Bool {
+        cache[key] = value
+        return true
+    }
 
-  func value(for key: String) -> Data? {
-    return cache[key] ?? nil
-  }
+    func value(for key: String) -> Data? {
+        return cache[key] ?? nil
+    }
 
-  @discardableResult
-  func removeValue(for key: String) -> Bool {
-    cache[key] = nil
-    return true
-  }
+    @discardableResult
+    func removeValue(for key: String) -> Bool {
+        cache[key] = nil
+        return true
+    }
 }

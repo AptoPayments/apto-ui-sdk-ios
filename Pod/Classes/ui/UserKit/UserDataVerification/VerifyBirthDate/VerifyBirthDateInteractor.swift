@@ -6,70 +6,70 @@
 //
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class VerifyBirthDateInteractor: VerifyBirthDateInteractorProtocol {
-  private unowned let dataReceiver: VerifyBirthDateDataReceiver
-  private let verificationType: VerificationParams<BirthDate, Verification>
-  private let platform: AptoPlatformProtocol
-  private var verification: Verification?
-  private var birthDate: BirthDate?
+    private unowned let dataReceiver: VerifyBirthDateDataReceiver
+    private let verificationType: VerificationParams<BirthDate, Verification>
+    private let platform: AptoPlatformProtocol
+    private var verification: Verification?
+    private var birthDate: BirthDate?
 
-  init(platform: AptoPlatformProtocol, verificationType: VerificationParams<BirthDate, Verification>,
-       dataReceiver: VerifyBirthDateDataReceiver) {
-    self.platform = platform
-    self.dataReceiver = dataReceiver
-    self.verificationType = verificationType
-  }
+    init(platform: AptoPlatformProtocol, verificationType: VerificationParams<BirthDate, Verification>,
+         dataReceiver: VerifyBirthDateDataReceiver)
+    {
+        self.platform = platform
+        self.dataReceiver = dataReceiver
+        self.verificationType = verificationType
+    }
 
-  func provideBirthDate() {
-    switch verificationType {
-    case .datapoint(let birthDate):
-      self.birthDate = birthDate
-      startVerification()
-    case .verification(let verification):
-      self.verification = verification
-      dataReceiver.verificationReceived(verification)
-    }
-  }
-
-  func startVerification() {
-    guard let birthDate = self.birthDate, birthDate.date.value != nil else {
-      return
-    }
-    platform.startBirthDateVerification(birthDate) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .failure(let error):
-        self.dataReceiver.verificationStartError(error)
-      case .success(let verification):
-        self.verification = verification
-        self.dataReceiver.verificationReceived(verification)
-      }
-    }
-  }
-
-  func submit(birthDate: Date) {
-    guard let verification = self.verification else {
-      return
-    }
-    let secret = birthDate.formatForJSONAPI()
-    verification.secret = secret
-    platform.completeVerification(verification) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .failure:
-        self.dataReceiver.verificationFailed()
-      case .success(let verification):
-        if verification.status == .passed {
-          verification.secret = secret
-          self.dataReceiver.verificationSucceeded(verification)
+    func provideBirthDate() {
+        switch verificationType {
+        case let .datapoint(birthDate):
+            self.birthDate = birthDate
+            startVerification()
+        case let .verification(verification):
+            self.verification = verification
+            dataReceiver.verificationReceived(verification)
         }
-        else {
-          self.dataReceiver.verificationFailed()
-        }
-      }
     }
-  }
+
+    func startVerification() {
+        guard let birthDate = birthDate, birthDate.date.value != nil else {
+            return
+        }
+        platform.startBirthDateVerification(birthDate) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .failure(error):
+                self.dataReceiver.verificationStartError(error)
+            case let .success(verification):
+                self.verification = verification
+                self.dataReceiver.verificationReceived(verification)
+            }
+        }
+    }
+
+    func submit(birthDate: Date) {
+        guard let verification = verification else {
+            return
+        }
+        let secret = birthDate.formatForJSONAPI()
+        verification.secret = secret
+        platform.completeVerification(verification) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .failure:
+                self.dataReceiver.verificationFailed()
+            case let .success(verification):
+                if verification.status == .passed {
+                    verification.secret = secret
+                    self.dataReceiver.verificationSucceeded(verification)
+                } else {
+                    self.dataReceiver.verificationFailed()
+                }
+            }
+        }
+    }
 }

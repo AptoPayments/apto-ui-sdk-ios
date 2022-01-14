@@ -6,28 +6,28 @@
 //
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class ServerMaintenanceErrorInteractorTest: XCTestCase {
-  private var sut: ServerMaintenanceErrorInteractor! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: ServerMaintenanceErrorInteractor! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private lazy var platform = serviceLocator.platformFake
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private lazy var platform = serviceLocator.platformFake
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = ServerMaintenanceErrorInteractor(aptoPlatform: platform)
-  }
+        sut = ServerMaintenanceErrorInteractor(aptoPlatform: platform)
+    }
 
-  func testRunPendingRequestCallNetworkManager() {
-    // When
-    sut.runPendingRequests()
+    func testRunPendingRequestCallNetworkManager() {
+        // When
+        sut.runPendingRequests()
 
-    // Then
-    XCTAssertTrue(platform.runPendingNetworkRequestsCalled)
-  }
+        // Then
+        XCTAssertTrue(platform.runPendingNetworkRequestsCalled)
+    }
 }

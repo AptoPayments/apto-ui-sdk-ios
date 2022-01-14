@@ -1,9 +1,9 @@
 import AptoSDK
- 
-extension AptoPlatform {
-  public var transaction: TransactionModule {
-    AptoTransactionModule()
-  }
+
+public extension AptoPlatform {
+    var transaction: TransactionModule {
+        AptoTransactionModule()
+    }
 }
 
 internal struct AptoTransactionModule: TransactionModule {}

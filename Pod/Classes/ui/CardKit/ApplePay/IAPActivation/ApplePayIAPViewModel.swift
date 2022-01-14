@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 16/4/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 public final class ApplePayIAPViewModel {
     typealias Observer<T> = (T) -> Void
@@ -28,26 +28,30 @@ public final class ApplePayIAPViewModel {
         onLoadingStateChange?(true)
         loader.fetchCard(cardId, forceRefresh: false) { [weak self] result in
             switch result {
-            case .success(let card):
+            case let .success(card):
                 self?.onCardFetched?(card)
-            case .failure(let error):
+            case let .failure(error):
                 self?.onCardError?(error)
             }
             self?.onLoadingStateChange?(false)
         }
     }
-    
-    func sendRequestData(certificates: [Data], nonce: Data, nonceSignature: Data, completion: @escaping (ApplePayIAPIssuerResponse) -> Void) {
+
+    func sendRequestData(certificates: [Data],
+                         nonce: Data,
+                         nonceSignature: Data,
+                         completion: @escaping (ApplePayIAPIssuerResponse) -> Void)
+    {
         onLoadingStateChange?(true)
         loader.startApplePayInAppProvisioning(cardId: cardId,
                                               certificates: certificates,
                                               nonce: nonce,
                                               nonceSignature: nonceSignature) { [weak self] result in
             switch result {
-            case .success(let responsePayload):
+            case let .success(responsePayload):
                 completion(responsePayload)
                 self?.onPayloadFetched?(responsePayload)
-            case .failure(let error):
+            case let .failure(error):
                 self?.onPayloadError?(error)
             }
         }

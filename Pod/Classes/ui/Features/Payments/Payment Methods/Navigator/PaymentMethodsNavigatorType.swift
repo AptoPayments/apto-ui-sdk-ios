@@ -1,6 +1,6 @@
 import Foundation
 
 protocol PaymentMethodsNavigatorType {
-  func close()
-  func didTapOnAddCard()
+    func close()
+    func didTapOnAddCard()
 }

@@ -8,44 +8,34 @@
 import UIKit
 
 class SelectAccountTypeScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Fund Loan"
+        static let SelectBankAccountButton = "Select Bank Account Button"
+        static let IssueVirtualCardButton = "Issue Virtual Card Button"
+        static let AddCardButton = "Add Card Button"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Fund Loan"
-    static let SelectBankAccountButton = "Select Bank Account Button"
-    static let IssueVirtualCardButton = "Issue Virtual Card Button"
-    static let AddCardButton = "Add Card Button"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func selectBankAccount() -> Self {
+        tapView(withAccessibilityLabel: Labels.SelectBankAccountButton)
 
-    return self
+        return self
+    } // end selectBankAccount
 
-  } // end waitForScreen
+    @discardableResult func addCard() -> Self {
+        tapView(withAccessibilityLabel: Labels.AddCardButton)
 
-  @discardableResult func selectBankAccount() -> Self {
+        return self
+    } // end addCard
 
-    tapView(withAccessibilityLabel: Labels.SelectBankAccountButton)
+    @discardableResult func issueVirtualCard() -> Self {
+        tapView(withAccessibilityLabel: Labels.IssueVirtualCardButton)
 
-    return self
-
-  } // end selectBankAccount
-
-  @discardableResult func addCard() -> Self {
-
-    tapView(withAccessibilityLabel: Labels.AddCardButton)
-
-    return self
-
-  } // end addCard
-
-  @discardableResult func issueVirtualCard() -> Self {
-
-    tapView(withAccessibilityLabel: Labels.IssueVirtualCardButton)
-
-    return self
-
-  } // end issueVirtualCard
-
+        return self
+    } // end issueVirtualCard
 }

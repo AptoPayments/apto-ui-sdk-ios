@@ -5,13 +5,13 @@
 //  Created by Fabio Cuomo on 26/1/21.
 //
 
-import UIKit
-import SnapKit
 import AptoSDK
+import SnapKit
+import UIKit
 
 public final class DetailActionView: UIView {
     let uiConfiguration: UIConfig
-    
+
     private(set) lazy var titleLabel: UILabel = {
         let label = ComponentCatalog.boldMessageLabelWith(text: "",
                                                           textAlignment: .left,
@@ -20,6 +20,7 @@ public final class DetailActionView: UIView {
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
+
     private(set) lazy var subTitleLabel: UILabel = {
         let label = ComponentCatalog.boldMessageLabelWith(text: "",
                                                           textAlignment: .left,
@@ -28,37 +29,39 @@ public final class DetailActionView: UIView {
         label.font = uiConfiguration.fontProvider.itemDescriptionFont
         return label
     }()
+
     private lazy var chevronImageView: UIImageView = {
         guard let image = UIImage.imageFromPodBundle("row_arrow.png")?.asTemplate() else { return UIImageView() }
         let imageView = UIImageView(image: image)
         imageView.tintColor = uiConfiguration.uiTertiaryColor
         return imageView
     }()
+
     private let dividerView = UIView()
     private let titleText: String
     private let subTitleText: String
-    
+
     init(uiconfig: UIConfig, textTitle: String, textSubTitle: String) {
-        self.uiConfiguration = uiconfig
-        self.titleText = textTitle
-        self.subTitleText = textSubTitle
+        uiConfiguration = uiconfig
+        titleText = textTitle
+        subTitleText = textSubTitle
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     private func setupViews() {
         backgroundColor = uiConfiguration.textMessageColor
         dividerView.backgroundColor = uiConfiguration.uiTertiaryColor
         titleLabel.text = titleText
         subTitleLabel.text = subTitleText
-        
+
         [titleLabel, subTitleLabel, chevronImageView, dividerView].forEach(addSubview)
     }
-    
+
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
@@ -78,12 +81,11 @@ public final class DetailActionView: UIView {
             make.height.equalTo(1)
         }
     }
-    
+
     // MARK: Public methods
+
     public func configure(with title: String, subtitle: String) {
         titleLabel.text = title
         subTitleLabel.text = subtitle
     }
 }
-
-

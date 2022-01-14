@@ -8,16 +8,15 @@
 
 import XCTest
 
-@testable import AptoUISDK
 @testable import AptoSDK
+@testable import AptoUISDK
 
 class ApplePayIAPViewControllerTests: XCTestCase {
-
     let cardId = "crd_1234567890"
-    
+
     func test_init_doesNotFetchCard() {
         let (_, loader) = makeSUT()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 0)
     }
 
@@ -25,14 +24,16 @@ class ApplePayIAPViewControllerTests: XCTestCase {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 1)
     }
-    
+
     // MARK: - Helpers
+
     private func makeSUT(file: StaticString = #file, line: UInt = #line)
-    ->
-    (sut: ApplePayIAPViewController, loader: CardLoaderSpy) {
+        ->
+        (sut: ApplePayIAPViewController, loader: CardLoaderSpy)
+    {
         let loader = CardLoaderSpy()
         let viewModel = ApplePayIAPViewModel(cardId: cardId, loader: loader)
         let sut = ApplePayIAPViewController(viewModel: viewModel, uiConfiguration: UIConfig.default)
@@ -40,5 +41,4 @@ class ApplePayIAPViewControllerTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
     }
-
 }

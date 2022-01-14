@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 7/10/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class P2PTransferResultViewController: AptoViewController {
     private(set) lazy var resultView: GenericResultScreenView = {
@@ -16,18 +16,19 @@ class P2PTransferResultViewController: AptoViewController {
         view.configureBottomItems(with: summary)
         return view
     }()
+
     private let transferResponse: P2PTransferResponse
-    
+
     init(uiConfiguration: UIConfig, transferResponse: P2PTransferResponse) {
         self.transferResponse = transferResponse
         super.init(uiConfiguration: uiConfiguration)
     }
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     override func loadView() {
-        self.view = resultView
+        view = resultView
     }
 
     override func viewDidLoad() {
@@ -35,12 +36,16 @@ class P2PTransferResultViewController: AptoViewController {
         navigationController?.navigationBar.topItem?.title = ""
         navigationItem.hidesBackButton = true
         let closeImageIcon = UIImage.imageFromPodBundle("top_close_default")
-        let closeButton = UIBarButtonItem(image: closeImageIcon, style: .plain, target: self, action: #selector(didTapOnClose))
+        let closeButton = UIBarButtonItem(image: closeImageIcon,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(didTapOnClose))
         navigationItem.leftBarButtonItem = closeButton
         resultView.doneButton.addTarget(self, action: #selector(didTapOnDoneButton), for: .touchUpInside)
     }
-    
+
     // MARK: Private methods
+
     private func headerTitleText() -> String {
         let recipient = (transferResponse.recipientFirstName ?? "") + " " + (transferResponse.recipientLastName ?? "")
         var headerTitle = ""
@@ -59,7 +64,7 @@ class P2PTransferResultViewController: AptoViewController {
         }
         return headerTitle
     }
-    
+
     private func statusTitleText() -> String {
         var status = ""
         switch transferResponse.status {
@@ -71,11 +76,11 @@ class P2PTransferResultViewController: AptoViewController {
         }
         return status
     }
-    
+
     private func resultSummary() -> [BottomItemModel] {
         var summary = [
             BottomItemModel(info: "p2p_transfer.transfer_funds.success.status.title".podLocalized(),
-                            value: statusTitleText())
+                            value: statusTitleText()),
         ]
         if let transactionDate = transferResponse.createdAt {
             let dateFormatter = DateFormatter.dateTimeFormatter()
@@ -85,12 +90,13 @@ class P2PTransferResultViewController: AptoViewController {
         }
         return summary
     }
-    
+
     // MARK: Public methods
+
     @objc public func didTapOnDoneButton() {
         navigationController?.dismiss(animated: true)
     }
-    
+
     @objc func didTapOnClose() {
         navigationController?.dismiss(animated: true)
     }

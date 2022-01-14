@@ -6,17 +6,16 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
 @testable import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class AddCardOnboardingViewControllerTests: XCTestCase {
-
     let cardId = "crd_1234567890"
 
     func test_init_doesNotFetchCardInfo() {
         let (_, loader) = makeSUT()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 0)
     }
 
@@ -24,7 +23,7 @@ class AddCardOnboardingViewControllerTests: XCTestCase {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 1)
     }
 
@@ -34,21 +33,21 @@ class AddCardOnboardingViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         loader.completeCardInfoLoading()
         loader.completeCardProductLoading()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 1)
         XCTAssertEqual(loader.loadCardProductCallCount, 1)
     }
-    
+
     func test_loadCardCompletion_rendersSuccessfullyLoadedInfo() {
         let card = ModelDataProvider.provider.cardWithFunding
         let cardProduct = ModelDataProvider.provider.cardProduct
-        
+
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
         loader.completeCardInfoLoading(with: card)
         loader.completeCardProductLoading(with: cardProduct)
-        
+
         let header = "Debit Card"
         let firstParagraph = "You can instantly transfer funds from your existing bank debit card to your <<VALUE>> card account. Please note that transfers are reviewed and they can be delayed or declined if we suspect risks.".replace(["<<VALUE>>": cardProduct.name])
         let secondParagraph = "This transaction will appear in your bank account statement as: <<VALUE>>".replace(["<<VALUE>>": card.features?.funding?.softDescriptor ?? ""])
@@ -58,6 +57,7 @@ class AddCardOnboardingViewControllerTests: XCTestCase {
     }
 
     // MARK: - Helpers
+
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: AddCardOnboardingViewController, loader: CardLoaderSpy) {
         let loader = CardLoaderSpy()
         let viewModel = AddCardOnboardingViewModel(cardId: cardId, loader: loader)
@@ -72,9 +72,11 @@ private extension AddCardOnboardingViewController {
     var header: String? {
         return mainView.headerLabel.text
     }
+
     var firstParagraph: String? {
         return mainView.firstParagraphLabel.text
     }
+
     var secondParagraph: String? {
         return mainView.secondParagraphLabel.text
     }

@@ -6,15 +6,14 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
-import SnapshotTesting
 import SnapKit
+import SnapshotTesting
+import XCTest
 
-@testable import AptoUISDK
 @testable import AptoSDK
+@testable import AptoUISDK
 
 class P2PTransferViewTests: XCTestCase {
-    
     func test_transferView_rendersView() {
         let view = P2PTransferView(uiconfig: UIConfig.default, defaultCountry: "US")
         view.configureView(for: .email, intro: "p2p_transfer.main_screen.intro.email_description")
@@ -25,8 +24,7 @@ class P2PTransferViewTests: XCTestCase {
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        
+
         assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }
-

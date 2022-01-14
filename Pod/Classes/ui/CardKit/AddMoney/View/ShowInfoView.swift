@@ -5,13 +5,13 @@
 //  Created by Fabio Cuomo on 27/1/21.
 //
 
+import AptoSDK
 import Foundation
 import SnapKit
-import AptoSDK
 
 public final class ShowInfoView: UIView {
     let uiConfiguration: UIConfig
-    
+
     private lazy var infoLabel: UILabel = {
         let label = ComponentCatalog.boldMessageLabelWith(text: "",
                                                           textAlignment: .left,
@@ -20,6 +20,7 @@ public final class ShowInfoView: UIView {
         label.font = uiConfiguration.fontProvider.formListFont
         return label
     }()
+
     private(set) lazy var valueLabel: UILabel = {
         let label = ComponentCatalog.boldMessageLabelWith(text: "",
                                                           textAlignment: .left,
@@ -29,26 +30,28 @@ public final class ShowInfoView: UIView {
         label.isUserInteractionEnabled = true
         return label
     }()
+
     private let dividerView = UIView()
-    
+
     init(uiconfig: UIConfig) {
-        self.uiConfiguration = uiconfig
+        uiConfiguration = uiconfig
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     // MARK: Private Methods
+
     private func setupViews() {
         backgroundColor = uiConfiguration.textMessageColor
         dividerView.backgroundColor = uiConfiguration.uiTertiaryColor
-        
+
         [infoLabel, valueLabel, dividerView].forEach(addSubview)
     }
-    
+
     private func setupConstraints() {
         infoLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
@@ -67,10 +70,9 @@ public final class ShowInfoView: UIView {
     }
 
     // MARK: Public Methods
+
     public func configure(with infoText: String, valueText: String) {
         infoLabel.text = infoText
         valueLabel.text = valueText
     }
 }
-
-

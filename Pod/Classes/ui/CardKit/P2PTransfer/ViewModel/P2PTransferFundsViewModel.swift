@@ -5,9 +5,9 @@
 //  Created by Fabio Cuomo on 6/9/21.
 //
 
-import Foundation
 import AptoSDK
 import CoreImage
+import Foundation
 
 class P2PTransferFundsViewModel {
     private let loader: AptoPlatformProtocol
@@ -20,37 +20,38 @@ class P2PTransferFundsViewModel {
     var onTransferDone: Observer<P2PTransferResponse>?
 
     private var balance: FundingSource?
-    
+
     init(loader: AptoPlatformProtocol, cardId: String) {
         self.loader = loader
         self.cardId = cardId
     }
 
     // MARK: Public methods
+
     public func fetchFundingSource() {
         onLoadingStateChange?(true)
         loader.fetchCardFundingSource(cardId,
                                       forceRefresh: false) { [weak self] result in
             switch result {
-            case .success(let fundingSource):
+            case let .success(fundingSource):
                 if let fundingSource = fundingSource {
                     self?.balance = fundingSource
                     self?.onBalanceFetched?(fundingSource)
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self?.onErrorRequest?(error)
             }
             self?.onLoadingStateChange?(false)
         }
     }
-    
+
     public func performTransferRequest(model: P2PTransferRequest) {
         onLoadingStateChange?(true)
         loader.p2pMakeTransfer(transferRequest: model) { [weak self] result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 self?.onTransferDone?(response)
-            case .failure(let error):
+            case let .failure(error):
                 self?.onErrorRequest?(error)
             }
             self?.onLoadingStateChange?(false)

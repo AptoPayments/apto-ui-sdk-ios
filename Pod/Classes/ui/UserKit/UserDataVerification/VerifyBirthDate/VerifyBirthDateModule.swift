@@ -6,40 +6,40 @@
 //
 //
 
-import UIKit
 import AptoSDK
+import UIKit
 
 class VerifyBirthDateModule: UIModule, VerifyBirthDateModuleProtocol {
-  private let verificationType: VerificationParams<BirthDate, Verification>
-  private var presenter: VerifyBirthDatePresenterProtocol?
+    private let verificationType: VerificationParams<BirthDate, Verification>
+    private var presenter: VerifyBirthDatePresenterProtocol?
 
-  open var onVerificationPassed: ((_ verifyBirthDateModule: VerifyBirthDateModule,
-                                   _ verification: Verification) -> Void)?
+    open var onVerificationPassed: ((_ verifyBirthDateModule: VerifyBirthDateModule,
+                                     _ verification: Verification) -> Void)?
 
-  init(serviceLocator: ServiceLocatorProtocol, verificationType: VerificationParams<BirthDate, Verification>) {
-    self.verificationType = verificationType
-    super.init(serviceLocator: serviceLocator)
-  }
+    init(serviceLocator: ServiceLocatorProtocol, verificationType: VerificationParams<BirthDate, Verification>) {
+        self.verificationType = verificationType
+        super.init(serviceLocator: serviceLocator)
+    }
 
-  override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
-    let presenter = serviceLocator.presenterLocator.verifyBirthDatePresenter()
-    let interactor = serviceLocator.interactorLocator.verifyBirthDateInteractor(verificationType: verificationType,
-                                                                                dataReceiver: presenter)
-    presenter.interactor = interactor
-    presenter.router = self
-    let viewController = serviceLocator.viewLocator.verifyBirthDateView(presenter: presenter)
-    presenter.view = viewController
-    addChild(viewController: viewController, completion: completion)
-    self.presenter = presenter
-  }
+    override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
+        let presenter = serviceLocator.presenterLocator.verifyBirthDatePresenter()
+        let interactor = serviceLocator.interactorLocator.verifyBirthDateInteractor(verificationType: verificationType,
+                                                                                    dataReceiver: presenter)
+        presenter.interactor = interactor
+        presenter.router = self
+        let viewController = serviceLocator.viewLocator.verifyBirthDateView(presenter: presenter)
+        presenter.view = viewController
+        addChild(viewController: viewController, completion: completion)
+        self.presenter = presenter
+    }
 }
 
 extension VerifyBirthDateModule: VerifyBirthDateRouterProtocol {
-  func closeTappedInVerifyBirthDate() {
-    self.close()
-  }
+    func closeTappedInVerifyBirthDate() {
+        close()
+    }
 
-  func birthDateVerificationPassed(verification: Verification) {
-    self.onVerificationPassed?(self, verification)
-  }
+    func birthDateVerificationPassed(verification: Verification) {
+        onVerificationPassed?(self, verification)
+    }
 }

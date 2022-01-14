@@ -6,18 +6,18 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
-import SwiftyJSON
 @testable import AptoSDK
+import SwiftyJSON
+import XCTest
 
 class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
-
     func test_init_doesNotRequestDataFromURL() {
         let (_, transport) = makeSUT()
         assertThatInitDoesNotRequestDataFromURL(on: transport)
     }
 
     // MARK: issueCard tests
+
     func test_issueCard_postDataToURL() {
         let (sut, transport) = makeSUT()
         assertThatIssueCardPostDataToURL(on: sut, transport: transport,
@@ -51,6 +51,7 @@ class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
     }
 
     // MARK: createApplication tests
+
     func test_createApplication_postDataToURL() {
         let (sut, transport) = makeSUT()
         assertThatCreateApplicationPostDataToURL(on: sut, transport: transport)
@@ -72,48 +73,51 @@ class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
     }
 
     // MARK: applicationStatus tests
+
     func test_applicationStatus_getDataFromURL() {
         let (sut, transport) = makeSUT()
         assertThatApplicationStatusGetDataFromURL(on: sut, transport: transport, applicationId: anyApplicationId())
     }
-    
+
     func test_applicationStatusTwice_getDataFromURLTwice() {
         let (sut, transport) = makeSUT()
         assertThatApplicationStatusTwiceGetDataToURLTwice(on: sut, transport: transport, applicationId: anyApplicationId())
     }
-    
+
     func test_applicationStatus_deliversErrorOnClientErrors() {
         let (sut, transport) = makeSUT()
         assertThatApplicationStatusDeliversErrorOnClientErrors(on: sut, transport: transport, applicationId: anyApplicationId())
     }
-    
-        func test_applicationStatus_deliversApplicationOnValidJSONResponse() {
+
+    func test_applicationStatus_deliversApplicationOnValidJSONResponse() {
         let (sut, transport) = makeSUT()
         assertThatApplicationStatusDeliversApplicationOnValidJSONResponse(on: sut, transport: transport, applicationId: anyApplicationId())
     }
 
     // MARK: setBalanceStore tests
+
     func test_setBalanceStore_postDataToURL() {
         let (sut, transport) = makeSUT()
         assertThatSetBalanceStorePostDataToURL(on: sut, transport: transport, applicationId: anyApplicationId())
     }
-    
+
     func test_setBalanceStore_postDataToURLTwice() {
         let (sut, transport) = makeSUT()
         assertThatSetBalanceStorePostDataToURLTwice(on: sut, transport: transport, applicationId: anyApplicationId())
     }
-    
+
     func test_setBalanceStore_deliversErrorOnClientErrors() {
         let (sut, transport) = makeSUT()
         assertThatSetBalanceStoreDeliversErrorOnClientErrors(on: sut, transport: transport, applicationId: anyApplicationId())
     }
-    
+
     func test_setBalanceStore_deliversNewApplicationOnValidJSONResponse() {
         let (sut, transport) = makeSUT()
         assertThatSetBalanceStoreDeliversSelectBalanceStoreResultOnValidJSONResponse(on: sut, transport: transport, applicationId: anyApplicationId())
     }
 
     // MARK: acceptDisclaimer tests
+
     func test_acceptDisclaimer_postDataToURL() {
         let (sut, transport) = makeSUT()
         assertThatAcceptDisclaimerPostDataToURL(on: sut,
@@ -121,7 +125,7 @@ class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
                                                 workflowObject: ModelDataProvider.provider.cardApplication,
                                                 workflowAction: ModelDataProvider.provider.workflowAction)
     }
-    
+
     func test_acceptDisclaimer_postDataToURLTwice() {
         let (sut, transport) = makeSUT()
         assertThatAcceptDisclaimerPostDataToURLTwice(on: sut,
@@ -129,7 +133,7 @@ class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
                                                      workflowObject: ModelDataProvider.provider.cardApplication,
                                                      workflowAction: ModelDataProvider.provider.workflowAction)
     }
-    
+
     func test_acceptDisclaimer_deliversErrorOnClientErrors() {
         let (sut, transport) = makeSUT()
         assertThatAcceptDisclaimerDeliversErrorOnClientErrors(on: sut,
@@ -137,7 +141,7 @@ class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
                                                               workflowObject: ModelDataProvider.provider.cardApplication,
                                                               workflowAction: ModelDataProvider.provider.workflowAction)
     }
-    
+
     func test_acceptDisclaimer_deliversSuccessOnValidJSONResponse() {
         let (sut, transport) = makeSUT()
         assertThatAcceptDisclaimerDeliversNewApplicationOnValidJSONResponse(on: sut,
@@ -147,27 +151,28 @@ class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
     }
 
     // MARK: cancelCardApplication tests
+
     func test_cancelCardApplication_deleteDataFromURL() {
         let (sut, transport) = makeSUT()
         assertThatCancelCardApplicationDeleteDataFromURL(on: sut,
                                                          transport: transport,
                                                          applicationId: anyApplicationId())
     }
-    
+
     func test_cancelCardApplication_deleteDataFromURLTwice() {
         let (sut, transport) = makeSUT()
         assertThatCancelCardApplicationDeleteDataFromURLTwice(on: sut,
                                                               transport: transport,
                                                               applicationId: anyApplicationId())
     }
-    
+
     func test_cancelCardApplication_deliversErrorOnClientErrors() {
         let (sut, transport) = makeSUT()
         assertThatCancelCardApplicationDeliversErrorOnClientErrors(on: sut,
                                                                    transport: transport,
                                                                    applicationId: anyApplicationId())
     }
-    
+
     func test_cancelCardApplication_deliversNewApplicationOnValidJSONResponse() {
         let (sut, transport) = makeSUT()
         assertThatCancelCardApplicationDeliversNewApplicationOnValidJSONResponse(on: sut,
@@ -176,6 +181,7 @@ class CardApplicationStorageTests: XCTestCase, CardApplicationSpecs {
     }
 
     // MARK: Private Helper methods
+
     private func makeSUT() -> (sut: CardApplicationsStorageProtocol, transport: StorageTransportSpy) {
         let transport = StorageTransportSpy()
         let sut = CardApplicationsStorage(transport: transport)

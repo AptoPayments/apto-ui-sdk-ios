@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 26/3/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 final class OrderPhysicalCardUIComposer {
     private init() {}
@@ -16,9 +16,11 @@ final class OrderPhysicalCardUIComposer {
     public static func composedWith(card: Card,
                                     cardLoader: AptoPlatformProtocol,
                                     analyticsManager: AnalyticsServiceProtocol,
-                                    uiConfiguration: UIConfig,
+                                    uiConfiguration _: UIConfig,
                                     cardOrderedCompletion: OrderedCompletion? = nil,
-                                    cardConfigErrorCompletion: CardConfigErrorCompletion? = nil) -> OrderPhysicalCardViewController {
+                                    cardConfigErrorCompletion: CardConfigErrorCompletion? = nil)
+        -> OrderPhysicalCardViewController
+    {
         let viewModel = OrderPhysicalCardViewModel(card: card, loader: cardLoader, analyticsManager: analyticsManager)
         let controller = OrderPhysicalCardViewController(uiConfiguration: UIConfig.default, viewModel: viewModel)
         controller.cardOrderedCompletion = cardOrderedCompletion

@@ -5,14 +5,14 @@
 //  Created by Fabio Cuomo on 29/1/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 struct AuthenticationSettingContext {
     let isGlobalFaceIdEnabled: Bool
     let isLocalFaceIdEnabled: Bool
     let pciAuthenticationType: PCIAuthType
-    
+
     var shouldAuthenticateWithFaceId: Bool {
         isGlobalFaceIdEnabled && isLocalFaceIdEnabled
     }
@@ -20,7 +20,7 @@ struct AuthenticationSettingContext {
 
 struct AuthenticationTypeHelper {
     private init() {}
-    
+
     static func authenticationMode(with context: AuthenticationSettingContext) -> AuthenticationMode {
         switch context.pciAuthenticationType {
         case .pinOrBiometrics:
@@ -32,4 +32,3 @@ struct AuthenticationTypeHelper {
         }
     }
 }
-

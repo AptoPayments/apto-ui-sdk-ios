@@ -10,5 +10,5 @@ import AptoSDK
 @testable import AptoUISDK
 
 class VerifyEmailModuleSpy: UIModuleSpy, VerifyEmailModuleProtocol {
-  var onVerificationPassed: ((VerifyEmailModule, Verification) -> Void)?
+    var onVerificationPassed: ((VerifyEmailModule, Verification) -> Void)?
 }

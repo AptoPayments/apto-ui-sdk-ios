@@ -6,55 +6,55 @@
 //
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class ContentPresenterPresenterTest: XCTestCase {
-  private var sut: ContentPresenterPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: ContentPresenterPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private lazy var router = ContentPresenterModuleSpy(serviceLocator: serviceLocator)
-  private let interactor = ContentPresenterInteractorFake()
-  private let content = Content.plainText("Content")
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private lazy var router = ContentPresenterModuleSpy(serviceLocator: serviceLocator)
+    private let interactor = ContentPresenterInteractorFake()
+    private let content = Content.plainText("Content")
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = ContentPresenterPresenter()
-    sut.router = router
-    sut.interactor = interactor
-    interactor.nextContentToProvide = content
-  }
+        sut = ContentPresenterPresenter()
+        sut.router = router
+        sut.interactor = interactor
+        interactor.nextContentToProvide = content
+    }
 
-  func testViewLoadedCallInteractorToProvideContent() {
-    // When
-    sut.viewLoaded()
+    func testViewLoadedCallInteractorToProvideContent() {
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertTrue(interactor.provideContentCalled)
-  }
+        // Then
+        XCTAssertTrue(interactor.provideContentCalled)
+    }
 
-  func testLinkTappedCallRouterToShowURL() {
-    // Given
-    let url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this force_unwrapping
+    func testLinkTappedCallRouterToShowURL() {
+        // Given
+        let url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this force_unwrapping
 
-    // When
-    sut.linkTapped(url)
+        // When
+        sut.linkTapped(url)
 
-    // Then
-    XCTAssertTrue(router.showURLCalled)
-  }
+        // Then
+        XCTAssertTrue(router.showURLCalled)
+    }
 
-  func testContentProvidedUpdateViewModel() {
-    // Given
-    XCTAssertNil(sut.viewModel.content.value)
+    func testContentProvidedUpdateViewModel() {
+        // Given
+        XCTAssertNil(sut.viewModel.content.value)
 
-    // When
-    sut.viewLoaded()
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertNotNil(sut.viewModel.content.value)
-  }
+        // Then
+        XCTAssertNotNil(sut.viewModel.content.value)
+    }
 }

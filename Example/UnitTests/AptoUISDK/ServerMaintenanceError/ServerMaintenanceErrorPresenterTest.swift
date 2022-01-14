@@ -6,43 +6,43 @@
 //
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class ServerMaintenanceErrorPresenterTest: XCTestCase {
-  private var sut: ServerMaintenanceErrorPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: ServerMaintenanceErrorPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private lazy var router = serviceLocator.moduleLocatorFake.serverMaintenanceErrorModuleSpy
-  private lazy var interactor = serviceLocator.interactorLocatorFake.serverMaintenanceErrorInteractorSpy
-  private let analyticsManager: AnalyticsManagerSpy = AnalyticsManagerSpy()
-  
-  override func setUp() {
-    super.setUp()
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private lazy var router = serviceLocator.moduleLocatorFake.serverMaintenanceErrorModuleSpy
+    private lazy var interactor = serviceLocator.interactorLocatorFake.serverMaintenanceErrorInteractorSpy
+    private let analyticsManager = AnalyticsManagerSpy()
 
-    sut = ServerMaintenanceErrorPresenter()
-    sut.router = router
-    sut.interactor = interactor
-    sut.analyticsManager = analyticsManager
-  }
+    override func setUp() {
+        super.setUp()
 
-  func testRetryTappedNotifyRouterAndInteractor() {
-    // When
-    sut.retryTapped()
+        sut = ServerMaintenanceErrorPresenter()
+        sut.router = router
+        sut.interactor = interactor
+        sut.analyticsManager = analyticsManager
+    }
 
-    // Then
-    XCTAssertTrue(router.pendingRequestsExecutedCalled)
-    XCTAssertTrue(interactor.runPendingRequestsCalled)
-  }
-  
-  func testViewLoadedLogMaintenanceEvent() {
-    // When
-    sut.viewLoaded()
-    
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(analyticsManager.lastEvent, Event.maintenance)
-  }
+    func testRetryTappedNotifyRouterAndInteractor() {
+        // When
+        sut.retryTapped()
+
+        // Then
+        XCTAssertTrue(router.pendingRequestsExecutedCalled)
+        XCTAssertTrue(interactor.runPendingRequestsCalled)
+    }
+
+    func testViewLoadedLogMaintenanceEvent() {
+        // When
+        sut.viewLoaded()
+
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(analyticsManager.lastEvent, Event.maintenance)
+    }
 }

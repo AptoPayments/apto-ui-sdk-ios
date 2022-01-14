@@ -13,28 +13,29 @@ class IssueCardInteractor: IssueCardInteractorProtocol {
     private let application: CardApplication
     private let cardAdditionalFields: CardAdditionalFieldsProtocol
     private let initializationData: InitializationData?
-    
+
     init(
         platform: AptoPlatformProtocol,
         application: CardApplication,
         cardAdditionalFields: CardAdditionalFieldsProtocol,
-        initializationData: InitializationData?)
-    {
+        initializationData: InitializationData?
+    ) {
         self.platform = platform
         self.application = application
         self.cardAdditionalFields = cardAdditionalFields
         self.initializationData = initializationData
     }
-    
+
     func issueCard(completion: @escaping Result<Card, NSError>.Callback) {
         platform.issueCard(
             applicationId: application.id,
             metadata: initializationData?.cardMetadata ?? "",
-            design: initializationData?.design) { result in
+            design: initializationData?.design
+        ) { result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
-            case .success(let card):
+            case let .success(card):
                 completion(.success(card))
             }
         }

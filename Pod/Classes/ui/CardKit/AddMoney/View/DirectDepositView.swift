@@ -5,9 +5,9 @@
 //  Created by Fabio Cuomo on 27/1/21.
 //
 
-import UIKit
-import SnapKit
 import AptoSDK
+import SnapKit
+import UIKit
 
 public class DirectDepositView: UIView {
     let uiConfiguration: UIConfig
@@ -34,6 +34,7 @@ public class DirectDepositView: UIView {
         label.numberOfLines = 0
         return label
     }()
+
     let activityIndicator: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .gray)
         spinner.hidesWhenStopped = true
@@ -41,24 +42,29 @@ public class DirectDepositView: UIView {
     }()
 
     init(uiconfig: UIConfig) {
-        self.uiConfiguration = uiconfig
+        uiConfiguration = uiconfig
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     // MARK: Private Methods
+
     private func setupViews() {
         backgroundColor = uiConfiguration.textMessageColor
         isOpaque = false
-        
-        [descriptionLabel, bankAccountInfoView, accountNumberInfoView, routingNumberInfoView, footerLabel, activityIndicator].forEach(containerView.addSubview)
+
+        [
+            descriptionLabel, bankAccountInfoView,
+            accountNumberInfoView, routingNumberInfoView,
+            footerLabel, activityIndicator,
+        ].forEach(containerView.addSubview)
         [containerView, activityIndicator].forEach(addSubview)
     }
-    
+
     private func setupConstraints() {
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -90,12 +96,16 @@ public class DirectDepositView: UIView {
             make.center.equalToSuperview()
         }
     }
-    
+
     // MARK: Public Methods
+
     public func configure(with viewData: DirectDepositViewData) {
-        bankAccountInfoView.configure(with: "load_funds.direct_deposit.bank_name.title".podLocalized(), valueText: "load_funds.direct_deposit.bank_name.description".podLocalized())
-        accountNumberInfoView.configure(with: "load_funds.direct_deposit.ach_number.title".podLocalized(), valueText: viewData.accountDetails.accountNumber ?? "")
-        routingNumberInfoView.configure(with: "load_funds.direct_deposit.routing_number.title".podLocalized(), valueText: viewData.accountDetails.routingNumber ?? "")
+        bankAccountInfoView.configure(with: "load_funds.direct_deposit.bank_name.title".podLocalized(),
+                                      valueText: "load_funds.direct_deposit.bank_name.description".podLocalized())
+        accountNumberInfoView.configure(with: "load_funds.direct_deposit.ach_number.title".podLocalized(),
+                                        valueText: viewData.accountDetails.accountNumber ?? "")
+        routingNumberInfoView.configure(with: "load_funds.direct_deposit.routing_number.title".podLocalized(),
+                                        valueText: viewData.accountDetails.routingNumber ?? "")
         descriptionLabel.text = viewData.description
         footerLabel.text = viewData.footer
     }
@@ -103,9 +113,8 @@ public class DirectDepositView: UIView {
     func hideView() {
         containerView.alpha = 0
     }
-    
+
     func showView() {
         containerView.alpha = 1
     }
 }
-

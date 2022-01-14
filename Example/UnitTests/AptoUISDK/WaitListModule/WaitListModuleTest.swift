@@ -5,58 +5,58 @@
 // Created by Takeichi Kanzaki on 27/02/2019.
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class WaitListModuleTest: XCTestCase {
-  private var sut: WaitListModule! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: WaitListModule! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private let cardApplication = ModelDataProvider.provider.waitListCardApplication
-  private lazy var presenter = serviceLocator.presenterLocatorFake.waitListPresenterSpy
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private let cardApplication = ModelDataProvider.provider.waitListCardApplication
+    private lazy var presenter = serviceLocator.presenterLocatorFake.waitListPresenterSpy
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = WaitListModule(serviceLocator: serviceLocator, cardApplication: cardApplication)
-  }
-
-  func testInitializeCallbackSuccess() {
-    // Given
-    var returnedResult: Result<UIViewController, NSError>?
-
-    // When
-    sut.initialize { result in
-      returnedResult = result
+        sut = WaitListModule(serviceLocator: serviceLocator, cardApplication: cardApplication)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testInitializeCallbackSuccess() {
+        // Given
+        var returnedResult: Result<UIViewController, NSError>?
 
-  func testInitializeSetUpPresenter() {
-    // When
-    sut.initialize { _ in }
+        // When
+        sut.initialize { result in
+            returnedResult = result
+        }
 
-    // Then
-    XCTAssertNotNil(presenter.interactor)
-    XCTAssertNotNil(presenter.router)
-    XCTAssertNotNil(presenter.analyticsManager)
-  }
-
-  func testApplicationStatusChangedCallOnFinish() {
-    // Given
-    var onFinishCalled = false
-    sut.onFinish = { _ in
-      onFinishCalled = true
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
     }
 
-    // When
-    sut.applicationStatusChanged()
+    func testInitializeSetUpPresenter() {
+        // When
+        sut.initialize { _ in }
 
-    // Then
-    XCTAssertTrue(onFinishCalled)
-  }
+        // Then
+        XCTAssertNotNil(presenter.interactor)
+        XCTAssertNotNil(presenter.router)
+        XCTAssertNotNil(presenter.analyticsManager)
+    }
+
+    func testApplicationStatusChangedCallOnFinish() {
+        // Given
+        var onFinishCalled = false
+        sut.onFinish = { _ in
+            onFinishCalled = true
+        }
+
+        // When
+        sut.applicationStatusChanged()
+
+        // Then
+        XCTAssertTrue(onFinishCalled)
+    }
 }

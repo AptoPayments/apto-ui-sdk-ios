@@ -7,5 +7,4 @@
 import AptoSDK
 @testable import AptoUISDK
 
-class ShowDisclaimerActionModuleSpy: UIModuleSpy, ShowDisclaimerActionModuleProtocol {
-}
+class ShowDisclaimerActionModuleSpy: UIModuleSpy, ShowDisclaimerActionModuleProtocol {}

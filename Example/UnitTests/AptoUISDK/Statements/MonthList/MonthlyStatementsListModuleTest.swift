@@ -5,59 +5,59 @@
 //  Created by Takeichi Kanzaki on 23/09/2019.
 //
 
-import XCTest
 @testable import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class MonthlyStatementsListModuleTest: XCTestCase {
-  private var sut: MonthlyStatementsListModule! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: MonthlyStatementsListModule! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private let dataProvider = ModelDataProvider.provider
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private let dataProvider = ModelDataProvider.provider
 
-  override func setUp() {
-    super.setUp()
-    sut = MonthlyStatementsListModule(serviceLocator: serviceLocator)
-  }
-
-  func testInitializeCompleteSucceed() {
-    // Given
-    var returnedResult: Result<UIViewController, NSError>?
-
-    // When
-    sut.initialize { result in
-      returnedResult = result
+    override func setUp() {
+        super.setUp()
+        sut = MonthlyStatementsListModule(serviceLocator: serviceLocator)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testInitializeCompleteSucceed() {
+        // Given
+        var returnedResult: Result<UIViewController, NSError>?
 
-  func testInitializeSetUpPresenter() {
-    // Given
-    let presenter = serviceLocator.presenterLocatorFake.monthlyStatementsListPresenter()
+        // When
+        sut.initialize { result in
+            returnedResult = result
+        }
 
-    // When
-    sut.initialize { _ in }
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
+    }
 
-    // Then
-    XCTAssertNotNil(presenter.router)
-    XCTAssertNotNil(presenter.interactor)
-    XCTAssertNotNil(presenter.analyticsManager)
-  }
+    func testInitializeSetUpPresenter() {
+        // Given
+        let presenter = serviceLocator.presenterLocatorFake.monthlyStatementsListPresenter()
 
-  func testShowStatementReportShowMonthlyStatementsReportModule() {
-    // Given
-    let month = dataProvider.month
-    let moduleLocator = serviceLocator.moduleLocatorFake
-    let monthlyStatementsReportModule = moduleLocator.monthlyStatementsReportModuleSpy
+        // When
+        sut.initialize { _ in }
 
-    // When
-    sut.showStatementReport(month: month)
+        // Then
+        XCTAssertNotNil(presenter.router)
+        XCTAssertNotNil(presenter.interactor)
+        XCTAssertNotNil(presenter.analyticsManager)
+    }
 
-    // Then
-    XCTAssertTrue(monthlyStatementsReportModule.initializeCalled)
-    XCTAssertNotNil(monthlyStatementsReportModule.onClose)
-  }
+    func testShowStatementReportShowMonthlyStatementsReportModule() {
+        // Given
+        let month = dataProvider.month
+        let moduleLocator = serviceLocator.moduleLocatorFake
+        let monthlyStatementsReportModule = moduleLocator.monthlyStatementsReportModuleSpy
+
+        // When
+        sut.showStatementReport(month: month)
+
+        // Then
+        XCTAssertTrue(monthlyStatementsReportModule.initializeCalled)
+        XCTAssertNotNil(monthlyStatementsReportModule.onClose)
+    }
 }

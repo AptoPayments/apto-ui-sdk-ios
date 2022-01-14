@@ -1,7 +1,7 @@
 import AptoSDK
 
-extension TransactionModule {
-  public var component: TransactionComponentProvider {
-    AptoTransactionComponentProvider()
-  }
+public extension TransactionModule {
+    var component: TransactionComponentProvider {
+        AptoTransactionComponentProvider()
+    }
 }

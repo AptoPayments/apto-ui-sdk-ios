@@ -15,12 +15,12 @@ final class AddMoneyAnimationController: NSObject, UIViewControllerAnimatedTrans
 
     var direction: Direction = .present
     private let addMoneyView: AddMoneyView
-    
+
     init(with addMoneyView: AddMoneyView) {
         self.addMoneyView = addMoneyView
     }
-    
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval { 0.5 }
+
+    func transitionDuration(using _: UIViewControllerContextTransitioning?) -> TimeInterval { 0.5 }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         switch direction {
@@ -32,7 +32,7 @@ final class AddMoneyAnimationController: NSObject, UIViewControllerAnimatedTrans
     }
 
     private func present(using context: UIViewControllerContextTransitioning) {
-        guard let _ = context.view(forKey: .to) else {
+        guard context.view(forKey: .to) != nil else {
             context.completeTransition(false)
             return
         }
@@ -42,5 +42,5 @@ final class AddMoneyAnimationController: NSObject, UIViewControllerAnimatedTrans
         }
     }
 
-    private func dismiss(using context: UIViewControllerContextTransitioning) {}
+    private func dismiss(using _: UIViewControllerContextTransitioning) {}
 }

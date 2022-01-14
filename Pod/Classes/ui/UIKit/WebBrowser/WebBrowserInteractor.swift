@@ -9,17 +9,17 @@
 import Foundation
 
 class WebBrowserInteractor: WebBrowserInteractorProtocol {
-  private let url: URL
-  private let headers: [String: String]?
-  private unowned let dataReceiver: WebBrowserDataReceiverProtocol
+    private let url: URL
+    private let headers: [String: String]?
+    private unowned let dataReceiver: WebBrowserDataReceiverProtocol
 
-  init(url: URL, headers: [String: String]? = nil, dataReceiver: WebBrowserDataReceiverProtocol) {
-    self.url = url
-    self.headers = headers
-    self.dataReceiver = dataReceiver
-  }
+    init(url: URL, headers: [String: String]? = nil, dataReceiver: WebBrowserDataReceiverProtocol) {
+        self.url = url
+        self.headers = headers
+        self.dataReceiver = dataReceiver
+    }
 
-  func provideUrl() {
-    dataReceiver.load(url: url, headers: headers)
-  }
+    func provideUrl() {
+        dataReceiver.load(url: url, headers: headers)
+    }
 }

@@ -8,13 +8,13 @@
 import AptoSDK
 
 class BiometricPermissionInteractor: BiometricPermissionInteractorProtocol {
-  private let platform: AptoPlatformProtocol
+    private let platform: AptoPlatformProtocol
 
-  init(platform: AptoPlatformProtocol) {
-    self.platform = platform
-  }
+    init(platform: AptoPlatformProtocol) {
+        self.platform = platform
+    }
 
-  func setBiometricPermissionEnabled(_ isEnabled: Bool) {
-    platform.setIsBiometricEnabled(isEnabled)
-  }
+    func setBiometricPermissionEnabled(_ isEnabled: Bool) {
+        platform.setIsBiometricEnabled(isEnabled)
+    }
 }

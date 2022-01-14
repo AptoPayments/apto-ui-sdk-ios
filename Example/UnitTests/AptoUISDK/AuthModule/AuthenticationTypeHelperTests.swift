@@ -12,13 +12,12 @@ import XCTest
 @testable import AptoUISDK
 
 class AuthenticationTypeHelperTests: XCTestCase {
-
     func test_authMode_isBiometryWhenFaceIdIsEnabledAndAuthPciIsPinOrBiometrics() {
         let context = AuthenticationSettingContext(isGlobalFaceIdEnabled: true,
                                                    isLocalFaceIdEnabled: true,
                                                    pciAuthenticationType: .pinOrBiometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.allAvailables)
     }
 
@@ -27,26 +26,25 @@ class AuthenticationTypeHelperTests: XCTestCase {
                                                    isLocalFaceIdEnabled: false,
                                                    pciAuthenticationType: .pinOrBiometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.passcode)
     }
 
-    
     func test_authMode_isPasscodeWhenGlobalFaceIdIsDisabledAndAuthPciIsPinOrBiometrics() {
         let context = AuthenticationSettingContext(isGlobalFaceIdEnabled: false,
                                                    isLocalFaceIdEnabled: true,
                                                    pciAuthenticationType: .pinOrBiometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.passcode)
     }
-    
+
     func test_authMode_isPasscodeWhenFaceIdIsDisabledAndAuthPciIsPinOrBiometrics() {
         let context = AuthenticationSettingContext(isGlobalFaceIdEnabled: false,
                                                    isLocalFaceIdEnabled: false,
                                                    pciAuthenticationType: .pinOrBiometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.passcode)
     }
 
@@ -55,16 +53,16 @@ class AuthenticationTypeHelperTests: XCTestCase {
                                                    isLocalFaceIdEnabled: true,
                                                    pciAuthenticationType: .biometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.biometry)
     }
-    
+
     func test_authMode_isNoneWhenLocalFaceIdIsDisabledAndAuthPciIsBiometrics() {
         let context = AuthenticationSettingContext(isGlobalFaceIdEnabled: true,
                                                    isLocalFaceIdEnabled: false,
                                                    pciAuthenticationType: .biometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.none)
     }
 
@@ -73,7 +71,7 @@ class AuthenticationTypeHelperTests: XCTestCase {
                                                    isLocalFaceIdEnabled: true,
                                                    pciAuthenticationType: .biometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.none)
     }
 
@@ -82,7 +80,7 @@ class AuthenticationTypeHelperTests: XCTestCase {
                                                    isLocalFaceIdEnabled: false,
                                                    pciAuthenticationType: .biometrics)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.none)
     }
 
@@ -91,7 +89,7 @@ class AuthenticationTypeHelperTests: XCTestCase {
                                                    isLocalFaceIdEnabled: false,
                                                    pciAuthenticationType: .none)
         let authenticationType = AuthenticationTypeHelper.authenticationMode(with: context)
-        
+
         XCTAssertEqual(authenticationType, AuthenticationMode.none)
     }
 }

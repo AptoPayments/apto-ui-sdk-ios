@@ -9,14 +9,12 @@
 import Foundation
 
 class WelcomeScreenScreen: Screen {
-  
-  struct Labels {
-    static let FindALoanButton = "Find a Loan Button"
-  }
-  
-  @discardableResult func agreeProjectDisclaimer() -> Self {
-    uiTest.tester().tapView(withAccessibilityLabel: Labels.FindALoanButton)
-    return self
-  }
-  
+    enum Labels {
+        static let FindALoanButton = "Find a Loan Button"
+    }
+
+    @discardableResult func agreeProjectDisclaimer() -> Self {
+        uiTest.tester().tapView(withAccessibilityLabel: Labels.FindALoanButton)
+        return self
+    }
 }

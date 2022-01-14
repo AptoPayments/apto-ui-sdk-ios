@@ -5,128 +5,128 @@
 // Created by Takeichi Kanzaki on 05/02/2019.
 //
 
-import XCTest
 @testable import AptoSDK
+import XCTest
 
 class AmountTest: XCTestCase {
-  func testSmallAmountTextReturnTwoDecimalFigures() {
-    // Given
-    let sut = Amount(value: 0.00123, currency: "USD")
+    func testSmallAmountTextReturnTwoDecimalFigures() {
+        // Given
+        let sut = Amount(value: 0.00123, currency: "USD")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("$0.0012", text)
-  }
+        // Then
+        XCTAssertEqual("$0.0012", text)
+    }
 
-  func testZeroAmountTextReturnTwoDecimalFigures() {
-    // Given
-    let sut = Amount(value: 0, currency: "BCH")
+    func testZeroAmountTextReturnTwoDecimalFigures() {
+        // Given
+        let sut = Amount(value: 0, currency: "BCH")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("BCH\u{A0}0.00", text)
-  }
+        // Then
+        XCTAssertEqual("BCH\u{A0}0.00", text)
+    }
 
-  func testMinusZeroAmountTextIgnoreSign() {
-    // Given
-    let sut = Amount(value: -0, currency: "BCH")
+    func testMinusZeroAmountTextIgnoreSign() {
+        // Given
+        let sut = Amount(value: -0, currency: "BCH")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("BCH\u{A0}0.00", text)
-  }
+        // Then
+        XCTAssertEqual("BCH\u{A0}0.00", text)
+    }
 
-  func testNormalAmountTextReturnTwoDecimals() {
-    // Given
-    let sut = Amount(value: 10.00123, currency: "USD")
+    func testNormalAmountTextReturnTwoDecimals() {
+        // Given
+        let sut = Amount(value: 10.00123, currency: "USD")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("$10.00", text)
-  }
+        // Then
+        XCTAssertEqual("$10.00", text)
+    }
 
-  func testGBPCurrencyTextReturnAppropriateCurrency() {
-    // Given
-    let sut = Amount(value: 10.00123, currency: "GBP")
+    func testGBPCurrencyTextReturnAppropriateCurrency() {
+        // Given
+        let sut = Amount(value: 10.00123, currency: "GBP")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("£10.00", text)
-  }
+        // Then
+        XCTAssertEqual("£10.00", text)
+    }
 
-  func testBitCoinCurrencyTextReturnAppropriateCurrency() {
-    // Given
-    let sut = Amount(value: 0.000128, currency: "BTC")
+    func testBitCoinCurrencyTextReturnAppropriateCurrency() {
+        // Given
+        let sut = Amount(value: 0.000128, currency: "BTC")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("BTC\u{A0}0.00013", text)
-  }
+        // Then
+        XCTAssertEqual("BTC\u{A0}0.00013", text)
+    }
 
-  func testNegativeAmountTextReturnNegativeValue() {
-    // Given
-    let sut = Amount(value: -10.00123, currency: "USD")
+    func testNegativeAmountTextReturnNegativeValue() {
+        // Given
+        let sut = Amount(value: -10.00123, currency: "USD")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("-$10.00", text)
-  }
+        // Then
+        XCTAssertEqual("-$10.00", text)
+    }
 
-  func testNegativeAmountAbsTextReturnAbsoluteValue() {
-    // Given
-    let sut = Amount(value: -10.00123, currency: "USD")
+    func testNegativeAmountAbsTextReturnAbsoluteValue() {
+        // Given
+        let sut = Amount(value: -10.00123, currency: "USD")
 
-    // When
-    let text = sut.absText
+        // When
+        let text = sut.absText
 
-    // Then
-    XCTAssertEqual("$10.00", text)
-  }
+        // Then
+        XCTAssertEqual("$10.00", text)
+    }
 
-  func testCustomCurrencySymbolTextUseCustomSymbol() {
-    // Given
-    let sut = Amount(value: 10.00123, currency: "MXN")
+    func testCustomCurrencySymbolTextUseCustomSymbol() {
+        // Given
+        let sut = Amount(value: 10.00123, currency: "MXN")
 
-    // When
-    let text = sut.text
+        // When
+        let text = sut.text
 
-    // Then
-    XCTAssertEqual("MXN\u{A0}10.00", text)
-  }
+        // Then
+        XCTAssertEqual("MXN\u{A0}10.00", text)
+    }
 
-  func testAmountExchangeTextReturnExpectedValue() {
-    // Given
-    let sut = Amount(value: 10.00123, currency: "USD")
+    func testAmountExchangeTextReturnExpectedValue() {
+        // Given
+        let sut = Amount(value: 10.00123, currency: "USD")
 
-    // When
-    let exchangeText = sut.exchangeText
+        // When
+        let exchangeText = sut.exchangeText
 
-    // Then
-    XCTAssertEqual("10.00 $", exchangeText)
-  }
+        // Then
+        XCTAssertEqual("10.00 $", exchangeText)
+    }
 
-  func testCustomCurrencyAmountExchangeTextReturnExpectedValue() {
-    // Given
-    let sut = Amount(value: 10.00123, currency: "MXN")
+    func testCustomCurrencyAmountExchangeTextReturnExpectedValue() {
+        // Given
+        let sut = Amount(value: 10.00123, currency: "MXN")
 
-    // When
-    let exchangeText = sut.exchangeText
+        // When
+        let exchangeText = sut.exchangeText
 
-    // Then
-    XCTAssertEqual("10.00 MXN", exchangeText)
-  }
+        // Then
+        XCTAssertEqual("10.00 MXN", exchangeText)
+    }
 }

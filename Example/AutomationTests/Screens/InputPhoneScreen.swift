@@ -8,26 +8,20 @@
 import UIKit
 
 class InputPhoneScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Get Started"
+        static let PhoneNumberField = "Phone Number Input Field"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Get Started"
-    static let PhoneNumberField = "Phone Number Input Field"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func input(phoneNumber: String) -> Self {
+        enter(text: phoneNumber, intoViewWithAccessibilityLabel: Labels.PhoneNumberField)
 
-    return self
-
-  } // end waitForScreen
-
-  @discardableResult func input(phoneNumber: String) -> Self {
-
-    enter(text: phoneNumber, intoViewWithAccessibilityLabel: Labels.PhoneNumberField)
-
-    return self
-
-  } // end input(phoneNumber)
-
+        return self
+    } // end input(phoneNumber)
 }

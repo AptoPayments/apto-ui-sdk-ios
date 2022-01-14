@@ -9,21 +9,21 @@
 import Foundation
 
 class WebBrowserPresenter: WebBrowserPresenterProtocol {
-  // swiftlint:disable implicitly_unwrapped_optional
-  weak var router: WebBrowserRouterProtocol!
-  var view: WebBrowserViewProtocol!
-  var interactor: WebBrowserInteractorProtocol!
-  // swiftlint:enable implicitly_unwrapped_optional
+    // swiftlint:disable implicitly_unwrapped_optional
+    weak var router: WebBrowserRouterProtocol!
+    var view: WebBrowserViewProtocol!
+    var interactor: WebBrowserInteractorProtocol!
+    // swiftlint:enable implicitly_unwrapped_optional
 
-  func viewLoaded() {
-    interactor.provideUrl()
-  }
+    func viewLoaded() {
+        interactor.provideUrl()
+    }
 
-  func load(url: URL, headers: [String: String]?) {
-    view.load(url: url, headers: headers)
-  }
+    func load(url: URL, headers: [String: String]?) {
+        view.load(url: url, headers: headers)
+    }
 
-  func closeTapped() {
-    router.close()
-  }
+    func closeTapped() {
+        router.close()
+    }
 }

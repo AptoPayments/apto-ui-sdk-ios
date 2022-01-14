@@ -1,7 +1,7 @@
 import AptoSDK
 
-extension TransactionModule {
-  public var screen: TransactionScreenProvider {
-    AptoTransactionScreenProvider()
-  }
+public extension TransactionModule {
+    var screen: TransactionScreenProvider {
+        AptoTransactionScreenProvider()
+    }
 }

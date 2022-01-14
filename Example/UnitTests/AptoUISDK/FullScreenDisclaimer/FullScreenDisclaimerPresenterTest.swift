@@ -6,77 +6,77 @@
 //
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class FullScreenDisclaimerPresenterTest: XCTestCase {
-  private var sut: FullScreenDisclaimerPresenter!
+    private var sut: FullScreenDisclaimerPresenter!
 
-  // Collaborators
-  private lazy var router = FullScreenDisclaimerRouterSpy()
-  private lazy var interactor = FullScreenDisclaimerInteractorFake()
-  private let analyticsManager: AnalyticsManagerSpy = AnalyticsManagerSpy()
+    // Collaborators
+    private lazy var router = FullScreenDisclaimerRouterSpy()
+    private lazy var interactor = FullScreenDisclaimerInteractorFake()
+    private let analyticsManager = AnalyticsManagerSpy()
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = FullScreenDisclaimerPresenter()
-    sut.router = router
-    sut.interactor = interactor
-    sut.analyticsManager = analyticsManager
-  }
+        sut = FullScreenDisclaimerPresenter()
+        sut.router = router
+        sut.interactor = interactor
+        sut.analyticsManager = analyticsManager
+    }
 
-  func testViewLoadedCalledAskInteractorToProvideDisclaimer() {
-    // When
-    sut.viewLoaded()
+    func testViewLoadedCalledAskInteractorToProvideDisclaimer() {
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertTrue(interactor.provideDisclaimerCalled)
-  }
+        // Then
+        XCTAssertTrue(interactor.provideDisclaimerCalled)
+    }
 
-  func testViewLoadedCalledSetViewDisclaimer() {
-    // When
-    sut.viewLoaded()
+    func testViewLoadedCalledSetViewDisclaimer() {
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertEqual(interactor.disclaimer, sut.viewModel.disclaimer.value)
-  }
+        // Then
+        XCTAssertEqual(interactor.disclaimer, sut.viewModel.disclaimer.value)
+    }
 
-  func testCloseTappedAskRouterToClose() {
-    // When
-    sut.closeTapped()
+    func testCloseTappedAskRouterToClose() {
+        // When
+        sut.closeTapped()
 
-    // Then
-    XCTAssertTrue(router.closeCalled)
-  }
+        // Then
+        XCTAssertTrue(router.closeCalled)
+    }
 
-  func testAgreeTappedNotifyRouter() {
-    // When
-    sut.agreeTapped()
+    func testAgreeTappedNotifyRouter() {
+        // When
+        sut.agreeTapped()
 
-    // Then
-    XCTAssertTrue(router.agreeTappedCalled)
-  }
+        // Then
+        XCTAssertTrue(router.agreeTappedCalled)
+    }
 
-  func testLinkTappedCallShowExternalURL() {
-    // Given
-    let url = URL(string: "https://aptopayments.com")!
+    func testLinkTappedCallShowExternalURL() {
+        // Given
+        let url = URL(string: "https://aptopayments.com")!
 
-    // When
-    sut.linkTapped(url)
+        // When
+        sut.linkTapped(url)
 
-    // Then
-    XCTAssertTrue(router.showExternalCalled)
-    XCTAssertEqual(url, router.lastURL!) // swiftlint:disable:this implicitly_unwrapped_optional
-  }
+        // Then
+        XCTAssertTrue(router.showExternalCalled)
+        XCTAssertEqual(url, router.lastURL!) // swiftlint:disable:this implicitly_unwrapped_optional
+    }
 
-  func testViewLoadedLogDisclaimerEvent() {
-    // When
-    sut.viewLoaded()
+    func testViewLoadedLogDisclaimerEvent() {
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(analyticsManager.lastEvent, Event.disclaimer)
-  }
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(analyticsManager.lastEvent, Event.disclaimer)
+    }
 }

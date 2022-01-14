@@ -5,12 +5,12 @@
 //  Created by Fabio Cuomo on 23/3/21.
 //
 
-import UIKit
-import SnapKit
 import AptoSDK
+import SnapKit
+import UIKit
 
 final class OrderPhysicalCardView: UIView {
-    struct Constants {
+    enum Constants {
         static let buttonsCornerRadius = CGFloat(25)
         static let headerLabelPadding = 20
         static let headerLabelTopMargin = 50
@@ -24,7 +24,8 @@ final class OrderPhysicalCardView: UIView {
         static let actionButtonBottomMargin = -12
         static let buttonPadding = 20
         static let buttonHeight = 50
-    }    
+    }
+
     let uiConfiguration: UIConfig
     private(set) lazy var headerLabel: UILabel = {
         let label = UILabel()
@@ -33,6 +34,7 @@ final class OrderPhysicalCardView: UIView {
         label.textColor = uiConfiguration.textTopBarSecondaryColor
         return label
     }()
+
     private(set) lazy var introLabel: UILabel = {
         let label = ComponentCatalog.boldMessageLabelWith(text: "order_physical_card.order_screen.intro".podLocalized(),
                                                           textAlignment: .left,
@@ -42,6 +44,7 @@ final class OrderPhysicalCardView: UIView {
         label.numberOfLines = 0
         return label
     }()
+
     private(set) lazy var creditCardView = AptoCardView()
     private(set) lazy var feeInfoView = ShowInfoView(uiconfig: uiConfiguration)
     private(set) lazy var actionButton: UIButton = {
@@ -52,6 +55,7 @@ final class OrderPhysicalCardView: UIView {
         button.titleLabel?.font = UITheme2FontProvider(fontDescriptors: nil).mainItemLightFont
         return button
     }()
+
     private(set) lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = uiConfiguration.uiBackgroundSecondaryColor
@@ -60,26 +64,26 @@ final class OrderPhysicalCardView: UIView {
         button.titleLabel?.font = UITheme2FontProvider(fontDescriptors: nil).mainItemLightFont
         return button
     }()
-    
+
     init(uiconfig: UIConfig) {
-        self.uiConfiguration = uiconfig
+        uiConfiguration = uiconfig
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     private func setupViews() {
         backgroundColor = uiConfiguration.textMessageColor
         [headerLabel, introLabel, creditCardView, feeInfoView, actionButton, cancelButton].forEach(addSubview)
-        
+
         cancelButton.layer.cornerRadius = Constants.buttonsCornerRadius
         actionButton.layer.cornerRadius = Constants.buttonsCornerRadius
         feeInfoView.alpha = 0
     }
-    
+
     private func setupConstraints() {
         headerLabel.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(Constants.headerLabelPadding)
@@ -112,17 +116,19 @@ final class OrderPhysicalCardView: UIView {
     }
 
     // MARK: Public methods
+
     func configure(card: Card, cardFee: String?) {
         creditCardView.configure(with: card.cardStyle, cardNetwork: card.cardNetwork)
         if let cardFee = cardFee,
            let feeAmount = Double(cardFee.dropFirst()),
-           feeAmount > 0 {
+           feeAmount > 0
+        {
             feeInfoView.configure(with: "order_physical_card.order_screen.order_fee_title".podLocalized(),
                                   valueText: cardFee)
             feeInfoView.alpha = 1
         }
     }
-    
+
     func viewButtons(enable: Bool) {
         actionButton.isEnabled = enable
         cancelButton.isEnabled = enable

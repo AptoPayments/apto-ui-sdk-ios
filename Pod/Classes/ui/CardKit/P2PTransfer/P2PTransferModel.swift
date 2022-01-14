@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 6/9/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 struct P2PTransferModel {
     let phone: PhoneNumber?
@@ -14,19 +14,25 @@ struct P2PTransferModel {
     let cardholder: CardholderData?
 }
 
-
-struct P2PTransferModelMapper {
-    public static func mapToCardConfig(_  model: P2PTransferModel, action: @escaping (() -> Void)) -> CurrentCardConfig? {
+enum P2PTransferModelMapper {
+    public static func mapToCardConfig(_ model: P2PTransferModel, action: @escaping (() -> Void))
+        -> CurrentCardConfig?
+    {
         if let cardholder = model.cardholder,
            let firstname = cardholder.firstName,
-           let lastname = cardholder.lastName {
+           let lastname = cardholder.lastName
+        {
             return CurrentCardConfig(title: "\(firstname) \(lastname)",
                                      icon: UIImage.imageFromPodBundle("credit_debit_card"),
-                                     action: CurrentCardConfig.Action(title: "p2p_transfer.transfer_funds.add_amount.action.title".podLocalized(), action: action))
+                                     action: CurrentCardConfig
+                                         .Action(title: "p2p_transfer.transfer_funds.add_amount.action.title"
+                                             .podLocalized(), action: action))
         } else if let email = model.email {
             return CurrentCardConfig(title: email,
                                      icon: UIImage.imageFromPodBundle("credit_debit_card"),
-                                     action: CurrentCardConfig.Action(title: "p2p_transfer.transfer_funds.add_amount.action.title".podLocalized(), action: action))
+                                     action: CurrentCardConfig
+                                         .Action(title: "p2p_transfer.transfer_funds.add_amount.action.title"
+                                             .podLocalized(), action: action))
         }
         return nil
     }

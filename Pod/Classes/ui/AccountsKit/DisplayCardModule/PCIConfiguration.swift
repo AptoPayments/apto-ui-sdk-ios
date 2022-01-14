@@ -7,7 +7,8 @@ struct PCIConfiguration: Equatable {
     let lastFour: String
     let environment: AptoPlatformEnvironment
     let name: String?
-    
+
+    // swiftlint:disable force_unwrapping
     init(apiKey: String = AptoPlatform.defaultManager().apiKey,
          userToken: String = AptoPlatform.defaultManager().currentToken()!.token,
          cardId: String,
@@ -22,4 +23,5 @@ struct PCIConfiguration: Equatable {
         self.name = name
         self.environment = environment
     }
+    // swiftlint:enable force_unwrapping
 }

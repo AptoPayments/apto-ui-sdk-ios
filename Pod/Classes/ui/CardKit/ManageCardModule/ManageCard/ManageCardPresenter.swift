@@ -6,47 +6,49 @@
 //
 //
 
-import Foundation
 import AptoSDK
 import Bond
+import Foundation
 
 class ManageCardPresenter: ManageCardPresenterProtocol {
-  private let notificationHandler: NotificationHandler
-  // swiftlint:disable implicitly_unwrapped_optional
-  private var fetchTransactionOperationQueue: FetchTransactionOperationQueue!
-  var view: ManageCardViewProtocol!
-  var interactor: ManageCardInteractorProtocol! {
-    didSet {
-      fetchTransactionOperationQueue = FetchTransactionOperationQueue(transactionsProvider: interactor)
+    private let notificationHandler: NotificationHandler
+    // swiftlint:disable implicitly_unwrapped_optional
+    private var fetchTransactionOperationQueue: FetchTransactionOperationQueue!
+    var view: ManageCardViewProtocol!
+    var interactor: ManageCardInteractorProtocol! {
+        didSet {
+            fetchTransactionOperationQueue = FetchTransactionOperationQueue(transactionsProvider: interactor)
+        }
     }
-  }
-  weak var router: ManageCardRouterProtocol!
-  // swiftlint:enable implicitly_unwrapped_optional
-  let viewModel: ManageCardViewModel
-  var analyticsManager: AnalyticsServiceProtocol?
-  private let rowsPerPage = 20
-  private var lastTransactionId: String?
-  private let config: ManageCardPresenterConfig
-  private var cardInfoRetrieved = false
-  private var transactionsInfoRetrieved = false
-  private var remoteInfoRetrieved: Bool {
-    return cardInfoRetrieved && transactionsInfoRetrieved
-  }
-  private var cardInfoDataTimeout: Date?
+
+    weak var router: ManageCardRouterProtocol!
+    // swiftlint:enable implicitly_unwrapped_optional
+    let viewModel: ManageCardViewModel
+    var analyticsManager: AnalyticsServiceProtocol?
+    private let rowsPerPage = 20
+    private var lastTransactionId: String?
+    private let config: ManageCardPresenterConfig
+    private var cardInfoRetrieved = false
+    private var transactionsInfoRetrieved = false
+    private var remoteInfoRetrieved: Bool {
+        return cardInfoRetrieved && transactionsInfoRetrieved
+    }
+
+    private var cardInfoDataTimeout: Date?
     private var currentCardState: FinancialAccountState = .unknown
     private var currentOrderStatus: OrderedStatus = .notApplicable
 
-  init(config: ManageCardPresenterConfig, notificationHandler: NotificationHandler) {
-    self.config = config
-    self.viewModel = ManageCardViewModel()
-    self.notificationHandler = notificationHandler
-    notificationHandler.addObserver(self, selector: #selector(backgroundRefresh),
-                                    name: UIApplication.didBecomeActiveNotification)
-  }
+    init(config: ManageCardPresenterConfig, notificationHandler: NotificationHandler) {
+        self.config = config
+        viewModel = ManageCardViewModel()
+        self.notificationHandler = notificationHandler
+        notificationHandler.addObserver(self, selector: #selector(backgroundRefresh),
+                                        name: UIApplication.didBecomeActiveNotification)
+    }
 
-  deinit {
-    notificationHandler.removeObserver(self)
-  }
+    deinit {
+        notificationHandler.removeObserver(self)
+    }
 
     func viewLoaded() {
         if interactor.isUserLoggedIn() {
@@ -54,123 +56,126 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
         }
     }
 
-  func closeTapped() {
-    router.closeFromManageCardViewer()
-  }
-
-  func nextTapped() {
-    router.accountSettingsTappedInManageCardViewer()
-  }
-
-  func cardTapped() {
-    // Disable card settings if the card is pending activation
-    guard viewModel.state.value != .created else { return }
-    if viewModel.fundingSource.value?.state == .invalid {
-      router.balanceTappedInManageCardViewer()
+    func closeTapped() {
+        router.closeFromManageCardViewer()
     }
-    else {
-      router.cardSettingsTappedInManageCardViewer()
+
+    func nextTapped() {
+        router.accountSettingsTappedInManageCardViewer()
     }
-  }
 
-  func cardSettingsTapped() {
-    // Disable card settings if the card is pending activation
-    guard viewModel.state.value != .created else { return }
-    router.cardSettingsTappedInManageCardViewer()
-  }
-
-  func balanceTapped() {
-    router.balanceTappedInManageCardViewer()
-  }
-
-  func transactionSelected(indexPath: IndexPath) {
-    router.showTransactionDetails(transaction: viewModel.transactions[itemAt: indexPath])
-  }
-
-  func activateCardTapped() {
-    view.showLoadingSpinner()
-    interactor.activateCard { [unowned self] result in
-      self.view.hideLoadingSpinner()
-      switch result {
-      case .failure(let error):
-        self.view.show(error: error)
-      case .success:
-        self.viewModel.state.send(.active)
-      }
-    }
-  }
-
-  func showCardStatsTapped() {
-    router.showCardStatsTappedInManageCardViewer()
-  }
-
-  func refreshCard() {
-    view.showLoadingSpinner()
-    refreshCard { [unowned self] in
-      self.view.hideLoadingSpinner()
-    }
-  }
-
-  func refreshFundingSource() {
-    interactor.provideFundingSource(forceRefresh: false) {  [weak self] result in
-      switch result {
-      case .failure(let error):
-        self?.view.show(error: error)
-      case .success(let card):
-        guard let self = self else {
-          return
+    func cardTapped() {
+        // Disable card settings if the card is pending activation
+        guard viewModel.state.value != .created else { return }
+        if viewModel.fundingSource.value?.state == .invalid {
+            router.balanceTappedInManageCardViewer()
+        } else {
+            router.cardSettingsTappedInManageCardViewer()
         }
-        self.updateViewModelWith(card: card)
-      }
     }
-  }
 
-  func showCardInfo() {
-    viewModel.cardInfoVisible.send(true)
-  }
-
-  func hideCardInfo() {
-    viewModel.cardInfoVisible.send(false)
-  }
-
-  func reloadTapped(showSpinner: Bool) {
-    refreshInfo(showSpinner: showSpinner)
-    interactor.loadFundingSources { _ in }
-  }
-
-  func moreTransactionsTapped(completion: @escaping (_ noMoreTransactions: Bool) -> Void) {
-    guard remoteInfoRetrieved else { return completion(true) }
-    fetchTransactionOperationQueue.loadMoreTransactions(lastTransactionId: lastTransactionId,
-                                                        rows: rowsPerPage) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .failure(let error):
-        self.view.show(error: error)
-      case .success(let transactions):
-        self.process(newTransactions: transactions)
-        completion(transactions.isEmpty)
-      }
+    func cardSettingsTapped() {
+        // Disable card settings if the card is pending activation
+        guard viewModel.state.value != .created else { return }
+        router.cardSettingsTappedInManageCardViewer()
     }
-  }
 
-  func activatePhysicalCardTapped() {
-    view.requestPhysicalActivationCode(completion: activatePhysicalCard)
-    analyticsManager?.track(event: Event.manageCardActivatePhysicalCardOverlay)
-    analyticsManager?.track(event: Event.manageCardGetPINNue)
-  }
+    func balanceTapped() {
+        router.balanceTappedInManageCardViewer()
+    }
+
+    func transactionSelected(indexPath: IndexPath) {
+        router.showTransactionDetails(transaction: viewModel.transactions[itemAt: indexPath])
+    }
+
+    func activateCardTapped() {
+        view.showLoadingSpinner()
+        interactor.activateCard { [unowned self] result in
+            self.view.hideLoadingSpinner()
+            switch result {
+            case let .failure(error):
+                self.view.show(error: error)
+            case .success:
+                self.viewModel.state.send(.active)
+            }
+        }
+    }
+
+    func showCardStatsTapped() {
+        router.showCardStatsTappedInManageCardViewer()
+    }
+
+    func refreshCard() {
+        view.showLoadingSpinner()
+        refreshCard { [unowned self] in
+            self.view.hideLoadingSpinner()
+        }
+    }
+
+    func refreshFundingSource() {
+        interactor.provideFundingSource(forceRefresh: false) { [weak self] result in
+            switch result {
+            case let .failure(error):
+                self?.view.show(error: error)
+            case let .success(card):
+                guard let self = self else {
+                    return
+                }
+                self.updateViewModelWith(card: card)
+            }
+        }
+    }
+
+    func showCardInfo() {
+        viewModel.cardInfoVisible.send(true)
+    }
+
+    func hideCardInfo() {
+        viewModel.cardInfoVisible.send(false)
+    }
+
+    func setCardPin() {
+        viewModel.showSetCardPin.send(true)
+    }
+
+    func reloadTapped(showSpinner: Bool) {
+        refreshInfo(showSpinner: showSpinner)
+        interactor.loadFundingSources { _ in }
+    }
+
+    func moreTransactionsTapped(completion: @escaping (_ noMoreTransactions: Bool) -> Void) {
+        guard remoteInfoRetrieved else { return completion(true) }
+        fetchTransactionOperationQueue.loadMoreTransactions(lastTransactionId: lastTransactionId,
+                                                            rows: rowsPerPage) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .failure(error):
+                self.view.show(error: error)
+            case let .success(transactions):
+                self.process(newTransactions: transactions)
+                completion(transactions.isEmpty)
+            }
+        }
+    }
+
+    func activatePhysicalCardTapped() {
+        view.requestPhysicalActivationCode(completion: activatePhysicalCard)
+        analyticsManager?.track(event: Event.manageCardActivatePhysicalCardOverlay)
+        analyticsManager?.track(event: Event.manageCardGetPINNue)
+    }
 
     func initInAppProvisioningEnrollProcess() {
         router.enrollApplePayProvisioning()
     }
-    
-  // MARK: - Private methods
+
+    // MARK: - Private methods
 
     func retrieveFundingSource() {
         interactor.provideFundingSource(forceRefresh: false) { [weak self] result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 self?.view.show(error: error)
-            case .success(let card):
+            case let .success(card):
                 if let wself = self {
                     wself.updateViewModelWith(card: card)
                     wself.refreshTransactions(forceRefresh: false) { [weak self] _ in
@@ -181,7 +186,7 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
         }
         analyticsManager?.track(event: Event.manageCard)
     }
-    
+
     @objc private func backgroundRefresh() {
         hideCardInfoIfNecessary()
         backgroundRefreshCard { [weak self] in
@@ -193,51 +198,51 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
         interactor.loadFundingSources { _ in }
     }
 
-  private func hideCardInfoIfNecessary() {
-    if let timeout = cardInfoDataTimeout, timeout.timeIntervalSinceNow <= 0 {
-      hideCardInfo()
-      cardInfoDataTimeout = nil
+    private func hideCardInfoIfNecessary() {
+        if let timeout = cardInfoDataTimeout, timeout.timeIntervalSinceNow <= 0 {
+            hideCardInfo()
+            cardInfoDataTimeout = nil
+        }
     }
-  }
 
-  fileprivate func refreshInfo(showSpinner: Bool = true, completion: (() -> Void)? = nil) {
-    if showSpinner {
-      view.showLoadingSpinner()
-    }
-    refreshCard { [unowned self] in
-      self.refreshTransactions { [unowned self] _ in
+    fileprivate func refreshInfo(showSpinner: Bool = true, completion: (() -> Void)? = nil) {
         if showSpinner {
-          self.view.hideLoadingSpinner()
+            view.showLoadingSpinner()
         }
-        completion?()
-      }
+        refreshCard { [unowned self] in
+            self.refreshTransactions { [unowned self] _ in
+                if showSpinner {
+                    self.view.hideLoadingSpinner()
+                }
+                completion?()
+            }
+        }
     }
-  }
 
-  fileprivate func refreshCard(completion: @escaping () -> Void) {
-    interactor.reloadCard { [weak self] result in
-      switch result {
-      case .failure(let error):
-        self?.view.show(error: error)
-        completion()
-      case .success(let card):
-        if let wself = self {
-          wself.updateViewModelWith(card: card)
-          completion()
+    fileprivate func refreshCard(completion: @escaping () -> Void) {
+        interactor.reloadCard { [weak self] result in
+            switch result {
+            case let .failure(error):
+                self?.view.show(error: error)
+                completion()
+            case let .success(card):
+                if let wself = self {
+                    wself.updateViewModelWith(card: card)
+                    completion()
+                }
+            }
         }
-      }
     }
-  }
 
     private func backgroundRefreshCard(completion: @escaping () -> Void) {
         interactor.reloadCard { [weak self] result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 self?.view.show(error: error)
                 completion()
-            case .success(let card):
+            case let .success(card):
                 if let wself = self {
-                    if  wself.shouldRefreshCard(card) {
+                    if wself.shouldRefreshCard(card) {
                         wself.performViewModelUpdate(with: card)
                     }
                     completion()
@@ -245,11 +250,11 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
             }
         }
     }
-    
+
     private func shouldRefreshCard(_ card: Card) -> Bool {
         currentCardState != card.state || currentOrderStatus != card.orderedStatus
     }
-    
+
     private func updateViewModelWith(card: Card) {
         viewModel.cardInfoVisible.send(false)
         performViewModelUpdate(with: card)
@@ -260,11 +265,10 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
         viewModel.card.send(card)
         viewModel.cardNetwork.send(card.cardNetwork)
         viewModel.fundingSource.send(card.fundingSource)
-        if card.orderedStatus == .ordered && card.orderedStatus != viewModel.orderedStatus.value {
-          viewModel.showPhysicalCardActivationMessage.send(true)
-        }
-        else {
-          viewModel.showPhysicalCardActivationMessage.send(false)
+        if card.orderedStatus == .ordered, card.orderedStatus != viewModel.orderedStatus.value {
+            viewModel.showPhysicalCardActivationMessage.send(true)
+        } else {
+            viewModel.showPhysicalCardActivationMessage.send(false)
         }
         viewModel.orderedStatus.send(card.orderedStatus)
         viewModel.spendableToday.send(card.spendableToday)
@@ -272,144 +276,139 @@ class ManageCardPresenter: ManageCardPresenterProtocol {
         viewModel.cardStyle.send(card.cardStyle)
         viewModel.state.send(card.state)
         if let showActivateCardButton = config.showActivateCardButton {
-          viewModel.isActivateCardFeatureEnabled.send(showActivateCardButton)
-        }
-        else {
-          viewModel.isActivateCardFeatureEnabled.send(false)
+            viewModel.isActivateCardFeatureEnabled.send(showActivateCardButton)
+        } else {
+            viewModel.isActivateCardFeatureEnabled.send(false)
         }
         if viewModel.cardLoaded.value == false {
-          viewModel.cardLoaded.send(true)
+            viewModel.cardLoaded.send(true)
         }
         if let showStatsButton = config.showStatsButton {
-          viewModel.isStatsFeatureEnabled.send(showStatsButton)
-        }
-        else {
-          viewModel.isStatsFeatureEnabled.send(false)
+            viewModel.isStatsFeatureEnabled.send(showStatsButton)
+        } else {
+            viewModel.isStatsFeatureEnabled.send(false)
         }
         viewModel.isAccountSettingsEnabled.send(config.showAccountSettingsButton ?? true)
         currentCardState = card.state
         currentOrderStatus = card.orderedStatus
     }
-    
-  fileprivate func refreshTransactions(forceRefresh: Bool = true,
-                                       completion: @escaping (_ transactionsLoaded: Int) -> Void) {
-    viewModel.transactionsLoaded.send(false)
-    fetchTransactionOperationQueue.reloadTransactions(rows: rowsPerPage,
-                                                      forceRefresh: forceRefresh) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .failure(let error):
-        self.view.show(error: error)
-      case .success(let transactions):
-        self.viewModel.transactions.removeAllItemsAndSections()
-        self.viewModel.transactionsLoaded.send(true)
-        self.process(newTransactions: transactions)
-        completion(transactions.count)
-      }
-    }
-  }
 
-  private func process(newTransactions transactions: [Transaction]) {
-    if let lastTransaction = transactions.last {
-      self.lastTransactionId = lastTransaction.transactionId
+    fileprivate func refreshTransactions(forceRefresh: Bool = true,
+                                         completion: @escaping (_ transactionsLoaded: Int) -> Void)
+    {
+        viewModel.transactionsLoaded.send(false)
+        fetchTransactionOperationQueue.reloadTransactions(rows: rowsPerPage,
+                                                          forceRefresh: forceRefresh) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .failure(error):
+                self.view.show(error: error)
+            case let .success(transactions):
+                self.viewModel.transactions.removeAllItemsAndSections()
+                self.viewModel.transactionsLoaded.send(true)
+                self.process(newTransactions: transactions)
+                completion(transactions.count)
+            }
+        }
     }
-    else {
-      return
-    }
-    var sections = viewModel.transactions.tree.sections.map { return $0.metadata }
-    transactions.forEach { transaction in
-      append(transaction: transaction, to: &sections)
-    }
-  }
 
-  private func backgroundRefreshTransactions(completion: @escaping () -> Void) {
-    fetchTransactionOperationQueue.backgroundRefresh(rows: rowsPerPage) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .failure:
-        break // A background operation shouldn't show an error to the user
-      case .success(let transactions):
-        self.process(backgroundTransactions: transactions)
-        completion()
-      }
+    private func process(newTransactions transactions: [Transaction]) {
+        if let lastTransaction = transactions.last {
+            lastTransactionId = lastTransaction.transactionId
+        } else {
+            return
+        }
+        var sections = viewModel.transactions.tree.sections.map { $0.metadata }
+        transactions.forEach { transaction in
+            append(transaction: transaction, to: &sections)
+        }
     }
-  }
 
-  private func process(backgroundTransactions transactions: [Transaction]) {
-    guard !transactions.isEmpty else { return }
-    guard viewModel.transactions.numberOfItemsInAllSections != 0 else {
-      self.process(newTransactions: transactions)
-      return
+    private func backgroundRefreshTransactions(completion: @escaping () -> Void) {
+        fetchTransactionOperationQueue.backgroundRefresh(rows: rowsPerPage) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .failure:
+                break // A background operation shouldn't show an error to the user
+            case let .success(transactions):
+                self.process(backgroundTransactions: transactions)
+                completion()
+            }
+        }
     }
-    let currentTopTransaction = viewModel.transactions[itemAt: [0, 0]]
-    guard let index = transactions.firstIndex(where: { currentTopTransaction.transactionId == $0.transactionId }) else {
-      viewModel.transactions.removeAllItemsAndSections()
-      self.process(newTransactions: transactions)
-      return
-    }
-    var sections = viewModel.transactions.tree.sections.map { return $0.metadata }
-    for idx in (0 ..< index).reversed() {
-      append(transaction: transactions[idx], to: &sections, asTopItem: true)
-    }
-  }
 
-  private var firstTransactionMonthPerYear = [Int: Int]()
-
-  private func append(transaction: Transaction, to sections: inout [String], asTopItem: Bool = false) {
-    let transactionYear = transaction.createdAt.year
-    let transactionMonth = transaction.createdAt.month
-    if firstTransactionMonthPerYear[transactionYear] == nil {
-      firstTransactionMonthPerYear[transactionYear] = transactionMonth
+    private func process(backgroundTransactions transactions: [Transaction]) {
+        guard !transactions.isEmpty else { return }
+        guard viewModel.transactions.numberOfItemsInAllSections != 0 else {
+            process(newTransactions: transactions)
+            return
+        }
+        let currentTopTransaction = viewModel.transactions[itemAt: [0, 0]]
+        guard let index = transactions.firstIndex(where: { currentTopTransaction.transactionId == $0.transactionId }) else {
+            viewModel.transactions.removeAllItemsAndSections()
+            process(newTransactions: transactions)
+            return
+        }
+        var sections = viewModel.transactions.tree.sections.map { $0.metadata }
+        for idx in (0 ..< index).reversed() {
+            append(transaction: transactions[idx], to: &sections, asTopItem: true)
+        }
     }
-    let isFirstMonthOfTheYearWithTransaction = firstTransactionMonthPerYear[transactionYear] == transactionMonth
-    let sectionName = section(for: transaction, includeYearNumber: isFirstMonthOfTheYearWithTransaction)
-    if let indexOfSection = sections.firstIndex(of: sectionName) {
-      if asTopItem {
-        viewModel.transactions.insert(item: transaction, at: IndexPath(row: 0, section: indexOfSection))
-      }
-      else {
-        viewModel.transactions.appendItem(transaction, toSectionAt: indexOfSection)
-      }
+
+    private var firstTransactionMonthPerYear = [Int: Int]()
+
+    private func append(transaction: Transaction, to sections: inout [String], asTopItem: Bool = false) {
+        let transactionYear = transaction.createdAt.year
+        let transactionMonth = transaction.createdAt.month
+        if firstTransactionMonthPerYear[transactionYear] == nil {
+            firstTransactionMonthPerYear[transactionYear] = transactionMonth
+        }
+        let isFirstMonthOfTheYearWithTransaction = firstTransactionMonthPerYear[transactionYear] == transactionMonth
+        let sectionName = section(for: transaction, includeYearNumber: isFirstMonthOfTheYearWithTransaction)
+        if let indexOfSection = sections.firstIndex(of: sectionName) {
+            if asTopItem {
+                viewModel.transactions.insert(item: transaction, at: IndexPath(row: 0, section: indexOfSection))
+            } else {
+                viewModel.transactions.appendItem(transaction, toSectionAt: indexOfSection)
+            }
+        } else {
+            sections.append(sectionName)
+            let section = Array2D<String, Transaction>(sectionsWithItems: [(sectionName, [transaction])])
+            if asTopItem {
+                viewModel.transactions.insert(section: section[sectionAt: 0], at: 0)
+            } else {
+                viewModel.transactions.appendSection(section[sectionAt: 0])
+            }
+        }
     }
-    else {
-      sections.append(sectionName)
-      let section = Array2D<String, Transaction>(sectionsWithItems: [(sectionName, [transaction])])
-      if asTopItem {
-        viewModel.transactions.insert(section: section[sectionAt: 0], at: 0)
-      }
-      else {
-        viewModel.transactions.appendSection(section[sectionAt: 0])
-      }
+
+    private func section(for transaction: Transaction, includeYearNumber: Bool) -> String {
+        let formatter = includeYearNumber ? yearDateFormatter : dateFormatter
+        return formatter.string(from: transaction.createdAt)
     }
-  }
 
-  private func section(for transaction: Transaction, includeYearNumber: Bool) -> String {
-    let formatter = includeYearNumber ? yearDateFormatter : dateFormatter
-    return formatter.string(from: transaction.createdAt)
-  }
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM"
+        return formatter
+    }()
 
-  private lazy var dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "MMMM"
-    return formatter
-  }()
+    private lazy var yearDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM, yyyy"
+        return formatter
+    }()
 
-  private lazy var yearDateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "MMMM, yyyy"
-    return formatter
-  }()
-
-  private func activatePhysicalCard(_ code: String) {
-    view.showLoadingSpinner()
-    interactor.activatePhysicalCard(code: code) { [unowned self] result in
-      self.view.hideLoadingSpinner()
-      switch result {
-      case .failure(let error):
-        self.view.show(error: error)
-      case .success:
-        self.router.physicalActivationSucceed()
-      }
+    private func activatePhysicalCard(_ code: String) {
+        view.showLoadingSpinner()
+        interactor.activatePhysicalCard(code: code) { [unowned self] result in
+            self.view.hideLoadingSpinner()
+            switch result {
+            case let .failure(error):
+                self.view.show(error: error)
+            case .success:
+                self.router.physicalActivationSucceed()
+            }
+        }
     }
-  }
 }

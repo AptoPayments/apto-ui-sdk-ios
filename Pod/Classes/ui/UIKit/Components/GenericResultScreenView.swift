@@ -5,9 +5,9 @@
 //  Created by Fabio Cuomo on 4/8/21.
 //
 
-import UIKit
-import SnapKit
 import AptoSDK
+import SnapKit
+import UIKit
 
 public enum ResultType {
     case success
@@ -27,7 +27,7 @@ final class GenericResultScreenView: UIView {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
+
     private(set) lazy var headerTextView: UILabel = {
         let label = UILabel()
         label.font = uiConfiguration.fontProvider.topBarTitleBigFont
@@ -53,22 +53,23 @@ final class GenericResultScreenView: UIView {
         stackView.isHidden = true
         return stackView
     }()
+
     private let bottomViewItemCount: Int
-    
+
     init(uiconfig: UIConfig, bottomViewItemCount: Int = 0) {
-        self.uiConfiguration = uiconfig
+        uiConfiguration = uiconfig
         self.bottomViewItemCount = bottomViewItemCount
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     private func setupViews() {
         backgroundColor = uiConfiguration.uiSecondaryColor
-        for _ in 0..<bottomViewItemCount {
+        for _ in 0 ..< bottomViewItemCount {
             let item = ShowInfoView(uiconfig: uiConfiguration)
             bottomStackView.addArrangedSubview(item)
             item.snp.makeConstraints { make in
@@ -77,33 +78,34 @@ final class GenericResultScreenView: UIView {
         }
         [resultImageView, headerTextView, doneButton, bottomStackView].forEach(addSubview)
     }
-    
+
     private func setupConstraints() {
         resultImageView.snp.makeConstraints { make in
             make.width.height.equalTo(64)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(124)
         }
-        
+
         headerTextView.snp.makeConstraints { make in
             make.top.equalTo(resultImageView.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(20)
             make.centerX.equalToSuperview()
         }
-        
+
         bottomStackView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalTo(doneButton.snp.top).offset(-20)
         }
-        
+
         doneButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(20)
             make.bottom.equalTo(bottomConstraint).inset(34)
             make.height.equalTo(48)
         }
     }
-    
+
     // MARK: Public method
+
     public func configure(for result: ResultType, text: String) {
         switch result {
         case .success:
@@ -113,9 +115,9 @@ final class GenericResultScreenView: UIView {
         }
         headerTextView.text = text
     }
-    
+
     public func configureBottomItems(with infoItems: [BottomItemModel]) {
-        bottomStackView.isHidden = infoItems.count == 0
+        bottomStackView.isHidden = infoItems.isEmpty
         for (index, view) in bottomStackView.arrangedSubviews.enumerated() {
             if let infoView = view as? ShowInfoView {
                 infoView.configure(with: infoItems[index].info, valueText: infoItems[index].value)

@@ -6,19 +6,19 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import AptoSDK
+import Foundation
 
 class CardApplicationStorageSpy: CardApplicationsStorageProtocol {
-    func createApplication(_ apiKey: String, userToken: String, cardProduct: CardProduct, callback: @escaping Result<CardApplication, NSError>.Callback) {}
-    
-    func applicationStatus(_ apiKey: String, userToken: String, applicationId: String, callback: @escaping Result<CardApplication, NSError>.Callback) {}
-    
-    func setBalanceStore(_ apiKey: String, userToken: String, applicationId: String, custodian: Custodian, callback: @escaping Result<SelectBalanceStoreResult, NSError>.Callback) {}
-    
-    func acceptDisclaimer(_ apiKey: String, userToken: String, workflowObject: WorkflowObject, workflowAction: WorkflowAction, callback: @escaping Result<Void, NSError>.Callback) {}
-    
-    func cancelCardApplication(_ apiKey: String, userToken: String, applicationId: String, callback: @escaping Result<Void, NSError>.Callback) {}
-    
-    func issueCard(_ apiKey: String, userToken: String, applicationId: String, metadata: String?, design: IssueCardDesign?, callback: @escaping Result<Card, NSError>.Callback) {}
+    func createApplication(_: String, userToken _: String, cardProduct _: CardProduct, callback _: @escaping Result<CardApplication, NSError>.Callback) {}
+
+    func applicationStatus(_: String, userToken _: String, applicationId _: String, callback _: @escaping Result<CardApplication, NSError>.Callback) {}
+
+    func setBalanceStore(_: String, userToken _: String, applicationId _: String, custodian _: Custodian, callback _: @escaping Result<SelectBalanceStoreResult, NSError>.Callback) {}
+
+    func acceptDisclaimer(_: String, userToken _: String, workflowObject _: WorkflowObject, workflowAction _: WorkflowAction, callback _: @escaping Result<Void, NSError>.Callback) {}
+
+    func cancelCardApplication(_: String, userToken _: String, applicationId _: String, callback _: @escaping Result<Void, NSError>.Callback) {}
+
+    func issueCard(_: String, userToken _: String, applicationId _: String, metadata _: String?, design _: IssueCardDesign?, callback _: @escaping Result<Card, NSError>.Callback) {}
 }

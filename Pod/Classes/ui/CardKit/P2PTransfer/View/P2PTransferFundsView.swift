@@ -5,9 +5,9 @@
 //  Created by Fabio Cuomo on 30/8/21.
 //
 
-import UIKit
-import SnapKit
 import AptoSDK
+import SnapKit
+import UIKit
 
 final class P2PTransferFundsView: UIView {
     let uiConfiguration: UIConfig
@@ -20,6 +20,7 @@ final class P2PTransferFundsView: UIView {
         textField.keyboardType = .decimalPad
         return textField
     }()
+
     private(set) var errorLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,12 +30,14 @@ final class P2PTransferFundsView: UIView {
         label.alpha = 0
         return label
     }()
+
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 10
         return stackView
     }()
+
     private(set) lazy var currentCardView: CurrentCardView = {
         let view = CurrentCardView()
         view.alpha = 0
@@ -51,27 +54,29 @@ final class P2PTransferFundsView: UIView {
         button.isHidden = true
         return button
     }()
-    private var bottomStackViewConstraint: Constraint? = nil
-    private var bottomAmountConstraint: Constraint? = nil
-    
+
+    private var bottomStackViewConstraint: Constraint?
+    private var bottomAmountConstraint: Constraint?
+
     init(uiconfig: UIConfig) {
-        self.uiConfiguration = uiconfig
+        uiConfiguration = uiconfig
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
-    // MARK : Private methods
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    // MARK: Private methods
+
     func setupSubviews() {
         stackView.addArrangedSubview(currentCardView)
         stackView.addArrangedSubview(actionButton)
 
         [amountTextField, errorLabel, stackView].forEach(addSubview)
     }
-    
+
     func setupConstraints() {
         amountTextField.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(10)
@@ -92,36 +97,39 @@ final class P2PTransferFundsView: UIView {
     }
 
     // MARK: Public methods
+
     public func showActionButton(_ show: Bool) {
         UIView.animate(withDuration: 0.1) { [weak self] in
             self?.actionButton.isHidden = !show
         }
     }
-    
+
     public func showError(message: String) {
         errorLabel.text = message
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.errorLabel.alpha = 1
-        } completion: { [weak self] success in
+        } completion: { [weak self] _ in
             UIView.animate(withDuration: 0.1, delay: 2.0, options: .curveEaseInOut) {
                 self?.errorLabel.alpha = 0
             } completion: { _ in }
         }
     }
-    
+
     public func configure(with currentSelection: CurrentCardConfig) {
         currentCardView.configure(with: currentSelection)
         currentCardView.alpha = 1
     }
-    
+
     public func updateViewContraints(to position: CGFloat) {
         bottomStackViewConstraint?.update(inset: position)
         bottomAmountConstraint?.update(inset: position)
     }
-    
+
     public func showLimitError(_ limit: String, show: Bool) {
         if show {
-            errorLabel.text = "p2p_transfer.transfer_funds.amount_exceeded.error.message".podLocalized().replace(["<<MAX>>" : limit])
+            errorLabel.text = "p2p_transfer.transfer_funds.amount_exceeded.error.message"
+                .podLocalized()
+                .replace(["<<MAX>>": limit])
             UIView.animate(withDuration: 0.3) { [errorLabel] in
                 errorLabel.alpha = 1
             }

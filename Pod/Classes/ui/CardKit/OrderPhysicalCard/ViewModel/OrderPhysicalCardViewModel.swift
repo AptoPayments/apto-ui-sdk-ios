@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 25/3/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 final class OrderPhysicalCardViewModel {
     typealias Observer<T> = (T) -> Void
@@ -14,7 +14,7 @@ final class OrderPhysicalCardViewModel {
     enum OrderPhysicalCardError: Error {
         case internalError
     }
-    
+
     private let loader: AptoPlatformProtocol
     private let card: Card
     private let analyticsManager: AnalyticsServiceProtocol
@@ -29,48 +29,52 @@ final class OrderPhysicalCardViewModel {
         self.card = card
         self.analyticsManager = analyticsManager
     }
-    
+
     func loadConfig() {
         onOrderCardLoadingStateChange?(true)
         loader.getOrderPhysicalCardConfig(card.accountId) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let config):
+            case let .success(config):
                 do {
+                    let conf = try self.makePCIConfiguration(card: self.card)
                     let viewData = OrderPhysicalCardViewData(card: self.card,
                                                              config: config,
-                                                             pciConfiguration: try self.makePCIConfiguration(card: self.card))
+                                                             pciConfiguration: conf)
                     self.onOrderCardConfigLoaded?(viewData)
                 } catch {
                     self.onOrderCardError?(ServiceError(code: .internalIncosistencyError))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self.onOrderCardConfigError?(error)
             }
             self.onOrderCardLoadingStateChange?(false)
         }
     }
-    
+
     func performCardOrder() {
         onOrderCardLoadingStateChange?(true)
+        // swiftlint:disable closure_parameter_position
         loader.orderPhysicalCard(card.accountId) { [onCardOrdered,
                                                     onOrderCardError,
                                                     onOrderCardLoadingStateChange] result in
-            switch result {
-            case .success(let card):
-                onCardOrdered?(card)
-            case .failure(let error):
-                onOrderCardError?(error)
-            }
-            onOrderCardLoadingStateChange?(false)
+                switch result {
+                case let .success(card):
+                    onCardOrdered?(card)
+                case let .failure(error):
+                    onOrderCardError?(error)
+                }
+                onOrderCardLoadingStateChange?(false)
         }
+        // swiftlint:enable closure_parameter_position
     }
-    
+
     func track(event: Event, properties: [String: Any]? = nil) {
         analyticsManager.track(event: event, properties: properties)
     }
-    
+
     // MARK: Private methods
+
     private func makePCIConfiguration(card: Card) throws -> PCIConfiguration {
         guard let token = loader.currentToken()?.token else {
             throw OrderPhysicalCardError.internalError

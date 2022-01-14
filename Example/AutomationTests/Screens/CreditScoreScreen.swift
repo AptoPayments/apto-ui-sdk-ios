@@ -8,25 +8,19 @@
 import UIKit
 
 class CreditScoreScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Credit Score"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Credit Score"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func select(creditScore: String) -> Self {
+        tapView(withAccessibilityLabel: creditScore)
 
-    return self
-
-  } // end waitForScreen
-
-  @discardableResult func select(creditScore: String) -> Self {
-
-    tapView(withAccessibilityLabel: creditScore)
-
-    return self
-
-  } // end select(creditScore)
-
+        return self
+    } // end select(creditScore)
 }

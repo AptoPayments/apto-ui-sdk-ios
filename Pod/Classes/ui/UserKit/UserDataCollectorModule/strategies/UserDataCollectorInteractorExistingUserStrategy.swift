@@ -6,34 +6,37 @@
 //
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class UserDataCollectorInteractorExistingUserStrategy: UserDataCollectorInteractorStrategy {
-  override func shouldShowEmailVerification(userData: DataPointList,
-                                            userRequiredData: RequiredDataPointList) -> Bool {
-    return false
-  }
-
-  override func shouldShowBirthdateVerification(userData: DataPointList,
-                                                userRequiredData: RequiredDataPointList) -> Bool {
-    return false
-  }
-
-  override func shouldRecoverUserAccount(userData: DataPointList) -> Bool {
-    return false
-  }
-
-  override func shouldUpdateUserData(_ userData: DataPointList,
-                                     initialUserData: DataPointList) -> DataPointList? {
-    let differences = initialUserData.modifiedDataPoints(compareWith: userData)
-    if !differences.dataPoints.isEmpty {
-      return differences
+    override func shouldShowEmailVerification(userData _: DataPointList,
+                                              userRequiredData _: RequiredDataPointList) -> Bool
+    {
+        return false
     }
-    return nil
-  }
 
-  override func shouldCreateNewUser(_ userData: DataPointList) -> Bool {
-    return false
-  }
+    override func shouldShowBirthdateVerification(userData _: DataPointList,
+                                                  userRequiredData _: RequiredDataPointList) -> Bool
+    {
+        return false
+    }
+
+    override func shouldRecoverUserAccount(userData _: DataPointList) -> Bool {
+        return false
+    }
+
+    override func shouldUpdateUserData(_ userData: DataPointList,
+                                       initialUserData: DataPointList) -> DataPointList?
+    {
+        let differences = initialUserData.modifiedDataPoints(compareWith: userData)
+        if !differences.dataPoints.isEmpty {
+            return differences
+        }
+        return nil
+    }
+
+    override func shouldCreateNewUser(_: DataPointList) -> Bool {
+        return false
+    }
 }

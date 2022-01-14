@@ -1,66 +1,68 @@
-import Bond
 import AptoSDK
+import Bond
 import ReactiveKit
 
-private typealias ViewModel = PassCodeOnboardingViewModelInput & PassCodeOnboardingViewModelOutput & PassCodeOnboardingViewModelType
+private typealias ViewModel = PassCodeOnboardingViewModelInput &
+    PassCodeOnboardingViewModelOutput &
+    PassCodeOnboardingViewModelType
 
 final class PassCodeOnboardingViewModel: ViewModel {
+    var input: PassCodeOnboardingViewModelInput { self }
+    var output: PassCodeOnboardingViewModelOutput { self }
 
-  var input: PassCodeOnboardingViewModelInput { self }
-  var output: PassCodeOnboardingViewModelOutput { self }
+    var navigator: PassCodeOnboardingNavigatorType?
 
-  var navigator: PassCodeOnboardingNavigatorType?
+    private let card: Card
+    private let apto: AptoPlatformProtocol
 
-  private let card: Card
-  private let apto: AptoPlatformProtocol
+    init(apto: AptoPlatformProtocol = AptoPlatform.defaultManager(), card: Card) {
+        self.card = card
+        self.apto = apto
+    }
 
-  init(apto: AptoPlatformProtocol = AptoPlatform.defaultManager(), card: Card) {
-    self.card = card
-    self.apto = apto
-  }
+    // MARK: - Output
 
-  // MARK: - Output
+    var state = Observable<PassCodeOnboardingViewState>(.idle)
+    var moduleState = Observable<PassCodeModuleState>(.idle)
+    var nextButtonEnabled = Observable<Bool>(false)
 
-  var state = Observable<PassCodeOnboardingViewState>(.idle)
-  var moduleState = Observable<PassCodeModuleState>(.idle)
-  var nextButtonEnabled = Observable<Bool>(false)
+    // MARK: - Input
 
-  // MARK: - Input
-
-  func didTapOnSetPassCode() {
-    if card.features?.passCode?.verificationRequired == true {
-      self.state.send(.loading)
-      apto.startPrimaryVerification { [weak self] result in
-        switch result {
-        case .failure(let error):
-          self?.state.send(.error(error))
-        case .success(let verification):
-          self?.state.send(.loaded(verification))
-          switch verification.verificationType {
-          case .phoneNumber:
-            self?.navigator?.navigateToVerifyPhone(verificationType: .verification(verification)) { module, verification in
-              self?.navigateToSetPassCode(verification: verification, module: module)
+    func didTapOnSetPassCode() {
+        if card.features?.passCode?.verificationRequired == true {
+            state.send(.loading)
+            apto.startPrimaryVerification { [weak self] result in
+                switch result {
+                case let .failure(error):
+                    self?.state.send(.error(error))
+                case let .success(verification):
+                    self?.state.send(.loaded(verification))
+                    switch verification.verificationType {
+                    case .phoneNumber:
+                        self?.navigator?
+                            .navigateToVerifyPhone(verificationType: .verification(verification)) { module, verification in
+                                self?.navigateToSetPassCode(verification: verification, module: module)
+                            }
+                    case .email:
+                        self?.navigator?
+                            .navigateToVerifyEmail(verificationType: .verification(verification)) { module, verification in
+                                self?.navigateToSetPassCode(verification: verification, module: module)
+                            }
+                    default:
+                        break
+                    }
+                }
             }
-          case .email:
-              self?.navigator?.navigateToVerifyEmail(verificationType: .verification(verification)) { module, verification in
-                self?.navigateToSetPassCode(verification: verification, module: module)
-              }
-          default:
-            break
-          }
+        } else {
+            navigateToSetPassCode()
         }
-      }
     }
-    else {
-      navigateToSetPassCode()
-    }
-  }
 
-  private func navigateToSetPassCode(verification: Verification? = nil, module: UIModule? = nil) {
-    navigator?.navigateToSetPassCode(card: self.card, verification: verification, module: module) { [weak self] in
-      self?.navigator?.close() {
-        self?.moduleState.send(.finished)
-      }
+    private func navigateToSetPassCode(verification: Verification? = nil, module: UIModule? = nil) {
+        navigator?.navigateToSetPassCode(card: card, verification: verification, module: module) { [weak self] in
+            self?.navigator?.close {
+                self?.moduleState.send(.finished)
+            }
+        }
     }
-  }
 }

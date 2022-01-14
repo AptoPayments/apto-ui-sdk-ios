@@ -5,251 +5,253 @@
 //  Created by Takeichi Kanzaki on 10/03/2020.
 //
 
-import XCTest
 @testable import AptoSDK
+import XCTest
 
 class CardDetailsTest: XCTestCase {
-  // MARK: - Month
-  func testYYdashMMreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "20-03", pan: "PAN", cvv: "CVV")
+    // MARK: - Month
 
-    // When
-    let month = sut.month
+    func testYYdashMMreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "20-03", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testYYslashMMreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "20/03", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testYYslashMMreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "20/03", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testYYdashMMdashDDreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "20-03-01", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testYYdashMMdashDDreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "20-03-01", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testYYslashMMslashDDreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "20/03/01", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testYYslashMMslashDDreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "20/03/01", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testYYYYdashMMreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "2020-03", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testYYYYdashMMreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "2020-03", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testYYYYslashMMreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "2020/03", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testYYYYslashMMreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "2020/03", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testYYYYdashMMdashDDreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "2020-03-01", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testYYYYdashMMdashDDreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "2020-03-01", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testYYYYslashMMslashDDreturnExpectedMonth() {
-    // Given
-    let sut = CardDetails(expiration: "2020/03/01", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testYYYYslashMMslashDDreturnExpectedMonth() {
+        // Given
+        let sut = CardDetails(expiration: "2020/03/01", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertEqual(3, month)
-  }
+        // When
+        let month = sut.month
 
-  func testInvalidSeparatorReturnNilMonth() {
-    // Given
-    let sut = CardDetails(expiration: "20,03,01", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertEqual(3, month)
+    }
 
-    // When
-    let month = sut.month
+    func testInvalidSeparatorReturnNilMonth() {
+        // Given
+        let sut = CardDetails(expiration: "20,03,01", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertNil(month)
-  }
+        // When
+        let month = sut.month
 
-  func testInvalidExpirationReturnNilMonth() {
-    // Given
-    let sut = CardDetails(expiration: "inv/al-id", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertNil(month)
+    }
 
-    // When
-    let month = sut.month
+    func testInvalidExpirationReturnNilMonth() {
+        // Given
+        let sut = CardDetails(expiration: "inv/al-id", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertNil(month)
-  }
+        // When
+        let month = sut.month
 
-  func testEmptyExpirationReturnNilMonth() {
-    // Given
-    let sut = CardDetails(expiration: "", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertNil(month)
+    }
 
-    // When
-    let month = sut.month
+    func testEmptyExpirationReturnNilMonth() {
+        // Given
+        let sut = CardDetails(expiration: "", pan: "PAN", cvv: "CVV")
 
-    // Then
-    XCTAssertNil(month)
-  }
+        // When
+        let month = sut.month
 
-  // MARK: - Year
-  func testYYdashMMreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "20-03", pan: "PAN", cvv: "CVV")
+        // Then
+        XCTAssertNil(month)
+    }
 
-    // When
-    let year = sut.year
+    // MARK: - Year
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYdashMMreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "20-03", pan: "PAN", cvv: "CVV")
 
-  func testYYslashMMreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "20/03", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYslashMMreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "20/03", pan: "PAN", cvv: "CVV")
 
-  func testYYdashMMdashDDreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "20-03-01", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYdashMMdashDDreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "20-03-01", pan: "PAN", cvv: "CVV")
 
-  func testYYslashMMslashDDreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "20/03/01", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYslashMMslashDDreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "20/03/01", pan: "PAN", cvv: "CVV")
 
-  func testYYYYdashMMreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "2020-03", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYYYdashMMreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "2020-03", pan: "PAN", cvv: "CVV")
 
-  func testYYYYslashMMreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "2020/03", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYYYslashMMreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "2020/03", pan: "PAN", cvv: "CVV")
 
-  func testYYYYdashMMdashDDreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "2020-03-01", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYYYdashMMdashDDreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "2020-03-01", pan: "PAN", cvv: "CVV")
 
-  func testYYYYslashMMslashDDreturnExpectedYear() {
-    // Given
-    let sut = CardDetails(expiration: "2020/03/01", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertEqual(20, year)
-  }
+    func testYYYYslashMMslashDDreturnExpectedYear() {
+        // Given
+        let sut = CardDetails(expiration: "2020/03/01", pan: "PAN", cvv: "CVV")
 
-  func testInvalidSeparatorReturnNilYear() {
-    // Given
-    let sut = CardDetails(expiration: "20,03,01", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertEqual(20, year)
+    }
 
-    // Then
-    XCTAssertNil(year)
-  }
+    func testInvalidSeparatorReturnNilYear() {
+        // Given
+        let sut = CardDetails(expiration: "20,03,01", pan: "PAN", cvv: "CVV")
 
-  func testInvalidExpirationReturnNilYear() {
-    // Given
-    let sut = CardDetails(expiration: "inv/al-id", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertNil(year)
+    }
 
-    // Then
-    XCTAssertNil(year)
-  }
+    func testInvalidExpirationReturnNilYear() {
+        // Given
+        let sut = CardDetails(expiration: "inv/al-id", pan: "PAN", cvv: "CVV")
 
-  func testEmptyExpirationReturnNilYear() {
-    // Given
-    let sut = CardDetails(expiration: "", pan: "PAN", cvv: "CVV")
+        // When
+        let year = sut.year
 
-    // When
-    let year = sut.year
+        // Then
+        XCTAssertNil(year)
+    }
 
-    // Then
-    XCTAssertNil(year)
-  }
+    func testEmptyExpirationReturnNilYear() {
+        // Given
+        let sut = CardDetails(expiration: "", pan: "PAN", cvv: "CVV")
+
+        // When
+        let year = sut.year
+
+        // Then
+        XCTAssertNil(year)
+    }
 }

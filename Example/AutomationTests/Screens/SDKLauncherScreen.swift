@@ -8,30 +8,28 @@
 import Foundation
 
 class SDKLauncherScreen: Screen {
+    enum Labels {
+        static let GetStarted = "Get Started"
+        static let Settings = "Settings"
+    }
 
-  struct Labels {
-    static let GetStarted = "Get Started"
-    static let Settings = "Settings"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.GetStarted)
+        waitForViewWith(accessibilityLabel: Labels.Settings)
+        return self
+    }
 
-  @discardableResult override func waitForScreen() -> Self {
-    waitForViewWith(accessibilityLabel: Labels.GetStarted)
-    waitForViewWith(accessibilityLabel: Labels.Settings)
-    return self
-  }
+    override func isScreenPresent() -> Bool {
+        return isViewPresentWith(accessibilityLabel: Labels.GetStarted) && isViewPresentWith(accessibilityLabel: Labels.Settings)
+    }
 
-  override func isScreenPresent() -> Bool {
-    return isViewPresentWith(accessibilityLabel: Labels.GetStarted) && isViewPresentWith(accessibilityLabel: Labels.Settings)
-  }
+    @discardableResult func startAptoSDK() -> Self {
+        tapView(withAccessibilityLabel: Labels.GetStarted)
+        return self
+    }
 
-  @discardableResult func startAptoSDK() -> Self {
-    tapView(withAccessibilityLabel: Labels.GetStarted)
-    return self
-  }
-
-  @discardableResult func openSettingsScreen() -> Self {
-    tapView(withAccessibilityLabel: Labels.Settings)
-    return self
-  }
-
+    @discardableResult func openSettingsScreen() -> Self {
+        tapView(withAccessibilityLabel: Labels.Settings)
+        return self
+    }
 }

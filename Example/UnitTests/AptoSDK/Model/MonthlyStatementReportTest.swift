@@ -5,85 +5,86 @@
 //  Created by Takeichi Kanzaki on 20/09/2019.
 //
 
-import XCTest
 @testable import AptoSDK
 import SwiftyJSON
+import XCTest
 
 class MonthlyStatementReportTest: XCTestCase {
-  private let dataProvider = ModelDataProvider.provider
+    private let dataProvider = ModelDataProvider.provider
 
-  // MARK: - JSON Parser test
-  func testMonthlyStatementReportIsCreatedFromJSON() {
-    // Given
-    let sut = dataProvider.monthlyStatementReportJSON
+    // MARK: - JSON Parser test
 
-    // When
-    let statementReport = sut.monthlyStatementReport
+    func testMonthlyStatementReportIsCreatedFromJSON() {
+        // Given
+        let sut = dataProvider.monthlyStatementReportJSON
 
-    // Then
-    XCTAssertNotNil(statementReport?.id)
-    XCTAssertNotNil(statementReport?.month)
-    XCTAssertNotNil(statementReport?.year)
-    XCTAssertNotNil(statementReport?.downloadUrl)
-    XCTAssertNotNil(statementReport?.urlExpirationDate)
-  }
+        // When
+        let statementReport = sut.monthlyStatementReport
 
-  func testMonthlyStatementReportIsReturnedFromLinkObject() {
-    // Given
-    let sut = dataProvider.monthlyStatementReportJSON
+        // Then
+        XCTAssertNotNil(statementReport?.id)
+        XCTAssertNotNil(statementReport?.month)
+        XCTAssertNotNil(statementReport?.year)
+        XCTAssertNotNil(statementReport?.downloadUrl)
+        XCTAssertNotNil(statementReport?.urlExpirationDate)
+    }
 
-    // When
-    let statementReport = sut.linkObject
+    func testMonthlyStatementReportIsReturnedFromLinkObject() {
+        // Given
+        let sut = dataProvider.monthlyStatementReportJSON
 
-    // Then
-    XCTAssertNotNil(statementReport)
-    XCTAssertTrue(statementReport is MonthlyStatementReport)
-  }
+        // When
+        let statementReport = sut.linkObject
 
-  func testMonthlyStatementReportWithInvalidJSONReturnNil() {
-    // Given
-    let sut = dataProvider.emptyJSON
+        // Then
+        XCTAssertNotNil(statementReport)
+        XCTAssertTrue(statementReport is MonthlyStatementReport)
+    }
 
-    // When
-    let statementReport = sut.monthlyStatementReport
+    func testMonthlyStatementReportWithInvalidJSONReturnNil() {
+        // Given
+        let sut = dataProvider.emptyJSON
 
-    // Then
-    XCTAssertNil(statementReport)
-  }
+        // When
+        let statementReport = sut.monthlyStatementReport
 
-  func testMonthlyStatementReportWithoutIdReturnNil() {
-    // Given
-    var sut = dataProvider.monthlyStatementReportJSON
-    try! sut.merge(with: JSON(dictionaryLiteral: ("id", NSNull())))
+        // Then
+        XCTAssertNil(statementReport)
+    }
 
-    // When
-    let statementReport = sut.monthlyStatementReport
+    func testMonthlyStatementReportWithoutIdReturnNil() {
+        // Given
+        var sut = dataProvider.monthlyStatementReportJSON
+        try! sut.merge(with: JSON(dictionaryLiteral: ("id", NSNull())))
 
-    // Then
-    XCTAssertNil(statementReport)
-  }
+        // When
+        let statementReport = sut.monthlyStatementReport
 
-  func testMonthlyStatementReportWithoutMonthReturnNil() {
-    // Given
-    var sut = dataProvider.monthlyStatementReportJSON
-    try! sut.merge(with: JSON(dictionaryLiteral: ("month", NSNull())))
+        // Then
+        XCTAssertNil(statementReport)
+    }
 
-    // When
-    let statementReport = sut.monthlyStatementReport
+    func testMonthlyStatementReportWithoutMonthReturnNil() {
+        // Given
+        var sut = dataProvider.monthlyStatementReportJSON
+        try! sut.merge(with: JSON(dictionaryLiteral: ("month", NSNull())))
 
-    // Then
-    XCTAssertNil(statementReport)
-  }
+        // When
+        let statementReport = sut.monthlyStatementReport
 
-  func testMonthlyStatementReportWithoutYearReturnNil() {
-    // Given
-    var sut = dataProvider.monthlyStatementReportJSON
-    try! sut.merge(with: JSON(dictionaryLiteral: ("year", NSNull())))
+        // Then
+        XCTAssertNil(statementReport)
+    }
 
-    // When
-    let statementReport = sut.monthlyStatementReport
+    func testMonthlyStatementReportWithoutYearReturnNil() {
+        // Given
+        var sut = dataProvider.monthlyStatementReportJSON
+        try! sut.merge(with: JSON(dictionaryLiteral: ("year", NSNull())))
 
-    // Then
-    XCTAssertNil(statementReport)
-  }
+        // When
+        let statementReport = sut.monthlyStatementReport
+
+        // Then
+        XCTAssertNil(statementReport)
+    }
 }

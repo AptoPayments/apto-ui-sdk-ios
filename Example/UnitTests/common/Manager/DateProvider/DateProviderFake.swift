@@ -8,8 +8,8 @@
 @testable import AptoUISDK
 
 class DateProviderFake: DateProviderProtocol {
-  var nextDateToProvide = Date()
-  func currentDate() -> Date {
-    return nextDateToProvide
-  }
+    var nextDateToProvide = Date()
+    func currentDate() -> Date {
+        return nextDateToProvide
+    }
 }

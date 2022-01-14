@@ -1,6 +1,6 @@
 import AptoSDK
 
 public enum TransactionListState {
-  case loading
-  case loaded
+    case loading
+    case loaded
 }

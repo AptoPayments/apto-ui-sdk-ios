@@ -8,6 +8,6 @@
 @testable import AptoSDK
 
 class UserPreferencesStorageFake: UserPreferencesStorageProtocol {
-  var shouldShowDetailedCardActivity: Bool = false
-  var shouldUseBiometric: Bool = false
+    var shouldShowDetailedCardActivity: Bool = false
+    var shouldUseBiometric: Bool = false
 }

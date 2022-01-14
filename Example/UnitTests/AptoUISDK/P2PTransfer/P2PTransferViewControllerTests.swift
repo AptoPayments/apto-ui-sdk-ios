@@ -6,27 +6,26 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
 import SnapKit
+import XCTest
 
-@testable import AptoUISDK
 @testable import AptoSDK
+@testable import AptoUISDK
 
 class P2PTransferViewControllerTests: XCTestCase {
-
     func test_init_rendersP2PTransferView() throws {
         let (sut, _) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertNotNil(sut.view)
         XCTAssertTrue(sut.view.subviews.count > 0)
-        XCTAssertTrue(((sut.view.subviews.first?.isKind(of: P2PTransferView.self)) != nil))
+        XCTAssertTrue((sut.view.subviews.first?.isKind(of: P2PTransferView.self)) != nil)
     }
 
     func test_init_doesNotFetchConfiguration() {
         let (_, loader) = makeSUT()
-        
+
         XCTAssertEqual(loader.fetchConfigurationLoadCallCount, 0)
         XCTAssertEqual(loader.findRecipientLoadCallCount, 0)
         XCTAssertEqual(loader.inviteLoadCallCount, 0)
@@ -37,7 +36,7 @@ class P2PTransferViewControllerTests: XCTestCase {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertEqual(loader.fetchConfigurationLoadCallCount, 1)
         XCTAssertEqual(loader.findRecipientLoadCallCount, 0)
         XCTAssertEqual(loader.inviteLoadCallCount, 0)
@@ -48,7 +47,7 @@ class P2PTransferViewControllerTests: XCTestCase {
         let (sut, _) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertTrue(sut.isActivityIndicatorLoading)
     }
 
@@ -147,8 +146,8 @@ class P2PTransferViewControllerTests: XCTestCase {
 
     func test_notExistentPhoneNumber_showsNoResultView() {
         let (sut, loader) = makeSUT()
-        let error = NSError(domain: "com.aptopayments.aptocard", code: 404, userInfo: ["message" : "user_not_found"])
-        
+        let error = NSError(domain: "com.aptopayments.aptocard", code: 404, userInfo: ["message": "user_not_found"])
+
         sut.loadViewIfNeeded()
 
         sut.phoneNumberTextField.becomeFirstResponder()
@@ -167,13 +166,14 @@ class P2PTransferViewControllerTests: XCTestCase {
         sut.phoneNumberTextField.becomeFirstResponder()
         sut.phoneNumberTextField.text = "+14047772666"
         sut.phoneNumberTextField.simulate(event: UIControl.Event.editingChanged)
-        
+
         loader.completeFindRecipient(with: ModelDataProvider.provider.recipient)
 
         XCTAssertFalse(sut.showNoResultsView)
     }
 
     // MARK: - Helpers
+
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: P2PTransferViewController, loader: P2PTransferLoaderSpy) {
         let loader = P2PTransferLoaderSpy()
         let viewModel = P2PTransferViewModel(loader: loader)
@@ -189,11 +189,11 @@ private extension P2PTransferViewController {
     var isActivityIndicatorLoading: Bool {
         return activityIndicator.isAnimating
     }
-    
+
     var phoneNumberTextField: UITextField {
         return transferView.phoneTextField
     }
-    
+
     var emailTextField: UITextField {
         return transferView.emailTextField
     }
@@ -205,9 +205,8 @@ private extension P2PTransferViewController {
     var emailIsInvalid: Bool {
         return transferView.emailTextField.textColor == uiConfiguration.uiErrorColor
     }
-    
+
     var showNoResultsView: Bool {
         return transferView.resultsView.emptyLabel.alpha == 1
     }
 }
-

@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 8/2/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 final class AddMoneyViewModel {
     private let loader: AptoPlatformProtocol
@@ -22,7 +22,8 @@ final class AddMoneyViewModel {
         self.cardId = cardId
         self.analyticsManager = analyticsManager
     }
-    
+
+    // swiftlint:disable trailing_closure
     public func load() {
         onCardLoadingStateChange?(true)
         loader
@@ -30,14 +31,16 @@ final class AddMoneyViewModel {
                        forceRefresh: false,
                        retrieveBalances: false,
                        callback: { [weak self] result in
-                        if let error = result.error {
-                            self?.onErrorCardLoading?(error)
-                        }
-                        self?.onCardLoadingStateChange?(false)
+                           if let error = result.error {
+                               self?.onErrorCardLoading?(error)
+                           }
+                           self?.onCardLoadingStateChange?(false)
                        })
     }
-    
+
+    // swiftlint:enable trailing_closure
+
     public func trackEvent() {
         analyticsManager.track(event: .addFundsSelectorStart)
-    }    
+    }
 }

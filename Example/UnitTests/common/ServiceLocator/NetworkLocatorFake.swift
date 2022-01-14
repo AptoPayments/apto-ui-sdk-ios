@@ -9,18 +9,20 @@
 @testable import AptoSDK
 
 class NetworkLocatorFake: NetworkLocatorProtocol {
-  lazy var networkManagerSpy: NetworkManagerSpy = NetworkManagerSpy()
-  func networkManager(baseURL: URL?,
-                      certPinningConfig: [String: [String: AnyObject]]?,
-                      allowSelfSignedCertificate: Bool) -> NetworkManagerProtocol {
-    return networkManagerSpy
-  }
+    lazy var networkManagerSpy = NetworkManagerSpy()
+    func networkManager(baseURL _: URL?,
+                        certPinningConfig _: [String: [String: AnyObject]]?,
+                        allowSelfSignedCertificate _: Bool) -> NetworkManagerProtocol
+    {
+        return networkManagerSpy
+    }
 
-  lazy var jsonTransportFake = JSONTransportFake()
-  func jsonTransport(environment: JSONTransportEnvironment,
-                     baseUrlProvider: BaseURLProvider,
-                     certPinningConfig: [String: [String: AnyObject]]?,
-                     allowSelfSignedCertificate: Bool) -> JSONTransport {
-    return jsonTransportFake
-  }
+    lazy var jsonTransportFake = JSONTransportFake()
+    func jsonTransport(environment _: JSONTransportEnvironment,
+                       baseUrlProvider _: BaseURLProvider,
+                       certPinningConfig _: [String: [String: AnyObject]]?,
+                       allowSelfSignedCertificate _: Bool) -> JSONTransport
+    {
+        return jsonTransportFake
+    }
 }

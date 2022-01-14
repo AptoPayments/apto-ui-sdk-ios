@@ -8,37 +8,29 @@
 import UIKit
 
 class AddCardScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Add Card"
+        static let CardDataField = "Card Data Field"
+        static let AddCardButton = "Add Card Button"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Add Card"
-    static let CardDataField = "Card Data Field"
-    static let AddCardButton = "Add Card Button"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func enter(cardNumber: String, expirationDate: String, cvv: String) -> Self {
+        enter(text: cardNumber, intoViewWithAccessibilityLabel: Labels.CardDataField)
+        enter(text: expirationDate, intoViewWithAccessibilityLabel: Labels.CardDataField)
+        enter(text: cvv, intoViewWithAccessibilityLabel: "CVC")
 
-    return self
+        return self
+    } // end enterCardNumber:expirationDate
 
-  } // end waitForScreen
+    @discardableResult func addCard() -> Self {
+        tapView(withAccessibilityLabel: Labels.AddCardButton)
 
-  @discardableResult func enter(cardNumber: String, expirationDate: String, cvv: String) -> Self {
-
-    enter(text:cardNumber, intoViewWithAccessibilityLabel: Labels.CardDataField)
-    enter(text:expirationDate, intoViewWithAccessibilityLabel: Labels.CardDataField)
-    enter(text:cvv, intoViewWithAccessibilityLabel: "CVC")
-
-    return self
-
-  } // end enterCardNumber:expirationDate
-
-  @discardableResult func addCard() -> Self {
-
-    tapView(withAccessibilityLabel: Labels.AddCardButton)
-
-    return self
-
-  } // end addCard
-
+        return self
+    } // end addCard
 }

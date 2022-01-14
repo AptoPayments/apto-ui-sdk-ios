@@ -17,7 +17,7 @@ PODS:
     - PhoneNumberKit (~> 3.3.3)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.15.0):
+  - AptoUISDK (2.16.0):
     - AptoPCI (= 3.2.0)
     - AptoSDK (= 3.8.0)
     - Bond (~> 7.6)
@@ -52,6 +52,7 @@ PODS:
   - ReactiveKit (3.17.4)
   - SnapKit (5.0.1)
   - SnapshotTesting (1.7.2)
+  - SwiftLint (0.45.0)
   - SwiftyJSON (5.0.0)
   - TrustKit (1.6.5)
   - TTTAttributedLabel (2.0.0)
@@ -74,6 +75,7 @@ DEPENDENCIES:
   - PullToRefreshKit (~> 0.8)
   - SnapKit (~> 5.0)
   - SnapshotTesting (~> 1.7.2)
+  - SwiftLint
   - SwiftyJSON (~> 5.0)
   - TrustKit (~> 1.6)
   - TTTAttributedLabel (= 2.0.0)
@@ -96,6 +98,7 @@ SPEC REPOS:
     - ReactiveKit
     - SnapKit
     - SnapshotTesting
+    - SwiftLint
     - SwiftyJSON
     - TrustKit
     - TTTAttributedLabel
@@ -116,7 +119,7 @@ SPEC CHECKSUMS:
   AptoObjCSDK: c7c371631a33ca992fdfd8ace436fe9233eac31e
   AptoPCI: c6504de7ec402ce7570973d2957c193b5159390b
   AptoSDK: 1ab7ac4e25c95c62610abbd9c3a342d050247b24
-  AptoUISDK: 7eef2008ab9ea6e1a2cc96bc31ba419ccfa8b3c5
+  AptoUISDK: a96c047934277a8d4f83bf3c13be97db04ebd01c
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
   Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
@@ -129,11 +132,12 @@ SPEC CHECKSUMS:
   ReactiveKit: f9f9e079efa39312c597bf1508ef4810d111ce76
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SnapshotTesting: 8caa6661fea7c8019d5b46de77c16bab99c36c5c
+  SwiftLint: e5c7f1fba68eccfc51509d5b2ce1699f5502e0c7
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   TwilioVoice: b75c5120e1e6a7402fd1f9f4917e8215ce8d7baf
 
-PODFILE CHECKSUM: 9b214d8029d6b576961267f12b25765ea441565a
+PODFILE CHECKSUM: 2be361166817e533f80413d7b9ba6e89082d632d
 
 COCOAPODS: 1.11.2

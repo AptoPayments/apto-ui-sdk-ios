@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 15/6/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 struct OnBoardingCardData {
     let cardName: String?
@@ -26,7 +26,8 @@ final class AddCardOnboardingViewModel {
         self.loader = loader
         self.cardId = cardId
     }
-    
+
+    // swiftlint:disable trailing_closure
     public func fetchInfo() {
         onCardLoadingStateChange?(true)
         loader
@@ -34,31 +35,34 @@ final class AddCardOnboardingViewModel {
                        forceRefresh: false,
                        retrieveBalances: false,
                        callback: { [weak self] cardResult in
-                        switch cardResult {
-                        case .success(let card):
-                            let descriptor = card.features?.funding?.softDescriptor ?? ""
-                            guard let cardProductId = card.cardProductId else {
-                                self?.onCardInfoLoadedSuccessfully?(OnBoardingCardData(cardName: "", softDescriptor: descriptor))
-                                return
-                            }
-                            self?.fetchCompanyName(cardProductId: cardProductId, descriptor: descriptor)
-                        case .failure(let error):
-                            self?.onErrorCardLoading?(error)
-                        }
-                        self?.onCardLoadingStateChange?(false)
+                           switch cardResult {
+                           case let .success(card):
+                               let descriptor = card.features?.funding?.softDescriptor ?? ""
+                               guard let cardProductId = card.cardProductId else {
+                                   self?.onCardInfoLoadedSuccessfully?(OnBoardingCardData(cardName: "",
+                                                                                          softDescriptor: descriptor))
+                                   return
+                               }
+                               self?.fetchCompanyName(cardProductId: cardProductId, descriptor: descriptor)
+                           case let .failure(error):
+                               self?.onErrorCardLoading?(error)
+                           }
+                           self?.onCardLoadingStateChange?(false)
                        })
     }
-    
+
+    // swiftlint:enable trailing_closure
+
     public func fetchCompanyName(cardProductId: String, descriptor: String) {
         loader.fetchCardProduct(cardProductId: cardProductId,
                                 forceRefresh: false) { [weak self] result in
             switch result {
-            case .success(let cardProduct):
-                self?.onCardInfoLoadedSuccessfully?(OnBoardingCardData(cardName: cardProduct.name, softDescriptor: descriptor))
-            case .failure(let error):
+            case let .success(cardProduct):
+                self?.onCardInfoLoadedSuccessfully?(OnBoardingCardData(cardName: cardProduct.name,
+                                                                       softDescriptor: descriptor))
+            case let .failure(error):
                 self?.onErrorCardLoading?(error)
             }
         }
     }
-    
 }

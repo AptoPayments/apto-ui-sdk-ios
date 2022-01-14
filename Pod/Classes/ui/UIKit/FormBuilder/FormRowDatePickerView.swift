@@ -6,162 +6,165 @@
 //
 //
 
-import UIKit
 import AptoSDK
 import Bond
+import UIKit
 
 public enum FormDateFormat {
-  case dateOnly
-  case timeOnly
-  case dateTime
+    case dateOnly
+    case timeOnly
+    case dateTime
 }
 
 open class FormRowDatePickerView: FormRowTextInputView {
+    // MARK: - Public attributes
 
-  // MARK: - Public attributes
-  var dateValidator: DataValidator<Date>? {
-    didSet {
-      self.validateDate(self.dateValidator, date: self.date)
-    }
-  }
-
-  open var date: Date? {
-    didSet {
-      self.updateTextWith(date: self.date)
-      self.validateDate(self.dateValidator, date: self.date)
-      guard let date = self.date else {
-        return
-      }
-      datePicker.date = date
-    }
-  }
-
-  // MARK: - Initializers
-  public init(label: UILabel?,
-              labelWidth: CGFloat?,
-              textField: UITextField,
-              date: Date?,
-              format: FormDateFormat,
-              firstFormField: Bool = false,
-              lastFormField: Bool = false,
-              validator: DataValidator<Date>? = nil,
-              uiConfig: UIConfig) {
-    self.date = date
-    self.dateValidator = validator
-    self.datePicker = UIDatePicker()
-    switch format {
-    case .dateOnly:
-      datePicker.datePickerMode = .date
-      dateFormatter = DateFormatter.dateOnlyFormatter()
-    case .timeOnly:
-      datePicker.datePickerMode = .time
-      dateFormatter = DateFormatter.timeOnlyFormatter()
-    case .dateTime:
-      datePicker.datePickerMode = .dateAndTime
-      dateFormatter = DateFormatter.dateTimeFormatter()
-    }
-    super.init(label: label,
-               labelWidth: labelWidth,
-               textField: textField,
-               firstFormField: firstFormField,
-               lastFormField: lastFormField,
-               uiConfig: uiConfig)
-    textField.inputView = datePicker
-    datePicker.addTarget(self, action: #selector(FormRowDatePickerView.datePickerValueChanged(_:)), for: .valueChanged)
-    if #available(iOS 14, *) {
-        datePicker.preferredDatePickerStyle = .wheels
-    } else if #available(iOS 13.4, *) {
-        datePicker.preferredDatePickerStyle = .wheels
-    }
-
-    guard let date = self.date else {
-      self.valid.send(false)
-      return
-    }
-    datePicker.date = date
-
-    if validator != nil {
-      _ = self.bndValue.observeNext { _ in
-        let delayTime = DispatchTime.now() + Double(Int64(0.01 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-        DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
-          guard let wself = self else {
-            return
-          }
-          wself.validateDate(wself.dateValidator, date: wself.date)
+    var dateValidator: DataValidator<Date>? {
+        didSet {
+            self.validateDate(self.dateValidator, date: self.date)
         }
-      }
     }
-  }
 
-  required public init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - Binding Extensions
-  private var _bndDate: Observable<Date?>?
-  var bndDate: Observable<Date?> {
-    if let bndDate = _bndDate {
-      return bndDate
+    open var date: Date? {
+        didSet {
+            updateTextWith(date: self.date)
+            validateDate(dateValidator, date: self.date)
+            guard let date = date else {
+                return
+            }
+            datePicker.date = date
+        }
     }
-    else {
-      let bndDate = Observable<Date?>(self.date)
-      _ = bndDate.observeNext { [weak self] (date: Date?) in
-        self?.date = date
-      }
-      _bndDate = bndDate
-      return bndDate
+
+    // MARK: - Initializers
+
+    public init(label: UILabel?,
+                labelWidth: CGFloat?,
+                textField: UITextField,
+                date: Date?,
+                format: FormDateFormat,
+                firstFormField: Bool = false,
+                lastFormField: Bool = false,
+                validator: DataValidator<Date>? = nil,
+                uiConfig: UIConfig)
+    {
+        self.date = date
+        dateValidator = validator
+        datePicker = UIDatePicker()
+        switch format {
+        case .dateOnly:
+            datePicker.datePickerMode = .date
+            dateFormatter = DateFormatter.dateOnlyFormatter()
+        case .timeOnly:
+            datePicker.datePickerMode = .time
+            dateFormatter = DateFormatter.timeOnlyFormatter()
+        case .dateTime:
+            datePicker.datePickerMode = .dateAndTime
+            dateFormatter = DateFormatter.dateTimeFormatter()
+        }
+        super.init(label: label,
+                   labelWidth: labelWidth,
+                   textField: textField,
+                   firstFormField: firstFormField,
+                   lastFormField: lastFormField,
+                   uiConfig: uiConfig)
+        textField.inputView = datePicker
+        datePicker.addTarget(self, action: #selector(FormRowDatePickerView.datePickerValueChanged(_:)), for: .valueChanged)
+        if #available(iOS 14, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } else if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        }
+
+        guard let date = self.date else {
+            valid.send(false)
+            return
+        }
+        datePicker.date = date
+
+        if validator != nil {
+            _ = bndValue.observeNext { _ in
+                let delayTime = DispatchTime.now() + Double(Int64(0.01 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
+                    guard let wself = self else {
+                        return
+                    }
+                    wself.validateDate(wself.dateValidator, date: wself.date)
+                }
+            }
+        }
     }
-  }
 
-  @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-    bndDate.send(sender.date)
-    updateTextWith(date: sender.date)
-  }
-
-  // MARK: - Private methods and attributes
-
-  fileprivate let datePicker: UIDatePicker
-  fileprivate let dateFormatter: DateFormatter
-
-  fileprivate func updateTextWith(date: Date?) {
-    guard let date = date else {
-      textField.text = nil
-      return
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    self.textField.text = self.dateFormatter.string(from: date)
-  }
+
+    // MARK: - Binding Extensions
+
+    private var _bndDate: Observable<Date?>?
+    var bndDate: Observable<Date?> {
+        if let bndDate = _bndDate {
+            return bndDate
+        } else {
+            let bndDate = Observable<Date?>(date)
+            _ = bndDate.observeNext { [weak self] (date: Date?) in
+                self?.date = date
+            }
+            _bndDate = bndDate
+            return bndDate
+        }
+    }
+
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        bndDate.send(sender.date)
+        updateTextWith(date: sender.date)
+    }
+
+    // MARK: - Private methods and attributes
+
+    fileprivate let datePicker: UIDatePicker
+    fileprivate let dateFormatter: DateFormatter
+
+    fileprivate func updateTextWith(date: Date?) {
+        guard let date = date else {
+            textField.text = nil
+            return
+        }
+        textField.text = dateFormatter.string(from: date)
+    }
 }
 
 class MaximumDateValidator: DataValidator<Date> {
-  init(maximumDate: Date,
-       failReasonMessage: String) {
-    super.init(failReasonMessage: failReasonMessage) { date -> ValidationResult in
-      guard let date = date else {
-        return .fail(reason: failReasonMessage)
-      }
-      if date.isLessThanDate(maximumDate) {
-        return .pass
-      }
-      else {
-        return .fail(reason: failReasonMessage)
-      }
+    init(maximumDate: Date,
+         failReasonMessage: String)
+    {
+        super.init(failReasonMessage: failReasonMessage) { date -> ValidationResult in
+            guard let date = date else {
+                return .fail(reason: failReasonMessage)
+            }
+            if date.isLessThanDate(maximumDate) {
+                return .pass
+            } else {
+                return .fail(reason: failReasonMessage)
+            }
+        }
     }
-  }
 }
 
 class MinimumDateValidator: DataValidator<Date> {
-  init(minimumDate: Date,
-       failReasonMessage: String) {
-    super.init(failReasonMessage: failReasonMessage) { date -> ValidationResult in
-      guard let date = date else {
-        return .fail(reason: failReasonMessage)
-      }
-      if date.isGreaterThanDate(minimumDate) {
-        return .pass
-      }
-      else {
-        return .fail(reason: failReasonMessage)
-      }
+    init(minimumDate: Date,
+         failReasonMessage: String)
+    {
+        super.init(failReasonMessage: failReasonMessage) { date -> ValidationResult in
+            guard let date = date else {
+                return .fail(reason: failReasonMessage)
+            }
+            if date.isGreaterThanDate(minimumDate) {
+                return .pass
+            } else {
+                return .fail(reason: failReasonMessage)
+            }
+        }
     }
-  }
 }

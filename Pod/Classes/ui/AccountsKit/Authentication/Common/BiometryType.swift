@@ -6,7 +6,7 @@
 //
 
 enum BiometryType: CaseIterable {
-  case none
-  case faceID
-  case touchID
+    case none
+    case faceID
+    case touchID
 }

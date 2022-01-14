@@ -6,45 +6,44 @@
 //
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class ShowGenericMessageModule: UIModule {
-  private let showGenericMessageAction: WorkflowAction
-  open var onWelcomeScreenContinue: ((_ welcomeScreenModule: ShowGenericMessageModule) -> Void)?
+    private let showGenericMessageAction: WorkflowAction
+    open var onWelcomeScreenContinue: ((_ welcomeScreenModule: ShowGenericMessageModule) -> Void)?
 
-  init (serviceLocator: ServiceLocatorProtocol, showGenericMessageAction: WorkflowAction) {
-    self.showGenericMessageAction = showGenericMessageAction
-    super.init(serviceLocator: serviceLocator)
-  }
+    init(serviceLocator: ServiceLocatorProtocol, showGenericMessageAction: WorkflowAction) {
+        self.showGenericMessageAction = showGenericMessageAction
+        super.init(serviceLocator: serviceLocator)
+    }
 
-  override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
-    let viewController = buildWelcomeScreenViewController(uiConfig)
-    addChild(viewController: viewController, completion: completion)
-  }
+    override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
+        let viewController = buildWelcomeScreenViewController(uiConfig)
+        addChild(viewController: viewController, completion: completion)
+    }
 
-  func buildWelcomeScreenViewController(_ uiConfig: UIConfig) -> UIViewController {
-    let presenter = ShowGenericMessagePresenter()
-    let interactor = ShowGenericMessageInteractor(showGenericMessageAction: showGenericMessageAction,
-                                                  dataReceiver: presenter)
-    let viewController = ShowGenericMessageViewController(uiConfiguration: uiConfig, eventHandler: presenter)
-    presenter.view = viewController
-    presenter.interactor = interactor
-    presenter.router = self
-    return viewController
-  }
+    func buildWelcomeScreenViewController(_ uiConfig: UIConfig) -> UIViewController {
+        let presenter = ShowGenericMessagePresenter()
+        let interactor = ShowGenericMessageInteractor(showGenericMessageAction: showGenericMessageAction,
+                                                      dataReceiver: presenter)
+        let viewController = ShowGenericMessageViewController(uiConfiguration: uiConfig, eventHandler: presenter)
+        presenter.view = viewController
+        presenter.interactor = interactor
+        presenter.router = self
+        return viewController
+    }
 }
 
 extension ShowGenericMessageModule: ShowGenericMessageRouterProtocol {
-  func callToActionTapped() {
-    // Standard continue callback
-    next()
-    // Specific allback for the welcomescreenmodule
-    onWelcomeScreenContinue?(self)
+    func callToActionTapped() {
+        // Standard continue callback
+        next()
+        // Specific allback for the welcomescreenmodule
+        onWelcomeScreenContinue?(self)
+    }
 
-  }
-
-  func secondaryCallToActionTapped() {
-    // What do do here?
-  }
+    func secondaryCallToActionTapped() {
+        // What do do here?
+    }
 }

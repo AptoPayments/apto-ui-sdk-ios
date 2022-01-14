@@ -5,8 +5,8 @@
 //  Created by Ivan Oliver Martínez on 04/11/2020.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 @objc public enum AptoUISDKMode: Int {
     case standalone

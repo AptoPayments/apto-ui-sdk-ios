@@ -5,8 +5,8 @@
 //  Created by Fabio Cuomo on 6/9/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
     private let viewModel: P2PTransferFundsViewModel
@@ -26,12 +26,12 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
     }
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     override func loadView() {
-        self.view = transferFundsView
+        view = transferFundsView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = uiConfiguration.uiSecondaryColor
@@ -47,16 +47,19 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
         navigationController?.navigationBar.topItem?.title = ""
         navigationItem.hidesBackButton = true
         let closeImageIcon = UIImage.imageFromPodBundle("top_close_default")
-        let closeButton = UIBarButtonItem(image: closeImageIcon, style: .plain, target: self, action: #selector(didTapOnClose))
+        let closeButton = UIBarButtonItem(image: closeImageIcon,
+                                          style: .plain,
+                                          target: self, action: #selector(didTapOnClose))
         navigationItem.leftBarButtonItem = closeButton
-        self.title = "p2p_transfer.transfer_funds.screen.title".podLocalized()
+        title = "p2p_transfer.transfer_funds.screen.title".podLocalized()
     }
 
     // MARK: Private methods
+
     private func setupBinding() {
         transferFundsView.amountTextField.delegate = self
         transferFundsView.actionButton.addTarget(self, action: #selector(didTapOnActionButton), for: .touchUpInside)
-        
+
         viewModel.onBalanceFetched = { [weak self] fundingSource in
             guard let balance = fundingSource.balance,
                   let amount = balance.amount.value else { return }
@@ -66,7 +69,7 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
             self?.transferFundsView.amountTextField.becomeFirstResponder()
             self?.sourceId = fundingSource.fundingSourceId
         }
-        
+
         viewModel.onTransferDone = { [weak self] response in
             if response.status == .failed {
                 self?.view.endEditing(true)
@@ -77,7 +80,7 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
             }
             self?.onTransferCompletion?(response)
         }
-        
+
         viewModel.onLoadingStateChange = { [weak self] loading in
             if loading {
                 self?.showLoadingView()
@@ -87,39 +90,48 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
                 self?.transferFundsView.actionButton.isEnabled = true
             }
         }
-        
-        viewModel.onErrorRequest = { [weak self] error in
+        // swiftlint:disable trailing_closure
+        viewModel.onErrorRequest = { [weak self] _ in
             self?.view.endEditing(true)
             self?.transferFundsView.showActionButton(false)
             self?.transferFundsView.updateViewContraints(to: 6)
             self?.show(message: "p2p_transfer.transfer_funds.error.description".podLocalized(),
-                       title: "p2p_transfer.transfer_funds.error.title".podLocalized(), onMessageDismissed: { [weak self] in self?.resetFundsScreen() } )
+                       title: "p2p_transfer.transfer_funds.error.title".podLocalized(),
+                       onMessageDismissed: { [weak self] in self?.resetFundsScreen() })
         }
     }
-    
+
     private func watchKeyboard() {
         keyboardWatcher.startWatching(onKeyboardShown: { [weak self] size in
             self?.transferFundsView.updateViewContraints(to: size.height + 10)
         })
     }
-    
+
+    // swiftlint:enable trailing_closure
+
     private func isValidAmount(_ value: String) -> Bool {
-        guard let _ = Double(value) else { return false }
-        return true
+        return Double(value) != nil
     }
-    
+
     private func amountExceedsLimit(_ amount: String, _ amountLimit: Double?) -> Bool {
         guard let currentAmount = Double(amount),
               let amountLimit = amountLimit,
-           currentAmount > amountLimit else { return false }
+              currentAmount > amountLimit else { return false }
         return true
     }
-    
+
+    // swiftlint:disable legacy_constructor
     private func decimalsBelow(limit: Int, amount: String) -> Bool {
-        let regex = try! NSRegularExpression(pattern: "\\..{\(limit),}", options: [])
-        let matches = regex.matches(in: amount, options:[], range:NSMakeRange(0, amount.count))
-        return matches.count == 0
+        do {
+            let regex = try NSRegularExpression(pattern: "\\..{\(limit),}", options: [])
+            let matches = regex.matches(in: amount, options: [], range: NSMakeRange(0, amount.count))
+            return matches.isEmpty
+        } catch {
+            return false
+        }
     }
+
+    // swiftlint:enable legacy_constructor
 
     private func resetFundsScreen() {
         transferFundsView.amountTextField.becomeFirstResponder()
@@ -127,14 +139,17 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
             transferFundsView.showActionButton(isValidAmount(text))
         }
     }
-    
+
     // MARK: UITextFieldDelegate methods
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool
+    {
         transferFundsView.showLimitError("", show: false)
-        
+
         guard let text = textField.text else { return false }
-        let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        if (string == "." || string == "0") && text.count == 0 { return false }
+        let newText = (text as NSString).replacingCharacters(in: range, with: string)
+        if string == "." || string == "0", text.isEmpty { return false }
 
         transferFundsView.showActionButton(isValidAmount(newText))
         if string.isEmpty { return true }
@@ -144,20 +159,18 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
             transferFundsView.showLimitError(amount, show: true)
             return false
         }
-        
+
         if !decimalsBelow(limit: 3, amount: text + string) {
             return false
         }
-        
+
         switch string {
-        case "0","1","2","3","4","5","6","7","8","9":
+        case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
             return true
         case ".":
             var decimalCount = 0
-            for character in text {
-                if character == "." {
-                    decimalCount += 1
-                }
+            for character in text where character == "." {
+                decimalCount += 1
             }
             if decimalCount == 1 {
                 return false
@@ -165,11 +178,12 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
                 return true
             }
         default:
-            return string.count == 0
+            return string.isEmpty
         }
     }
-    
+
     // MARK: Public methods
+
     @objc func didTapOnActionButton() {
         guard let sourceId = sourceId,
               let amountTextField = transferFundsView.amountTextField.text,
@@ -181,7 +195,7 @@ class P2PTransferFundsViewController: AptoViewController, UITextFieldDelegate {
         let transferRequest = P2PTransferRequest(sourceId: sourceId, recipientId: cardholderId, amount: amount)
         viewModel.performTransferRequest(model: transferRequest)
     }
-    
+
     @objc func didTapOnClose() {
         navigationController?.dismiss(animated: true)
     }

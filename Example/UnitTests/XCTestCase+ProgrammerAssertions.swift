@@ -6,80 +6,78 @@
 //
 //
 
+@testable import AptoSDK
 import Foundation
 import XCTest
-@testable import AptoSDK
 
 private let noReturnFailureWaitTime = 0.1
 
 public extension XCTestCase {
-
-  /**
-   Expects an `fatalError` to be called.
-   If `fatalError` not called, the test case will fail.
-   - parameter expectedMessage: The expected message to be asserted to the one passed to the `fatalError`. If nil, then ignored.
-   - parameter file:            The file name that called the method.
-   - parameter line:            The line number that called the method.
-   - parameter testCase:        The test case to be executed that expected to fire the assertion method.
-   */
-  func expectFatalError(
-    _ expectedMessage: String? = nil,
-    file: StaticString = #file,
-    line: UInt = #line,
-    testCase: @escaping () -> Void) {
-
-    expectAssertionNoReturnFunction("fatalError", file: file, line: line, function: { (caller) -> () in
-
-      Assertions.fatalErrorClosure = { message, _, _ in
-        caller(message)
-      }
-
-    }, expectedMessage: expectedMessage, testCase: testCase) { () -> () in
-      Assertions.fatalErrorClosure = Assertions.swiftFatalErrorClosure
-    }
-  }
-
-  // MARK:- Private Methods
-  fileprivate func expectAssertionNoReturnFunction(
-    _ functionName: String,
-    file: StaticString,
-    line: UInt,
-    function: (_ caller: @escaping (String) -> Never) -> Void,
-    expectedMessage: String? = nil,
-    testCase: @escaping () -> Void,
-    cleanUp: @escaping () -> ()
+    /**
+     Expects an `fatalError` to be called.
+     If `fatalError` not called, the test case will fail.
+     - parameter expectedMessage: The expected message to be asserted to the one passed to the `fatalError`. If nil, then ignored.
+     - parameter file:            The file name that called the method.
+     - parameter line:            The line number that called the method.
+     - parameter testCase:        The test case to be executed that expected to fire the assertion method.
+     */
+    func expectFatalError(
+        _ expectedMessage: String? = nil,
+        file: StaticString = #file,
+        line: UInt = #line,
+        testCase: @escaping () -> Void
     ) {
+        expectAssertionNoReturnFunction("fatalError", file: file, line: line, function: { caller -> Void in
 
-    let expectation = self.expectation(description: functionName + "-Expectation")
-    var assertionMessage: String? = nil
+            Assertions.fatalErrorClosure = { message, _, _ in
+                caller(message)
+            }
 
-    function { (message) -> Never in
-      assertionMessage = message
-      expectation.fulfill()
-      sleep(3600*5)
-      Swift.fatalError(message)
+        }, expectedMessage: expectedMessage, testCase: testCase) { () -> Void in
+            Assertions.fatalErrorClosure = Assertions.swiftFatalErrorClosure
+        }
     }
 
-    // act, perform on separate thead because a call to function runs forever
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async(execute: testCase)
+    // MARK: - Private Methods
 
-    waitForExpectations(timeout: noReturnFailureWaitTime) { _ in
+    private func expectAssertionNoReturnFunction(
+        _ functionName: String,
+        file: StaticString,
+        line: UInt,
+        function: (_ caller: @escaping (String) -> Never) -> Void,
+        expectedMessage: String? = nil,
+        testCase: @escaping () -> Void,
+        cleanUp: @escaping () -> Void
+    ) {
+        let expectation = self.expectation(description: functionName + "-Expectation")
+        var assertionMessage: String?
 
-      defer {
-        // clean up
-        cleanUp()
-      }
+        function { message -> Never in
+            assertionMessage = message
+            expectation.fulfill()
+            sleep(3600 * 5)
+            Swift.fatalError(message)
+        }
 
-      guard let assertionMessage = assertionMessage else {
-        XCTFail(functionName + " is expected to be called.", file: file, line: line)
-        return
-      }
+        // act, perform on separate thead because a call to function runs forever
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async(execute: testCase)
 
-      if let expectedMessage = expectedMessage {
-        // assert only if not nil
-        XCTAssertEqual(assertionMessage, expectedMessage, functionName + " called with incorrect message.", file: file, line: line)
-      }
+        waitForExpectations(timeout: noReturnFailureWaitTime) { _ in
+
+            defer {
+                // clean up
+                cleanUp()
+            }
+
+            guard let assertionMessage = assertionMessage else {
+                XCTFail(functionName + " is expected to be called.", file: file, line: line)
+                return
+            }
+
+            if let expectedMessage = expectedMessage {
+                // assert only if not nil
+                XCTAssertEqual(assertionMessage, expectedMessage, functionName + " called with incorrect message.", file: file, line: line)
+            }
+        }
     }
-  }
-
 }

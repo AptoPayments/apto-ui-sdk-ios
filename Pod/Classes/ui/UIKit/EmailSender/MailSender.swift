@@ -5,23 +5,23 @@
 //  Created by Ivan Oliver Martínez on 04/05/2018.
 //
 
-import UIKit
 import MessageUI
+import UIKit
 
 class MailSender: NSObject {
     var composer: UIViewController?
-    
+
     func canSendEmail() -> Bool {
         return MFMailComposeViewController.canSendMail()
     }
-    
+
     func sendMessageWith(subject: String, message: String, recipients: [String?]) {
         guard canSendEmail() else {
             UIApplication.topViewController()?.showMessage("Email client not configured", uiConfig: nil)
             return
         }
         let filteredRecipients = recipients.compactMap { recipient -> String? in
-            return recipient
+            recipient
         }
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
@@ -34,9 +34,10 @@ class MailSender: NSObject {
 }
 
 extension MailSender: MFMailComposeViewControllerDelegate {
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult,
-                               error: Error?) {
-        if let composer = self.composer {
+    func mailComposeController(_: MFMailComposeViewController, didFinishWith _: MFMailComposeResult,
+                               error _: Error?)
+    {
+        if let composer = composer {
             composer.dismiss(animated: true, completion: nil)
             self.composer = nil
         }

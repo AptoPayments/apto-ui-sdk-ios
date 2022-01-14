@@ -162,7 +162,6 @@
 		D99BD466641EDE6E07ABF939 /* ContentPresenterInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD5E15145A4AE8EB03459 /* ContentPresenterInteractorTest.swift */; };
 		D99BD4706AFF825E65A1784D /* ServerMaintenanceErrorTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD1C5C4E36F47B0A52BC5 /* ServerMaintenanceErrorTestDoubles.swift */; };
 		D99BD4A4D9B91A49FB0E498F /* UIModuleSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD8FBB7EC375FF455E37A /* UIModuleSpy.swift */; };
-		D99BD4A755759998FD86B09B /* SetPinInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */; };
 		D99BD4B1C65D30B428CA97DD /* ServerMaintenanceErrorPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD4E2D1B5822248215826 /* ServerMaintenanceErrorPresenterTest.swift */; };
 		D99BD4D2A74CC4948F8AFD42 /* PresenterLocatorFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD0F4A245B34F36E3355E /* PresenterLocatorFake.swift */; };
 		D99BD555F653BD0BC06275D0 /* NotificationPreferencesInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD62BDB6D3977738C0E36 /* NotificationPreferencesInteractorTest.swift */; };
@@ -205,7 +204,6 @@
 		D99BDAEDDEEF41F33388A73A /* MonthlyStatementsReportTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDA288876DB39D831232E /* MonthlyStatementsReportTestDoubles.swift */; };
 		D99BDAF0178946C15015F56F /* IssueCardTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD15DF029C42C8368ADA4 /* IssueCardTestDoubles.swift */; };
 		D99BDAF3D5B7458F0BBC74CD /* PhysicalCardActivationSucceedModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD17D7D29814E184641A3 /* PhysicalCardActivationSucceedModuleTest.swift */; };
-		D99BDAF4F0A593DEEF908090 /* SetPinModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD960D51769BD542CBDED /* SetPinModuleTest.swift */; };
 		D99BDB2CD01601378EF98EBC /* CountrySelectorPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDDA5906427922AA5CA6F /* CountrySelectorPresenterTest.swift */; };
 		D99BDB56D5589E314E12E900 /* ExternalOAuthInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BDDF38E2B5EE55621A6EE /* ExternalOAuthInteractorTest.swift */; };
 		D99BDBA789EADA58CD83689A /* UserStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99BD84CFCBDF9CF46D3EA3D /* UserStorageTest.swift */; };
@@ -548,7 +546,6 @@
 		D99BD86821F2C34BA8F94D62 /* NetworkManagerSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManagerSpy.swift; sourceTree = "<group>"; };
 		D99BD8B7C126856D6B2DB8BF /* DoubleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleTest.swift; sourceTree = "<group>"; };
 		D99BD8FBB7EC375FF455E37A /* UIModuleSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIModuleSpy.swift; sourceTree = "<group>"; };
-		D99BD960D51769BD542CBDED /* SetPinModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinModuleTest.swift; sourceTree = "<group>"; };
 		D99BD9671686403020B9C112 /* CountrySelectorModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySelectorModuleTest.swift; sourceTree = "<group>"; };
 		D99BD9A62DB2E14989227464 /* ModuleLocatorFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleLocatorFake.swift; sourceTree = "<group>"; };
 		D99BD9C007A65B05924DF7A9 /* CreatePasscodeTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePasscodeTestDoubles.swift; sourceTree = "<group>"; };
@@ -595,7 +592,6 @@
 		D99BDF72B85C701A643826E2 /* ShowDisclaimerActionTestDoubles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDisclaimerActionTestDoubles.swift; sourceTree = "<group>"; };
 		D99BDF936A709E75178B60D3 /* CardSettingsPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSettingsPresenterTest.swift; sourceTree = "<group>"; };
 		D99BDFAEC0A452DD70C262B8 /* SelectBalanceStoreModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectBalanceStoreModuleTest.swift; sourceTree = "<group>"; };
-		D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinInteractorTest.swift; sourceTree = "<group>"; };
 		E502A39226DD22950082EC73 /* P2pTransferFundsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2pTransferFundsViewTests.swift; sourceTree = "<group>"; };
 		E50F539025D15C81002726C4 /* CardLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLoaderSpy.swift; sourceTree = "<group>"; };
 		E52130E627196A4400C3AD18 /* HostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
@@ -1352,7 +1348,6 @@
 				D99BDB88F55A79DB8F64EFC4 /* ServerMaintenanceError */,
 				2C1C3C85258B6904008C7103 /* SetCodeModule */,
 				2C38C3D5258B75DD00D3DC48 /* SetPassCodeModule */,
-				D99BD5AE8596C20C9D11900D /* SetPinModule */,
 				D99BDCA9ED15BB20C3BD366B /* ShowDisclaimerActionModule */,
 				D99BD908FB7C8073C49F897F /* Statements */,
 				D99BDB4B61A81BD39BC3E27E /* UserDataVerification */,
@@ -1389,15 +1384,6 @@
 				D99BDE42E53A84E6C7B83D67 /* SelectBalanceStoreTestDoubles.swift */,
 			);
 			path = SelectBalanceStore;
-			sourceTree = "<group>";
-		};
-		D99BD5AE8596C20C9D11900D /* SetPinModule */ = {
-			isa = PBXGroup;
-			children = (
-				D99BDFB8083D731485D31770 /* SetPinInteractorTest.swift */,
-				D99BD960D51769BD542CBDED /* SetPinModuleTest.swift */,
-			);
-			path = SetPinModule;
 			sourceTree = "<group>";
 		};
 		D99BD6061124EC181F5C7CA9 /* CreatePasscodeModule */ = {
@@ -2046,7 +2032,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -n \"$RUN_LINTER\" ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint\n  else\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  fi\nfi\n";
+			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		3A581A3B6496F4B76264B0B2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2351,11 +2337,9 @@
 				E5D81699272AA5D0002C141E /* XCTestCase+AcceptDisclaimerSpecs.swift in Sources */,
 				D99BDB2CD01601378EF98EBC /* CountrySelectorPresenterTest.swift in Sources */,
 				E5D8168D27282CE8002C141E /* CardApplicationSpecs.swift in Sources */,
-				D99BD4A755759998FD86B09B /* SetPinInteractorTest.swift in Sources */,
 				D99BDE9FFB16559DDC2A9CBD /* SetCodeTestDoubles.swift in Sources */,
 				2C38C3DC258B7E5100D3DC48 /* SetPassCodeModuleTest.swift in Sources */,
 				D99BD65D17206BD083AAAB41 /* SetCodePresenterTest.swift in Sources */,
-				D99BDAF4F0A593DEEF908090 /* SetPinModuleTest.swift in Sources */,
 				E5D816972729AD9F002C141E /* XCTestCase+SetBalanceStoreSpecs.swift in Sources */,
 				D99BD058DF3974DAFDD8063F /* VoIPTestDoubles.swift in Sources */,
 				2C61F4C52551DDA700A0707E /* ManageCardInteractorTest.swift in Sources */,

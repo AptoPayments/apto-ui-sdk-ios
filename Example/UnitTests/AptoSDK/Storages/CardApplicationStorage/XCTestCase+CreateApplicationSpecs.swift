@@ -6,8 +6,8 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import AptoSDK
+import Foundation
 import XCTest
 
 extension CardApplicationSpecs where Self: XCTestCase {
@@ -21,7 +21,7 @@ extension CardApplicationSpecs where Self: XCTestCase {
         XCTAssertTrue(transport.postCalled, file: file, line: line)
         XCTAssertEqual(transport.requestesURLs, [try url.asURL()], file: file, line: line)
     }
-    
+
     func assertThatCreateApplicationPostDataToURLTwice(on sut: CardApplicationsStorageProtocol, transport: StorageTransportSpy, file: StaticString = #filePath, line: UInt = #line) {
         let url = URLWrapper(baseUrl: transport.environment.baseUrl(), url: JSONRouter.applyToCard)
 
@@ -35,8 +35,8 @@ extension CardApplicationSpecs where Self: XCTestCase {
         XCTAssertTrue(transport.postCalled, file: file, line: line)
         XCTAssertEqual(transport.requestesURLs, [try url.asURL(), try url.asURL()], file: file, line: line)
     }
-    
-    func assertThatCreateApplicationDeliversErrorOnClientErrors(on sut: CardApplicationsStorageProtocol, transport: StorageTransportSpy, file: StaticString = #filePath, line: UInt = #line) {
+
+    func assertThatCreateApplicationDeliversErrorOnClientErrors(on sut: CardApplicationsStorageProtocol, transport: StorageTransportSpy, file _: StaticString = #filePath, line _: UInt = #line) {
         let clientError = NSError(domain: "APTO DOMAIN ERROR", code: 0)
 
         expectCreateApplication(sut,
@@ -47,17 +47,17 @@ extension CardApplicationSpecs where Self: XCTestCase {
             transport.complete(with: clientError)
         }
     }
-    
-    func assertThatCreateApplicationDeliversNewApplicationOnValidJSONResponse(on sut: CardApplicationsStorageProtocol, transport: StorageTransportSpy, file: StaticString = #filePath, line: UInt = #line) {
+
+    func assertThatCreateApplicationDeliversNewApplicationOnValidJSONResponse(on sut: CardApplicationsStorageProtocol, transport: StorageTransportSpy, file _: StaticString = #filePath, line _: UInt = #line) {
         let item = makeCardApplication()
-        
+
         var capturedResults = [Result<CardApplication, NSError>]()
-        
+
         sut.createApplication(apiKey(),
                               userToken: userToken(),
                               cardProduct: anyCardProduct()) { capturedResults.append($0) }
         transport.complete(withResult: item.json)
-        
+
         XCTAssertEqual(try capturedResults[0].get().id, anyCardId())
     }
 }
@@ -68,14 +68,15 @@ extension CardApplicationSpecs where Self: XCTestCase {
                                  apiKey: String,
                                  userToken: String,
                                  cardProduct: CardProduct,
-                                 when action: () -> Void) {
+                                 when action: () -> Void)
+    {
         var capturedResults = [Result<CardApplication, NSError>]()
         sut.createApplication(apiKey,
                               userToken: userToken,
                               cardProduct: cardProduct) { capturedResults.append($0) }
-        
+
         action()
-        
+
         XCTAssertEqual(capturedResults, [result])
     }
 }

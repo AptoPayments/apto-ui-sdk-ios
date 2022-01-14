@@ -6,15 +6,16 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import AptoSDK
+import Foundation
 import XCTest
 
 extension CardApplicationSpecs where Self: XCTestCase {
     func assertThatCancelCardApplicationDeleteDataFromURL(on sut: CardApplicationsStorageProtocol,
                                                           transport: StorageTransportSpy,
                                                           applicationId: String,
-                                                          file: StaticString = #filePath, line: UInt = #line) {
+                                                          file: StaticString = #filePath, line: UInt = #line)
+    {
         let url = URLWrapper(baseUrl: transport.environment.baseUrl(), url: JSONRouter.cardApplication, urlParameters: [":applicationId": applicationId])
         sut.cancelCardApplication(apiKey(),
                                   userToken: userToken(),
@@ -22,11 +23,12 @@ extension CardApplicationSpecs where Self: XCTestCase {
         XCTAssertTrue(transport.deleteCalled, file: file, line: line)
         XCTAssertEqual(transport.voidRequestesURLs, [try url.asURL()], file: file, line: line)
     }
-    
+
     func assertThatCancelCardApplicationDeleteDataFromURLTwice(on sut: CardApplicationsStorageProtocol,
                                                                transport: StorageTransportSpy,
                                                                applicationId: String,
-                                                               file: StaticString = #filePath, line: UInt = #line) {
+                                                               file: StaticString = #filePath, line: UInt = #line)
+    {
         let url = URLWrapper(baseUrl: transport.environment.baseUrl(), url: JSONRouter.cardApplication, urlParameters: [":applicationId": applicationId])
         sut.cancelCardApplication(apiKey(),
                                   userToken: userToken(),
@@ -39,13 +41,14 @@ extension CardApplicationSpecs where Self: XCTestCase {
         XCTAssertTrue(transport.deleteCalled, file: file, line: line)
         XCTAssertEqual(transport.voidRequestesURLs, [try url.asURL(), try url.asURL()], file: file, line: line)
     }
-    
+
     func assertThatCancelCardApplicationDeliversErrorOnClientErrors(on sut: CardApplicationsStorageProtocol,
                                                                     transport: StorageTransportSpy,
                                                                     applicationId: String,
-                                                                    file: StaticString = #filePath, line: UInt = #line) {
+                                                                    file _: StaticString = #filePath, line _: UInt = #line)
+    {
         let clientError = NSError(domain: "APTO DOMAIN ERROR", code: 0)
-        
+
         expectCancelCardApplication(sut,
                                     toCompleteWith: .failure(clientError),
                                     apiKey: apiKey(),
@@ -54,11 +57,12 @@ extension CardApplicationSpecs where Self: XCTestCase {
             transport.completeVoid(with: clientError)
         }
     }
-    
+
     func assertThatCancelCardApplicationDeliversNewApplicationOnValidJSONResponse(on sut: CardApplicationsStorageProtocol,
                                                                                   transport: StorageTransportSpy,
                                                                                   applicationId: String,
-                                                                                  file: StaticString = #filePath, line: UInt = #line) {
+                                                                                  file _: StaticString = #filePath, line _: UInt = #line)
+    {
         expectCancelCardApplication(sut,
                                     toCompleteWith: .success(()),
                                     apiKey: apiKey(),
@@ -66,7 +70,6 @@ extension CardApplicationSpecs where Self: XCTestCase {
                                     applicationId: applicationId) {
             transport.completeVoid()
         }
-        
     }
 }
 
@@ -77,23 +80,23 @@ extension CardApplicationSpecs where Self: XCTestCase {
                                      userToken: String,
                                      applicationId: String,
                                      when action: () -> Void,
-                                     file: StaticString = #filePath, line: UInt = #line) {
-
+                                     file: StaticString = #filePath, line: UInt = #line)
+    {
         var receivedResult: (Result<Void, NSError>)?
 
         sut.cancelCardApplication(apiKey,
                                   userToken: userToken,
                                   applicationId: applicationId) { receivedResult = $0 }
-        
+
         action()
-        
+
         switch (receivedResult, result) {
         case (.success, .success):
             XCTAssertTrue(true, file: file, line: line)
-            
+
         case let (.failure(expectedError), .failure(resultError)):
             XCTAssertEqual(expectedError, resultError, file: file, line: line)
-            
+
         default:
             XCTFail("Expected result \(result), got \(String(describing: receivedResult)) instead", file: file, line: line)
         }

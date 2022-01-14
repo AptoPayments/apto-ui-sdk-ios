@@ -8,12 +8,12 @@
 import Foundation
 
 protocol FileDownloaderProvider {
-  func fileDownloader(url: URL, localFilename: String) -> FileDownloader
+    func fileDownloader(url: URL, localFilename: String) -> FileDownloader
 }
 
 protocol SystemServicesLocatorProtocol: FileDownloaderProvider {
-  func fileManager(filename: String) -> FileManagerProtocol
-  func dateProvider() -> DateProviderProtocol
-  func authenticationManager() -> AuthenticationManagerProtocol
-  func cardAdditionalFields() -> CardAdditionalFieldsProtocol
+    func fileManager(filename: String) -> FileManagerProtocol
+    func dateProvider() -> DateProviderProtocol
+    func authenticationManager() -> AuthenticationManagerProtocol
+    func cardAdditionalFields() -> CardAdditionalFieldsProtocol
 }

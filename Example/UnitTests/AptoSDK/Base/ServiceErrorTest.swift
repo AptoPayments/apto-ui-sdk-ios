@@ -6,117 +6,107 @@
 //  Copyright © 2019 Apto Payments. All rights reserved.
 //
 
-import XCTest
 @testable import AptoSDK
+import XCTest
 
 class ServiceErrorTest: XCTestCase {
-  func testInitWithCoderThrowsException() {
-    // Given
-    let aCoder = NSCoder()
+    func testErrorDomain() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
 
-    // Then
-    expectFatalError("Not implemented") {
-      let _ = ServiceError(coder: aCoder)
+        // When
+        let serviceError = ServiceError(code: errorCode)
+
+        // Then
+        XCTAssertTrue(serviceError.domain == kServiceErrorDomain)
     }
-  }
 
-  func testErrorDomain() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
+    func testInitWithErrorCode() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
 
-    // When
-    let serviceError = ServiceError(code: errorCode)
+        // When
+        let serviceError = ServiceError(code: errorCode)
 
-    // Then
-    XCTAssertTrue(serviceError.domain == kServiceErrorDomain)
-  }
+        // Then
+        XCTAssertTrue(serviceError.code == errorCode.rawValue)
+    }
 
-  func testInitWithErrorCode() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
+    func testInitWithReason() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
+        let reason = "My Error Reason"
 
-    // When
-    let serviceError = ServiceError(code: errorCode)
+        // When
+        let serviceError = ServiceError(code: errorCode, reason: reason)
 
-    // Then
-    XCTAssertTrue(serviceError.code == errorCode.rawValue)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedFailureReasonErrorKey]! as! String == reason)
+    }
 
-  func testInitWithReason() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
-    let reason = "My Error Reason"
+    func testInitWithReasonSetsLocalizedDescription() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.internalIncosistencyError
+        let description = "error.service.internalIncosistency"
+        // When
+        let serviceError = ServiceError(code: errorCode)
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-    // When
-    let serviceError = ServiceError(code: errorCode, reason: reason)
+    func testInitWithReasonSetsLocalizedDescription1() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.jsonError
+        let description = "error.service.jsonError"
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedFailureReasonErrorKey]! as! String == reason)
-  }
+        // When
+        let serviceError = ServiceError(code: errorCode)
 
-  func testInitWithReasonSetsLocalizedDescription() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.internalIncosistencyError
-    let description = "error.service.internalIncosistency"
-    // When
-    let serviceError = ServiceError(code: errorCode)
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-  func testInitWithReasonSetsLocalizedDescription1() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.jsonError
-    let description = "error.service.jsonError"
+    func testInitWithReasonSetsLocalizedDescription2() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.notInitialized
+        let description = "error.service.notInitialized"
+        // When
+        let serviceError = ServiceError(code: errorCode)
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-    // When
-    let serviceError = ServiceError(code: errorCode)
+    func testInitWithReasonSetsLocalizedDescription3() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.wrongSessionState
+        let description = "error.service.wrongSessionState"
+        // When
+        let serviceError = ServiceError(code: errorCode)
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+    func testInitWithReasonSetsLocalizedDescription4() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.invalidAddress
+        let description = "error.service.invalidAddress"
 
-  func testInitWithReasonSetsLocalizedDescription2() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.notInitialized
-    let description = "error.service.notInitialized"
-    // When
-    let serviceError = ServiceError(code: errorCode)
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // When
+        let serviceError = ServiceError(code: errorCode)
 
-  func testInitWithReasonSetsLocalizedDescription3() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.wrongSessionState
-    let description = "error.service.wrongSessionState"
-    // When
-    let serviceError = ServiceError(code: errorCode)
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-  func testInitWithReasonSetsLocalizedDescription4() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.invalidAddress
-    let description = "error.service.invalidAddress"
+    func testInitWithReasonSetsLocalizedDescription5() {
+        // Given
+        let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
+        let description = "error.service.incompleteApplicationData"
 
-    // When
-    let serviceError = ServiceError(code: errorCode)
+        // When
+        let serviceError = ServiceError(code: errorCode)
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
-
-  func testInitWithReasonSetsLocalizedDescription5() {
-    // Given
-    let errorCode = ServiceError.ErrorCodes.incompleteApplicationData
-    let description = "error.service.incompleteApplicationData"
-
-    // When
-    let serviceError = ServiceError(code: errorCode)
-
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 }

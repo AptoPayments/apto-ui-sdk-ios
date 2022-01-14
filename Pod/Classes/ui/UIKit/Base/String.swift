@@ -8,5 +8,5 @@
 import Foundation
 
 extension String {
-  static let dropDownCharacter = "▾"
+    static let dropDownCharacter = "▾"
 }

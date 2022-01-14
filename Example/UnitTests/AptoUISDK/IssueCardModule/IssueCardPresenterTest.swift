@@ -6,185 +6,185 @@
 //
 //
 
-import XCTest
 @testable import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class IssueCardPresenterTest: XCTestCase {
-  private var sut: IssueCardPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: IssueCardPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private lazy var router = serviceLocator.moduleLocatorFake.issueCardModuleSpy
-  private lazy var interactor = serviceLocator.interactorLocatorFake.issueCardInteractorFake
-  private let analyticsManager: AnalyticsManagerSpy = AnalyticsManagerSpy()
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private lazy var router = serviceLocator.moduleLocatorFake.issueCardModuleSpy
+    private lazy var interactor = serviceLocator.interactorLocatorFake.issueCardInteractorFake
+    private let analyticsManager = AnalyticsManagerSpy()
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = IssueCardPresenter(router: router, interactor: interactor, configuration: nil)
-    sut.analyticsManager = analyticsManager
-  }
+        sut = IssueCardPresenter(router: router, interactor: interactor, configuration: nil)
+        sut.analyticsManager = analyticsManager
+    }
 
-  func testViewLoadedCallInteractorToIssueCardSetViewModelToLoadingState() {
-    // When
-    sut.viewLoaded()
+    func testViewLoadedCallInteractorToIssueCardSetViewModelToLoadingState() {
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertTrue(interactor.issueCardCalled)
-    XCTAssertEqual(IssueCardViewState.loading, sut.viewModel.state.value)
-  }
+        // Then
+        XCTAssertTrue(interactor.issueCardCalled)
+        XCTAssertEqual(IssueCardViewState.loading, sut.viewModel.state.value)
+    }
 
-  func testIssueCardFailureSetViewModelToErrorState() {
-    // Given
-    interactor.nextIssueCardResult = .failure(BackendError(code: .other))
+    func testIssueCardFailureSetViewModelToErrorState() {
+        // Given
+        interactor.nextIssueCardResult = .failure(BackendError(code: .other))
 
-    // When
-    sut.viewLoaded()
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertEqual(IssueCardViewState.error(error: BackendError(code: .other)), sut.viewModel.state.value)
-  }
+        // Then
+        XCTAssertEqual(IssueCardViewState.error(error: BackendError(code: .other)), sut.viewModel.state.value)
+    }
 
-  func testIssueCardSucceedCallCardIssued() {
-    // Given
-    interactor.nextIssueCardResult = .success(ModelDataProvider.provider.card)
+    func testIssueCardSucceedCallCardIssued() {
+        // Given
+        interactor.nextIssueCardResult = .success(ModelDataProvider.provider.card)
 
-    // When
-    sut.viewLoaded()
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertEqual(IssueCardViewState.done, sut.viewModel.state.value)
-    XCTAssertTrue(router.cardIssuedCalled)
-  }
+        // Then
+        XCTAssertEqual(IssueCardViewState.done, sut.viewModel.state.value)
+        XCTAssertTrue(router.cardIssuedCalled)
+    }
 
-  func testRequestCardTappedCallInteractorToIssueCardSetViewModelToLoadingState() {
-    // When
-    sut.requestCardTapped()
+    func testRequestCardTappedCallInteractorToIssueCardSetViewModelToLoadingState() {
+        // When
+        sut.requestCardTapped()
 
-    // Then
-    XCTAssertTrue(interactor.issueCardCalled)
-    XCTAssertEqual(IssueCardViewState.loading, sut.viewModel.state.value)
-  }
+        // Then
+        XCTAssertTrue(interactor.issueCardCalled)
+        XCTAssertEqual(IssueCardViewState.loading, sut.viewModel.state.value)
+    }
 
-  func testRequestCardTappedIssueCardFailureSetViewModelToErrorState() {
-    // Given
-    interactor.nextIssueCardResult = .failure(BackendError(code: .other))
+    func testRequestCardTappedIssueCardFailureSetViewModelToErrorState() {
+        // Given
+        interactor.nextIssueCardResult = .failure(BackendError(code: .other))
 
-    // When
-    sut.requestCardTapped()
+        // When
+        sut.requestCardTapped()
 
-    // Then
-    XCTAssertEqual(IssueCardViewState.error(error: BackendError(code: .other)), sut.viewModel.state.value)
-  }
+        // Then
+        XCTAssertEqual(IssueCardViewState.error(error: BackendError(code: .other)), sut.viewModel.state.value)
+    }
 
-  func testRequestCardTappedIssueCardSucceedCallCardIssued() {
-    // Given
-    interactor.nextIssueCardResult = .success(ModelDataProvider.provider.card)
+    func testRequestCardTappedIssueCardSucceedCallCardIssued() {
+        // Given
+        interactor.nextIssueCardResult = .success(ModelDataProvider.provider.card)
 
-    // When
-    sut.requestCardTapped()
+        // When
+        sut.requestCardTapped()
 
-    // Then
-    XCTAssertEqual(IssueCardViewState.done, sut.viewModel.state.value)
-    XCTAssertTrue(router.cardIssuedCalled)
-  }
+        // Then
+        XCTAssertEqual(IssueCardViewState.done, sut.viewModel.state.value)
+        XCTAssertTrue(router.cardIssuedCalled)
+    }
 
-  func testRetryTappedCallInteractorToIssueCardSetViewModelToLoadingState() {
-    // When
-    sut.retryTapped()
+    func testRetryTappedCallInteractorToIssueCardSetViewModelToLoadingState() {
+        // When
+        sut.retryTapped()
 
-    // Then
-    XCTAssertTrue(interactor.issueCardCalled)
-    XCTAssertEqual(IssueCardViewState.loading, sut.viewModel.state.value)
-  }
+        // Then
+        XCTAssertTrue(interactor.issueCardCalled)
+        XCTAssertEqual(IssueCardViewState.loading, sut.viewModel.state.value)
+    }
 
-  func testInitWithActionConfigurationViewLoadedSetViewModelStateToShowLegalNotice() {
-    // Given
-    let configuration = IssueCardActionConfiguration(legalNotice: .plainText("Legal Notice"), errorAsset: nil)
-    sut = IssueCardPresenter(router: router, interactor: interactor, configuration: configuration)
+    func testInitWithActionConfigurationViewLoadedSetViewModelStateToShowLegalNotice() {
+        // Given
+        let configuration = IssueCardActionConfiguration(legalNotice: .plainText("Legal Notice"), errorAsset: nil)
+        sut = IssueCardPresenter(router: router, interactor: interactor, configuration: configuration)
 
-    // When
-    sut.viewLoaded()
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertEqual(IssueCardViewState.showLegalNotice(content: configuration.legalNotice!), sut.viewModel.state.value)
-  }
+        // Then
+        XCTAssertEqual(IssueCardViewState.showLegalNotice(content: configuration.legalNotice!), sut.viewModel.state.value)
+    }
 
-  func testBackTappedCallRouter() {
-    // When
-    sut.closeTapped()
+    func testBackTappedCallRouter() {
+        // When
+        sut.closeTapped()
 
-    // Then
-    XCTAssertTrue(router.closeTappedCalled)
-  }
+        // Then
+        XCTAssertTrue(router.closeTappedCalled)
+    }
 
-  func testShowURLCallRouter() {
-    // Given
-    let url = TappedURL(title: nil, url: ModelDataProvider.provider.url)
+    func testShowURLCallRouter() {
+        // Given
+        let url = TappedURL(title: nil, url: ModelDataProvider.provider.url)
 
-    // When
-    sut.show(url: url)
+        // When
+        sut.show(url: url)
 
-    // Then
-    XCTAssertTrue(router.showURLCalled)
-  }
-  
-  func testViewLoadedLogIssueCardEvent() {
-    // When
-    sut.viewLoaded()
-    
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(analyticsManager.lastEvent, Event.issueCard)
-  }
-  
-  func testTrackErrorLogIssueCardErrorBalanceInsufficientFundsEvent() {
-    // Given
-    interactor.nextIssueCardResult = .failure(BackendError(code: .balanceInsufficientFunds))
-    
-    // When
-    sut.requestCardTapped()
-    
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardInsufficientFunds)
-  }
-  
-  func testTrackErrorLogIssueCardErrorBalanceValidationsEmailSendsDisabledEvent() {
-    // Given
-    interactor.nextIssueCardResult = .failure(BackendError(code: .balanceValidationsEmailSendsDisabled))
-    
-    // When
-    sut.requestCardTapped()
-    
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardEmailSendsDisabled)
-  }
-  
-  func testTrackErrorLogIssueCardErrorBalanceValidationsInsufficientApplicationLimit() {
-    // Given
-    interactor.nextIssueCardResult = .failure(BackendError(code: .balanceValidationsInsufficientApplicationLimit))
-    
-    // When
-    sut.requestCardTapped()
-    
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardInsufficientApplicationLimit)
-  }
-  
-  func testTrackErrorLogIssueCardErrorUnknownError() {
-    // Given
-    interactor.nextIssueCardResult = .failure(BackendError(code: .undefinedError, reason: "some reason"))
-    
-    // When
-    sut.requestCardTapped()
-    
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardUnknownError)
-    XCTAssertNotNil(analyticsManager.lastProperties)
-  }
+        // Then
+        XCTAssertTrue(router.showURLCalled)
+    }
+
+    func testViewLoadedLogIssueCardEvent() {
+        // When
+        sut.viewLoaded()
+
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(analyticsManager.lastEvent, Event.issueCard)
+    }
+
+    func testTrackErrorLogIssueCardErrorBalanceInsufficientFundsEvent() {
+        // Given
+        interactor.nextIssueCardResult = .failure(BackendError(code: .balanceInsufficientFunds))
+
+        // When
+        sut.requestCardTapped()
+
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardInsufficientFunds)
+    }
+
+    func testTrackErrorLogIssueCardErrorBalanceValidationsEmailSendsDisabledEvent() {
+        // Given
+        interactor.nextIssueCardResult = .failure(BackendError(code: .balanceValidationsEmailSendsDisabled))
+
+        // When
+        sut.requestCardTapped()
+
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardEmailSendsDisabled)
+    }
+
+    func testTrackErrorLogIssueCardErrorBalanceValidationsInsufficientApplicationLimit() {
+        // Given
+        interactor.nextIssueCardResult = .failure(BackendError(code: .balanceValidationsInsufficientApplicationLimit))
+
+        // When
+        sut.requestCardTapped()
+
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardInsufficientApplicationLimit)
+    }
+
+    func testTrackErrorLogIssueCardErrorUnknownError() {
+        // Given
+        interactor.nextIssueCardResult = .failure(BackendError(code: .undefinedError, reason: "some reason"))
+
+        // When
+        sut.requestCardTapped()
+
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(analyticsManager.lastEvent, Event.issueCardUnknownError)
+        XCTAssertNotNil(analyticsManager.lastProperties)
+    }
 }

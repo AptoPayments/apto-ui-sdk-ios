@@ -6,380 +6,382 @@
 //
 //
 
-import Foundation
 @testable import AptoSDK
 @testable import AptoUISDK
+import Foundation
 import SwiftyJSON
 
 class ModelDataProvider {
-  static let provider: ModelDataProvider = ModelDataProvider()
-  private init() {
-  }
+    static let provider = ModelDataProvider()
+    private init() {}
 
-  lazy var emptyJSON = JSON()
+    lazy var emptyJSON = JSON()
 
     lazy var design = IssueCardDesign(designKey: "a key", qrCode: "a code", extraEmbossingLine: "a line", imageURL: "an image", additionalImageURL: "another image")
     lazy var initializationData = InitializationData(userMetadata: "a user metadata", cardMetadata: "a card metadata", custodianId: "a custodian id", design: design)
 
     let aptoMetadata = "apto_metadata"
-    
+
     lazy var issueCardRequest: [String: Any] = [
         "application_id": "entity_XXXXXXXXXXXXXXXXX",
         "metadata": aptoMetadata,
-        "design": design
+        "design": design,
     ]
-        
-  lazy var user = AptoUser(userId: "userId",
-                            metadata: nil,
-                            accessToken: AccessToken(token: "AccessToken",
-                                                     primaryCredential: .email,
-                                                     secondaryCredential: .phoneNumber))
 
-  lazy var userJSON = JSON(dictionaryLiteral: ("user_id", "user_id"), ("user_token", "user_token"))
+    lazy var user = AptoUser(userId: "userId",
+                             metadata: nil,
+                             accessToken: AccessToken(token: "AccessToken",
+                                                      primaryCredential: .email,
+                                                      secondaryCredential: .phoneNumber))
 
-  lazy var teamConfig = TeamConfiguration(logoUrl: nil, name: "Test team")
+    lazy var userJSON = JSON(dictionaryLiteral: ("user_id", "user_id"), ("user_token", "user_token"))
 
-  lazy var workflowAction: WorkflowAction = {
-    let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [balanceType],
-                                                              assetUrl: nil)
-    return WorkflowAction(actionId: "entity_XXXXXXXXXXXXXXXX",
-                          name: "collect_user_data",
-                          order: 1,
-                          status: WorkflowActionStatus.enabled,
-                          actionType: .collectUserData,
-                          configuration: configuration)
-  }()
+    lazy var teamConfig = TeamConfiguration(logoUrl: nil, name: "Test team")
 
-  lazy var waitListAction: WorkflowAction = {
-    let configuration = WaitListActionConfiguration(asset: "asset", backgroundImage: "image", backgroundColor: "color",
-                                                    darkBackgroundColor: "color")
-    return WorkflowAction(actionId: nil,
-                          name: nil,
-                          order: nil,
-                          status: nil,
-                          actionType: .waitList,
-                          configuration: configuration)
-  }()
+    lazy var workflowAction: WorkflowAction = {
+        let configuration = SelectBalanceStoreActionConfiguration(allowedBalanceTypes: [balanceType],
+                                                                  assetUrl: nil)
+        return WorkflowAction(actionId: "entity_XXXXXXXXXXXXXXXX",
+                              name: "collect_user_data",
+                              order: 1,
+                              status: WorkflowActionStatus.enabled,
+                              actionType: .collectUserData,
+                              configuration: configuration)
+    }()
 
-  lazy var projectBranding: ProjectBranding = {
-    return ProjectBranding(uiBackgroundPrimaryColor: "ffffff",
-                           uiBackgroundSecondaryColor: "ffffff",
-                           iconPrimaryColor: "ffffff",
-                           iconSecondaryColor: "ffffff",
-                           iconTertiaryColor: "ffffff",
-                           textPrimaryColor: "ffffff",
-                           textSecondaryColor: "ffffff",
-                           textTertiaryColor: "ffffff",
-                           textTopBarPrimaryColor: "ffffff",
-                           textTopBarSecondaryColor: "ffffff",
-                           textLinkColor: "ffffff",
-                           textLinkUnderlined: true,
-                           textButtonColor: "ffffff",
-                           buttonCornerRadius: 12,
-                           uiPrimaryColor: "ffffff",
-                           uiSecondaryColor: "ffffff",
-                           uiTertiaryColor: "ffffff",
-                           uiErrorColor: "ffffff",
-                           uiSuccessColor: "ffffff",
-                           uiNavigationPrimaryColor: "ffffff",
-                           uiNavigationSecondaryColor: "ffffff",
-                           uiBackgroundOverlayColor: "ffffff",
-                           textMessageColor: "ffffff",
-                           badgeBackgroundPositiveColor: "ffffff",
-                           badgeBackgroundNegativeColor: "ffffff",
-                           showToastTitle: true,
-                           transactionDetailsCollapsable: true,
-                           disclaimerBackgroundColor: "ffffff",
-                           uiStatusBarStyle: "auto",
-                           logoUrl: nil,
-                           uiTheme: "theme_1")
-  }()
+    lazy var waitListAction: WorkflowAction = {
+        let configuration = WaitListActionConfiguration(asset: "asset", backgroundImage: "image", backgroundColor: "color",
+                                                        darkBackgroundColor: "color")
+        return WorkflowAction(actionId: nil,
+                              name: nil,
+                              order: nil,
+                              status: nil,
+                              actionType: .waitList,
+                              configuration: configuration)
+    }()
 
-  lazy var branding: Branding = Branding(light: projectBranding, dark: projectBranding)
+    lazy var projectBranding: ProjectBranding = {
+        ProjectBranding(uiBackgroundPrimaryColor: "ffffff",
+                        uiBackgroundSecondaryColor: "ffffff",
+                        iconPrimaryColor: "ffffff",
+                        iconSecondaryColor: "ffffff",
+                        iconTertiaryColor: "ffffff",
+                        textPrimaryColor: "ffffff",
+                        textSecondaryColor: "ffffff",
+                        textTertiaryColor: "ffffff",
+                        textTopBarPrimaryColor: "ffffff",
+                        textTopBarSecondaryColor: "ffffff",
+                        textLinkColor: "ffffff",
+                        textLinkUnderlined: true,
+                        textButtonColor: "ffffff",
+                        buttonCornerRadius: 12,
+                        uiPrimaryColor: "ffffff",
+                        uiSecondaryColor: "ffffff",
+                        uiTertiaryColor: "ffffff",
+                        uiErrorColor: "ffffff",
+                        uiSuccessColor: "ffffff",
+                        uiNavigationPrimaryColor: "ffffff",
+                        uiNavigationSecondaryColor: "ffffff",
+                        uiBackgroundOverlayColor: "ffffff",
+                        textMessageColor: "ffffff",
+                        badgeBackgroundPositiveColor: "ffffff",
+                        badgeBackgroundNegativeColor: "ffffff",
+                        showToastTitle: true,
+                        transactionDetailsCollapsable: true,
+                        disclaimerBackgroundColor: "ffffff",
+                        uiStatusBarStyle: "auto",
+                        logoUrl: nil,
+                        uiTheme: "theme_1")
+    }()
 
-  lazy var projectConfiguration: ProjectConfiguration = {
-    return ProjectConfiguration(name: "Test project",
-                                summary: nil,
-                                allowUserLogin: true,
-                                primaryAuthCredential: .email,
-                                secondaryAuthCredential: .phoneNumber,
-                                skipSteps: true,
-                                strictAddressValidation: false,
-                                defaultCountryCode: 1,
-                                products: [.link],
-                                welcomeScreenAction: workflowAction,
-                                supportEmailAddress: nil,
-                                branding: branding,
-                                allowedCountries: [Country(isoCode: "US", name: "United States")],
-                                isTrackerActive: false,
-                                trackerAccessToken: nil)
-  }()
+    lazy var branding = Branding(light: projectBranding, dark: projectBranding)
 
-  lazy var contextConfiguration = ContextConfiguration(teamConfiguration: teamConfig,
-                                                       projectConfiguration: projectConfiguration)
+    lazy var projectConfiguration: ProjectConfiguration = {
+        ProjectConfiguration(name: "Test project",
+                             summary: nil,
+                             allowUserLogin: true,
+                             primaryAuthCredential: .email,
+                             secondaryAuthCredential: .phoneNumber,
+                             skipSteps: true,
+                             strictAddressValidation: false,
+                             defaultCountryCode: 1,
+                             products: [.link],
+                             welcomeScreenAction: workflowAction,
+                             supportEmailAddress: nil,
+                             branding: branding,
+                             allowedCountries: [Country(isoCode: "US", name: "United States")],
+                             isTrackerActive: false,
+                             trackerAccessToken: nil)
+    }()
 
-  lazy var uiConfig: UIConfig = UIConfig(projectConfiguration: projectConfiguration)
+    lazy var contextConfiguration = ContextConfiguration(teamConfiguration: teamConfig,
+                                                         projectConfiguration: projectConfiguration)
 
-  lazy var phoneDataPoint: DataPoint = DataPoint(type: .phoneNumber, verified: true, notSpecified: false)
-  lazy var emailDataPoint: DataPoint = DataPoint(type: .email, verified: true, notSpecified: false)
+    lazy var uiConfig = UIConfig(projectConfiguration: projectConfiguration)
 
-  lazy var phoneNumberDataPointList: DataPointList = {
-    let list = DataPointList()
-    _ = list.getForcingDataPointOf(type: .phoneNumber, defaultValue: PhoneNumber())
+    lazy var phoneDataPoint = DataPoint(type: .phoneNumber, verified: true, notSpecified: false)
+    lazy var emailDataPoint = DataPoint(type: .email, verified: true, notSpecified: false)
 
-    return list
-  }()
-  lazy var emailDataPointList: DataPointList = {
-    let list = DataPointList()
-    _ = list.getForcingDataPointOf(type: .email, defaultValue: Email())
+    lazy var phoneNumberDataPointList: DataPointList = {
+        let list = DataPointList()
+        _ = list.getForcingDataPointOf(type: .phoneNumber, defaultValue: PhoneNumber())
 
-    return list
-  }()
-  lazy var birthDateDataPointList: DataPointList = {
-    let list = DataPointList()
-    _ = list.getForcingDataPointOf(type: .birthDate, defaultValue: BirthDate())
+        return list
+    }()
 
-    return list
-  }()
-  lazy var ssnDataPointList: DataPointList = {
-    let list = DataPointList()
-    _ = list.getForcingDataPointOf(type: .idDocument, defaultValue: IdDocument())
+    lazy var emailDataPointList: DataPointList = {
+        let list = DataPointList()
+        _ = list.getForcingDataPointOf(type: .email, defaultValue: Email())
 
-    return list
-  }()
+        return list
+    }()
 
-  lazy var cardApplication: CardApplication = CardApplication(id: "entity_XXXXXXXXXXXXXXXX",
-                                                              status: .approved,
-                                                              applicationDate: Date(timeIntervalSince1970: 1601665324),
-                                                              workflowObjectId: "entity_XXXXXXXXXXXXXXXX",
-                                                              nextAction: workflowAction)
+    lazy var birthDateDataPointList: DataPointList = {
+        let list = DataPointList()
+        _ = list.getForcingDataPointOf(type: .birthDate, defaultValue: BirthDate())
 
-  lazy var waitListCardApplication = CardApplication(id: "id",
-                                                     status: .created,
-                                                     applicationDate: Date(),
-                                                     workflowObjectId: "workflow_id",
-                                                     nextAction: waitListAction)
+        return list
+    }()
 
-  lazy var cardJSON = JSON(dictionaryLiteral: ("account_id", "account_id"), ("state", "created"), ("last_four", "1234"))
+    lazy var ssnDataPointList: DataPointList = {
+        let list = DataPointList()
+        _ = list.getForcingDataPointOf(type: .idDocument, defaultValue: IdDocument())
 
-  lazy var card: Card = {
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    card.details = cardDetails
-    return card
-  }()
+        return list
+    }()
 
-  lazy var cardWithoutCardProductId: Card = {
-    let card = Card(accountId: "card_id",
-                    cardProductId: nil,
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    card.details = cardDetails
-    return card
-  }()
+    lazy var cardApplication = CardApplication(id: "entity_XXXXXXXXXXXXXXXX",
+                                               status: .approved,
+                                               applicationDate: Date(timeIntervalSince1970: 1_601_665_324),
+                                               workflowObjectId: "entity_XXXXXXXXXXXXXXXX",
+                                               nextAction: workflowAction)
 
-  lazy var cardWithoutDetails: Card = Card(accountId: "card_id",
-                                           cardProductId: "card_product_id",
-                                           cardNetwork: .other,
-                                           cardIssuer: .shift,
-                                           cardBrand: "Shift",
-                                           state: .active,
-                                           cardHolder: "Holder Name",
-                                           lastFourDigits: "7890",
-                                           spendableToday: Amount(value: 12.34, currency: "GBP"),
-                                           nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                                           totalBalance: Amount(value: 12.34, currency: "GBP"),
-                                           nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                                           kyc: .passed,
-                                           orderedStatus: .received,
-                                           format: .virtual,
-                                           issuedAt: Date(),
-                                           panToken: "pan_token",
-                                           cvvToken: "cvv_token",
-                                           verified: true)
+    lazy var waitListCardApplication = CardApplication(id: "id",
+                                                       status: .created,
+                                                       applicationDate: Date(),
+                                                       workflowObjectId: "workflow_id",
+                                                       nextAction: waitListAction)
 
-  lazy var cardWithIVR: Card = {
-    let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
-    let ivr = IVR(status: .enabled, phone: phoneNumber)
-    let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    features: features,
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    return card
-  }()
+    lazy var cardJSON = JSON(dictionaryLiteral: ("account_id", "account_id"), ("state", "created"), ("last_four", "1234"))
 
-  lazy var cardWithVoIP: Card = {
-    let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
-    let ivr = IVR(status: .enabled, phone: phoneNumber)
-    let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
-                                getPin: FeatureAction(source: .voIP, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    features: features,
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    return card
-  }()
+    lazy var card: Card = {
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        card.details = cardDetails
+        return card
+    }()
 
-  lazy var cardWithChangePIN: Card = {
-    let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
-    let ivr = IVR(status: .enabled, phone: phoneNumber)
-    let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
-                                getPin: FeatureAction(source: .api, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    features: features,
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    return card
-  }()
+    lazy var cardWithoutCardProductId: Card = {
+        let card = Card(accountId: "card_id",
+                        cardProductId: nil,
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        card.details = cardDetails
+        return card
+    }()
 
-  lazy var cardWithChangePINAndIVR: Card = {
-    let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
-    let ivr = IVR(status: .enabled, phone: phoneNumber)
-    let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
-                                getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    features: features,
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    return card
-  }()
+    lazy var cardWithoutDetails = Card(accountId: "card_id",
+                                       cardProductId: "card_product_id",
+                                       cardNetwork: .other,
+                                       cardIssuer: .shift,
+                                       cardBrand: "Shift",
+                                       state: .active,
+                                       cardHolder: "Holder Name",
+                                       lastFourDigits: "7890",
+                                       spendableToday: Amount(value: 12.34, currency: "GBP"),
+                                       nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                                       totalBalance: Amount(value: 12.34, currency: "GBP"),
+                                       nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                                       kyc: .passed,
+                                       orderedStatus: .received,
+                                       format: .virtual,
+                                       issuedAt: Date(),
+                                       panToken: "pan_token",
+                                       cvvToken: "cvv_token",
+                                       verified: true)
 
-  lazy var cardWithPassCode: Card = {
-    let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
-    let ivr = IVR(status: .enabled, phone: phoneNumber)
-    let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
-                                getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: PassCode(status: .enabled, passCodeSet: false, verificationRequired: true),
-                                achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    features: features,
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    return card
-  }()
+    lazy var cardWithIVR: Card = {
+        let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
+        let ivr = IVR(status: .enabled, phone: phoneNumber)
+        let features = CardFeatures(setPin: FeatureAction(source: .ivr(ivr), status: .enabled),
+                                    getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
+                                    allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                    passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        features: features,
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        return card
+    }()
+
+    lazy var cardWithVoIP: Card = {
+        let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
+        let ivr = IVR(status: .enabled, phone: phoneNumber)
+        let features = CardFeatures(setPin: FeatureAction(source: .voIP, status: .enabled),
+                                    getPin: FeatureAction(source: .voIP, status: .enabled),
+                                    allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                    passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        features: features,
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        return card
+    }()
+
+    lazy var cardWithChangePIN: Card = {
+        let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
+        let ivr = IVR(status: .enabled, phone: phoneNumber)
+        let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
+                                    getPin: FeatureAction(source: .api, status: .enabled),
+                                    allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                    passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        features: features,
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        return card
+    }()
+
+    lazy var cardWithChangePINAndIVR: Card = {
+        let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
+        let ivr = IVR(status: .enabled, phone: phoneNumber)
+        let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
+                                    getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
+                                    allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                    passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        features: features,
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        return card
+    }()
+
+    lazy var cardWithPassCode: Card = {
+        let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
+        let ivr = IVR(status: .enabled, phone: phoneNumber)
+        let features = CardFeatures(setPin: FeatureAction(source: .api, status: .enabled),
+                                    getPin: FeatureAction(source: .ivr(ivr), status: .enabled),
+                                    allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                    passCode: PassCode(status: .enabled, passCodeSet: false, verificationRequired: true),
+                                    achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        features: features,
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        return card
+    }()
 
     lazy var cardWithACHAccount: Card = {
         let keys = ["evolve_eua"]
@@ -388,9 +390,9 @@ class ModelDataProvider {
         let disclaimer = Disclaimer(agreementKeys: keys, content: content)
         let accountDetails = ACHAccountDetails(routingNumber: "123000789", accountNumber: "1234567890")
         let bankAccount = ACHAccountFeature(status: .enabled,
-                                             isAccountProvisioned: true,
-                                             disclaimer: disclaimer,
-                                             achAccountDetails: accountDetails)
+                                            isAccountProvisioned: true,
+                                            disclaimer: disclaimer,
+                                            achAccountDetails: accountDetails)
         let features = CardFeatures(setPin: nil, getPin: nil, allowedBalanceTypes: nil, activation: nil, ivrSupport: nil,
                                     funding: nil, passCode: nil, achAccount: bankAccount, inAppProvisioning: nil, p2pTransfer: nil)
         let card = Card(accountId: "card_id",
@@ -506,7 +508,7 @@ class ModelDataProvider {
         let recipient = CardholderData(firstName: "Barak", lastName: "Obama", cardholderId: "crd_12345678")
         return recipient
     }()
-    
+
     lazy var transferResponse: P2PTransferResponse = {
         let response = P2PTransferResponse(transferId: "11111",
                                            status: PaymentResultStatus.processed,
@@ -517,302 +519,300 @@ class ModelDataProvider {
                                            createdAt: Date())
         return response
     }()
-    
+
     lazy var cardWithUnknownSource: Card = {
-    let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
-    let ivr = IVR(status: .enabled, phone: phoneNumber)
-    let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
-                                getPin: FeatureAction(source: .unknown, status: .enabled),
-                                allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
-                                passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .received,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    features: features,
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    return card
-  }()
+        let phoneNumber = PhoneNumber(countryCode: 1, phoneNumber: "2342303796")
+        let ivr = IVR(status: .enabled, phone: phoneNumber)
+        let features = CardFeatures(setPin: FeatureAction(source: .unknown, status: .enabled),
+                                    getPin: FeatureAction(source: .unknown, status: .enabled),
+                                    allowedBalanceTypes: [balanceType], activation: nil, ivrSupport: ivr, funding: nil,
+                                    passCode: nil, achAccount: nil, inAppProvisioning: nil, p2pTransfer: nil)
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .received,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        features: features,
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        return card
+    }()
 
-  lazy var orderedCard: Card = {
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .ordered,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true)
-    return card
-  }()
+    lazy var orderedCard: Card = {
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .ordered,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true)
+        return card
+    }()
 
-  lazy var waitListedCard: Card = {
-    let card = Card(accountId: "card_id",
-                    cardProductId: "card_product_id",
-                    cardNetwork: .other,
-                    cardIssuer: .shift,
-                    cardBrand: "Shift",
-                    state: .active,
-                    cardHolder: "Holder Name",
-                    lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"),
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
-                    kyc: .passed,
-                    orderedStatus: .ordered,
-                    format: .virtual,
-                    issuedAt: Date(),
-                    panToken: "pan_token",
-                    cvvToken: "cvv_token",
-                    verified: true,
-                    isInWaitList: true)
-    return card
-  }()
+    lazy var waitListedCard: Card = {
+        let card = Card(accountId: "card_id",
+                        cardProductId: "card_product_id",
+                        cardNetwork: .other,
+                        cardIssuer: .shift,
+                        cardBrand: "Shift",
+                        state: .active,
+                        cardHolder: "Holder Name",
+                        lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"),
+                        kyc: .passed,
+                        orderedStatus: .ordered,
+                        format: .virtual,
+                        issuedAt: Date(),
+                        panToken: "pan_token",
+                        cvvToken: "cvv_token",
+                        verified: true,
+                        isInWaitList: true)
+        return card
+    }()
 
-  lazy var cardInactive: Card = {
-    let card = Card(accountId: "card_id", cardProductId: "card_product_id", cardNetwork: .other, cardIssuer: .shift,
-                    cardBrand: "Shift", state: .inactive, cardHolder: "Holder Name", lastFourDigits: "7890",
-                    spendableToday: Amount(value: 12.34, currency: "GBP"), 
-                    nativeSpendableToday: Amount(value: 0.034, currency: "BTC"), 
-                    totalBalance: Amount(value: 12.34, currency: "GBP"),
-                    nativeTotalBalance: Amount(value: 0.034, currency: "BTC"), kyc: .passed, orderedStatus: .received, format: .virtual, issuedAt: Date(),
-                    panToken: "pan_token", cvvToken: "cvv_token", verified: true)
-    card.details = cardDetails
-    return card
-  }()
+    lazy var cardInactive: Card = {
+        let card = Card(accountId: "card_id", cardProductId: "card_product_id", cardNetwork: .other, cardIssuer: .shift,
+                        cardBrand: "Shift", state: .inactive, cardHolder: "Holder Name", lastFourDigits: "7890",
+                        spendableToday: Amount(value: 12.34, currency: "GBP"),
+                        nativeSpendableToday: Amount(value: 0.034, currency: "BTC"),
+                        totalBalance: Amount(value: 12.34, currency: "GBP"),
+                        nativeTotalBalance: Amount(value: 0.034, currency: "BTC"), kyc: .passed, orderedStatus: .received, format: .virtual, issuedAt: Date(),
+                        panToken: "pan_token", cvvToken: "cvv_token", verified: true)
+        card.details = cardDetails
+        return card
+    }()
 
-  lazy var cardDetails = CardDetails(expiration: "99-03", pan: "1234234134124123", cvv: "123")
+    lazy var cardDetails = CardDetails(expiration: "99-03", pan: "1234234134124123", cvv: "123")
 
-  lazy var transaction = transactionWith(transactionId: "transactionId")
+    lazy var transaction = transactionWith(transactionId: "transactionId")
 
-  func transactionWith(transactionId: String) -> Transaction {
-    return Transaction(transactionId: transactionId,
-                       transactionType: .purchase,
-                       createdAt: Date(),
-                       transactionDescription: "transactionDescription",
-                       lastMessage: "lastMessage",
-                       declineCode: nil,
-                       merchant: nil,
-                       store: nil,
-                       localAmount: Amount(value: 10, currency: "USD"),
-                       billingAmount: Amount(value: 10, currency: "USD"),
-                       holdAmount: nil,
-                       cashbackAmount: nil,
-                       feeAmount: nil,
-                       nativeBalance: Amount(value: 0.001, currency: "BTC"),
-                       settlement: nil,
-                       ecommerce: true,
-                       international: false,
-                       cardPresent: false,
-                       emv: false,
-                       cardNetwork: .visa,
-                       state: .complete,
-                       adjustments: nil,
-                       fundingSourceName: "Bitcoin")
-  }
+    func transactionWith(transactionId: String) -> Transaction {
+        return Transaction(transactionId: transactionId,
+                           transactionType: .purchase,
+                           createdAt: Date(),
+                           transactionDescription: "transactionDescription",
+                           lastMessage: "lastMessage",
+                           declineCode: nil,
+                           merchant: nil,
+                           store: nil,
+                           localAmount: Amount(value: 10, currency: "USD"),
+                           billingAmount: Amount(value: 10, currency: "USD"),
+                           holdAmount: nil,
+                           cashbackAmount: nil,
+                           feeAmount: nil,
+                           nativeBalance: Amount(value: 0.001, currency: "BTC"),
+                           settlement: nil,
+                           ecommerce: true,
+                           international: false,
+                           cardPresent: false,
+                           emv: false,
+                           cardNetwork: .visa,
+                           state: .complete,
+                           adjustments: nil,
+                           fundingSourceName: "Bitcoin")
+    }
 
-  lazy var fundingSource = FundingSource(fundingSourceId: "fundingSourceId",
-                                         type: .custodianWallet,
-                                         balance: Amount(value: 1000, currency: "USD"),
-                                         amountHold: nil,
-                                         state: .valid)
+    lazy var fundingSource = FundingSource(fundingSourceId: "fundingSourceId",
+                                           type: .custodianWallet,
+                                           balance: Amount(value: 1000, currency: "USD"),
+                                           amountHold: nil,
+                                           state: .valid)
 
-  lazy var invalidFundingSource = FundingSource(fundingSourceId: "fundingSourceId",
-                                                type: .custodianWallet,
-                                                balance: Amount(value: 1000, currency: "USD"),
-                                                amountHold: nil,
-                                                state: .invalid)
+    lazy var invalidFundingSource = FundingSource(fundingSourceId: "fundingSourceId",
+                                                  type: .custodianWallet,
+                                                  balance: Amount(value: 1000, currency: "USD"),
+                                                  amountHold: nil,
+                                                  state: .invalid)
 
-  lazy var externalOauthModuleConfig = ExternalOAuthModuleConfig(title: "title", 
-                                                                 explanation: "explanation",
-                                                                 callToAction: "callToAction",
-                                                                 newUserAction: "newUserAction",
-                                                                 allowedBalanceTypes: [balanceType],
-                                                                 assetUrl: url,
-                                                                 oauthErrorMessageKeys: nil)
+    lazy var externalOauthModuleConfig = ExternalOAuthModuleConfig(title: "title",
+                                                                   explanation: "explanation",
+                                                                   callToAction: "callToAction",
+                                                                   newUserAction: "newUserAction",
+                                                                   allowedBalanceTypes: [balanceType],
+                                                                   assetUrl: url,
+                                                                   oauthErrorMessageKeys: nil)
 
     lazy var custodian: Custodian = {
         let custodian = Custodian(custodianType: "custodian", name: "Custodian")
         custodian.externalCredentials = .oauth(OauthCredential(oauthTokenId: oauthCredential.oauthTokenId))
         return custodian
     }()
-    
+
     lazy var selectBalanceStoreResult = SelectBalanceStoreResult(result: .valid, errorCode: 0)
-    
-  lazy var oauthCredential = OauthCredential(oauthTokenId: "oauth_token_id")
 
-  lazy var oauthAttempt = OauthAttempt(id: "attempt_id",
-                                       status: .passed,
-                                       url: url,
-                                       credentials: oauthCredential,
-                                       error: nil,
-                                       errorMessage: nil)
+    lazy var oauthCredential = OauthCredential(oauthTokenId: "oauth_token_id")
 
-  lazy var oauthErrorAttempt = OauthAttempt(id: "attempt_id",
-                                            status: .failed,
-                                            url: nil,
-                                            credentials: nil,
-                                            error: "unauthorised_access",
-                                            errorMessage: "unauthorised_access")
+    lazy var oauthAttempt = OauthAttempt(id: "attempt_id",
+                                         status: .passed,
+                                         url: url,
+                                         credentials: oauthCredential,
+                                         error: nil,
+                                         errorMessage: nil)
 
-  lazy var usa = Country(isoCode: "US", name: "United States")
+    lazy var oauthErrorAttempt = OauthAttempt(id: "attempt_id",
+                                              status: .failed,
+                                              url: nil,
+                                              credentials: nil,
+                                              error: "unauthorised_access",
+                                              errorMessage: "unauthorised_access")
 
-  lazy var balanceType = AllowedBalanceType(type: "custodian", baseUri: "baseUri")
+    lazy var usa = Country(isoCode: "US", name: "United States")
 
-  lazy var url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this implicitly_unwrapped_optional
+    lazy var balanceType = AllowedBalanceType(type: "custodian", baseUri: "baseUri")
 
-  lazy var tappedURL = TappedURL(title: "AptoPayments", url: url)
+    lazy var url = URL(string: "https://aptopayments.com")! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  lazy var categorySpending = CategorySpending(categoryId: .food,
-                                               spending: Amount(value: 100, currency: "USD"),
-                                               difference: 10)
+    lazy var tappedURL = TappedURL(title: "AptoPayments", url: url)
 
-  func monthlySpending(date: Date, previousSpendingExists: Bool = true, nextSpendingExists: Bool = true) -> MonthlySpending {
-    return MonthlySpending(previousSpendingExists: previousSpendingExists,
-                           nextSpendingExists: nextSpendingExists,
-                           spending: [categorySpending],
-                           date: date)
-  }
+    lazy var categorySpending = CategorySpending(categoryId: .food,
+                                                 spending: Amount(value: 100, currency: "USD"),
+                                                 difference: 10)
 
-  lazy var monthlySpendingJSON = JSON(parseJSON:"""
-{
-  "next_spending_exists": false,
-  "prev_spending_exists": true,
-  "spending": {
-    "data": [
-      {
-        "category_id": "plane",
-        "difference": "-13.13",
-        "spending": {
-          "amount": 90,
-          "currency": "USD",
-          "type": "money"
-        },
-        "type": "category_spending"
-      }
-    ],
-    "has_more": false,
-    "page": 0,
-    "rows": 12,
-    "total_count": 1,
-    "type": "list"
-  },
-  "type": "monthly_spending"
-}
-""")
+    func monthlySpending(date: Date, previousSpendingExists: Bool = true, nextSpendingExists: Bool = true) -> MonthlySpending {
+        return MonthlySpending(previousSpendingExists: previousSpendingExists,
+                               nextSpendingExists: nextSpendingExists,
+                               spending: [categorySpending],
+                               date: date)
+    }
 
-  lazy var cardProduct = CardProduct(id: "id",
-                                     teamId: "teamId",
-                                     name: "Name",
-                                     summary: "Summary",
-                                     website: nil,
-                                     cardholderAgreement: .plainText("cardholder agreement"),
-                                     privacyPolicy: .plainText("privacy policy"),
-                                     termsAndConditions: .plainText("terms and conditions"),
-                                     faq: .plainText("faq"),
-                                     status: .enabled,
-                                     shared: false,
-                                     disclaimerAction: workflowAction,
-                                     cardIssuer: "Shift",
-                                     waitListBackgroundImage: "image",
-                                     waitListBackgroundColor: "color",
-                                     waitListDarkBackgroundColor: "color",
-                                     waitListAsset: "asset",
-                                     exchangeRates: .plainText("exchange rates"))
-  lazy var paymentSuccessfulGroup = NotificationGroup(groupId: .paymentSuccessful,
-                                                      category: .cardActivity,
-                                                      state: .disabled,
-                                                      channel: NotificationGroup.Channel(push: true, email: true))
-  lazy var atmWithdrawalGroup = NotificationGroup(groupId: .atmWithdrawal,
-                                                  category: .cardActivity,
-                                                  state: .enabled,
-                                                  channel: NotificationGroup.Channel(push: true, email: false))
+    lazy var monthlySpendingJSON = JSON(parseJSON: """
+    {
+      "next_spending_exists": false,
+      "prev_spending_exists": true,
+      "spending": {
+        "data": [
+          {
+            "category_id": "plane",
+            "difference": "-13.13",
+            "spending": {
+              "amount": 90,
+              "currency": "USD",
+              "type": "money"
+            },
+            "type": "category_spending"
+          }
+        ],
+        "has_more": false,
+        "page": 0,
+        "rows": 12,
+        "total_count": 1,
+        "type": "list"
+      },
+      "type": "monthly_spending"
+    }
+    """)
 
-  lazy var notificationPreferences = NotificationPreferences(preferences: [paymentSuccessfulGroup, atmWithdrawalGroup])
+    lazy var cardProduct = CardProduct(id: "id",
+                                       teamId: "teamId",
+                                       name: "Name",
+                                       summary: "Summary",
+                                       website: nil,
+                                       cardholderAgreement: .plainText("cardholder agreement"),
+                                       privacyPolicy: .plainText("privacy policy"),
+                                       termsAndConditions: .plainText("terms and conditions"),
+                                       faq: .plainText("faq"),
+                                       status: .enabled,
+                                       shared: false,
+                                       disclaimerAction: workflowAction,
+                                       cardIssuer: "Shift",
+                                       waitListBackgroundImage: "image",
+                                       waitListBackgroundColor: "color",
+                                       waitListDarkBackgroundColor: "color",
+                                       waitListAsset: "asset",
+                                       exchangeRates: .plainText("exchange rates"))
+    lazy var paymentSuccessfulGroup = NotificationGroup(groupId: .paymentSuccessful,
+                                                        category: .cardActivity,
+                                                        state: .disabled,
+                                                        channel: NotificationGroup.Channel(push: true, email: true))
+    lazy var atmWithdrawalGroup = NotificationGroup(groupId: .atmWithdrawal,
+                                                    category: .cardActivity,
+                                                    state: .enabled,
+                                                    channel: NotificationGroup.Channel(push: true, email: false))
 
-  lazy var oauthUserData = OAuthUserData(userData: phoneNumberDataPointList)
+    lazy var notificationPreferences = NotificationPreferences(preferences: [paymentSuccessfulGroup, atmWithdrawalGroup])
 
-  lazy var oauthSaveUserDataSucceed = OAuthSaveUserDataResult(result: .valid,
-                                                              userData: nil)
+    lazy var oauthUserData = OAuthUserData(userData: phoneNumberDataPointList)
 
-  lazy var oauthSaveUserDataFailure = OAuthSaveUserDataResult(result: .invalid,
-                                                              userData: phoneNumberDataPointList)
+    lazy var oauthSaveUserDataSucceed = OAuthSaveUserDataResult(result: .valid,
+                                                                userData: nil)
 
-  lazy var voIPToken = VoIPToken(accessToken: "access_token", requestToken: "request_token", provider: "twilio")
+    lazy var oauthSaveUserDataFailure = OAuthSaveUserDataResult(result: .invalid,
+                                                                userData: phoneNumberDataPointList)
 
-  lazy var monthlyStatementReportJSON = JSON(dictionaryLiteral: ("type", "monthly_statement_report"), ("id", "id"), 
-                                             ("month", 2), ("year", 2019),
-                                             ("download_url", "https://aptopayments.com"), 
-                                             ("url_expiration", "2019-02-11T17:17:13.564128+00:00"))
+    lazy var voIPToken = VoIPToken(accessToken: "access_token", requestToken: "request_token", provider: "twilio")
 
-  lazy var monthlyStatementReport = MonthlyStatementReport(id: "id", month: 2, year: 2019,
-                                                           downloadUrl: "https://aptopyaments.com",
-                                                           urlExpirationDate: Date().add(3, units: .month))
-  lazy var monthlyStatementReportExpired = MonthlyStatementReport(id: "id", month: 2, year: 2019,
-                                                                  downloadUrl: "https://aptopyaments.com", 
-                                                                  urlExpirationDate: Date.distantPast)
-  lazy var monthlyStatementReportWithoutUrl = MonthlyStatementReport(id: "id", month: 2, year: 2019, downloadUrl: nil,
-                                                                     urlExpirationDate: Date.distantPast)
-  lazy var monthlyStatementReportWithoutExpiration = MonthlyStatementReport(id: "id", month: 2, year: 2019,
-                                                                            downloadUrl: nil, urlExpirationDate: nil)
+    lazy var monthlyStatementReportJSON = JSON(dictionaryLiteral: ("type", "monthly_statement_report"), ("id", "id"),
+                                               ("month", 2), ("year", 2019),
+                                               ("download_url", "https://aptopayments.com"),
+                                               ("url_expiration", "2019-02-11T17:17:13.564128+00:00"))
 
-  lazy var monthJSON: JSON = ["type": "month", "month": 2, "year": 2019]
+    lazy var monthlyStatementReport = MonthlyStatementReport(id: "id", month: 2, year: 2019,
+                                                             downloadUrl: "https://aptopyaments.com",
+                                                             urlExpirationDate: Date().add(3, units: .month))
+    lazy var monthlyStatementReportExpired = MonthlyStatementReport(id: "id", month: 2, year: 2019,
+                                                                    downloadUrl: "https://aptopyaments.com",
+                                                                    urlExpirationDate: Date.distantPast)
+    lazy var monthlyStatementReportWithoutUrl = MonthlyStatementReport(id: "id", month: 2, year: 2019, downloadUrl: nil,
+                                                                       urlExpirationDate: Date.distantPast)
+    lazy var monthlyStatementReportWithoutExpiration = MonthlyStatementReport(id: "id", month: 2, year: 2019,
+                                                                              downloadUrl: nil, urlExpirationDate: nil)
 
-  lazy var month = Month(month: 2, year: 2019)
+    lazy var monthJSON: JSON = ["type": "month", "month": 2, "year": 2019]
 
-  lazy var monthlyStatementsPeriodJSON: JSON = [
-    "type": "monthly_statements_period",
-    "start": [
-      "type": "month",
-      "year": 2019,
-      "month": 5
-    ],
-    "end": [
-      "type": "month",
-      "year": 2019,
-      "month": 9
+    lazy var month = Month(month: 2, year: 2019)
+
+    lazy var monthlyStatementsPeriodJSON: JSON = [
+        "type": "monthly_statements_period",
+        "start": [
+            "type": "month",
+            "year": 2019,
+            "month": 5,
+        ],
+        "end": [
+            "type": "month",
+            "year": 2019,
+            "month": 9,
+        ],
     ]
-  ]
 
-  lazy var monthlyStatementsPeriod = MonthlyStatementsPeriod(start: Month(month: 5, year: 2019),
-                                                             end: Month(month: 9, year: 2019))
+    lazy var monthlyStatementsPeriod = MonthlyStatementsPeriod(start: Month(month: 5, year: 2019),
+                                                               end: Month(month: 9, year: 2019))
 
-  lazy var verification: Verification = {
-    let verification = Verification(verificationId: "verification_id",
-                                    verificationType: .phoneNumber,
-                                    status: .passed)
-    return verification
-  }()
+    lazy var verification: Verification = {
+        let verification = Verification(verificationId: "verification_id",
+                                        verificationType: .phoneNumber,
+                                        status: .passed)
+        return verification
+    }()
 
-  lazy var verificationJSON = JSON(dictionaryLiteral: ("type", "verification"), ("verification_id", "id"),
-                                   ("verification_type", "phone"), ("verification_type", "phone"),
-                                   ("status", "pending"))
-
-
+    lazy var verificationJSON = JSON(dictionaryLiteral: ("type", "verification"), ("verification_id", "id"),
+                                     ("verification_type", "phone"), ("verification_type", "phone"),
+                                     ("status", "pending"))
 }

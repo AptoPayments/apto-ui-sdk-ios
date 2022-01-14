@@ -6,17 +6,17 @@
 //
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class FullScreenDisclaimerInteractor: FullScreenDisclaimerInteractorProtocol {
-  private let disclaimer: Content
+    private let disclaimer: Content
 
-  init(disclaimer: Content) {
-    self.disclaimer = disclaimer
-  }
+    init(disclaimer: Content) {
+        self.disclaimer = disclaimer
+    }
 
-  func provideDisclaimer(completion: @escaping((_ disclaimer: Content) -> Void)) {
-    completion(disclaimer)
-  }
+    func provideDisclaimer(completion: @escaping ((_ disclaimer: Content) -> Void)) {
+        completion(disclaimer)
+    }
 }

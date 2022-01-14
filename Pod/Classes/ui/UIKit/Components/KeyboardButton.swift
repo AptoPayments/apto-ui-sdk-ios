@@ -8,55 +8,56 @@
 import Foundation
 
 struct KeyboardStateConfig {
-  let image: UIImage?
-  let backgroundColor: UIColor
+    let image: UIImage?
+    let backgroundColor: UIColor
 }
 
 enum KeyboardButtonType {
-  case image(normalStateConfig: KeyboardStateConfig)
-  case digit(digit: Character)
+    case image(normalStateConfig: KeyboardStateConfig)
+    case digit(digit: Character)
 }
 
 class KeyboardButton: UIButton {
-  private let type: KeyboardButtonType
-  var action: ((_ button: KeyboardButton) -> Void)?
+    private let type: KeyboardButtonType
+    var action: ((_ button: KeyboardButton) -> Void)?
 
-  init(type: KeyboardButtonType, action: ((_ button: KeyboardButton) -> Void)? = nil) {
-    self.type = type
-    self.action = action
-    super.init(frame: .zero)
-    setUpUI()
-  }
-
-  required public init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  private func setUpUI() {
-    setUpSelf()
-    switch type {
-    case .image(let normalStateConfig):
-      setUpState(normalStateConfig.image, normalStateConfig.backgroundColor, .normal)
-    case .digit(let digit):
-      setBackgroundImage(UIImage(color: UIColor.white.withAlphaComponent(0.10)), for: .highlighted)
-      setTitle(String(digit), for: .normal)
-      titleLabel?.font = UIFont.systemFont(ofSize: 32)
+    init(type: KeyboardButtonType, action: ((_ button: KeyboardButton) -> Void)? = nil) {
+        self.type = type
+        self.action = action
+        super.init(frame: .zero)
+        setUpUI()
     }
-  }
 
-  private func setUpSelf() {
-    snp.makeConstraints { make in
-      make.width.height.equalTo(56)
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    layer.cornerRadius = 28
-    layer.masksToBounds = true
-    addTapGestureRecognizer { [unowned self] in
-      self.action?(self)
-    }
-  }
 
-  func setUpState(_ image: UIImage?, _ color: UIColor, _ state: UIControl.State) {
-    setBackgroundImage(UIImage(color: color), for: state)
-    setImage(image, for: state)
-  }
+    private func setUpUI() {
+        setUpSelf()
+        switch type {
+        case let .image(normalStateConfig):
+            setUpState(normalStateConfig.image, normalStateConfig.backgroundColor, .normal)
+        case let .digit(digit):
+            setBackgroundImage(UIImage(color: UIColor.white.withAlphaComponent(0.10)), for: .highlighted)
+            setTitle(String(digit), for: .normal)
+            titleLabel?.font = UIFont.systemFont(ofSize: 32)
+        }
+    }
+
+    private func setUpSelf() {
+        snp.makeConstraints { make in
+            make.width.height.equalTo(56)
+        }
+        layer.cornerRadius = 28
+        layer.masksToBounds = true
+        addTapGestureRecognizer { [unowned self] in
+            self.action?(self)
+        }
+    }
+
+    func setUpState(_ image: UIImage?, _ color: UIColor, _ state: UIControl.State) {
+        setBackgroundImage(UIImage(color: color), for: state)
+        setImage(image, for: state)
+    }
 }

@@ -9,21 +9,21 @@
 import ReactiveKit
 
 class ContentPresenterPresenter: ContentPresenterPresenterProtocol {
-  let viewModel = ContentPresenterViewModel()
-  var interactor: ContentPresenterInteractorProtocol! // swiftlint:disable:this implicitly_unwrapped_optional
-  weak var router: ContentPresenterRouter! // swiftlint:disable:this implicitly_unwrapped_optional
+    let viewModel = ContentPresenterViewModel()
+    var interactor: ContentPresenterInteractorProtocol! // swiftlint:disable:this implicitly_unwrapped_optional
+    weak var router: ContentPresenterRouter! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  func viewLoaded() {
-    interactor.provideContent { content in
-      self.viewModel.content.send(content)
+    func viewLoaded() {
+        interactor.provideContent { content in
+            self.viewModel.content.send(content)
+        }
     }
-  }
 
-  func closeTapped() {
-    router.close()
-  }
+    func closeTapped() {
+        router.close()
+    }
 
-  func linkTapped(_ url: URL) {
-    router.show(url: url)
-  }
+    func linkTapped(_ url: URL) {
+        router.show(url: url)
+    }
 }

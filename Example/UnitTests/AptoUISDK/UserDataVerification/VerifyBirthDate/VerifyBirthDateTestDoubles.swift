@@ -10,5 +10,5 @@ import AptoSDK
 @testable import AptoUISDK
 
 class VerifyBirthDateModuleSpy: UIModuleSpy, VerifyBirthDateModuleProtocol {
-  var onVerificationPassed: ((VerifyBirthDateModule, Verification) -> Void)?
+    var onVerificationPassed: ((VerifyBirthDateModule, Verification) -> Void)?
 }

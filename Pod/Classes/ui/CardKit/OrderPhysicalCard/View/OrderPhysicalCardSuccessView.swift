@@ -7,12 +7,12 @@
 
 import Foundation
 
-import UIKit
-import SnapKit
 import AptoSDK
+import SnapKit
+import UIKit
 
 final class OrderPhysicalCardSuccessView: UIView {
-    struct Constants {
+    enum Constants {
         static let crediCardPadding = 26.0
         static let crediCardTopMargin = 84.0
         static let titlePadding = 20.0
@@ -23,6 +23,7 @@ final class OrderPhysicalCardSuccessView: UIView {
         static let actionButtonHeight = 50.0
         static let actionButtonBottonMargin = -34.0
     }
+
     let uiConfiguration: UIConfig
     private(set) lazy var creditCardView = AptoCardView()
     private(set) lazy var actionButton: UIButton = {
@@ -33,6 +34,7 @@ final class OrderPhysicalCardSuccessView: UIView {
         button.titleLabel?.font = UITheme2FontProvider(fontDescriptors: nil).mainItemLightFont
         return button
     }()
+
     private(set) lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "order_physical_card.success_title".podLocalized()
@@ -41,10 +43,12 @@ final class OrderPhysicalCardSuccessView: UIView {
         label.textColor = uiConfiguration.textTopBarSecondaryColor
         return label
     }()
+
     private(set) lazy var descriptionLabel: UILabel = {
-        let label = ComponentCatalog.boldMessageLabelWith(text: "order_physical_card.success_description".podLocalized(),
-                                                          textAlignment: .left,
-                                                          uiConfig: uiConfiguration)
+        let label = ComponentCatalog.boldMessageLabelWith(text: "order_physical_card.success_description"
+            .podLocalized(),
+            textAlignment: .left,
+            uiConfig: uiConfiguration)
         label.textColor = uiConfiguration.textTertiaryColor
         label.font = uiConfiguration.fontProvider.mainItemRegularFont
         label.textAlignment = .center
@@ -53,22 +57,22 @@ final class OrderPhysicalCardSuccessView: UIView {
     }()
 
     init(uiconfig: UIConfig) {
-        self.uiConfiguration = uiconfig
+        uiConfiguration = uiconfig
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     private func setupViews() {
         backgroundColor = uiConfiguration.textMessageColor
         [creditCardView, titleLabel, descriptionLabel, actionButton].forEach(addSubview)
-        
+
         actionButton.layer.cornerRadius = 25
     }
-    
+
     private func setupConstraints() {
         creditCardView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(Constants.crediCardPadding)
@@ -91,6 +95,7 @@ final class OrderPhysicalCardSuccessView: UIView {
     }
 
     // MARK: Public methods
+
     func configure(card: Card) {
         creditCardView.configure(with: card.cardStyle, cardNetwork: card.cardNetwork)
     }

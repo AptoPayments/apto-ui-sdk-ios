@@ -5,15 +5,15 @@
 //  Created by Ivan Oliver Martínez on 19/03/2018.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 extension UITableView {
-  /// Set table header view & layout constraints.
-  func setTableHeaderView(headerView: UIView) {
-    self.tableHeaderView = headerView
-    headerView.snp.makeConstraints { make in
-      make.top.left.right.width.equalTo(self)
+    /// Set table header view & layout constraints.
+    func setTableHeaderView(headerView: UIView) {
+        tableHeaderView = headerView
+        headerView.snp.makeConstraints { make in
+            make.top.left.right.width.equalTo(self)
+        }
     }
-  }
 }

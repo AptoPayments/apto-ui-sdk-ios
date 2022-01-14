@@ -5,293 +5,293 @@
 // Created by Takeichi Kanzaki on 23/11/2018.
 //
 
-import XCTest
 @testable import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class ManageCardInteractorTest: XCTestCase {
-  var sut: ManageCardInteractor! // swiftlint:disable:this implicitly_unwrapped_optional
+    var sut: ManageCardInteractor! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private lazy var platform = ServiceLocatorFake().platformFake
-  private let card = ModelDataProvider.provider.card
-  private let dataProvider = ModelDataProvider.provider
+    // Collaborators
+    private lazy var platform = ServiceLocatorFake().platformFake
+    private let card = ModelDataProvider.provider.card
+    private let dataProvider = ModelDataProvider.provider
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = ManageCardInteractor(platform: platform, card: card)
-  }
-
-  func testProvideFundingSourceCallSession() {
-    // When
-    sut.provideFundingSource(forceRefresh: true) { _ in }
-
-    // Then
-    XCTAssertTrue(platform.fetchCardFundingSourceCalled)
-    XCTAssertEqual(true, platform.lastFetchCardFundingSourceForceRefresh)
-  }
-
-  func testProvideFundingSourceWithoutForceRefreshCallSessionWithoutForceRefresh() {
-    // When
-    sut.provideFundingSource(forceRefresh: false) { _ in }
-
-    // Then
-    XCTAssertEqual(false, platform.lastFetchCardFundingSourceForceRefresh)
-  }
-
-  func testGetFundingSourceFailsCallbackError() {
-    // Given
-    var returnedResult: Result<Card, NSError>?
-    platform.nextFetchCardFundingSourceResult = .failure(BackendError(code: .other))
-
-    // When
-    sut.provideFundingSource(forceRefresh: true) { result in
-      returnedResult = result
+        sut = ManageCardInteractor(platform: platform, card: card)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testProvideFundingSourceCallSession() {
+        // When
+        sut.provideFundingSource(forceRefresh: true) { _ in }
 
-  func testGetFundingSourceSucceedCallbackSuccess() {
-    // Given
-    var returnedResult: Result<Card, NSError>?
-    platform.nextFetchCardFundingSourceResult = .success(dataProvider.fundingSource)
-
-    // When
-    sut.provideFundingSource(forceRefresh: true) { result in
-      returnedResult = result
+        // Then
+        XCTAssertTrue(platform.fetchCardFundingSourceCalled)
+        XCTAssertEqual(true, platform.lastFetchCardFundingSourceForceRefresh)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testProvideFundingSourceWithoutForceRefreshCallSessionWithoutForceRefresh() {
+        // When
+        sut.provideFundingSource(forceRefresh: false) { _ in }
 
-  func testGetFundingSourceSucceedSetCardFundingSource() {
-    // Given
-    let fundingSource = dataProvider.fundingSource
-    platform.nextFetchCardFundingSourceResult = .success(fundingSource)
-
-    // When
-    sut.provideFundingSource(forceRefresh: true) { _ in }
-
-    // Then
-    XCTAssertEqual(fundingSource, card.fundingSource)
-  }
-
-  func testReloadCardCallSessionRetrievingBalance() {
-    // When
-    sut.reloadCard { _ in }
-
-    // Then
-    XCTAssertTrue(platform.fetchCardCalled)
-    XCTAssertEqual(true, platform.lastFetchCardRetrieveBalances)
-  }
-
-  func testReloadCardGetFinancialAccountFailsCallbackError() {
-    // Given
-    platform.nextFetchCardResult = .failure(BackendError(code: .other))
-    var returnedResult: Result<Card, NSError>?
-
-    // When
-    sut.reloadCard { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(false, platform.lastFetchCardFundingSourceForceRefresh)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testGetFundingSourceFailsCallbackError() {
+        // Given
+        var returnedResult: Result<Card, NSError>?
+        platform.nextFetchCardFundingSourceResult = .failure(BackendError(code: .other))
 
-  func testReloadCardGetFinancialAccountSucceedCallbackSuccess() {
-    // Given
-    platform.nextFetchCardResult = .success(dataProvider.card)
-    var returnedResult: Result<Card, NSError>?
+        // When
+        sut.provideFundingSource(forceRefresh: true) { result in
+            returnedResult = result
+        }
 
-    // When
-    sut.reloadCard { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testGetFundingSourceSucceedCallbackSuccess() {
+        // Given
+        var returnedResult: Result<Card, NSError>?
+        platform.nextFetchCardFundingSourceResult = .success(dataProvider.fundingSource)
 
-  func testActivateCardCallCardSession() {
-    // When
-    sut.activateCard { _ in }
+        // When
+        sut.provideFundingSource(forceRefresh: true) { result in
+            returnedResult = result
+        }
 
-    // Then
-    XCTAssertTrue(platform.activateCardCalled)
-  }
-
-  func testCardActivationFailsCallbackError() {
-    // Given
-    var returnedResult: Result<Card, NSError>?
-    platform.nextActivateCardResult = .failure(BackendError(code: .other))
-
-    // When
-    sut.activateCard { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testGetFundingSourceSucceedSetCardFundingSource() {
+        // Given
+        let fundingSource = dataProvider.fundingSource
+        platform.nextFetchCardFundingSourceResult = .success(fundingSource)
 
-  func testCardActivationSucceedCallbackSuccess() {
-    // Given
-    var returnedResult: Result<Card, NSError>?
-    platform.nextActivateCardResult = .success(dataProvider.card)
+        // When
+        sut.provideFundingSource(forceRefresh: true) { _ in }
 
-    // When
-    sut.activateCard { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(fundingSource, card.fundingSource)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testReloadCardCallSessionRetrievingBalance() {
+        // When
+        sut.reloadCard { _ in }
 
-  func testIsShowDetailedCardActivityEnabledCallSession() {
-    // Given
-    platform.nextIsShowDetailedCardActivityEnabledResult = true
-
-    // When
-    let isEnabled = sut.isShowDetailedCardActivityEnabled()
-
-    // Then
-    XCTAssertTrue(platform.isShowDetailedCardActivityEnabledCalled)
-    XCTAssertTrue(isEnabled)
-  }
-
-  func testProvideTransactionsCallCardSession() {
-    // Given
-    let filters = TransactionListFilters(rows: 20, lastTransactionId: nil)
-
-    // When
-    sut.provideTransactions(filters: filters, forceRefresh: true) { _ in }
-
-    // Then
-    XCTAssertTrue(platform.fetchCardTransactionsCalled)
-  }
-
-  func testRetrieveTransactionsFailsCallbackFailure() {
-    // Given
-    var returnedResult: Result<[Transaction], NSError>?
-    platform.nextFetchCardTransactionsResult = .failure(BackendError(code: .other))
-    let filters = TransactionListFilters(rows: 20, lastTransactionId: nil)
-
-    // When
-    sut.provideTransactions(filters: filters, forceRefresh: true) { result in
-      returnedResult = result
+        // Then
+        XCTAssertTrue(platform.fetchCardCalled)
+        XCTAssertEqual(true, platform.lastFetchCardRetrieveBalances)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testReloadCardGetFinancialAccountFailsCallbackError() {
+        // Given
+        platform.nextFetchCardResult = .failure(BackendError(code: .other))
+        var returnedResult: Result<Card, NSError>?
 
-  func testRetrieveTransactionsSucceedCallbackSuccess() {
-    // Given
-    var returnedResult: Result<[Transaction], NSError>?
-    platform.nextFetchCardTransactionsResult = .success([dataProvider.transaction])
-    let filters = TransactionListFilters(rows: 20, lastTransactionId: nil)
+        // When
+        sut.reloadCard { result in
+            returnedResult = result
+        }
 
-    // When
-    sut.provideTransactions(filters: filters, forceRefresh: true) { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testReloadCardGetFinancialAccountSucceedCallbackSuccess() {
+        // Given
+        platform.nextFetchCardResult = .success(dataProvider.card)
+        var returnedResult: Result<Card, NSError>?
 
-  func testActivatePhysicalCardCallCardSession() {
-    // When
-    sut.activatePhysicalCard(code: "111111") { _ in }
+        // When
+        sut.reloadCard { result in
+            returnedResult = result
+        }
 
-    // Then
-    XCTAssertTrue(platform.activatePhysicalCardCalled)
-  }
-
-  func testPhysicalActivationCallFailsCallbackFailure() {
-    // Given
-    var returnedResult: Result<Void, NSError>?
-    platform.nextActivatePhysicalCardResult = .failure(BackendError(code: .other))
-
-    // When
-    sut.activatePhysicalCard(code: "111111") { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testActivateCardCallCardSession() {
+        // When
+        sut.activateCard { _ in }
 
-  func testPhysicalActivationOperationFailsCallbackFailure() {
-    // Given
-    var returnedResult: Result<Void, NSError>?
-    let activationResult = PhysicalCardActivationResult(type: .error, errorCode: 90211, errorMessage: nil)
-    platform.nextActivatePhysicalCardResult = .success(activationResult)
-
-    // When
-    sut.activatePhysicalCard(code: "111111") { result in
-      returnedResult = result
+        // Then
+        XCTAssertTrue(platform.activateCardCalled)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testCardActivationFailsCallbackError() {
+        // Given
+        var returnedResult: Result<Card, NSError>?
+        platform.nextActivateCardResult = .failure(BackendError(code: .other))
 
-  func testPhysicalActivationOperationSucceedCallbackSuccess() {
-    // Given
-    var returnedResult: Result<Void, NSError>?
-    let activationResult = PhysicalCardActivationResult(type: .activated, errorCode: nil, errorMessage: nil)
-    platform.nextActivatePhysicalCardResult = .success(activationResult)
+        // When
+        sut.activateCard { result in
+            returnedResult = result
+        }
 
-    // When
-    sut.activatePhysicalCard(code: "111111") { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testCardActivationSucceedCallbackSuccess() {
+        // Given
+        var returnedResult: Result<Card, NSError>?
+        platform.nextActivateCardResult = .success(dataProvider.card)
 
-  func testLoadFundingSourceCallCardSession() {
-    // When
-    sut.loadFundingSources { _ in }
+        // When
+        sut.activateCard { result in
+            returnedResult = result
+        }
 
-    // Then
-    XCTAssertTrue(platform.fetchCardFundingSourcesCalled)
-    XCTAssertEqual(true, platform.lastFetchCardFundingSourcesForceRefresh)
-  }
-
-  func testCardFundingSourcesFailsCallbackFailure() {
-    // Given
-    var returnedResult: Result<[FundingSource], NSError>?
-    platform.nextFetchCardFundingSourcesResult = .failure(BackendError(code: .other))
-
-    // When
-    sut.loadFundingSources { result in
-      returnedResult = result
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testIsShowDetailedCardActivityEnabledCallSession() {
+        // Given
+        platform.nextIsShowDetailedCardActivityEnabledResult = true
 
-  func testCardFundingSourcesSucceedCallbackSuccess() {
-    // Given
-    var returnedResult: Result<[FundingSource], NSError>?
-    platform.nextFetchCardFundingSourcesResult = .success([dataProvider.fundingSource])
+        // When
+        let isEnabled = sut.isShowDetailedCardActivityEnabled()
 
-    // When
-    sut.loadFundingSources { result in
-      returnedResult = result
+        // Then
+        XCTAssertTrue(platform.isShowDetailedCardActivityEnabledCalled)
+        XCTAssertTrue(isEnabled)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testProvideTransactionsCallCardSession() {
+        // Given
+        let filters = TransactionListFilters(rows: 20, lastTransactionId: nil)
+
+        // When
+        sut.provideTransactions(filters: filters, forceRefresh: true) { _ in }
+
+        // Then
+        XCTAssertTrue(platform.fetchCardTransactionsCalled)
+    }
+
+    func testRetrieveTransactionsFailsCallbackFailure() {
+        // Given
+        var returnedResult: Result<[Transaction], NSError>?
+        platform.nextFetchCardTransactionsResult = .failure(BackendError(code: .other))
+        let filters = TransactionListFilters(rows: 20, lastTransactionId: nil)
+
+        // When
+        sut.provideTransactions(filters: filters, forceRefresh: true) { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
+    }
+
+    func testRetrieveTransactionsSucceedCallbackSuccess() {
+        // Given
+        var returnedResult: Result<[Transaction], NSError>?
+        platform.nextFetchCardTransactionsResult = .success([dataProvider.transaction])
+        let filters = TransactionListFilters(rows: 20, lastTransactionId: nil)
+
+        // When
+        sut.provideTransactions(filters: filters, forceRefresh: true) { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
+    }
+
+    func testActivatePhysicalCardCallCardSession() {
+        // When
+        sut.activatePhysicalCard(code: "111111") { _ in }
+
+        // Then
+        XCTAssertTrue(platform.activatePhysicalCardCalled)
+    }
+
+    func testPhysicalActivationCallFailsCallbackFailure() {
+        // Given
+        var returnedResult: Result<Void, NSError>?
+        platform.nextActivatePhysicalCardResult = .failure(BackendError(code: .other))
+
+        // When
+        sut.activatePhysicalCard(code: "111111") { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
+    }
+
+    func testPhysicalActivationOperationFailsCallbackFailure() {
+        // Given
+        var returnedResult: Result<Void, NSError>?
+        let activationResult = PhysicalCardActivationResult(type: .error, errorCode: 90211, errorMessage: nil)
+        platform.nextActivatePhysicalCardResult = .success(activationResult)
+
+        // When
+        sut.activatePhysicalCard(code: "111111") { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
+    }
+
+    func testPhysicalActivationOperationSucceedCallbackSuccess() {
+        // Given
+        var returnedResult: Result<Void, NSError>?
+        let activationResult = PhysicalCardActivationResult(type: .activated, errorCode: nil, errorMessage: nil)
+        platform.nextActivatePhysicalCardResult = .success(activationResult)
+
+        // When
+        sut.activatePhysicalCard(code: "111111") { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
+    }
+
+    func testLoadFundingSourceCallCardSession() {
+        // When
+        sut.loadFundingSources { _ in }
+
+        // Then
+        XCTAssertTrue(platform.fetchCardFundingSourcesCalled)
+        XCTAssertEqual(true, platform.lastFetchCardFundingSourcesForceRefresh)
+    }
+
+    func testCardFundingSourcesFailsCallbackFailure() {
+        // Given
+        var returnedResult: Result<[FundingSource], NSError>?
+        platform.nextFetchCardFundingSourcesResult = .failure(BackendError(code: .other))
+
+        // When
+        sut.loadFundingSources { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
+    }
+
+    func testCardFundingSourcesSucceedCallbackSuccess() {
+        // Given
+        var returnedResult: Result<[FundingSource], NSError>?
+        platform.nextFetchCardFundingSourcesResult = .success([dataProvider.fundingSource])
+
+        // When
+        sut.loadFundingSources { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
+    }
 }

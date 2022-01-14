@@ -17,12 +17,12 @@ struct GmailSender {
         self.subject = subject
         self.body = body
     }
-    
+
     func canSendEmail() -> Bool {
         guard let urlString = urlString() else { return false }
         return UIApplication.shared.canOpenURL(urlString)
     }
-    
+
     func sendMessage(completion: ((Bool) -> Void)? = nil) {
         guard let urlString = urlString(),
               canSendEmail() else { return }
@@ -32,8 +32,9 @@ struct GmailSender {
             UIApplication.shared.open(urlString)
         }
     }
-    
+
     // MARK: Private methods
+
     private func urlString() -> URL? {
         let googleUrlString = String(format: "googlegmail:///co?to=%@&subject=%@&body=%@",
                                      recipient,

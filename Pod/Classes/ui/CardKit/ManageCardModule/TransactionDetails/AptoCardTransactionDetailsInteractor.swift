@@ -6,17 +6,17 @@
 //
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class AptoCardTransactionDetailsInteractor: AptoCardTransactionDetailsInteractorProtocol {
-  private let transaction: Transaction
+    private let transaction: Transaction
 
-  init(transaction: Transaction) {
-    self.transaction = transaction
-  }
+    init(transaction: Transaction) {
+        self.transaction = transaction
+    }
 
-  func provideTransaction(callback: @escaping Result<Transaction, NSError>.Callback) {
-    callback(.success(transaction))
-  }
+    func provideTransaction(callback: @escaping Result<Transaction, NSError>.Callback) {
+        callback(.success(transaction))
+    }
 }

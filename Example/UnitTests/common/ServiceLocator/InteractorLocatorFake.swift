@@ -10,171 +10,180 @@ import AptoSDK
 @testable import AptoUISDK
 
 class InteractorLocatorFake: InteractorLocatorProtocol {
-  lazy var fullScreenDisclaimerInteractorSpy = FullScreenDisclaimerInteractorSpy()
-  func fullScreenDisclaimerInteractor(disclaimer: Content) -> FullScreenDisclaimerInteractorProtocol {
-    return fullScreenDisclaimerInteractorSpy
-  }
+    lazy var fullScreenDisclaimerInteractorSpy = FullScreenDisclaimerInteractorSpy()
+    func fullScreenDisclaimerInteractor(disclaimer _: Content) -> FullScreenDisclaimerInteractorProtocol {
+        return fullScreenDisclaimerInteractorSpy
+    }
 
-  lazy var countrySelectorInteractorFake = CountrySelectorInteractorFake()
-  func countrySelectorInteractor(countries: [Country]) -> CountrySelectorInteractorProtocol {
-    return countrySelectorInteractorFake
-  }
+    lazy var countrySelectorInteractorFake = CountrySelectorInteractorFake()
+    func countrySelectorInteractor(countries _: [Country]) -> CountrySelectorInteractorProtocol {
+        return countrySelectorInteractorFake
+    }
 
-  lazy var authInteractorSpy = AuthInteractorSpy()
-  func authInteractor(initialUserData: DataPointList, authConfig: AuthModuleConfig,
-                      dataReceiver: AuthDataReceiver, initializationData: InitializationData?) -> AuthInteractorProtocol {
-    return authInteractorSpy
-  }
+    lazy var authInteractorSpy = AuthInteractorSpy()
+    func authInteractor(initialUserData _: DataPointList, authConfig _: AuthModuleConfig,
+                        dataReceiver _: AuthDataReceiver, initializationData _: InitializationData?) -> AuthInteractorProtocol
+    {
+        return authInteractorSpy
+    }
 
-  func verifyPhoneInteractor(verificationType: VerificationParams<PhoneNumber, Verification>,
-                             dataReceiver: VerifyPhoneDataReceiver) -> VerifyPhoneInteractorProtocol {
-    Swift.fatalError("verifyPhoneInteractor(verificationType:dataReceiver:) has not been implemented")
-  }
+    func verifyPhoneInteractor(verificationType _: VerificationParams<PhoneNumber, Verification>,
+                               dataReceiver _: VerifyPhoneDataReceiver) -> VerifyPhoneInteractorProtocol
+    {
+        Swift.fatalError("verifyPhoneInteractor(verificationType:dataReceiver:) has not been implemented")
+    }
 
-  func verifyBirthDateInteractor(verificationType: VerificationParams<BirthDate, Verification>,
-                                 dataReceiver: VerifyBirthDateDataReceiver) -> VerifyBirthDateInteractorProtocol {
-    Swift.fatalError("verifyBirthDateInteractor(verificationType:dataReceiver:) has not been implemented")
-  }
+    func verifyBirthDateInteractor(verificationType _: VerificationParams<BirthDate, Verification>,
+                                   dataReceiver _: VerifyBirthDateDataReceiver) -> VerifyBirthDateInteractorProtocol
+    {
+        Swift.fatalError("verifyBirthDateInteractor(verificationType:dataReceiver:) has not been implemented")
+    }
 
-  lazy var externalOauthInteractorSpy = ExternalOAuthInteractorSpy()
-  func externalOAuthInteractor() -> ExternalOAuthInteractorProtocol {
-    return externalOauthInteractorSpy
-  }
+    lazy var externalOauthInteractorSpy = ExternalOAuthInteractorSpy()
+    func externalOAuthInteractor() -> ExternalOAuthInteractorProtocol {
+        return externalOauthInteractorSpy
+    }
 
-  // MARK: - Biometrics
-  lazy var createPasscodeInteractorFake = CreatePasscodeInteractorFake()
-  func createPasscodeInteractor() -> CreatePasscodeInteractorProtocol {
-    return createPasscodeInteractorFake
-  }
+    // MARK: - Biometrics
 
-  lazy var verifyPasscodeInteractorFake = VerifyPasscodeInteractorFake()
-  func verifyPasscodeInteractor() -> VerifyPasscodeInteractorProtocol {
-    return verifyPasscodeInteractorFake
-  }
+    lazy var createPasscodeInteractorFake = CreatePasscodeInteractorFake()
+    func createPasscodeInteractor() -> CreatePasscodeInteractorProtocol {
+        return createPasscodeInteractorFake
+    }
 
-  lazy var changePasscodeInteractorFake = ChangePasscodeInteractorFake()
-  func changePasscodeInteractor() -> ChangePasscodeInteractorProtocol {
-    return changePasscodeInteractorFake
-  }
+    lazy var verifyPasscodeInteractorFake = VerifyPasscodeInteractorFake()
+    func verifyPasscodeInteractor() -> VerifyPasscodeInteractorProtocol {
+        return verifyPasscodeInteractorFake
+    }
 
-  lazy var biometricPermissionInteractorFake = BiometricPermissionInteractorFake()
-  func biometricPermissionInteractor() -> BiometricPermissionInteractorProtocol {
-    return biometricPermissionInteractorFake
-  }
+    lazy var changePasscodeInteractorFake = ChangePasscodeInteractorFake()
+    func changePasscodeInteractor() -> ChangePasscodeInteractorProtocol {
+        return changePasscodeInteractorFake
+    }
 
-  lazy var issueCardInteractorFake = IssueCardInteractorFake()
-  func issueCardInteractor(application: CardApplication, initializationData: InitializationData?) -> IssueCardInteractorProtocol {
-    return issueCardInteractorFake
-  }
+    lazy var biometricPermissionInteractorFake = BiometricPermissionInteractorFake()
+    func biometricPermissionInteractor() -> BiometricPermissionInteractorProtocol {
+        return biometricPermissionInteractorFake
+    }
 
-  lazy var waitListInteractorFake = WaitListInteractorFake()
-  func waitListInteractor(application: CardApplication) -> WaitListInteractorProtocol {
-    return waitListInteractorFake
-  }
+    lazy var issueCardInteractorFake = IssueCardInteractorFake()
+    func issueCardInteractor(application _: CardApplication, initializationData _: InitializationData?) -> IssueCardInteractorProtocol {
+        return issueCardInteractorFake
+    }
 
-  lazy var cardWaitListInteractorFake = CardWaitListInteractorFake()
-  func cardWaitListInteractor(card: Card) -> CardWaitListInteractorProtocol {
-    return cardWaitListInteractorFake
-  }
+    lazy var waitListInteractorFake = WaitListInteractorFake()
+    func waitListInteractor(application _: CardApplication) -> WaitListInteractorProtocol {
+        return waitListInteractorFake
+    }
 
-  lazy var serverMaintenanceErrorInteractorSpy = ServerMaintenanceErrorInteractorSpy()
-  func serverMaintenanceErrorInteractor() -> ServerMaintenanceErrorInteractorProtocol {
-    return serverMaintenanceErrorInteractorSpy
-  }
+    lazy var cardWaitListInteractorFake = CardWaitListInteractorFake()
+    func cardWaitListInteractor(card _: Card) -> CardWaitListInteractorProtocol {
+        return cardWaitListInteractorFake
+    }
 
-  func accountSettingsInteractor() -> AccountSettingsInteractorProtocol {
-    Swift.fatalError("accountSettingsInteractor() has not been implemented")
-  }
+    lazy var serverMaintenanceErrorInteractorSpy = ServerMaintenanceErrorInteractorSpy()
+    func serverMaintenanceErrorInteractor() -> ServerMaintenanceErrorInteractorProtocol {
+        return serverMaintenanceErrorInteractorSpy
+    }
 
-  lazy var contentProviderInteractorFake = ContentPresenterInteractorFake()
-  func contentPresenterInteractor(content: Content) -> ContentPresenterInteractorProtocol {
-    return contentProviderInteractorFake
-  }
+    func accountSettingsInteractor() -> AccountSettingsInteractorProtocol {
+        Swift.fatalError("accountSettingsInteractor() has not been implemented")
+    }
 
-  lazy var dataConfirmationInteractorFake = DataConfirmationInteractorFake()
-  func dataConfirmationInteractor(userData: DataPointList) -> DataConfirmationInteractorProtocol {
-    return dataConfirmationInteractorFake
-  }
+    lazy var contentProviderInteractorFake = ContentPresenterInteractorFake()
+    func contentPresenterInteractor(content _: Content) -> ContentPresenterInteractorProtocol {
+        return contentProviderInteractorFake
+    }
 
-  lazy var webBrowserInteractorSpy = WebBrowserInteractorSpy()
-  func webBrowserInteractor(url: URL,
-                            headers: [String: String]?,
-                            dataReceiver: WebBrowserDataReceiverProtocol) -> WebBrowserInteractorProtocol {
-    return webBrowserInteractorSpy
-  }
+    lazy var dataConfirmationInteractorFake = DataConfirmationInteractorFake()
+    func dataConfirmationInteractor(userData _: DataPointList) -> DataConfirmationInteractorProtocol {
+        return dataConfirmationInteractorFake
+    }
 
-  // MARK: - Manage card
-  func manageCardInteractor(card: Card) -> ManageCardInteractorProtocol {
-    Swift.fatalError("manageCardInteractor(card:) has not been implemented")
-  }
+    lazy var webBrowserInteractorSpy = WebBrowserInteractorSpy()
+    func webBrowserInteractor(url _: URL,
+                              headers _: [String: String]?,
+                              dataReceiver _: WebBrowserDataReceiverProtocol) -> WebBrowserInteractorProtocol
+    {
+        return webBrowserInteractorSpy
+    }
 
-  func fundingSourceSelector(card: Card) -> FundingSourceSelectorInteractorProtocol {
-    Swift.fatalError("fundingSourceSelector(card:) has not been implemented")
-  }
+    // MARK: - Manage card
 
-  lazy var cardSettingsInteractorFake = CardSettingsInteractorFake()
-  func cardSettingsInteractor() -> CardSettingsInteractorProtocol {
-    return cardSettingsInteractorFake
-  }
+    func manageCardInteractor(card _: Card) -> ManageCardInteractorProtocol {
+        Swift.fatalError("manageCardInteractor(card:) has not been implemented")
+    }
 
-  func kycInteractor(card: Card) -> KYCInteractorProtocol {
-    Swift.fatalError("kycInteractor(card:) has not been implemented")
-  }
+    func fundingSourceSelector(card _: Card) -> FundingSourceSelectorInteractorProtocol {
+        Swift.fatalError("fundingSourceSelector(card:) has not been implemented")
+    }
 
-  lazy var cardMonthlyStatsInteractorSpy = CardMonthlyStatsInteractorSpy()
-  func cardMonthlyStatsInteractor(card: Card) -> CardMonthlyStatsInteractorProtocol {
-    return cardMonthlyStatsInteractorSpy
-  }
+    lazy var cardSettingsInteractorFake = CardSettingsInteractorFake()
+    func cardSettingsInteractor() -> CardSettingsInteractorProtocol {
+        return cardSettingsInteractorFake
+    }
 
-  lazy var transactionListInteractorSpy = TransactionListInteractorSpy()
-  func transactionListInteractor(card: Card) -> TransactionListInteractorProtocol {
-    return transactionListInteractorSpy
-  }
+    func kycInteractor(card _: Card) -> KYCInteractorProtocol {
+        Swift.fatalError("kycInteractor(card:) has not been implemented")
+    }
 
-  lazy var notificationPreferencesInteractorFake = NotificationPreferencesInteractorFake()
-  func notificationPreferencesInteractor() -> NotificationPreferencesInteractorProtocol {
-    return notificationPreferencesInteractorFake
-  }
+    lazy var cardMonthlyStatsInteractorSpy = CardMonthlyStatsInteractorSpy()
+    func cardMonthlyStatsInteractor(card _: Card) -> CardMonthlyStatsInteractorProtocol {
+        return cardMonthlyStatsInteractorSpy
+    }
 
-  lazy var setPinInteractorFake = SetCodeInteractorFake()
-  func setPinInteractor(card: Card) -> SetCodeInteractorProtocol {
-    return setPinInteractorFake
-  }
+    lazy var transactionListInteractorSpy = TransactionListInteractorSpy()
+    func transactionListInteractor(card _: Card) -> TransactionListInteractorProtocol {
+        return transactionListInteractorSpy
+    }
 
-  lazy var setPassCodeInteractorFake = SetCodeInteractorFake()
-  func setPassCodeInteractor(card: Card, verification: Verification?) -> SetCodeInteractorProtocol {
-    return setPassCodeInteractorFake
-  }
+    lazy var notificationPreferencesInteractorFake = NotificationPreferencesInteractorFake()
+    func notificationPreferencesInteractor() -> NotificationPreferencesInteractorProtocol {
+        return notificationPreferencesInteractorFake
+    }
 
-  lazy var voIPInteractorFake = VoIPInteractorFake()
-  func voIPInteractor(card: Card, actionSource: VoIPActionSource) -> VoIPInteractorProtocol {
-    return voIPInteractorFake
-  }
+    lazy var setPinInteractorFake = SetCodeInteractorFake()
+    func setPinInteractor(card _: Card) -> SetCodeInteractorProtocol {
+        return setPinInteractorFake
+    }
 
-  lazy var monthlyStatementsListFake = MonthlyStatementsListInteractorFake()
-  func monthlyStatementsListInteractor() -> MonthlyStatementsListInteractorProtocol {
-    return monthlyStatementsListFake
-  }
+    lazy var setPassCodeInteractorFake = SetCodeInteractorFake()
+    func setPassCodeInteractor(card _: Card, verification _: Verification?) -> SetCodeInteractorProtocol {
+        return setPassCodeInteractorFake
+    }
 
-  lazy var monthlyStatementsReportInteractorFake = MonthlyStatementsReportInteractorFake()
-  func monthlyStatementsReportInteractor(month: Month, downloaderProvider: FileDownloaderProvider)
-    -> MonthlyStatementsReportInteractorProtocol {
-      return monthlyStatementsReportInteractorFake
-  }
+    lazy var voIPInteractorFake = VoIPInteractorFake()
+    func voIPInteractor(card _: Card, actionSource _: VoIPActionSource) -> VoIPInteractorProtocol {
+        return voIPInteractorFake
+    }
 
-  // MARK: - Physical card activation
-  func physicalCardActivationInteractor(card: Card) -> PhysicalCardActivationInteractorProtocol {
-    Swift.fatalError("physicalCardActivationInteractor(card:session:) has not been implemented")
-  }
+    lazy var monthlyStatementsListFake = MonthlyStatementsListInteractorFake()
+    func monthlyStatementsListInteractor() -> MonthlyStatementsListInteractorProtocol {
+        return monthlyStatementsListFake
+    }
 
-  lazy var physicalCardActivationSucceedInteractorFake = PhysicalCardActivationSucceedInteractorFake()
-  func physicalCardActivationSucceedInteractor(card: Card) -> PhysicalCardActivationSucceedInteractorProtocol {
-    physicalCardActivationSucceedInteractorFake.card = card
-    return physicalCardActivationSucceedInteractorFake
-  }
+    lazy var monthlyStatementsReportInteractorFake = MonthlyStatementsReportInteractorFake()
+    func monthlyStatementsReportInteractor(month _: Month, downloaderProvider _: FileDownloaderProvider)
+        -> MonthlyStatementsReportInteractorProtocol
+    {
+        return monthlyStatementsReportInteractorFake
+    }
 
-  // MARK: - Transaction Details
-  func transactionDetailsInteractor(transaction: Transaction) -> AptoCardTransactionDetailsInteractorProtocol {
-    Swift.fatalError("transactionDetailsInteractor(transaction:) has not been implemented")
-  }
+    // MARK: - Physical card activation
+
+    func physicalCardActivationInteractor(card _: Card) -> PhysicalCardActivationInteractorProtocol {
+        Swift.fatalError("physicalCardActivationInteractor(card:session:) has not been implemented")
+    }
+
+    lazy var physicalCardActivationSucceedInteractorFake = PhysicalCardActivationSucceedInteractorFake()
+    func physicalCardActivationSucceedInteractor(card: Card) -> PhysicalCardActivationSucceedInteractorProtocol {
+        physicalCardActivationSucceedInteractorFake.card = card
+        return physicalCardActivationSucceedInteractorFake
+    }
+
+    // MARK: - Transaction Details
+
+    func transactionDetailsInteractor(transaction _: Transaction) -> AptoCardTransactionDetailsInteractorProtocol {
+        Swift.fatalError("transactionDetailsInteractor(transaction:) has not been implemented")
+    }
 }

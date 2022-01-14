@@ -5,148 +5,151 @@
 //  Created by Takeichi Kanzaki on 01/10/2019.
 //
 
-import XCTest
 @testable import AptoSDK
+import XCTest
 
 class MonthlyStatementsPeriodTest: XCTestCase {
-  private let dataProvider = ModelDataProvider.provider
+    private let dataProvider = ModelDataProvider.provider
 
-  // MARK: - Available months
-  func testAvailableMonthsReturnStartToEnd() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriod
+    // MARK: - Available months
 
-    // When
-    let availableMonths = sut.availableMonths()
+    func testAvailableMonthsReturnStartToEnd() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriod
 
-    // Then
-    let expectedMonths = [5, 6, 7, 8, 9].map { Month(month: $0, year: 2019) }
-    XCTAssertEqual(expectedMonths, availableMonths)
-  }
+        // When
+        let availableMonths = sut.availableMonths()
 
-  func testAvailableMonthsChangingYearReturnStartToEnd() {
-    // Given
-    let sut = MonthlyStatementsPeriod(start: Month(month: 11, year: 2018), end: Month(month: 2, year: 2019))
+        // Then
+        let expectedMonths = [5, 6, 7, 8, 9].map { Month(month: $0, year: 2019) }
+        XCTAssertEqual(expectedMonths, availableMonths)
+    }
 
-    // When
-    let availableMonths = sut.availableMonths()
+    func testAvailableMonthsChangingYearReturnStartToEnd() {
+        // Given
+        let sut = MonthlyStatementsPeriod(start: Month(month: 11, year: 2018), end: Month(month: 2, year: 2019))
 
-    // Then
-    let expectedMonths = [(11, 2018), (12, 2018), (1, 2019), (2, 2019)].map { Month(month: $0.0, year: $0.1) }
-    XCTAssertEqual(expectedMonths, availableMonths)
-  }
+        // When
+        let availableMonths = sut.availableMonths()
 
-  func testStartOlderThanEndReturnEmptyList() {
-    // Given
-    let sut = MonthlyStatementsPeriod(start: Month(month: 3, year: 2019), end: Month(month: 2, year: 2019))
+        // Then
+        let expectedMonths = [(11, 2018), (12, 2018), (1, 2019), (2, 2019)].map { Month(month: $0.0, year: $0.1) }
+        XCTAssertEqual(expectedMonths, availableMonths)
+    }
 
-    // When
-    let availableMonths = sut.availableMonths()
+    func testStartOlderThanEndReturnEmptyList() {
+        // Given
+        let sut = MonthlyStatementsPeriod(start: Month(month: 3, year: 2019), end: Month(month: 2, year: 2019))
 
-    // Then
-    XCTAssertTrue(availableMonths.isEmpty)
-  }
+        // When
+        let availableMonths = sut.availableMonths()
 
-  func testStartEqualToEndReturnSingleElementList() {
-    // Given
-    let sut = MonthlyStatementsPeriod(start: dataProvider.month, end: dataProvider.month)
+        // Then
+        XCTAssertTrue(availableMonths.isEmpty)
+    }
 
-    // When
-    let availableMonths = sut.availableMonths()
+    func testStartEqualToEndReturnSingleElementList() {
+        // Given
+        let sut = MonthlyStatementsPeriod(start: dataProvider.month, end: dataProvider.month)
 
-    // Then
-    let expectedMonths = [dataProvider.month]
-    XCTAssertEqual(expectedMonths, availableMonths)
-  }
+        // When
+        let availableMonths = sut.availableMonths()
 
-  // MARK: - is date valid
-  func testStartSameMonthAsStartIsValidReturnTrue() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriod
+        // Then
+        let expectedMonths = [dataProvider.month]
+        XCTAssertEqual(expectedMonths, availableMonths)
+    }
 
-    // When
-    let isValid = sut.includes(month: sut.start)
+    // MARK: - is date valid
 
-    // Then
-    XCTAssertTrue(isValid)
-  }
+    func testStartSameMonthAsStartIsValidReturnTrue() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriod
 
-  func testStartSameMonthAsEndIsValidReturnTrue() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriod
+        // When
+        let isValid = sut.includes(month: sut.start)
 
-    // When
-    let isValid = sut.includes(month: sut.end)
+        // Then
+        XCTAssertTrue(isValid)
+    }
 
-    // Then
-    XCTAssertTrue(isValid)
-  }
+    func testStartSameMonthAsEndIsValidReturnTrue() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriod
 
-  func testMonthBetweenStartAndEndIsValidReturnTrue() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriod
+        // When
+        let isValid = sut.includes(month: sut.end)
 
-    // When
-    let isValid = sut.includes(month: Month(month: sut.start.month + 1, year: sut.start.year))
+        // Then
+        XCTAssertTrue(isValid)
+    }
 
-    // Then
-    XCTAssertTrue(isValid)
-  }
+    func testMonthBetweenStartAndEndIsValidReturnTrue() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriod
 
-  func testMonthBeforeStartIsValidReturnFalse() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriod
+        // When
+        let isValid = sut.includes(month: Month(month: sut.start.month + 1, year: sut.start.year))
 
-    // When
-    let isValid = sut.includes(month: Month(month: sut.start.month - 1, year: sut.start.year))
+        // Then
+        XCTAssertTrue(isValid)
+    }
 
-    // Then
-    XCTAssertFalse(isValid)
-  }
+    func testMonthBeforeStartIsValidReturnFalse() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriod
 
-  func testMonthAfterEndIsValidReturnFalse() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriod
+        // When
+        let isValid = sut.includes(month: Month(month: sut.start.month - 1, year: sut.start.year))
 
-    // When
-    let isValid = sut.includes(month: Month(month: sut.end.month + 1, year: sut.end.year))
+        // Then
+        XCTAssertFalse(isValid)
+    }
 
-    // Then
-    XCTAssertFalse(isValid)
-  }
+    func testMonthAfterEndIsValidReturnFalse() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriod
 
-  // MARK: - JSON parser test
-  func testMonthIsCreatedFromJSON() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriodJSON
+        // When
+        let isValid = sut.includes(month: Month(month: sut.end.month + 1, year: sut.end.year))
 
-    // When
-    let monthlyStatementsPeriod = sut.monthlyStatementsPeriod
+        // Then
+        XCTAssertFalse(isValid)
+    }
 
-    // Then
-    XCTAssertNotNil(monthlyStatementsPeriod)
-  }
+    // MARK: - JSON parser test
 
-  func testMonthIsReturnedFromLinkObject() {
-    // Given
-    let sut = dataProvider.monthlyStatementsPeriodJSON
+    func testMonthIsCreatedFromJSON() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriodJSON
 
-    // When
-    let monthlyStatementsPeriod = sut.linkObject
+        // When
+        let monthlyStatementsPeriod = sut.monthlyStatementsPeriod
 
-    // Then
-    XCTAssertNotNil(monthlyStatementsPeriod)
-    XCTAssertTrue(monthlyStatementsPeriod is MonthlyStatementsPeriod)
-  }
+        // Then
+        XCTAssertNotNil(monthlyStatementsPeriod)
+    }
 
-  func testInvalidJSONMonthIsNil() {
-    // Given
-    let sut = dataProvider.emptyJSON
+    func testMonthIsReturnedFromLinkObject() {
+        // Given
+        let sut = dataProvider.monthlyStatementsPeriodJSON
 
-    // When
-    let monthlyStatementsPeriod = sut.monthlyStatementsPeriod
+        // When
+        let monthlyStatementsPeriod = sut.linkObject
 
-    // Then
-    XCTAssertNil(monthlyStatementsPeriod)
-  }
+        // Then
+        XCTAssertNotNil(monthlyStatementsPeriod)
+        XCTAssertTrue(monthlyStatementsPeriod is MonthlyStatementsPeriod)
+    }
+
+    func testInvalidJSONMonthIsNil() {
+        // Given
+        let sut = dataProvider.emptyJSON
+
+        // When
+        let monthlyStatementsPeriod = sut.monthlyStatementsPeriod
+
+        // Then
+        XCTAssertNil(monthlyStatementsPeriod)
+    }
 }

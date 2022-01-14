@@ -8,14 +8,12 @@
 import Foundation
 
 class VerifyEmailScreen: Screen {
+    enum Labels {
+        static let VerifyEmailExplanation = "Verify Email Explanation"
+    }
 
-  struct Labels {
-    static let VerifyEmailExplanation = "Verify Email Explanation"
-  }
-
-  @discardableResult override func waitForScreen() -> Self {
-    waitForViewWith(accessibilityLabel: Labels.VerifyEmailExplanation)
-    return self
-  }
-
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.VerifyEmailExplanation)
+        return self
+    }
 }

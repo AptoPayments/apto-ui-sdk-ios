@@ -8,40 +8,30 @@
 import UIKit
 
 class VerifyIdScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Get Offers"
+        static let BirthdateInputField = "Birthdate Input Field"
+        static let SSNInputField = "SSN Input Field"
+        static let getOffersButton = "Get Offers Button"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Get Offers"
-    static let BirthdateInputField = "Birthdate Input Field"
-    static let SSNInputField = "SSN Input Field"
-    static let getOffersButton = "Get Offers Button"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+        waitForViewWith(accessibilityLabel: Labels.BirthdateInputField)
+        waitForViewWith(accessibilityLabel: Labels.SSNInputField)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
-    waitForViewWith(accessibilityLabel: Labels.BirthdateInputField)
-    waitForViewWith(accessibilityLabel: Labels.SSNInputField)
+    @discardableResult func input(birthdate: Date) -> Self {
+        return selectDatePicker(date: birthdate, intoViewWithAccessibilityLabel: Labels.BirthdateInputField)
+    } // end input(birthdate)
 
-    return self
+    @discardableResult func input(ssn: String) -> Self {
+        return enter(text: ssn, intoViewWithAccessibilityLabel: Labels.SSNInputField)
+    } // end input(ssn)
 
-  } // end waitForScreen
-
-  @discardableResult func input(birthdate: Date) -> Self {
-
-    return selectDatePicker(date: birthdate, intoViewWithAccessibilityLabel: Labels.BirthdateInputField)
-
-  } // end input(birthdate)
-
-  @discardableResult func input(ssn: String) -> Self {
-
-    return enter(text: ssn, intoViewWithAccessibilityLabel: Labels.SSNInputField)
-
-  } // end input(ssn)
-
-  @discardableResult func getOffers() -> Self {
-
-    return tapView(withAccessibilityLabel: Labels.getOffersButton)
-
-  } // end getOffers
-
+    @discardableResult func getOffers() -> Self {
+        return tapView(withAccessibilityLabel: Labels.getOffersButton)
+    } // end getOffers
 }

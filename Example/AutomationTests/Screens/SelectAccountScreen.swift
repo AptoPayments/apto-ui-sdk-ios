@@ -8,26 +8,20 @@
 import UIKit
 
 class SelectAccountScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Funding Account"
+        static let AddAccountButton = "Add Account Button"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Funding Account"
-    static let AddAccountButton = "Add Account Button"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func addAccount() -> Self {
+        tapView(withAccessibilityLabel: Labels.AddAccountButton)
 
-    return self
-
-  } // end waitForScreen
-
-  @discardableResult func addAccount() -> Self {
-
-    tapView(withAccessibilityLabel: Labels.AddAccountButton)
-
-    return self
-
-  } // end selectBankAccount
-
+        return self
+    } // end selectBankAccount
 }

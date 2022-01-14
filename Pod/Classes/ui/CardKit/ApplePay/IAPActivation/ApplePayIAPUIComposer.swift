@@ -15,11 +15,12 @@ public final class ApplePayIAPUIComposer {
 
     public static func composedWith(cardId: String,
                                     cardLoader: AptoPlatformProtocol,
-                                    uiConfiguration: UIConfig,
-                                    iapCompletion: IAPCompletion? = nil) -> ApplePayIAPViewController {
+                                    uiConfiguration _: UIConfig,
+                                    iapCompletion: IAPCompletion? = nil) -> ApplePayIAPViewController
+    {
         let viewModel = ApplePayIAPViewModel(cardId: cardId, loader: cardLoader)
         let controller = ApplePayIAPViewController(viewModel: viewModel, uiConfiguration: UIConfig.default)
-        controller.didFinishInAppProvisioning = { controller, pass, error in
+        controller.didFinishInAppProvisioning = { controller, _, _ in
             controller.dismiss(animated: true)
             iapCompletion?()
         }

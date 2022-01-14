@@ -8,25 +8,19 @@
 import UIKit
 
 class TimeAtAddressScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Address"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Address"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func select(timeAtAddress: String) -> Self {
+        tapView(withAccessibilityLabel: timeAtAddress)
 
-    return self
-
-  } // end waitForScreen
-
-  @discardableResult func select(timeAtAddress: String) -> Self {
-
-    tapView(withAccessibilityLabel: timeAtAddress)
-
-    return self
-
-  } // end select(timeAtAddress)
-
+        return self
+    } // end select(timeAtAddress)
 }

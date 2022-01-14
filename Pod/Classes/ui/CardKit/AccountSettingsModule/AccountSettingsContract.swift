@@ -6,48 +6,48 @@
 //
 //
 
-import Bond
 import AptoSDK
+import Bond
 
-protocol AccountSettingsRouterProtocol: class {
-  func closeFromAccountSettings()
-  func contactTappedInAccountSettings()
-  func notificationsTappedInAccountSettings()
-  func showChangePasscode()
+protocol AccountSettingsRouterProtocol: AnyObject {
+    func closeFromAccountSettings()
+    func contactTappedInAccountSettings()
+    func notificationsTappedInAccountSettings()
+    func showChangePasscode()
 }
 
 typealias AccountSettingsViewProtocol = AptoViewController
 
 protocol AccountSettingsInteractorProtocol {
-  func isBiometricEnabled() -> Bool
-  func setIsBiometricEnabled(_ isEnabled: Bool)
-  func logoutCurrentUser()
+    func isBiometricEnabled() -> Bool
+    func setIsBiometricEnabled(_ isEnabled: Bool)
+    func logoutCurrentUser()
 }
 
 class AccountSettingsViewModel {
-  let showNotificationPreferences: Observable<Bool> = Observable(false)
-  let showChangePasscode: Observable<Bool> = Observable(false)
-  let biometryType: Observable<BiometryType> = Observable(.none)
-  let isBiometricEnabled: Observable<Bool> = Observable(false)
+    let showNotificationPreferences: Observable<Bool> = Observable(false)
+    let showChangePasscode: Observable<Bool> = Observable(false)
+    let biometryType: Observable<BiometryType> = Observable(.none)
+    let isBiometricEnabled: Observable<Bool> = Observable(false)
 }
 
 struct AccountSettingsPresenterConfig {
-  let showNotificationPreferences: Bool
-  let showChangePIN: Bool
-  let biometryType: BiometryType
+    let showNotificationPreferences: Bool
+    let showChangePIN: Bool
+    let biometryType: BiometryType
 }
 
-protocol AccountSettingsPresenterProtocol: class {
-  var viewModel: AccountSettingsViewModel { get }
-  var interactor: AccountSettingsInteractorProtocol! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
-  var router: AccountSettingsRouterProtocol! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
-  var analyticsManager: AnalyticsServiceProtocol? { get set }
+protocol AccountSettingsPresenterProtocol: AnyObject {
+    var viewModel: AccountSettingsViewModel { get }
+    var interactor: AccountSettingsInteractorProtocol! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
+    var router: AccountSettingsRouterProtocol! { get set } // swiftlint:disable:this implicitly_unwrapped_optional
+    var analyticsManager: AnalyticsServiceProtocol? { get set }
 
-  func viewLoaded()
-  func closeTapped()
-  func logoutTapped()
-  func contactTapped()
-  func notificationsTapped()
-  func changePasscodeTapped()
-  func changeShowBiometricTapped(_ isEnabled: Bool)
+    func viewLoaded()
+    func closeTapped()
+    func logoutTapped()
+    func contactTapped()
+    func notificationsTapped()
+    func changePasscodeTapped()
+    func changeShowBiometricTapped(_ isEnabled: Bool)
 }

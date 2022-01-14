@@ -5,52 +5,52 @@
 // Created by Takeichi Kanzaki on 20/11/2018.
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class WebBrowserPresenterTest: XCTestCase {
-  var sut: WebBrowserPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
+    var sut: WebBrowserPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let router = WebBrowserModuleSpy(serviceLocator: ServiceLocatorFake())
-  private let view = WebBrowserViewSpy()
-  private let interactor = WebBrowserInteractorSpy()
+    // Collaborators
+    private let router = WebBrowserModuleSpy(serviceLocator: ServiceLocatorFake())
+    private let view = WebBrowserViewSpy()
+    private let interactor = WebBrowserInteractorSpy()
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = WebBrowserPresenter()
-    sut.router = router
-    sut.view = view
-    sut.interactor = interactor
-  }
+        sut = WebBrowserPresenter()
+        sut.router = router
+        sut.view = view
+        sut.interactor = interactor
+    }
 
-  func testViewLoadedCallInteractor() {
-    // When
-    sut.viewLoaded()
+    func testViewLoadedCallInteractor() {
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertTrue(interactor.provideUrlCalled)
-  }
+        // Then
+        XCTAssertTrue(interactor.provideUrlCalled)
+    }
 
-  func testLoadUrlAskViewToLoadUrl() {
-    // Given
-    let url = ModelDataProvider.provider.url
+    func testLoadUrlAskViewToLoadUrl() {
+        // Given
+        let url = ModelDataProvider.provider.url
 
-    // When
-    sut.load(url: url, headers: nil)
+        // When
+        sut.load(url: url, headers: nil)
 
-    // Then
-    XCTAssertTrue(view.loadUrlCalled)
-    XCTAssertEqual(url, view.lastUrlToLoad)
-  }
+        // Then
+        XCTAssertTrue(view.loadUrlCalled)
+        XCTAssertEqual(url, view.lastUrlToLoad)
+    }
 
-  func testCloseTappedNotifyRouter() {
-    // When
-    sut.closeTapped()
+    func testCloseTappedNotifyRouter() {
+        // When
+        sut.closeTapped()
 
-    // Then
-    XCTAssertTrue(router.closeCalled)
-  }
+        // Then
+        XCTAssertTrue(router.closeCalled)
+    }
 }

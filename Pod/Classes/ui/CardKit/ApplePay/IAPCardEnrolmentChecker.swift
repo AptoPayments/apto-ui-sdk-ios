@@ -18,15 +18,17 @@ public protocol WatchConnectingSession {
 public class IAPCardEnrolmentChecker: NSObject, WCSessionDelegate {
     private let passLibraryManager: InAppPassLibrary
     private var session: WatchConnectingSession
-    
-    public init(with manager: InAppPassLibrary = IAPPassLibraryManager(), session: WatchConnectingSession = WCSession.default) {
-        self.passLibraryManager = manager
+
+    public init(with manager: InAppPassLibrary = IAPPassLibraryManager(),
+                session: WatchConnectingSession = WCSession.default)
+    {
+        passLibraryManager = manager
         self.session = session
         super.init()
         self.session.delegate = self
         self.session.activate()
     }
-    
+
     public func isCardEnrolledInPhoneWallet(lastFourDigits: String) -> Bool {
         let passes = passLibraryManager.passes()
         return isCardEnrolled(lastFourDigits: lastFourDigits, into: passes)
@@ -43,25 +45,29 @@ public class IAPCardEnrolmentChecker: NSObject, WCSessionDelegate {
 
     public func isCardEnrolled(lastFourDigits: String) -> Bool {
         isCardEnrolledInPhoneWallet(lastFourDigits: lastFourDigits) &&
-        isCardEnrolledInPairedWatchDevice(lastFourDigits: lastFourDigits)
+            isCardEnrolledInPairedWatchDevice(lastFourDigits: lastFourDigits)
     }
-    
+
     // MARK: Private methods
+
     private func isCardEnrolled(lastFourDigits: String, into passes: [PassLibraryItem]) -> Bool {
         passes.first { $0.cardLastFourDigits == lastFourDigits } != nil
     }
-    
+
     private func hasPairedWatchDevices() -> Bool {
         guard session.isSupported else { return false }
         return session.isPaired
     }
-    
+
     // MARK: WCSessionDelegate methods
-    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
-    
-    public func sessionDidBecomeInactive(_ session: WCSession) {}
-    
-    public func sessionDidDeactivate(_ session: WCSession) {}
+
+    public func session(_: WCSession,
+                        activationDidCompleteWith _: WCSessionActivationState,
+                        error _: Error?) {}
+
+    public func sessionDidBecomeInactive(_: WCSession) {}
+
+    public func sessionDidDeactivate(_: WCSession) {}
 }
 
 extension WCSession: WatchConnectingSession {

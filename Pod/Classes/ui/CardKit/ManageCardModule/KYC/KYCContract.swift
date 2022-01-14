@@ -5,48 +5,48 @@
 //  Created by Ivan Oliver Martínez on 27/12/2018.
 //
 
-import Foundation
 import AptoSDK
 import Bond
+import Foundation
 
 typealias KYCViewControllerProtocol = AptoViewController & KYCViewProtocol
 
 protocol KYCViewProtocol: ViewControllerProtocol {
-  func showLoadingSpinner()
-  func show(error: Error)
+    func showLoadingSpinner()
+    func show(error: Error)
 }
 
 protocol KYCInteractorProtocol {
-  func provideKYCInfo(_ callback: @escaping Result<KYCState?, NSError>.Callback)
+    func provideKYCInfo(_ callback: @escaping Result<KYCState?, NSError>.Callback)
 }
 
-protocol KYCPresenterProtocol: class {
-  // swiftlint:disable implicitly_unwrapped_optional
-  var view: KYCViewProtocol! { get set }
-  var interactor: KYCInteractorProtocol! { get set }
-  var router: KYCRouterProtocol! { get set }
-  // swiftlint:enable implicitly_unwrapped_optional
-  var viewModel: KYCViewModel { get }
-  var analyticsManager: AnalyticsServiceProtocol? { get set }
+protocol KYCPresenterProtocol: AnyObject {
+    // swiftlint:disable implicitly_unwrapped_optional
+    var view: KYCViewProtocol! { get set }
+    var interactor: KYCInteractorProtocol! { get set }
+    var router: KYCRouterProtocol! { get set }
+    // swiftlint:enable implicitly_unwrapped_optional
+    var viewModel: KYCViewModel { get }
+    var analyticsManager: AnalyticsServiceProtocol? { get set }
 
-  func viewLoaded()
-  func closeTapped()
-  func refreshTapped()
-  func show(url: URL)
+    func viewLoaded()
+    func closeTapped()
+    func refreshTapped()
+    func show(url: URL)
 }
 
 protocol KYCModuleProtocol: UIModuleProtocol {
-  func show(url: URL)
-  func call(url: URL, completion: @escaping () -> Void)
-  func cardActivationFinish()
+    func show(url: URL)
+    func call(url: URL, completion: @escaping () -> Void)
+    func cardActivationFinish()
 }
 
 class KYCViewModel {
-  public let kycState: Observable<KYCState?> = Observable(nil)
+    public let kycState: Observable<KYCState?> = Observable(nil)
 }
 
-protocol KYCRouterProtocol: class {
-  func closeFromKYC()
-  func kycPassed()
-  func show(url: URL)
+protocol KYCRouterProtocol: AnyObject {
+    func closeFromKYC()
+    func kycPassed()
+    func show(url: URL)
 }

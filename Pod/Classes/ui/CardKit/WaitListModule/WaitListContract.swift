@@ -9,46 +9,46 @@ import AptoSDK
 import Bond
 
 class WaitListViewModel {
-  let asset: Observable<String?> = Observable(nil)
-  let backgroundImage: Observable<String?> = Observable(nil)
-  let backgroundColor: Observable<String?> = Observable(nil)
-  let darkBackgroundColor: Observable<String?> = Observable(nil)
+    let asset: Observable<String?> = Observable(nil)
+    let backgroundImage: Observable<String?> = Observable(nil)
+    let backgroundColor: Observable<String?> = Observable(nil)
+    let darkBackgroundColor: Observable<String?> = Observable(nil)
 }
 
 // Card application wait list
 
 protocol WaitListModuleProtocol: UIModuleProtocol {
-  func applicationStatusChanged()
+    func applicationStatusChanged()
 }
 
 protocol WaitListInteractorProtocol {
-  func reloadApplication(completion: @escaping Result<CardApplication, NSError>.Callback)
+    func reloadApplication(completion: @escaping Result<CardApplication, NSError>.Callback)
 }
 
-protocol WaitListPresenterProtocol: class {
-  var viewModel: WaitListViewModel { get }
+protocol WaitListPresenterProtocol: AnyObject {
+    var viewModel: WaitListViewModel { get }
 
-  func viewLoaded()
+    func viewLoaded()
 }
 
 protocol CardApplicationWaitListPresenterProtocol: WaitListPresenterProtocol {
-  var interactor: WaitListInteractorProtocol? { get set }
-  var router: WaitListModuleProtocol? { get set }
-  var analyticsManager: AnalyticsServiceProtocol? { get set }
+    var interactor: WaitListInteractorProtocol? { get set }
+    var router: WaitListModuleProtocol? { get set }
+    var analyticsManager: AnalyticsServiceProtocol? { get set }
 }
 
 // Card wait list
 
 protocol CardWaitListModuleProtocol: UIModuleProtocol {
-  func cardStatusChanged()
+    func cardStatusChanged()
 }
 
 protocol CardWaitListInteractorProtocol {
-  func reloadCard(completion: @escaping Result<Card, NSError>.Callback)
+    func reloadCard(completion: @escaping Result<Card, NSError>.Callback)
 }
 
 protocol CardWaitListPresenterProtocol: WaitListPresenterProtocol {
-  var interactor: CardWaitListInteractorProtocol? { get set }
-  var router: CardWaitListModuleProtocol? { get set }
-  var analyticsManager: AnalyticsServiceProtocol? { get set }
+    var interactor: CardWaitListInteractorProtocol? { get set }
+    var router: CardWaitListModuleProtocol? { get set }
+    var analyticsManager: AnalyticsServiceProtocol? { get set }
 }

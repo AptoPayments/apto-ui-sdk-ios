@@ -5,104 +5,106 @@
 // Created by Takeichi Kanzaki on 28/06/2019.
 //
 
-import XCTest
 @testable import AptoSDK
+import XCTest
 
 class UserPreferencesStorageTest: XCTestCase {
-  private var sut: UserPreferencesStorage! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: UserPreferencesStorage! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let userDefaultsStorage = InMemoryUserDefaultsStorage()
-  private let showDetailedCardActivityKey = "apto.sdk.showDetailedCardActivity"
-  private let shouldUseBiometricKey = "apto.sdk.shouldUseBiometric"
-  private let notificationHandler = NotificationHandlerFake()
+    // Collaborators
+    private let userDefaultsStorage = InMemoryUserDefaultsStorage()
+    private let showDetailedCardActivityKey = "apto.sdk.showDetailedCardActivity"
+    private let shouldUseBiometricKey = "apto.sdk.shouldUseBiometric"
+    private let notificationHandler = NotificationHandlerFake()
 
-  override func setUp() {
-    super.setUp()
-    sut = UserPreferencesStorage(userDefaultsStorage: userDefaultsStorage, notificationHandler: notificationHandler)
-  }
+    override func setUp() {
+        super.setUp()
+        sut = UserPreferencesStorage(userDefaultsStorage: userDefaultsStorage, notificationHandler: notificationHandler)
+    }
 
-  func testRegisterForNotifications() {
-    // Then
-    XCTAssertTrue(notificationHandler.addObserverCalled)
-    XCTAssertTrue(notificationHandler.lastAddObserverObserver === sut)
-  }
+    func testRegisterForNotifications() {
+        // Then
+        XCTAssertTrue(notificationHandler.addObserverCalled)
+        XCTAssertTrue(notificationHandler.lastAddObserverObserver === sut)
+    }
 
-  // MARK: - show detailed card activity
-  func testNoPreferenceSavedShowDetailedCardActivityIsFalse() {
-    // When
-    let value = sut.shouldShowDetailedCardActivity
+    // MARK: - show detailed card activity
 
-    // Then
-    XCTAssertFalse(value)
-  }
+    func testNoPreferenceSavedShowDetailedCardActivityIsFalse() {
+        // When
+        let value = sut.shouldShowDetailedCardActivity
 
-  func testPreferenceSavedTrueShowDetailedCardActivityReturnSavedValue() {
-    // Given
-    userDefaultsStorage.set(true, forKey: showDetailedCardActivityKey)
+        // Then
+        XCTAssertFalse(value)
+    }
 
-    // When
-    let value = sut.shouldShowDetailedCardActivity
+    func testPreferenceSavedTrueShowDetailedCardActivityReturnSavedValue() {
+        // Given
+        userDefaultsStorage.set(true, forKey: showDetailedCardActivityKey)
 
-    // Then
-    XCTAssertTrue(value)
-  }
+        // When
+        let value = sut.shouldShowDetailedCardActivity
 
-  func testPreferenceSavedFalseShowDetailedCardActivityReturnSavedValue() {
-    // Given
-    userDefaultsStorage.set(false, forKey: showDetailedCardActivityKey)
+        // Then
+        XCTAssertTrue(value)
+    }
 
-    // When
-    let value = sut.shouldShowDetailedCardActivity
+    func testPreferenceSavedFalseShowDetailedCardActivityReturnSavedValue() {
+        // Given
+        userDefaultsStorage.set(false, forKey: showDetailedCardActivityKey)
 
-    // Then
-    XCTAssertFalse(value)
-  }
+        // When
+        let value = sut.shouldShowDetailedCardActivity
 
-  func testSetDetailedCardActivityPersistValue() {
-    // When
-    sut.shouldShowDetailedCardActivity = true
+        // Then
+        XCTAssertFalse(value)
+    }
 
-    // Then
-    XCTAssertNotNil(userDefaultsStorage.object(forKey: showDetailedCardActivityKey))
-  }
+    func testSetDetailedCardActivityPersistValue() {
+        // When
+        sut.shouldShowDetailedCardActivity = true
 
-  // MARK: - should use biometric
-  func testNoPreferenceSavedShouldUseBiometricIsFalse() {
-    // When
-    let value = sut.shouldUseBiometric
+        // Then
+        XCTAssertNotNil(userDefaultsStorage.object(forKey: showDetailedCardActivityKey))
+    }
 
-    // Then
-    XCTAssertFalse(value)
-  }
+    // MARK: - should use biometric
 
-  func testPreferenceSavedTrueShouldUseBiometricReturnSavedValue() {
-    // Given
-    userDefaultsStorage.set(true, forKey: shouldUseBiometricKey)
+    func testNoPreferenceSavedShouldUseBiometricIsFalse() {
+        // When
+        let value = sut.shouldUseBiometric
 
-    // When
-    let value = sut.shouldUseBiometric
+        // Then
+        XCTAssertFalse(value)
+    }
 
-    // Then
-    XCTAssertTrue(value)
-  }
+    func testPreferenceSavedTrueShouldUseBiometricReturnSavedValue() {
+        // Given
+        userDefaultsStorage.set(true, forKey: shouldUseBiometricKey)
 
-  func testPreferenceSavedFalseShouldUseBiometricReturnSavedValue() {
-    // Given
-    userDefaultsStorage.set(false, forKey: shouldUseBiometricKey)
+        // When
+        let value = sut.shouldUseBiometric
 
-    // When
-    let value = sut.shouldUseBiometric
+        // Then
+        XCTAssertTrue(value)
+    }
 
-    // Then
-    XCTAssertFalse(value)
-  }
+    func testPreferenceSavedFalseShouldUseBiometricReturnSavedValue() {
+        // Given
+        userDefaultsStorage.set(false, forKey: shouldUseBiometricKey)
 
-  func testSetShouldUseBiometricPersistValue() {
-    // When
-    sut.shouldUseBiometric = true
+        // When
+        let value = sut.shouldUseBiometric
 
-    // Then
-    XCTAssertNotNil(userDefaultsStorage.object(forKey: shouldUseBiometricKey))
-  }
+        // Then
+        XCTAssertFalse(value)
+    }
+
+    func testSetShouldUseBiometricPersistValue() {
+        // When
+        sut.shouldUseBiometric = true
+
+        // Then
+        XCTAssertNotNil(userDefaultsStorage.object(forKey: shouldUseBiometricKey))
+    }
 }

@@ -12,15 +12,13 @@ import XCTest
 @testable import AptoUISDK
 
 final class BasicTypeTest: XCTestCase {
+    func test_valid_country_code() throws {
+        let country = Country(isoCode: "US")
+        XCTAssertEqual(country.name, "United States")
+    }
 
-  func test_valid_country_code() throws {
-    let country = Country(isoCode: "US")
-    XCTAssertEqual(country.name, "United States")
-  }
-  
-  func test_invalid_country_code() throws {
-    let country = Country(isoCode: "alv")
-    XCTAssertEqual(country.name, "")
-  }
-
+    func test_invalid_country_code() throws {
+        let country = Country(isoCode: "alv")
+        XCTAssertEqual(country.name, "")
+    }
 }

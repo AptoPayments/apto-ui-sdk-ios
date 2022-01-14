@@ -5,77 +5,77 @@
 //  Created by Takeichi Kanzaki on 11/02/2020.
 //
 
-import XCTest
 @testable import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class BiometricPermissionPresenterTest: XCTestCase {
-  private var sut: BiometricPermissionPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: BiometricPermissionPresenter! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let router = BiometricPermissionModuleFake(serviceLocator: ServiceLocatorFake())
-  private let interactor = BiometricPermissionInteractorFake()
-  private let analyticsManager = AnalyticsManagerSpy()
+    // Collaborators
+    private let router = BiometricPermissionModuleFake(serviceLocator: ServiceLocatorFake())
+    private let interactor = BiometricPermissionInteractorFake()
+    private let analyticsManager = AnalyticsManagerSpy()
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = BiometricPermissionPresenter()
-    sut.router = router
-    sut.interactor = interactor
-    sut.analyticsManager = analyticsManager
-  }
+        sut = BiometricPermissionPresenter()
+        sut.router = router
+        sut.interactor = interactor
+        sut.analyticsManager = analyticsManager
+    }
 
-  func testViewLoadedTrackAnalyticsEvent() {
-    // When
-    sut.viewLoaded()
+    func testViewLoadedTrackAnalyticsEvent() {
+        // When
+        sut.viewLoaded()
 
-    // Then
-    XCTAssertTrue(analyticsManager.trackCalled)
-    XCTAssertEqual(Event.biometricPermissionStart, analyticsManager.lastEvent)
-  }
+        // Then
+        XCTAssertTrue(analyticsManager.trackCalled)
+        XCTAssertEqual(Event.biometricPermissionStart, analyticsManager.lastEvent)
+    }
 
-  func testCloseTappedAskRouterToClose() {
-    // When
-    sut.closeTapped()
+    func testCloseTappedAskRouterToClose() {
+        // When
+        sut.closeTapped()
 
-    // Then
-    XCTAssertTrue(interactor.setIsBiometricPermissionEnabledCalled)
-    XCTAssertEqual(false, interactor.lastIsBiometricPermissionEnabled)
-    XCTAssertTrue(router.closeCalled)
-  }
+        // Then
+        XCTAssertTrue(interactor.setIsBiometricPermissionEnabledCalled)
+        XCTAssertEqual(false, interactor.lastIsBiometricPermissionEnabled)
+        XCTAssertTrue(router.closeCalled)
+    }
 
-  func testRequestPermissionTappedAskRouterToRequestPermission() {
-    // When
-    sut.requestPermissionTapped()
+    func testRequestPermissionTappedAskRouterToRequestPermission() {
+        // When
+        sut.requestPermissionTapped()
 
-    // Then
-    XCTAssertTrue(router.requestBiometricPermissionCalled)
-  }
+        // Then
+        XCTAssertTrue(router.requestBiometricPermissionCalled)
+    }
 
-  func testPermissionGrantedAskRouterToFinish() {
-    // Given
-    router.nextRequestBiometricPermissionGrantedResult = true
+    func testPermissionGrantedAskRouterToFinish() {
+        // Given
+        router.nextRequestBiometricPermissionGrantedResult = true
 
-    // When
-    sut.requestPermissionTapped()
+        // When
+        sut.requestPermissionTapped()
 
-    // Then
-    XCTAssertTrue(interactor.setIsBiometricPermissionEnabledCalled)
-    XCTAssertEqual(true, interactor.lastIsBiometricPermissionEnabled)
-    XCTAssertTrue(router.finishCalled)
-  }
+        // Then
+        XCTAssertTrue(interactor.setIsBiometricPermissionEnabledCalled)
+        XCTAssertEqual(true, interactor.lastIsBiometricPermissionEnabled)
+        XCTAssertTrue(router.finishCalled)
+    }
 
-  func testPermissionDeniedAskRouterToClose() {
-    // Given
-    router.nextRequestBiometricPermissionGrantedResult = false
+    func testPermissionDeniedAskRouterToClose() {
+        // Given
+        router.nextRequestBiometricPermissionGrantedResult = false
 
-    // When
-    sut.requestPermissionTapped()
+        // When
+        sut.requestPermissionTapped()
 
-    // Then
-    XCTAssertTrue(interactor.setIsBiometricPermissionEnabledCalled)
-    XCTAssertEqual(false, interactor.lastIsBiometricPermissionEnabled)
-    XCTAssertTrue(router.closeCalled)
-  }
+        // Then
+        XCTAssertTrue(interactor.setIsBiometricPermissionEnabledCalled)
+        XCTAssertEqual(false, interactor.lastIsBiometricPermissionEnabled)
+        XCTAssertTrue(router.closeCalled)
+    }
 }

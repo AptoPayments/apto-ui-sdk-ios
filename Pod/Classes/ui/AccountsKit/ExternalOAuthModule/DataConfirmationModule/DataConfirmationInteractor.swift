@@ -8,13 +8,13 @@
 import AptoSDK
 
 class DataConfirmationInteractor: DataConfirmationInteractorProtocol {
-  private let userData: DataPointList
+    private let userData: DataPointList
 
-  init(userData: DataPointList) {
-    self.userData = userData
-  }
+    init(userData: DataPointList) {
+        self.userData = userData
+    }
 
-  func provideUserData(completion: (_ userData: DataPointList) -> Void) {
-    completion(userData)
-  }
+    func provideUserData(completion: (_ userData: DataPointList) -> Void) {
+        completion(userData)
+    }
 }

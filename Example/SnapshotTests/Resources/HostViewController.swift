@@ -11,14 +11,15 @@ import UIKit
 
 class HostViewController: UIViewController {
     private let rootView: UIView
-    
+
     init(with view: UIView) {
-        self.rootView = view
+        rootView = view
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(rootView)

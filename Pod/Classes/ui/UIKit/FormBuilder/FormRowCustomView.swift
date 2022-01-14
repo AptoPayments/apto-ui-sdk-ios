@@ -6,26 +6,27 @@
 //
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class FormRowCustomView: FormRowView {
-  let view: UIView
+    let view: UIView
 
-  init(view: UIView, showSplitter: Bool = false) {
-    self.view = view
-    super.init(showSplitter: showSplitter)
-    setUpUI()
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  private func setUpUI() {
-    contentView.addSubview(view)
-    view.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+    init(view: UIView, showSplitter: Bool = false) {
+        self.view = view
+        super.init(showSplitter: showSplitter)
+        setUpUI()
     }
-  }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpUI() {
+        contentView.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
 }

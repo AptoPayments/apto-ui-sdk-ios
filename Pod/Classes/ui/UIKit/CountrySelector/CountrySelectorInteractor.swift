@@ -5,17 +5,17 @@
 // Created by Takeichi Kanzaki on 16/05/2019.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class CountrySelectorInteractor: CountrySelectorInteractorProtocol {
-  private let countries: [Country]
+    private let countries: [Country]
 
-  init(countries: [Country]) {
-    self.countries = countries
-  }
+    init(countries: [Country]) {
+        self.countries = countries
+    }
 
-  func fetchCountries() -> [Country] {
-    return countries
-  }
+    func fetchCountries() -> [Country] {
+        return countries
+    }
 }

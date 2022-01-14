@@ -8,35 +8,27 @@
 import UIKit
 
 class LoanFundedScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Loan Funded"
+        static let ViewVirtualCardButton = "View Virtual Card"
+        static let ViewCardButton = "View Card"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Loan Funded"
-    static let ViewVirtualCardButton = "View Virtual Card"
-    static let ViewCardButton = "View Card"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func viewVirtualCard() -> Self {
+        tapView(withAccessibilityLabel: Labels.ViewVirtualCardButton)
 
-    return self
+        return self
+    } // end viewVirtualCard
 
-  } // end waitForScreen
+    @discardableResult func viewCard() -> Self {
+        tapView(withAccessibilityLabel: Labels.ViewCardButton)
 
-  @discardableResult func viewVirtualCard() -> Self {
-
-    tapView(withAccessibilityLabel: Labels.ViewVirtualCardButton)
-
-    return self
-
-  } // end viewVirtualCard
-
-  @discardableResult func viewCard() -> Self {
-
-    tapView(withAccessibilityLabel: Labels.ViewCardButton)
-
-    return self
-
-  } // end viewCard
-
+        return self
+    } // end viewCard
 }

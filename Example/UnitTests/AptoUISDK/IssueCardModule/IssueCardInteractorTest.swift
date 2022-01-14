@@ -6,67 +6,67 @@
 //
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class IssueCardInteractorTest: XCTestCase {
-  private var sut: IssueCardInteractor! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: IssueCardInteractor! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  //Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private lazy var platform = serviceLocator.platformFake
-  private lazy var dataProvider = ModelDataProvider.provider
-  private lazy var application: CardApplication = dataProvider.cardApplication
-  private lazy var cardAdditionalFieldsSpy = CardAdditionalFieldsSpy()
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private lazy var platform = serviceLocator.platformFake
+    private lazy var dataProvider = ModelDataProvider.provider
+    private lazy var application: CardApplication = dataProvider.cardApplication
+    private lazy var cardAdditionalFieldsSpy = CardAdditionalFieldsSpy()
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = IssueCardInteractor(
-      platform: platform,
-      application: application,
-      cardAdditionalFields: cardAdditionalFieldsSpy,
-        initializationData: ModelDataProvider.provider.initializationData
-    )
-  }
-
-  func testIssueCardCalledCallSessionToIssueCard() {
-    // When
-    sut.issueCard() { _ in }
-
-    // Then
-    XCTAssertTrue(platform.issueCardCalled)
-    XCTAssertEqual(platform.lastIssueCardApplicationId, application.id)
-  }
-  
-  func testIssueCardFailureCallbackError() {
-    // Given
-    let error = BackendError(code: .undefinedError)
-    platform.nextIssueCardResult = .failure(error)
-
-    // When
-    var result: Result<Card, NSError>?
-    sut.issueCard { returnedResult in
-      result = returnedResult
+        sut = IssueCardInteractor(
+            platform: platform,
+            application: application,
+            cardAdditionalFields: cardAdditionalFieldsSpy,
+            initializationData: ModelDataProvider.provider.initializationData
+        )
     }
 
-    // Then
-    XCTAssertTrue(result!.isFailure) // swiftlint:disable:this force_unwrapping
-  }
+    func testIssueCardCalledCallSessionToIssueCard() {
+        // When
+        sut.issueCard { _ in }
 
-  func testIssueCardSucceedCallbackSuccess() {
-    // Given
-    let card = dataProvider.card
-    platform.nextIssueCardResult = .success(card)
-
-    // When
-    var result: Result<Card, NSError>?
-    sut.issueCard { returnedResult in
-      result = returnedResult
+        // Then
+        XCTAssertTrue(platform.issueCardCalled)
+        XCTAssertEqual(platform.lastIssueCardApplicationId, application.id)
     }
 
-    // Then
-    XCTAssertTrue(result!.isSuccess) // swiftlint:disable:this force_unwrapping
-  }
+    func testIssueCardFailureCallbackError() {
+        // Given
+        let error = BackendError(code: .undefinedError)
+        platform.nextIssueCardResult = .failure(error)
+
+        // When
+        var result: Result<Card, NSError>?
+        sut.issueCard { returnedResult in
+            result = returnedResult
+        }
+
+        // Then
+        XCTAssertTrue(result!.isFailure) // swiftlint:disable:this force_unwrapping
+    }
+
+    func testIssueCardSucceedCallbackSuccess() {
+        // Given
+        let card = dataProvider.card
+        platform.nextIssueCardResult = .success(card)
+
+        // When
+        var result: Result<Card, NSError>?
+        sut.issueCard { returnedResult in
+            result = returnedResult
+        }
+
+        // Then
+        XCTAssertTrue(result!.isSuccess) // swiftlint:disable:this force_unwrapping
+    }
 }

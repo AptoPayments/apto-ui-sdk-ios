@@ -6,305 +6,309 @@
 //
 //
 
-import XCTest
-import SwiftyJSON
 @testable import AptoSDK
+import SwiftyJSON
+import XCTest
 
 class BackendErrorTest: XCTestCase {
-  func testInitWithCoderThrowsException() {
-    // Given
-    let aCoder = NSCoder()
+    func testErrorDomain() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.serviceUnavailable
 
-    // Then
-    expectFatalError("Not implemented") {
-      let _ = BackendError(coder: aCoder)
+        // When
+        let serviceError = BackendError(code: errorCode)
+
+        // Then
+        XCTAssertTrue(serviceError.domain == kBackendErrorDomain)
     }
-  }
 
-  func testErrorDomain () {
-    // Given
-    let errorCode = BackendError.ErrorCodes.serviceUnavailable
+    func testInitWithErrorCode() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.serviceUnavailable
 
-    // When
-    let serviceError = BackendError(code: errorCode)
+        // When
+        let serviceError = BackendError(code: errorCode)
 
-    // Then
-    XCTAssertTrue(serviceError.domain == kBackendErrorDomain)
-  }
+        // Then
+        XCTAssertTrue(serviceError.code == errorCode.rawValue)
+    }
 
-  func testInitWithErrorCode() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.serviceUnavailable
+    func testInitWithReason() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.incorrectParameters
+        let reason = "My Error Reason"
 
-    // When
-    let serviceError = BackendError(code: errorCode)
+        // When
+        let serviceError = BackendError(code: errorCode, reason: reason)
 
-    // Then
-    XCTAssertTrue(serviceError.code == errorCode.rawValue)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedFailureReasonErrorKey]! as! String == reason)
+    }
 
-  func testInitWithReason() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.incorrectParameters
-    let reason = "My Error Reason"
+    func testInitWithReasonSetsLocalizedDescription() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.undefinedError
+        let description = "Something went wrong."
 
-    // When
-    let serviceError = BackendError(code: errorCode, reason: reason)
+        // When
+        let serviceError = BackendError(code: errorCode)
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedFailureReasonErrorKey]! as! String == reason)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-  func testInitWithReasonSetsLocalizedDescription() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.undefinedError
-    let description = "Something went wrong."
+    func testInitWithReasonSetsLocalizedDescription1() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.serviceUnavailable
+        let description = "Something went wrong."
 
-    // When
-    let serviceError = BackendError(code: errorCode)
+        // When
+        let serviceError = BackendError(code: errorCode)
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-  func testInitWithReasonSetsLocalizedDescription1() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.serviceUnavailable
-    let description = "Something went wrong."
+    func testInitWithReasonSetsLocalizedDescription2() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.incorrectParameters
+        let description = "Something went wrong."
 
-    // When
-    let serviceError = BackendError(code: errorCode)
+        // When
+        let serviceError = BackendError(code: errorCode)
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-  func testInitWithReasonSetsLocalizedDescription2() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.incorrectParameters
-    let description = "Something went wrong."
+    func testInitWithReasonSetsLocalizedDescription3() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.invalidSession
+        let description = "For your security, your session has timed out due to inactivity."
 
-    // When
-    let serviceError = BackendError(code: errorCode)
+        // When
+        let serviceError = BackendError(code: errorCode)
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-  func testInitWithReasonSetsLocalizedDescription3() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.invalidSession
-    let description = "For your security, your session has timed out due to inactivity."
+    func testInitWithReasonSetsLocalizedDescription4() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.other
+        let description = "Something went wrong."
 
-    // When
-    let serviceError = BackendError(code: errorCode)
+        // When
+        let serviceError = BackendError(code: errorCode)
+        // Then
+        XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
+    }
 
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+    func testInvalidSessionError() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.invalidSession
+        let serviceError = BackendError(code: errorCode)
 
-  func testInitWithReasonSetsLocalizedDescription4() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.other
-    let description = "Something went wrong."
+        // When
+        let isInvalidSessionError = serviceError.invalidSessionError()
 
-    // When
-    let serviceError = BackendError(code: errorCode)
-    // Then
-    XCTAssertTrue(serviceError.userInfo[NSLocalizedDescriptionKey]! as! String == description)
-  }
+        // Then
+        XCTAssertTrue(isInvalidSessionError)
+    }
 
-  func testInvalidSessionError() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.invalidSession
-    let serviceError = BackendError(code: errorCode)
+    func testInvalidSessionErrorFalse1() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.undefinedError
+        let serviceError = BackendError(code: errorCode)
 
-    // When
-    let isInvalidSessionError = serviceError.invalidSessionError()
+        // When
+        let isInvalidSessionError = serviceError.invalidSessionError()
 
-    // Then
-    XCTAssertTrue(isInvalidSessionError)
-  }
+        // Then
+        XCTAssertFalse(isInvalidSessionError)
+    }
 
-  func testInvalidSessionErrorFalse1() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.undefinedError
-    let serviceError = BackendError(code: errorCode)
+    func testInvalidSessionErrorFalse2() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.serviceUnavailable
+        let serviceError = BackendError(code: errorCode)
 
-    // When
-    let isInvalidSessionError = serviceError.invalidSessionError()
+        // When
+        let isInvalidSessionError = serviceError.invalidSessionError()
 
-    // Then
-    XCTAssertFalse(isInvalidSessionError)
-  }
+        // Then
+        XCTAssertFalse(isInvalidSessionError)
+    }
 
-  func testInvalidSessionErrorFalse2() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.serviceUnavailable
-    let serviceError = BackendError(code: errorCode)
+    func testInvalidSessionErrorFalse3() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.incorrectParameters
+        let serviceError = BackendError(code: errorCode)
 
-    // When
-    let isInvalidSessionError = serviceError.invalidSessionError()
+        // When
+        let isInvalidSessionError = serviceError.invalidSessionError()
 
-    // Then
-    XCTAssertFalse(isInvalidSessionError)
-  }
+        // Then
+        XCTAssertFalse(isInvalidSessionError)
+    }
 
-  func testInvalidSessionErrorFalse3() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.incorrectParameters
-    let serviceError = BackendError(code: errorCode)
+    func testInvalidSessionErrorFalse4() {
+        // Given
+        let errorCode = BackendError.ErrorCodes.other
+        let serviceError = BackendError(code: errorCode)
 
-    // When
-    let isInvalidSessionError = serviceError.invalidSessionError()
+        // When
+        let isInvalidSessionError = serviceError.invalidSessionError()
 
-    // Then
-    XCTAssertFalse(isInvalidSessionError)
-  }
+        // Then
+        XCTAssertFalse(isInvalidSessionError)
+    }
 
-  func testInvalidSessionErrorFalse4() {
-    // Given
-    let errorCode = BackendError.ErrorCodes.other
-    let serviceError = BackendError(code: errorCode)
+    func testJSONParsingNoErrorCodeReturnsNil() {
+        // Given
+        let json: JSON = ["message": "My Message"]
+        // When
+        let backendError = json.backendError
+        // Then
+        XCTAssertNil(backendError)
+    }
 
-    // When
-    let isInvalidSessionError = serviceError.invalidSessionError()
+    func testJSONParsingInvalidCodeWithMessageReturnsUndefinedErrorWithReason() {
+        // Given
+        let json: JSON = ["code": 45, "message": "My Message"]
 
-    // Then
-    XCTAssertFalse(isInvalidSessionError)
-  }
+        // When
+        let backendError = json.backendError
 
-  func testJSONParsingNoErrorCodeReturnsNil() {
-    // Given
-    let json: JSON = ["message": "My Message"]
-    // When
-    let backendError = json.backendError
-    // Then
-    XCTAssertNil(backendError)
-  }
+        // Then
+        XCTAssertNotNil(backendError)
+        XCTAssertEqual(backendError?.code, BackendError.ErrorCodes.undefinedError.rawValue)
+        XCTAssertEqual(backendError?.rawCode, 45)
+        XCTAssertTrue(backendError?.userInfo[NSLocalizedFailureReasonErrorKey]! as! String == "My Message")
+    }
 
-  func testJSONParsingInvalidCodeWithMessageReturnsUndefinedErrorWithReason() {
-    // Given
-    let json: JSON = ["code": 45, "message": "My Message"]
-
-    // When
-    let backendError = json.backendError
-
-    // Then
-    XCTAssertNotNil(backendError)
-    XCTAssertEqual(backendError?.code, BackendError.ErrorCodes.undefinedError.rawValue)
-    XCTAssertEqual(backendError?.rawCode, 45)
-    XCTAssertTrue(backendError?.userInfo[NSLocalizedFailureReasonErrorKey]! as! String == "My Message")
-  }
-    
     func testJSONParsingInvalidCodeReturnsUndefinedError() {
-      // Given
-      let json: JSON = ["code": 45]
+        // Given
+        let json: JSON = ["code": 45]
 
-      // When
-      let backendError = json.backendError
+        // When
+        let backendError = json.backendError
 
-      // Then
-      XCTAssertNotNil(backendError)
-      XCTAssertEqual(backendError?.code, BackendError.ErrorCodes.undefinedError.rawValue)
-      XCTAssertEqual(backendError?.rawCode, 45)
-      XCTAssertNil(backendError?.userInfo[NSLocalizedFailureReasonErrorKey] as? String)
+        // Then
+        XCTAssertNotNil(backendError)
+        XCTAssertEqual(backendError?.code, BackendError.ErrorCodes.undefinedError.rawValue)
+        XCTAssertEqual(backendError?.rawCode, 45)
+        XCTAssertNil(backendError?.userInfo[NSLocalizedFailureReasonErrorKey] as? String)
     }
 
-  func testJSONParsingCorrectJSONReturnsBackendError() {
-    // Given
-    let json: JSON = ["code": 1, "message": "My Message"]
+    func testJSONParsingCorrectJSONReturnsBackendError() {
+        // Given
+        let json: JSON = ["code": 1, "message": "My Message"]
 
-    // When
-    let backendError = json.backendError
+        // When
+        let backendError = json.backendError
 
-    // Then
-    XCTAssertNotNil(backendError)
-  }
+        // Then
+        XCTAssertNotNil(backendError)
+    }
 
-  func testServerMaintenanceErrorServerMaintenanceReturnTrue() {
-    // Given
-    let error = BackendError(code: .serverMaintenance)
+    func testServerMaintenanceErrorServerMaintenanceReturnTrue() {
+        // Given
+        let error = BackendError(code: .serverMaintenance)
 
-    // When
-    let isServerMaintenance = error.serverMaintenance()
+        // When
+        let isServerMaintenance = error.serverMaintenance()
 
-    // Then
-    XCTAssertTrue(isServerMaintenance)
-  }
+        // Then
+        XCTAssertTrue(isServerMaintenance)
+    }
 
-  func testOtherErrorServerMaintenanceReturnFalse() {
-    // Given
-    let error = BackendError(code: .invalidSession)
+    func testOtherErrorServerMaintenanceReturnFalse() {
+        // Given
+        let error = BackendError(code: .invalidSession)
 
-    // When
-    let isServerMaintenance = error.serverMaintenance()
+        // When
+        let isServerMaintenance = error.serverMaintenance()
 
-    // Then
-    XCTAssertFalse(isServerMaintenance)
-  }
+        // Then
+        XCTAssertFalse(isServerMaintenance)
+    }
 
-  func testNetworkNotAvailableNetworkNotAvailableReturnTrue() {
-    // Given
-    let error = BackendError(code: .networkNotAvailable)
+    func testNetworkNotAvailableNetworkNotAvailableReturnTrue() {
+        // Given
+        let error = BackendError(code: .networkNotAvailable)
 
-    // When
-    let isNetworkNotAvailable = error.networkNotAvailable()
+        // When
+        let isNetworkNotAvailable = error.networkNotAvailable()
 
-    // Then
-    XCTAssertTrue(isNetworkNotAvailable)
-  }
+        // Then
+        XCTAssertTrue(isNetworkNotAvailable)
+    }
 
-  func testOtherErrorNetworkNotAvailableReturnFalse() {
-    // Given
-    let error = BackendError(code: .invalidSession)
+    func testOtherErrorNetworkNotAvailableReturnFalse() {
+        // Given
+        let error = BackendError(code: .invalidSession)
 
-    // When
-    let isNetworkNotAvailable = error.networkNotAvailable()
+        // When
+        let isNetworkNotAvailable = error.networkNotAvailable()
 
-    // Then
-    XCTAssertFalse(isNetworkNotAvailable)
-  }
+        // Then
+        XCTAssertFalse(isNetworkNotAvailable)
+    }
 
-  func testErrorInfoReturnsCodeAndDescription() {
-    // Given
-    let error = BackendError(code: .addressInvalid)
+    func testErrorInfoReturnsCodeAndDescription() {
+        // Given
+        let error = BackendError(code: .addressInvalid)
 
-    // When
-    let errorInfo = error.eventInfo
+        // When
+        let errorInfo = error.eventInfo
 
-    // Then
-    XCTAssertNotNil(errorInfo["code"])
-    XCTAssertNotNil(errorInfo["message"])
-    XCTAssertNil(errorInfo["reason"])
-    XCTAssertNil(errorInfo["raw_code"])
-  }
+        // Then
+        XCTAssertNotNil(errorInfo["code"])
+        XCTAssertNotNil(errorInfo["message"])
+        XCTAssertNil(errorInfo["reason"])
+        XCTAssertNil(errorInfo["raw_code"])
+    }
 
-  func testErrorWithReasonErrorInfoReturnsCodeDescriptionAndReason() {
-    // Given
-    let error = BackendError(code: .addressInvalid, reason: "reason")
+    func testErrorWithReasonErrorInfoReturnsCodeDescriptionAndReason() {
+        // Given
+        let error = BackendError(code: .addressInvalid, reason: "reason")
 
-    // When
-    let errorInfo = error.eventInfo
+        // When
+        let errorInfo = error.eventInfo
 
-    // Then
-    XCTAssertNotNil(errorInfo["code"])
-    XCTAssertNotNil(errorInfo["message"])
-    XCTAssertNotNil(errorInfo["reason"])
-    XCTAssertNil(errorInfo["raw_code"])
-  }
+        // Then
+        XCTAssertNotNil(errorInfo["code"])
+        XCTAssertNotNil(errorInfo["message"])
+        XCTAssertNotNil(errorInfo["reason"])
+        XCTAssertNil(errorInfo["raw_code"])
+    }
 
-  func testErrorWithRawCodeErrorInfoReturnsCodeDescriptionAndRawCode() {
-    // Given
-    let error = BackendError(code: .addressInvalid, rawCode: 1234, reason: "reason")
+    func testErrorWithRawCodeErrorInfoReturnsCodeDescriptionAndRawCode() {
+        // Given
+        let error = BackendError(code: .addressInvalid, rawCode: 1234, reason: "reason")
 
-    // When
-    let errorInfo = error.eventInfo
+        // When
+        let errorInfo = error.eventInfo
 
-    // Then
-    XCTAssertNotNil(errorInfo["code"])
-    XCTAssertNotNil(errorInfo["message"])
-    XCTAssertNotNil(errorInfo["reason"])
-    XCTAssertNotNil(errorInfo["raw_code"])
-  }
+        // Then
+        XCTAssertNotNil(errorInfo["code"])
+        XCTAssertNotNil(errorInfo["message"])
+        XCTAssertNotNil(errorInfo["reason"])
+        XCTAssertNotNil(errorInfo["raw_code"])
+    }
+  
+    func testErrorAccountCreationProhibited() {
+        // Given
+        let error = BackendError(code: .accountCreationProhibited, rawCode: 90301, reason: "reason")
+
+        // When
+        let errorInfo = error.eventInfo
+
+        // Then
+        XCTAssertNotNil(errorInfo["code"])
+        XCTAssertNotNil(errorInfo["message"])
+        XCTAssertNotNil(errorInfo["reason"])
+        XCTAssertNotNil(errorInfo["raw_code"])
+    }
 }

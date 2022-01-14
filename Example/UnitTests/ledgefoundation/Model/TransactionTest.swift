@@ -6,123 +6,125 @@
 //
 //
 
-import XCTest
 @testable import AptoSDK
+import XCTest
 
 class TransactionTest: XCTestCase {
+    // MARK: - Transaction Class
 
-  // MARK: - Transaction Class
-  func testTransactionClassATM() {
-    // When
-    let sut = transactionWith(type: .withdrawal, state: .pending)
+    func testTransactionClassATM() {
+        // When
+        let sut = transactionWith(type: .withdrawal, state: .pending)
 
-    // Then
-    XCTAssertEqual(sut.transactionClass, TransactionClass.atm)
-  }
+        // Then
+        XCTAssertEqual(sut.transactionClass, TransactionClass.atm)
+    }
 
-  func testTransactionClassDeclined() {
-    // When
-    let sut = transactionWith(type: .decline, state: .pending)
+    func testTransactionClassDeclined() {
+        // When
+        let sut = transactionWith(type: .decline, state: .pending)
 
-    // Then
-    XCTAssertEqual(sut.transactionClass, TransactionClass.declined)
-  }
+        // Then
+        XCTAssertEqual(sut.transactionClass, TransactionClass.declined)
+    }
 
-  func testTransactionClassPreauthorised() {
-    // When
-    let sut = transactionWith(type: .purchase, state: .pending)
+    func testTransactionClassPreauthorised() {
+        // When
+        let sut = transactionWith(type: .purchase, state: .pending)
 
-    // Then
-    XCTAssertEqual(sut.transactionClass, TransactionClass.preauthorised)
-  }
+        // Then
+        XCTAssertEqual(sut.transactionClass, TransactionClass.preauthorised)
+    }
 
-  func testTransactionClassReversed() {
-    // When
-    let sut = transactionWith(type: .reversal, state: .complete)
+    func testTransactionClassReversed() {
+        // When
+        let sut = transactionWith(type: .reversal, state: .complete)
 
-    // Then
-    XCTAssertEqual(sut.transactionClass, TransactionClass.reversed)
-  }
+        // Then
+        XCTAssertEqual(sut.transactionClass, TransactionClass.reversed)
+    }
 
-  func testTransactionClassAuthorised() {
-    // When
-    let sut = transactionWith(type: .purchase, state: .complete)
+    func testTransactionClassAuthorised() {
+        // When
+        let sut = transactionWith(type: .purchase, state: .complete)
 
-    // Then
-    XCTAssertEqual(sut.transactionClass, TransactionClass.authorised)
-  }
+        // Then
+        XCTAssertEqual(sut.transactionClass, TransactionClass.authorised)
+    }
 
-  // MARK: - Device Type
-  func testDeviceTypeEcommerce() {
-    // When
-    let sut = transactionWith(type: .withdrawal, state: .pending, ecommerce: true)
+    // MARK: - Device Type
 
-    // Then
-    XCTAssertEqual(sut.deviceType, TransactionDeviceType.ecommerce)
-  }
+    func testDeviceTypeEcommerce() {
+        // When
+        let sut = transactionWith(type: .withdrawal, state: .pending, ecommerce: true)
 
-  func testDeviceTypeCardPresent() {
-    // When
-    let sut = transactionWith(type: .decline, state: .pending, cardPresent: true)
+        // Then
+        XCTAssertEqual(sut.deviceType, TransactionDeviceType.ecommerce)
+    }
 
-    // Then
-    XCTAssertEqual(sut.deviceType, TransactionDeviceType.cardPresent)
-  }
+    func testDeviceTypeCardPresent() {
+        // When
+        let sut = transactionWith(type: .decline, state: .pending, cardPresent: true)
 
-  func testDeviceTypeInternational() {
-    // When
-    let sut = transactionWith(type: .purchase, state: .pending, international: true)
+        // Then
+        XCTAssertEqual(sut.deviceType, TransactionDeviceType.cardPresent)
+    }
 
-    // Then
-    XCTAssertEqual(sut.deviceType, TransactionDeviceType.international)
-  }
+    func testDeviceTypeInternational() {
+        // When
+        let sut = transactionWith(type: .purchase, state: .pending, international: true)
 
-  func testDeviceTypeEMV() {
-    // When
-    let sut = transactionWith(type: .reversal, state: .pending, emv: true)
+        // Then
+        XCTAssertEqual(sut.deviceType, TransactionDeviceType.international)
+    }
 
-    // Then
-    XCTAssertEqual(sut.deviceType, TransactionDeviceType.emv)
-  }
+    func testDeviceTypeEMV() {
+        // When
+        let sut = transactionWith(type: .reversal, state: .pending, emv: true)
 
-  func testDeviceTypeOther() {
-    // When
-    let sut = transactionWith(type: .purchase, state: .complete)
+        // Then
+        XCTAssertEqual(sut.deviceType, TransactionDeviceType.emv)
+    }
 
-    // Then
-    XCTAssertEqual(sut.deviceType, TransactionDeviceType.other)
-  }
+    func testDeviceTypeOther() {
+        // When
+        let sut = transactionWith(type: .purchase, state: .complete)
+
+        // Then
+        XCTAssertEqual(sut.deviceType, TransactionDeviceType.other)
+    }
 }
 
 private extension TransactionTest {
-  func transactionWith(type: TransactionType,
-                       state: TransactionState,
-                       ecommerce: Bool? = nil,
-                       cardPresent: Bool? = nil,
-                       international: Bool? = nil,
-                       emv: Bool? = nil) -> Transaction {
-    return Transaction(transactionId: "",
-                       transactionType: type,
-                       createdAt: Date(),
-                       transactionDescription: nil,
-                       lastMessage: nil,
-                       declineCode: nil,
-                       merchant: nil,
-                       store: nil,
-                       localAmount: nil,
-                       billingAmount: nil,
-                       holdAmount: nil,
-                       cashbackAmount: nil,
-                       feeAmount: nil,
-                       nativeBalance: nil,
-                       settlement: nil,
-                       ecommerce: ecommerce,
-                       international: international,
-                       cardPresent: cardPresent,
-                       emv: emv,
-                       cardNetwork: nil,
-                       state: state,
-                       adjustments: nil,
-                       fundingSourceName: "Bitcoin")
-  }
+    func transactionWith(type: TransactionType,
+                         state: TransactionState,
+                         ecommerce: Bool? = nil,
+                         cardPresent: Bool? = nil,
+                         international: Bool? = nil,
+                         emv: Bool? = nil) -> Transaction
+    {
+        return Transaction(transactionId: "",
+                           transactionType: type,
+                           createdAt: Date(),
+                           transactionDescription: nil,
+                           lastMessage: nil,
+                           declineCode: nil,
+                           merchant: nil,
+                           store: nil,
+                           localAmount: nil,
+                           billingAmount: nil,
+                           holdAmount: nil,
+                           cashbackAmount: nil,
+                           feeAmount: nil,
+                           nativeBalance: nil,
+                           settlement: nil,
+                           ecommerce: ecommerce,
+                           international: international,
+                           cardPresent: cardPresent,
+                           emv: emv,
+                           cardNetwork: nil,
+                           state: state,
+                           adjustments: nil,
+                           fundingSourceName: "Bitcoin")
+    }
 }

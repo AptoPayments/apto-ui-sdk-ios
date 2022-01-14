@@ -8,23 +8,17 @@
 @testable import AptoSDK
 
 class MockVerification: Verification, Mock, Stub {
+    var callStack: [String: CallLog] = [:]
+    var methodStubs: [String: AnyObject] = [:]
 
-  var callStack:[String:CallLog] = [:]
-  var methodStubs:[String:AnyObject] = [:]
+    override func copyWithZone(_: NSZone?) -> AnyObject {
+        var wself = self
+        wself.registerCall(methodName: #function)
 
-
-  override func copyWithZone(_ zone: NSZone?) -> AnyObject {
-
-    var wself = self
-    wself.registerCall(methodName: #function)
-
-    if let returnValue = returnValueFor(methodName: #function) {
-      return returnValue
+        if let returnValue = returnValueFor(methodName: #function) {
+            return returnValue
+        } else {
+            return self
+        }
     }
-    else {
-      return self
-    }
-
-  }
-
 }

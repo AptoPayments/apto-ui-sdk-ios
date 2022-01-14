@@ -8,17 +8,17 @@
 import UIKit
 
 class HelpAction {
-  private let emailRecipients: [String?]
-  private let mailSender: MailSender
+    private let emailRecipients: [String?]
+    private let mailSender: MailSender
 
-  init(emailRecipients: [String?]) {
-    self.emailRecipients = emailRecipients
-    self.mailSender = MailSender()
-  }
+    init(emailRecipients: [String?]) {
+        self.emailRecipients = emailRecipients
+        mailSender = MailSender()
+    }
 
-  func run() {
-    self.mailSender.sendMessageWith(subject: "help.email.subject".podLocalized(),
-                                    message: "help.email.body".podLocalized(),
-                                    recipients: self.emailRecipients)
-  }
+    func run() {
+        mailSender.sendMessageWith(subject: "help.email.subject".podLocalized(),
+                                   message: "help.email.body".podLocalized(),
+                                   recipients: emailRecipients)
+    }
 }

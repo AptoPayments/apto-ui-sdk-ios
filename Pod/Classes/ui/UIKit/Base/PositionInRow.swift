@@ -7,7 +7,7 @@
 //
 
 public enum PositionInRow {
-  case top
-  case center
-  case bottom
+    case top
+    case center
+    case bottom
 }

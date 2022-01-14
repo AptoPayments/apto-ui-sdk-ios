@@ -8,18 +8,19 @@
 import AptoSDK
 
 class NotificationPreferencesInteractor: NotificationPreferencesInteractorProtocol {
-  private let platform: AptoPlatformProtocol
+    private let platform: AptoPlatformProtocol
 
-  init(platform: AptoPlatformProtocol) {
-    self.platform = platform
-  }
+    init(platform: AptoPlatformProtocol) {
+        self.platform = platform
+    }
 
-  func fetchPreferences(completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
-    platform.fetchNotificationPreferences(callback: completion)
-  }
+    func fetchPreferences(completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
+        platform.fetchNotificationPreferences(callback: completion)
+    }
 
-  func updatePreferences(_ preferences: NotificationPreferences,
-                         completion: @escaping Result<NotificationPreferences, NSError>.Callback) {
-    platform.updateNotificationPreferences(preferences, callback: completion)
-  }
+    func updatePreferences(_ preferences: NotificationPreferences,
+                           completion: @escaping Result<NotificationPreferences, NSError>.Callback)
+    {
+        platform.updateNotificationPreferences(preferences, callback: completion)
+    }
 }

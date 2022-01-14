@@ -8,14 +8,14 @@
 import Foundation
 
 class CreatePasscodeInteractor: CreatePasscodeInteractorProtocol {
-  private let authenticationManager: AuthenticationManagerProtocol
+    private let authenticationManager: AuthenticationManagerProtocol
 
-  init(authenticationManager: AuthenticationManagerProtocol) {
-    self.authenticationManager = authenticationManager
-  }
+    init(authenticationManager: AuthenticationManagerProtocol) {
+        self.authenticationManager = authenticationManager
+    }
 
-  func save(code: String, callback: @escaping Result<Void, NSError>.Callback) {
-    let result = authenticationManager.save(code: code)
-    callback(result)
-  }
+    func save(code: String, callback: @escaping Result<Void, NSError>.Callback) {
+        let result = authenticationManager.save(code: code)
+        callback(result)
+    }
 }

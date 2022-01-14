@@ -6,62 +6,62 @@
 //
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class ServerMaintenanceErrorModuleTest: XCTestCase {
-  private var sut: ServerMaintenanceErrorModule! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: ServerMaintenanceErrorModule! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private lazy var dataProvider = ModelDataProvider.provider
-  private lazy var uiConfig = dataProvider.uiConfig
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private lazy var dataProvider = ModelDataProvider.provider
+    private lazy var uiConfig = dataProvider.uiConfig
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = ServerMaintenanceErrorModule(serviceLocator: serviceLocator)
-  }
-
-  func testInitializeReturnViewController() {
-    // Given
-    var returnedResult: Result<UIViewController, NSError>?
-
-    // When
-    sut.initialize { result in
-      returnedResult = result
+        sut = ServerMaintenanceErrorModule(serviceLocator: serviceLocator)
     }
 
-    // Then
-    XCTAssertTrue(returnedResult!.isSuccess) // swiftlint:disable:this force_unwrapping
-    XCTAssertNotNil(returnedResult?.value)
-  }
+    func testInitializeReturnViewController() {
+        // Given
+        var returnedResult: Result<UIViewController, NSError>?
 
-  func testInitializeConfigurePresenter() {
-    // Given
-    let presenter = serviceLocator.presenterLocatorFake.serverMaintenanceErrorPresenterSpy
+        // When
+        sut.initialize { result in
+            returnedResult = result
+        }
 
-    // When
-    sut.initialize { _ in }
-
-    // Then
-    XCTAssertNotNil(presenter.router)
-    XCTAssertNotNil(presenter.interactor)
-    XCTAssertNotNil(presenter.analyticsManager)
-  }
-
-  func testPendingRequestsExecutedCallClose() {
-    // Given
-    var closeCalled = false
-    sut.onClose = { _ in
-      closeCalled = true
+        // Then
+        XCTAssertTrue(returnedResult!.isSuccess) // swiftlint:disable:this force_unwrapping
+        XCTAssertNotNil(returnedResult?.value)
     }
 
-    // When
-    sut.pendingRequestsExecuted()
+    func testInitializeConfigurePresenter() {
+        // Given
+        let presenter = serviceLocator.presenterLocatorFake.serverMaintenanceErrorPresenterSpy
 
-    // Then
-    XCTAssertTrue(closeCalled)
-  }
+        // When
+        sut.initialize { _ in }
+
+        // Then
+        XCTAssertNotNil(presenter.router)
+        XCTAssertNotNil(presenter.interactor)
+        XCTAssertNotNil(presenter.analyticsManager)
+    }
+
+    func testPendingRequestsExecutedCallClose() {
+        // Given
+        var closeCalled = false
+        sut.onClose = { _ in
+            closeCalled = true
+        }
+
+        // When
+        sut.pendingRequestsExecuted()
+
+        // Then
+        XCTAssertTrue(closeCalled)
+    }
 }

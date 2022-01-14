@@ -10,47 +10,47 @@ import AptoSDK
 import Bond
 
 class VerifyBirthDatePresenter: VerifyBirthDatePresenterProtocol {
-  // swiftlint:disable implicitly_unwrapped_optional
-  var interactor: VerifyBirthDateInteractorProtocol!
-  weak var router: VerifyBirthDateRouterProtocol!
-  var view: VerifyBirthDateViewProtocol!
-  // swiftlint:enable implicitly_unwrapped_optional
+    // swiftlint:disable implicitly_unwrapped_optional
+    var interactor: VerifyBirthDateInteractorProtocol!
+    weak var router: VerifyBirthDateRouterProtocol!
+    var view: VerifyBirthDateViewProtocol!
+    // swiftlint:enable implicitly_unwrapped_optional
 
-  func viewLoaded() {
-    view.showLoadingSpinner()
-    interactor.provideBirthDate()
-  }
+    func viewLoaded() {
+        view.showLoadingSpinner()
+        interactor.provideBirthDate()
+    }
 
-  func verificationReceived(_ verification: Verification) {
-    view.hideLoadingSpinner()
-  }
+    func verificationReceived(_: Verification) {
+        view.hideLoadingSpinner()
+    }
 
-  func verificationStartError(_ error: NSError) {
-    view.hideLoadingSpinner()
-    view.show(error: error)
-  }
+    func verificationStartError(_ error: NSError) {
+        view.hideLoadingSpinner()
+        view.show(error: error)
+    }
 
-  func submitTapped(_ birthDate: Date) {
-    view.showLoadingSpinner()
-    interactor.submit(birthDate: birthDate)
-  }
+    func submitTapped(_ birthDate: Date) {
+        view.showLoadingSpinner()
+        interactor.submit(birthDate: birthDate)
+    }
 
-  func closeTapped() {
-    router.closeTappedInVerifyBirthDate()
-  }
+    func closeTapped() {
+        router.closeTappedInVerifyBirthDate()
+    }
 
-  func submitBirthDateError(_ error: NSError) {
-    view.hideLoadingSpinner()
-    view.show(error: error)
-  }
+    func submitBirthDateError(_ error: NSError) {
+        view.hideLoadingSpinner()
+        view.show(error: error)
+    }
 
-  func verificationSucceeded(_ verification: Verification) {
-    view.hideLoadingSpinner()
-    router.birthDateVerificationPassed(verification: verification)
-  }
+    func verificationSucceeded(_ verification: Verification) {
+        view.hideLoadingSpinner()
+        router.birthDateVerificationPassed(verification: verification)
+    }
 
-  func verificationFailed() {
-    view.hideLoadingSpinner()
-    view.showWrongBirthDateErrorMessage()
-  }
+    func verificationFailed() {
+        view.hideLoadingSpinner()
+        view.showWrongBirthDateErrorMessage()
+    }
 }

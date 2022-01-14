@@ -7,13 +7,13 @@
 
 import Foundation
 
-import UIKit
-import SnapKit
 import AptoSDK
+import SnapKit
+import UIKit
 
 public final class AddCardOnboardingView: UIView {
     let uiConfiguration: UIConfig
-    
+
     private(set) lazy var headerLabel: UILabel = {
         let label = ComponentCatalog.topBarTitleLabelWith(text: "",
                                                           textAlignment: .left,
@@ -23,6 +23,7 @@ public final class AddCardOnboardingView: UIView {
         label.text = "load_funds.add_card.onboarding.title".podLocalized()
         return label
     }()
+
     private(set) lazy var firstParagraphLabel: UILabel = {
         let label = ComponentCatalog.formListLabelWith(text: "",
                                                        textAlignment: .left,
@@ -32,6 +33,7 @@ public final class AddCardOnboardingView: UIView {
         label.numberOfLines = 0
         return label
     }()
+
     private(set) lazy var secondParagraphLabel: UILabel = {
         let label = ComponentCatalog.formListLabelWith(text: "",
                                                        textAlignment: .left,
@@ -41,6 +43,7 @@ public final class AddCardOnboardingView: UIView {
         label.numberOfLines = 0
         return label
     }()
+
     private(set) lazy var actionButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = uiConfiguration.uiPrimaryColor
@@ -51,23 +54,23 @@ public final class AddCardOnboardingView: UIView {
     }()
 
     init(uiconfig: UIConfig) {
-        self.uiConfiguration = uiconfig
+        uiConfiguration = uiconfig
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     private func setupViews() {
         backgroundColor = uiConfiguration.textMessageColor
         isOpaque = false
-        
+
         [headerLabel, firstParagraphLabel, secondParagraphLabel, actionButton].forEach(addSubview)
         actionButton.layer.cornerRadius = 25
     }
-    
+
     private func setupConstraints() {
         headerLabel.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(20)
@@ -87,24 +90,23 @@ public final class AddCardOnboardingView: UIView {
             make.bottom.equalTo(bottomConstraint).inset(34)
         }
     }
-    
+
     // MARK: Public methods
+
     public func configure(firstParagraph: String, secondParagraph: String) {
         firstParagraphLabel.text = firstParagraph
         secondParagraphLabel.text = secondParagraph
     }
-    
+
     func hideView() {
         [headerLabel, firstParagraphLabel, secondParagraphLabel, actionButton].forEach { view in
             view.alpha = 0
         }
     }
-    
+
     func showView() {
         [headerLabel, firstParagraphLabel, secondParagraphLabel, actionButton].forEach { view in
             view.alpha = 1
         }
     }
 }
-
-

@@ -20,8 +20,9 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
     private let secondaryCredentialType: DataPointType
     private let allowedDocuments: [Country: [IdDocumentType]]
     private lazy var allowedCountries: [Country] = {
-        return Array(allowedDocuments.keys)
+        Array(allowedDocuments.keys)
     }()
+
     private var countryField: FormRowCountryPickerView?
     private var documentTypeField: FormRowIdDocumentTypePickerView?
     private var numberField: FormRowTextInputView! // swiftlint:disable:this implicitly_unwrapped_optional
@@ -31,13 +32,14 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
 
     private let disposeBag = DisposeBag()
     private var numberTextField: FormRowTextInputView?
-    
+
     init(requiredData: RequiredDataPointList,
          secondaryCredentialType: DataPointType,
          userData: DataPointList,
          mode: UserDataCollectorFinalStepMode,
          uiConfig: UIConfig,
-         linkHandler: LinkHandler?) {
+         linkHandler: LinkHandler?)
+    {
         self.userData = userData
         self.requiredData = requiredData
         self.linkHandler = linkHandler
@@ -45,11 +47,11 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
         self.secondaryCredentialType = secondaryCredentialType
         if let dataPoint = requiredData.getRequiredDataPointOf(type: .idDocument),
            let config = dataPoint.configuration as? AllowedIdDocumentTypesConfiguration,
-           !config.allowedDocumentTypes.isEmpty {
-            self.allowedDocuments = config.allowedDocumentTypes
-        }
-        else {
-            self.allowedDocuments = [Country.defaultCountry: [IdDocumentType.ssn]]
+           !config.allowedDocumentTypes.isEmpty
+        {
+            allowedDocuments = config.allowedDocumentTypes
+        } else {
+            allowedDocuments = [Country.defaultCountry: [IdDocumentType.ssn]]
         }
         super.init(uiConfig: uiConfig)
     }
@@ -62,7 +64,7 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
             createDocumentTypePickerField(),
             createNumberField(),
             setUpOptionalIdDocument(),
-            FormRowSeparatorView(backgroundColor: UIColor.clear, height: CGFloat(20))
+            FormRowSeparatorView(backgroundColor: UIColor.clear, height: CGFloat(20)),
         ].compactMap { return $0 }
     }
 
@@ -71,23 +73,23 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
         if let showSSNRequiredDataPoint = requiredData.getRequiredDataPointOf(type: .idDocument) {
             showIdDocument = true
             showOptionalIdDocument = showSSNRequiredDataPoint.optional
-        }
-        else {
+        } else {
             showIdDocument = false
             showOptionalIdDocument = false
         }
     }
 
     // MARK: Priate UI methods
+
     private func createCountryPickerField() -> FormRowCountryPickerView? {
         guard showIdDocument == true else { return nil }
-        
+
         let idDocumentDataPoint = userData.idDocumentDataPoint
         guard allowedCountries.count > 1 else {
             idDocumentDataPoint.country.send(allowedCountries.first)
             return nil
         }
-        
+
         let countryField = FormBuilder.countryPickerRow(label: "collect_user_data.dob.doc_country.title".podLocalized(),
                                                         allowedCountries: allowedCountries,
                                                         uiConfig: uiConfig)
@@ -104,11 +106,12 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
 
     private func createDocumentTypePickerField() -> FormRowIdDocumentTypePickerView? {
         guard showIdDocument == true else { return nil }
-        
+
         let idDocumentDataPoint = userData.idDocumentDataPoint
         let currentCountry = idDocumentDataPoint.country.value ?? allowedCountries[0]
         guard let allowedDocumentTypes = allowedDocuments[currentCountry],
-              !allowedDocuments.isEmpty else {
+              !allowedDocuments.isEmpty
+        else {
             fatalError("No document types configured for country \(currentCountry.name)")
         }
         guard allowedCountries.count > 1 || allowedDocumentTypes.count > 1 else {
@@ -131,14 +134,15 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
 
     private func createNumberField() -> FormRowTextInputView? {
         guard showIdDocument == true else { return nil }
-        
+
         let idDocumentDataPoint = userData.idDocumentDataPoint
         let initiallyReadOnly = mode == .updateUser
         let placeholder = "collect_user_data.dob.doc_id.placeholder".podLocalized()
         var label = "collect_user_data.dob.doc_id.title".podLocalized()
         let currentCountry = idDocumentDataPoint.country.value ?? allowedCountries[0]
         if let allowedDocumentTypes = allowedDocuments[currentCountry],
-           (allowedCountries.count == 1 && allowedDocumentTypes.count == 1) {
+           allowedCountries.count == 1, allowedDocumentTypes.count == 1
+        {
             label.append(" (\(allowedDocumentTypes[0].localizedDescription))")
         }
         numberField = textInputRow(with: idDocumentDataPoint.documentType.value,
@@ -163,7 +167,7 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
             return NonEmptyTextValidator(failReasonMessage: "ssn-collector.driver-license.invalid".podLocalized())
         }
     }
-    
+
     private func accessibility(for documentType: IdDocumentType?) -> String {
         guard let documentType = documentType else { return "" }
         switch documentType {
@@ -182,32 +186,33 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                               label: String,
                               placeholder: String,
                               accessibilityLabel: String? = nil,
-                              validator: DataValidator<String>? = nil,
-                              initiallyReadonly: Bool = false,
-                              firstFormField: Bool = false,
-                              lastFormField: Bool = false,
+                              validator _: DataValidator<String>? = nil,
+                              initiallyReadonly _: Bool = false,
+                              firstFormField _: Bool = false,
+                              lastFormField _: Bool = false,
                               initiallyReadOnly: Bool,
-                              uiConfig: UIConfig) -> FormRowTextInputView? {
+                              uiConfig: UIConfig) -> FormRowTextInputView?
+    {
         let accessibilityLabel = accessibility(for: documentType)
         if let documentType = documentType {
             let validator = self.validator(for: documentType)
             return FormBuilder.standardTextInputRowWith(label: label,
-                                                               placeholder: placeholder,
-                                                               value: "",
-                                                               accessibilityLabel: accessibilityLabel,
-                                                               validator: validator,
-                                                               initiallyReadonly: initiallyReadOnly,
-                                                               uiConfig: uiConfig)
+                                                        placeholder: placeholder,
+                                                        value: "",
+                                                        accessibilityLabel: accessibilityLabel,
+                                                        validator: validator,
+                                                        initiallyReadonly: initiallyReadOnly,
+                                                        uiConfig: uiConfig)
         } else {
             return FormBuilder.standardTextInputRowWith(label: label,
-                                                               placeholder: placeholder,
-                                                               value: "",
-                                                               accessibilityLabel: accessibilityLabel,
-                                                               initiallyReadonly: initiallyReadOnly,
-                                                               uiConfig: uiConfig)
+                                                        placeholder: placeholder,
+                                                        value: "",
+                                                        accessibilityLabel: accessibilityLabel,
+                                                        initiallyReadonly: initiallyReadOnly,
+                                                        uiConfig: uiConfig)
         }
     }
-    
+
     private func setUpOptionalIdDocument() -> FormRowCheckView? {
         guard showOptionalIdDocument == true else { return nil }
         let idDocumentDataPoint = userData.idDocumentDataPoint
@@ -220,8 +225,8 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
         if let notSpecified = idDocumentDataPoint.notSpecified {
             documentNotSpecified.bndValue.send(notSpecified)
             numberField.bndValue.send(nil)
-            self.validatableRows = self.validatableRows.compactMap { ($0 == self.numberField) ? nil : $0 }
-            self.setupStepValidation()
+            validatableRows = validatableRows.compactMap { ($0 == self.numberField) ? nil : $0 }
+            setupStepValidation()
         }
         documentNotSpecified.bndValue.observeNext { checked in
             idDocumentDataPoint.notSpecified = checked
@@ -236,8 +241,7 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
                 self.validatableRows = self.validatableRows.compactMap {
                     ($0 == self.numberField || $0 == self.countryField || $0 == self.documentTypeField) ? nil : $0
                 }
-            }
-            else {
+            } else {
                 self.validatableRows.append(self.numberField)
                 if let countryField = self.countryField {
                     self.validatableRows.append(countryField)
@@ -250,5 +254,4 @@ class SSNStep: DataCollectorBaseStep, DataCollectorStepProtocol {
         }.dispose(in: disposeBag)
         return documentNotSpecified
     }
-
 }

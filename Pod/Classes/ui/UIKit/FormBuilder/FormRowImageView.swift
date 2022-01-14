@@ -9,19 +9,20 @@
 import UIKit
 
 class FormRowImageView: FormRowView {
-  private let imageView: UIImageView
+    private let imageView: UIImageView
 
-  init(imageView: UIImageView, height: CGFloat) {
-    self.imageView = imageView
-    super.init(showSplitter: false, height: height)
-    self.contentView.addSubview(self.imageView)
-    self.imageView.snp.makeConstraints { make in
-      make.height.equalTo(height)
-      make.top.left.right.bottom.equalTo(self.contentView)
+    init(imageView: UIImageView, height: CGFloat) {
+        self.imageView = imageView
+        super.init(showSplitter: false, height: height)
+        contentView.addSubview(self.imageView)
+        self.imageView.snp.makeConstraints { make in
+            make.height.equalTo(height)
+            make.top.left.right.bottom.equalTo(self.contentView)
+        }
     }
-  }
 
-  required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
-  }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

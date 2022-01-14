@@ -6,29 +6,28 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
 import SnapKit
+import XCTest
 
-@testable import AptoUISDK
 @testable import AptoSDK
+@testable import AptoUISDK
 
 class P2PTransferFundsViewControllerTests: XCTestCase {
-
     private let cardId = "crd_123456789"
-    
+
     func test_init_rendersP2PTransferFundsView() throws {
         let (sut, _) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertNotNil(sut.view)
         XCTAssertTrue(sut.view.subviews.count > 0)
-        XCTAssertTrue(((sut.view.subviews.first?.isKind(of: P2PTransferFundsView.self)) != nil))
+        XCTAssertTrue((sut.view.subviews.first?.isKind(of: P2PTransferFundsView.self)) != nil)
     }
 
     func test_init_doesNotFetchFundingSource() {
         let (_, loader) = makeSUT()
-        
+
         XCTAssertEqual(loader.fetchFundingSourceLoadCallCount, 0)
         XCTAssertEqual(loader.transferLoadCallCount, 0)
     }
@@ -37,7 +36,7 @@ class P2PTransferFundsViewControllerTests: XCTestCase {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertEqual(loader.fetchFundingSourceLoadCallCount, 1)
         XCTAssertEqual(loader.transferLoadCallCount, 0)
     }
@@ -46,7 +45,7 @@ class P2PTransferFundsViewControllerTests: XCTestCase {
         let (sut, _) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertTrue(sut.isActivityIndicatorLoading)
     }
 
@@ -58,7 +57,7 @@ class P2PTransferFundsViewControllerTests: XCTestCase {
 
         XCTAssertTrue(sut.isActivityIndicatorHidden)
     }
-    
+
     func test_validAmount_performTransferRequest() {
         let (sut, loader) = makeSUT()
 
@@ -69,7 +68,7 @@ class P2PTransferFundsViewControllerTests: XCTestCase {
         sut.amountTextField.text = "10"
         sut.amountTextField.simulate(event: UIControl.Event.editingChanged)
         sut.completTransferButton.simulateTap()
-        
+
         XCTAssertEqual(loader.fetchFundingSourceLoadCallCount, 1)
         XCTAssertEqual(loader.transferLoadCallCount, 1)
     }
@@ -83,13 +82,14 @@ class P2PTransferFundsViewControllerTests: XCTestCase {
         sut.amountTextField.becomeFirstResponder()
         sut.amountTextField.text = "0"
         sut.amountTextField.simulate(event: UIControl.Event.editingChanged)
-        
+
         XCTAssertEqual(loader.fetchFundingSourceLoadCallCount, 1)
         XCTAssertEqual(loader.transferLoadCallCount, 0)
         XCTAssertTrue(sut.completTransferButton.isHidden)
     }
 
     // MARK: - Helpers
+
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: P2PTransferFundsViewController, loader: P2PTransferLoaderSpy) {
         let loader = P2PTransferLoaderSpy()
         let viewModel = P2PTransferFundsViewModel(loader: loader, cardId: cardId)
@@ -101,7 +101,6 @@ class P2PTransferFundsViewControllerTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
     }
-
 }
 
 private extension P2PTransferFundsViewController {
@@ -109,13 +108,14 @@ private extension P2PTransferFundsViewController {
         if let window = UIApplication.shared.keyWindow {
             if let view = window.viewWithTag(2020),
                let firstView = view.subviews.first,
-               let spinner = firstView as? UIActivityIndicatorView {
+               let spinner = firstView as? UIActivityIndicatorView
+            {
                 return spinner.isAnimating
             }
         }
         return false
     }
-    
+
     var isActivityIndicatorHidden: Bool {
         if let window = UIApplication.shared.keyWindow {
             let subviews = window.subviews.reversed()
@@ -125,11 +125,11 @@ private extension P2PTransferFundsViewController {
         }
         return false
     }
-    
+
     var amountTextField: UITextField {
         transferFundsView.amountTextField
     }
-    
+
     var completTransferButton: UIButton {
         transferFundsView.actionButton
     }

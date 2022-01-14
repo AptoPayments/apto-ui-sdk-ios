@@ -8,17 +8,13 @@
 import UIKit
 
 class ShowCardScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "Card"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "Card"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
-
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
-
-    return self
-
-  } // end waitForScreen
-
+        return self
+    } // end waitForScreen
 }

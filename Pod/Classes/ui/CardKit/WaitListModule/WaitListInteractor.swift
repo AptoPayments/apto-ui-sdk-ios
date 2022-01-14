@@ -8,15 +8,15 @@
 import AptoSDK
 
 class WaitListInteractor: WaitListInteractorProtocol {
-  private let application: CardApplication
-  private let platform: AptoPlatformProtocol
+    private let application: CardApplication
+    private let platform: AptoPlatformProtocol
 
-  init(application: CardApplication, platform: AptoPlatformProtocol) {
-    self.application = application
-    self.platform = platform
-  }
+    init(application: CardApplication, platform: AptoPlatformProtocol) {
+        self.application = application
+        self.platform = platform
+    }
 
-  func reloadApplication(completion: @escaping Result<CardApplication, NSError>.Callback) {
-    platform.fetchCardApplicationStatus(application.id, callback: completion)
-  }
+    func reloadApplication(completion: @escaping Result<CardApplication, NSError>.Callback) {
+        platform.fetchCardApplicationStatus(application.id, callback: completion)
+    }
 }

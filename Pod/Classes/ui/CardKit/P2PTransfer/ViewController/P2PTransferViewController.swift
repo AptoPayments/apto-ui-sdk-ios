@@ -11,24 +11,27 @@ import SnapKit
 class P2PTransferViewController: AptoViewController {
     private(set) lazy var transferView: P2PTransferView = {
         guard let config = self.projectConfiguration,
-              let defaultCountry = config.allowedCountries.first else {
+              let defaultCountry = config.allowedCountries.first
+        else {
             return P2PTransferView(uiconfig: self.uiConfiguration, defaultCountry: "")
         }
         return P2PTransferView(uiconfig: self.uiConfiguration, defaultCountry: defaultCountry.isoCode)
     }()
+
     private let viewModel: P2PTransferViewModel
     private(set) var activityIndicator: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .white)
         spinner.hidesWhenStopped = true
         return spinner
     }()
+
     private let projectConfiguration: ProjectConfiguration?
     private var debounceTimer: Timer?
     var debounceDelay: TimeInterval = 0.8
     private let keyboardWatcher = KeyboardWatcher()
     private var transferModel: P2PTransferModel?
     var continueTransferCompletion: ((P2PTransferModel) -> Void)?
-    
+
     init(uiConfiguration: UIConfig, viewModel: P2PTransferViewModel, projectConfiguration: ProjectConfiguration?) {
         self.viewModel = viewModel
         self.projectConfiguration = projectConfiguration
@@ -36,7 +39,7 @@ class P2PTransferViewController: AptoViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +59,9 @@ class P2PTransferViewController: AptoViewController {
         super.viewWillAppear(animated)
         becomeResponder()
     }
-    
+
     // MARK: Private methods
+
     private func setupView() {
         view.backgroundColor = .white
         [transferView, activityIndicator].forEach(view.addSubview)
@@ -76,7 +80,7 @@ class P2PTransferViewController: AptoViewController {
         viewModel.onConfigurationLoaded = { [weak self] authMethod in
             self?.setupInputTextField(with: authMethod)
         }
-        
+
         viewModel.onErrorRequest = { [weak self] error in
             self?.show(error: error)
         }
@@ -88,7 +92,7 @@ class P2PTransferViewController: AptoViewController {
                 activityIndicator.stopAnimating()
             }
         }
-        
+
         viewModel.onRecipientLoadingStateChange = { [transferView] isLoading in
             if isLoading {
                 transferView.hideResultsView()
@@ -97,15 +101,16 @@ class P2PTransferViewController: AptoViewController {
                 transferView.stopLoading()
             }
         }
-        
+
         viewModel.onFindRecipientError = { [transferView] error in
             transferView.showNoResults(error.localizedDescription)
         }
-        
+
         viewModel.onRecipientFound = { [weak self] result in
             if let phone = result.phone,
                let prefix = phone.countryCode.value,
-               let number = phone.phoneNumber.value {
+               let number = phone.phoneNumber.value
+            {
                 self?.transferView.showResult(with: result.recipient, contact: "+" + String(prefix) + number)
                 self?.transferModel = P2PTransferModel(phone: phone, email: nil, cardholder: result.recipient)
             } else if let email = result.email {
@@ -113,12 +118,12 @@ class P2PTransferViewController: AptoViewController {
                 self?.transferModel = P2PTransferModel(phone: nil, email: email, cardholder: result.recipient)
             }
         }
-        
+
         transferView.phoneTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         transferView.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         transferView.continueButton.addTarget(self, action: #selector(didTapOnContinueButton), for: .touchUpInside)
     }
-    
+
     private func becomeResponder() {
         if !transferView.phoneTextField.isHidden {
             transferView.phoneTextField.becomeFirstResponder()
@@ -126,7 +131,7 @@ class P2PTransferViewController: AptoViewController {
             transferView.emailTextField.becomeFirstResponder()
         }
     }
-    
+
     @objc private func process(_ textField: UITextField) {
         guard let input = textField.text else { return }
         switch textField {
@@ -146,7 +151,7 @@ class P2PTransferViewController: AptoViewController {
             break
         }
     }
-    
+
     private func setupInputTextField(with authMethod: DataPointType) {
         switch authMethod {
         case .email:
@@ -156,18 +161,22 @@ class P2PTransferViewController: AptoViewController {
         default: break
         }
     }
-    
+
+    // swiftlint:disable trailing_closure
     private func watchKeyboard() {
         keyboardWatcher.startWatching(onKeyboardShown: { [weak self] size in
             self?.transferView.updateButtonPosition(to: size.height)
         })
     }
 
+    // swiftlint:enable trailing_closure
+
     // MARK: Public methods
+
     @objc override func closeTapped() {
         dismiss(animated: true)
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         transferView.hideResultsView()
         if let timer = debounceTimer {
@@ -176,12 +185,12 @@ class P2PTransferViewController: AptoViewController {
         if debounceDelay == 0 {
             process(textField)
         } else {
-            debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceDelay, repeats: false) { [weak self] timer in
+            debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceDelay, repeats: false) { [weak self] _ in
                 self?.process(textField)
             }
         }
     }
-    
+
     @objc func didTapOnContinueButton() {
         if let transferModel = transferModel {
             continueTransferCompletion?(transferModel)

@@ -6,23 +6,23 @@
 //
 //
 
-@testable import AptoSDK
 import Alamofire
+@testable import AptoSDK
 
 class NetworkManagerSpy: NetworkManagerProtocol {
-  var delegate: SessionDelegate {
-    return SessionDelegate()
-  }
+    var delegate: SessionDelegate {
+        return SessionDelegate()
+    }
 
-  private(set) var requestCalled = false
-  private(set) var lastNetworkRequest: NetworkRequest?
-  func request(_ networkRequest: NetworkRequest) {
-    requestCalled = true
-    lastNetworkRequest = networkRequest
-  }
+    private(set) var requestCalled = false
+    private(set) var lastNetworkRequest: NetworkRequest?
+    func request(_ networkRequest: NetworkRequest) {
+        requestCalled = true
+        lastNetworkRequest = networkRequest
+    }
 
-  private(set) var runPendingRequestsCalled = false
-  func runPendingRequests() {
-    runPendingRequestsCalled = true
-  }
+    private(set) var runPendingRequestsCalled = false
+    func runPendingRequests() {
+        runPendingRequestsCalled = true
+    }
 }

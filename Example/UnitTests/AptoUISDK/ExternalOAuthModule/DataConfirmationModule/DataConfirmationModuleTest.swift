@@ -6,153 +6,153 @@
 //
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class DataConfirmationModuleTest: XCTestCase {
-  var sut: DataConfirmationModule! // swiftlint:disable:this implicitly_unwrapped_optional
+    var sut: DataConfirmationModule! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private lazy var presenter = serviceLocator.presenterLocatorFake.dataConfirmationPresenterSpy
-  private let userData = ModelDataProvider.provider.emailDataPointList
-  private let delegate = DataConfirmationModuleDelegateFake()
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private lazy var presenter = serviceLocator.presenterLocatorFake.dataConfirmationPresenterSpy
+    private let userData = ModelDataProvider.provider.emailDataPointList
+    private let delegate = DataConfirmationModuleDelegateFake()
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = DataConfirmationModule(serviceLocator: serviceLocator, userData: userData)
-    sut.delegate = delegate
-  }
-
-  func testInitializeConfigurationSucceedConfigurePresenter() {
-    // Given
-    serviceLocator.setUpSessionForContextConfigurationSuccess()
-
-    // When
-    sut.initialize { _ in }
-
-    // Then
-    XCTAssertNotNil(presenter.router)
-    XCTAssertNotNil(presenter.interactor)
-    XCTAssertNotNil(presenter.analyticsManager)
-  }
-
-  func testInitializeConfigurationSucceedCallSuccess() {
-    // Given
-    var returnedResult: Result<UIViewController, NSError>?
-
-    // When
-    sut.initialize { result in
-      returnedResult = result
+        sut = DataConfirmationModule(serviceLocator: serviceLocator, userData: userData)
+        sut.delegate = delegate
     }
 
-    // Then
-    XCTAssertTrue(returnedResult!.isSuccess) // swiftlint:disable:this force_unwrapping
-  }
+    func testInitializeConfigurationSucceedConfigurePresenter() {
+        // Given
+        serviceLocator.setUpSessionForContextConfigurationSuccess()
 
-  func testCloseCalledCallOnClose() {
-    // Given
-    var onCloseCalled = false
-    sut.onClose = { _ in
-      onCloseCalled = true
+        // When
+        sut.initialize { _ in }
+
+        // Then
+        XCTAssertNotNil(presenter.router)
+        XCTAssertNotNil(presenter.interactor)
+        XCTAssertNotNil(presenter.analyticsManager)
     }
 
-    // When
-    sut.close()
+    func testInitializeConfigurationSucceedCallSuccess() {
+        // Given
+        var returnedResult: Result<UIViewController, NSError>?
 
-    // Then
-    XCTAssertTrue(onCloseCalled)
-  }
+        // When
+        sut.initialize { result in
+            returnedResult = result
+        }
 
-  func testCloseCalledDoNotCallOnFinish() {
-    // Given
-    var onFinishCalled = false
-    sut.onFinish = { _ in
-      onFinishCalled = true
+        // Then
+        XCTAssertTrue(returnedResult!.isSuccess) // swiftlint:disable:this force_unwrapping
     }
 
-    // When
-    sut.close()
+    func testCloseCalledCallOnClose() {
+        // Given
+        var onCloseCalled = false
+        sut.onClose = { _ in
+            onCloseCalled = true
+        }
 
-    // Then
-    XCTAssertFalse(onFinishCalled)
-  }
+        // When
+        sut.close()
 
-  func testConfirmDataCalledCallOnFinish() {
-    // Given
-    var onFinishCalled = false
-    sut.onFinish = { _ in
-      onFinishCalled = true
+        // Then
+        XCTAssertTrue(onCloseCalled)
     }
 
-    // When
-    sut.confirmData()
+    func testCloseCalledDoNotCallOnFinish() {
+        // Given
+        var onFinishCalled = false
+        sut.onFinish = { _ in
+            onFinishCalled = true
+        }
 
-    // Then
-    XCTAssertTrue(onFinishCalled)
-  }
+        // When
+        sut.close()
 
-  func testConfirmDataCalledDoNotCallOnClose() {
-    // Given
-    var onCloseCalled = false
-    sut.onClose = { _ in
-      onCloseCalled = true
+        // Then
+        XCTAssertFalse(onFinishCalled)
     }
 
-    // When
-    sut.confirmData()
+    func testConfirmDataCalledCallOnFinish() {
+        // Given
+        var onFinishCalled = false
+        sut.onFinish = { _ in
+            onFinishCalled = true
+        }
 
-    // Then
-    XCTAssertFalse(onCloseCalled)
-  }
+        // When
+        sut.confirmData()
 
-  func testReloadUserDataCallDelegate() {
-    // When
-    sut.reloadUserData { _ in }
-
-    // Then
-    XCTAssertTrue(delegate.reloadUserDataCalled)
-  }
-
-  func testReloadUserDataFailsCallbackFailure() {
-    // Given
-    var returnedResult: Result<DataPointList, NSError>?
-    delegate.nextReloadUserDataResult = .failure(BackendError(code: .other))
-
-    // When
-    sut.reloadUserData { result in
-      returnedResult = result
+        // Then
+        XCTAssertTrue(onFinishCalled)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isFailure)
-  }
+    func testConfirmDataCalledDoNotCallOnClose() {
+        // Given
+        var onCloseCalled = false
+        sut.onClose = { _ in
+            onCloseCalled = true
+        }
 
-  func testReloadUserDataSucceedCallbackSuccess() {
-    // Given
-    var returnedResult: Result<DataPointList, NSError>?
-    delegate.nextReloadUserDataResult = .success(userData)
+        // When
+        sut.confirmData()
 
-    // When
-    sut.reloadUserData { result in
-      returnedResult = result
+        // Then
+        XCTAssertFalse(onCloseCalled)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testReloadUserDataCallDelegate() {
+        // When
+        sut.reloadUserData { _ in }
 
-  func testInitializeUpdateUserDataCallPresenter() {
-    // Given
-    sut.initialize { _ in }
-    let presenter = serviceLocator.presenterLocatorFake.dataConfirmationPresenterSpy
+        // Then
+        XCTAssertTrue(delegate.reloadUserDataCalled)
+    }
 
-    // When
-    sut.updateUserData(userData)
+    func testReloadUserDataFailsCallbackFailure() {
+        // Given
+        var returnedResult: Result<DataPointList, NSError>?
+        delegate.nextReloadUserDataResult = .failure(BackendError(code: .other))
 
-    // Then
-    XCTAssertTrue(presenter.updateUserDataCalled)
-  }
+        // When
+        sut.reloadUserData { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isFailure)
+    }
+
+    func testReloadUserDataSucceedCallbackSuccess() {
+        // Given
+        var returnedResult: Result<DataPointList, NSError>?
+        delegate.nextReloadUserDataResult = .success(userData)
+
+        // When
+        sut.reloadUserData { result in
+            returnedResult = result
+        }
+
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
+    }
+
+    func testInitializeUpdateUserDataCallPresenter() {
+        // Given
+        sut.initialize { _ in }
+        let presenter = serviceLocator.presenterLocatorFake.dataConfirmationPresenterSpy
+
+        // When
+        sut.updateUserData(userData)
+
+        // Then
+        XCTAssertTrue(presenter.updateUserDataCalled)
+    }
 }

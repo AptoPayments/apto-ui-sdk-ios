@@ -9,130 +9,130 @@ import AptoSDK
 import Bond
 
 class TransactionListPresenter: TransactionListPresenterProtocol {
-  private let config: TransactionListModuleConfig
-  private let rowsPerPage = 20
-  private var lastTransactionId: String?
+    private let config: TransactionListModuleConfig
+    private let rowsPerPage = 20
+    private var lastTransactionId: String?
 
-  let viewModel = TransactionListViewModel()
-  weak var router: TransactionListModuleProtocol?
-  var interactor: TransactionListInteractorProtocol?
-  var analyticsManager: AnalyticsServiceProtocol?
-  private let transactionListEvents: TransactionListEvents?
-  
-  init(config: TransactionListModuleConfig, transactionListEvents: TransactionListEvents? = nil) {
-    self.config = config
-    self.transactionListEvents = transactionListEvents
-  }
+    let viewModel = TransactionListViewModel()
+    weak var router: TransactionListModuleProtocol?
+    var interactor: TransactionListInteractorProtocol?
+    var analyticsManager: AnalyticsServiceProtocol?
+    private let transactionListEvents: TransactionListEvents?
 
-  func viewLoaded() {
-    let title = config.categoryId?.name ?? "transactions.list.title".podLocalized()
-    viewModel.title.send(title)
-    fetchTransactions(showLoadingSpinner: true, clearCurrent: true) { _ in }
-    analyticsManager?.track(event: Event.transactionList)
-  }
-
-  func closeTapped() {
-    router?.close()
-  }
-
-  func reloadData() {
-    fetchTransactions(showLoadingSpinner: false, clearCurrent: true) { _ in }
-  }
-
-  func loadMoreTransactions(completion: @escaping (_ noMoreTransactions: Bool) -> Void) {
-    fetchTransactions(showLoadingSpinner: false, clearCurrent: false) { transactionsLoaded in
-      completion(transactionsLoaded == 0)
+    init(config: TransactionListModuleConfig, transactionListEvents: TransactionListEvents? = nil) {
+        self.config = config
+        self.transactionListEvents = transactionListEvents
     }
-  }
 
-  func transactionSelected(_ transaction: Transaction) {
-    transactionListEvents?.onTapOnTransaction?(transaction)
-    router?.showDetails(of: transaction)
-  }
+    func viewLoaded() {
+        let title = config.categoryId?.name ?? "transactions.list.title".podLocalized()
+        viewModel.title.send(title)
+        fetchTransactions(showLoadingSpinner: true, clearCurrent: true) { _ in }
+        analyticsManager?.track(event: Event.transactionList)
+    }
 
-  // MARK: - Private methods
-  private func fetchTransactions(showLoadingSpinner: Bool,
-                                 clearCurrent: Bool,
-                                 completion: @escaping (_ transactionsLoaded: Int) -> Void) {
-    if showLoadingSpinner {
-      router?.showLoadingSpinner()
+    func closeTapped() {
+        router?.close()
     }
-    if clearCurrent {
-      lastTransactionId = nil
+
+    func reloadData() {
+        fetchTransactions(showLoadingSpinner: false, clearCurrent: true) { _ in }
     }
-    interactor?.fetchTransactions(filters: fetchTransactionFilters) { [weak self] result in
-      if showLoadingSpinner {
-        self?.router?.hideLoadingSpinner()
-      }
-      switch result {
-      case .failure(let error):
-        self?.router?.show(error: error)
-        completion(0)
-      case .success(let transactions):
-        if clearCurrent {
-          self?.viewModel.transactions.removeAllItemsAndSections()
+
+    func loadMoreTransactions(completion: @escaping (_ noMoreTransactions: Bool) -> Void) {
+        fetchTransactions(showLoadingSpinner: false, clearCurrent: false) { transactionsLoaded in
+            completion(transactionsLoaded == 0)
         }
-        self?.updateViewModel(with: transactions)
-        completion(transactions.count)
-      }
     }
-  }
 
-  private func updateViewModel(with transactions: [Transaction]) {
-    if let lastTransaction = transactions.last {
-      self.lastTransactionId = lastTransaction.transactionId
+    func transactionSelected(_ transaction: Transaction) {
+        transactionListEvents?.onTapOnTransaction?(transaction)
+        router?.showDetails(of: transaction)
     }
-    else {
-      return
+
+    // MARK: - Private methods
+
+    private func fetchTransactions(showLoadingSpinner: Bool,
+                                   clearCurrent: Bool,
+                                   completion: @escaping (_ transactionsLoaded: Int) -> Void)
+    {
+        if showLoadingSpinner {
+            router?.showLoadingSpinner()
+        }
+        if clearCurrent {
+            lastTransactionId = nil
+        }
+        interactor?.fetchTransactions(filters: fetchTransactionFilters) { [weak self] result in
+            if showLoadingSpinner {
+                self?.router?.hideLoadingSpinner()
+            }
+            switch result {
+            case let .failure(error):
+                self?.router?.show(error: error)
+                completion(0)
+            case let .success(transactions):
+                if clearCurrent {
+                    self?.viewModel.transactions.removeAllItemsAndSections()
+                }
+                self?.updateViewModel(with: transactions)
+                completion(transactions.count)
+            }
+        }
     }
-    var sections = viewModel.transactions.tree.sections.map { return $0.metadata }
-    transactions.forEach { transaction in
-      append(transaction: transaction, to: &sections)
+
+    private func updateViewModel(with transactions: [Transaction]) {
+        if let lastTransaction = transactions.last {
+            lastTransactionId = lastTransaction.transactionId
+        } else {
+            return
+        }
+        var sections = viewModel.transactions.tree.sections.map { $0.metadata }
+        transactions.forEach { transaction in
+            append(transaction: transaction, to: &sections)
+        }
     }
-  }
 
-  private var firstTransactionMonthPerYear = [Int: Int]()
+    private var firstTransactionMonthPerYear = [Int: Int]()
 
-  private func append(transaction: Transaction, to sections: inout [String]) {
-    let transactionYear = transaction.createdAt.year
-    let transactionMonth = transaction.createdAt.month
-    if firstTransactionMonthPerYear[transactionYear] == nil {
-      firstTransactionMonthPerYear[transactionYear] = transactionMonth
+    private func append(transaction: Transaction, to sections: inout [String]) {
+        let transactionYear = transaction.createdAt.year
+        let transactionMonth = transaction.createdAt.month
+        if firstTransactionMonthPerYear[transactionYear] == nil {
+            firstTransactionMonthPerYear[transactionYear] = transactionMonth
+        }
+        let isFirstMonthOfTheYearWithTransaction = firstTransactionMonthPerYear[transactionYear] == transactionMonth
+        let sectionName = section(for: transaction, includeYearNumber: isFirstMonthOfTheYearWithTransaction)
+        if let indexOfSection = sections.firstIndex(of: sectionName) {
+            viewModel.transactions.appendItem(transaction, toSectionAt: indexOfSection)
+        } else {
+            sections.append(sectionName)
+            let section = Array2D<String, Transaction>(sectionsWithItems: [(sectionName, [transaction])])[sectionAt: 0]
+            viewModel.transactions.appendSection(section)
+        }
     }
-    let isFirstMonthOfTheYearWithTransaction = firstTransactionMonthPerYear[transactionYear] == transactionMonth
-    let sectionName = section(for: transaction, includeYearNumber: isFirstMonthOfTheYearWithTransaction)
-    if let indexOfSection = sections.firstIndex(of: sectionName) {
-      viewModel.transactions.appendItem(transaction, toSectionAt: indexOfSection)
+
+    private func section(for transaction: Transaction, includeYearNumber: Bool) -> String {
+        let formatter = includeYearNumber ? yearDateFormatter : dateFormatter
+        return formatter.string(from: transaction.createdAt)
     }
-    else {
-      sections.append(sectionName)
-      let section = Array2D<String, Transaction>(sectionsWithItems: [(sectionName, [transaction])])[sectionAt: 0]
-      viewModel.transactions.appendSection(section)
+
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM"
+        return formatter
+    }()
+
+    private lazy var yearDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM, yyyy"
+        return formatter
+    }()
+
+    private var fetchTransactionFilters: TransactionListFilters {
+        return TransactionListFilters(rows: rowsPerPage,
+                                      lastTransactionId: lastTransactionId,
+                                      startDate: config.startDate,
+                                      endDate: config.endDate,
+                                      mccCode: config.categoryId?.rawValue)
     }
-  }
-
-  private func section(for transaction: Transaction, includeYearNumber: Bool) -> String {
-    let formatter = includeYearNumber ? yearDateFormatter : dateFormatter
-    return formatter.string(from: transaction.createdAt)
-  }
-
-  private lazy var dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "MMMM"
-    return formatter
-  }()
-
-  private lazy var yearDateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "MMMM, yyyy"
-    return formatter
-  }()
-
-  private var fetchTransactionFilters: TransactionListFilters {
-    return TransactionListFilters(rows: rowsPerPage,
-                                  lastTransactionId: lastTransactionId,
-                                  startDate: config.startDate,
-                                  endDate: config.endDate,
-                                  mccCode: config.categoryId?.rawValue)
-  }
 }

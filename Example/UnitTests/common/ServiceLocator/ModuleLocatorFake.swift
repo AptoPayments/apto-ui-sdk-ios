@@ -10,261 +10,290 @@ import AptoSDK
 @testable import AptoUISDK
 
 class ModuleLocatorFake: ModuleLocatorProtocol {
+    private unowned let serviceLocator: ServiceLocatorProtocol
 
-  private unowned let serviceLocator: ServiceLocatorProtocol
+    init(serviceLocator: ServiceLocatorProtocol) {
+        self.serviceLocator = serviceLocator
+    }
 
-  init(serviceLocator: ServiceLocatorProtocol) {
-    self.serviceLocator = serviceLocator
-  }
+    lazy var fullScreenDisclaimerModuleSpy: FullScreenDisclaimerModuleSpy = {
+        FullScreenDisclaimerModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var fullScreenDisclaimerModuleSpy: FullScreenDisclaimerModuleSpy = {
-    return FullScreenDisclaimerModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func fullScreenDisclaimerModule(disclaimer: Content,
-                                  disclaimerTitle: String,
-                                  callToActionTitle: String,
-                                  cancelActionTitle: String) -> FullScreenDisclaimerModuleProtocol {
-    return fullScreenDisclaimerModuleSpy
-  }
+    func fullScreenDisclaimerModule(disclaimer _: Content,
+                                    disclaimerTitle _: String,
+                                    callToActionTitle _: String,
+                                    cancelActionTitle _: String) -> FullScreenDisclaimerModuleProtocol
+    {
+        return fullScreenDisclaimerModuleSpy
+    }
 
-  lazy var countrySelectorModuleSpy: CountrySelectorModuleSpy = {
-    return CountrySelectorModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func countrySelectorModule(countries: [Country]) -> CountrySelectorModuleProtocol {
-    return countrySelectorModuleSpy
-  }
+    lazy var countrySelectorModuleSpy: CountrySelectorModuleSpy = {
+        CountrySelectorModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  func authModule(authConfig: AuthModuleConfig,
-                  initialUserData: DataPointList, initializationData: InitializationData?) -> AuthModuleProtocol {
-    return AuthModule(serviceLocator: serviceLocator,
-                      config: authConfig,
-                      initialUserData: initialUserData, initializationData: initializationData)
-  }
+    func countrySelectorModule(countries _: [Country]) -> CountrySelectorModuleProtocol {
+        return countrySelectorModuleSpy
+    }
 
-  lazy var externalOauthModuleFake: ExternalOAuthModuleFake = {
-    return ExternalOAuthModuleFake(serviceLocator: serviceLocator)
-  }()
-  func externalOAuthModule(config: ExternalOAuthModuleConfig, uiConfig: UIConfig) -> ExternalOAuthModuleProtocol {
-    return externalOauthModuleFake
-  }
+    func authModule(authConfig: AuthModuleConfig,
+                    initialUserData: DataPointList, initializationData: InitializationData?) -> AuthModuleProtocol
+    {
+        return AuthModule(serviceLocator: serviceLocator,
+                          config: authConfig,
+                          initialUserData: initialUserData, initializationData: initializationData)
+    }
 
-  // MARK: - Biometrics
-  lazy var createPasscodeModuleSpy: CreatePasscodeModuleSpy = {
-    return CreatePasscodeModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func createPasscodeModule() -> CreatePasscodeModuleProtocol {
-    return createPasscodeModuleSpy
-  }
+    lazy var externalOauthModuleFake: ExternalOAuthModuleFake = {
+        ExternalOAuthModuleFake(serviceLocator: serviceLocator)
+    }()
 
-  lazy var verifyPasscodeModuleSpy: VerifyPasscodeModuleSpy = {
-    return VerifyPasscodeModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func verifyPasscodeModule() -> VerifyPasscodeModuleProtocol {
-    return verifyPasscodeModuleSpy
-  }
+    func externalOAuthModule(config _: ExternalOAuthModuleConfig, uiConfig _: UIConfig) -> ExternalOAuthModuleProtocol {
+        return externalOauthModuleFake
+    }
 
-  lazy var changePasscodeModuleSpy: ChangePasscodeModuleSpy = {
-    return ChangePasscodeModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func changePasscodeModule() -> ChangePasscodeModuleProtocol {
-    return changePasscodeModuleSpy
-  }
+    // MARK: - Biometrics
 
-  lazy var biometricPermissionModuleFake = BiometricPermissionModuleFake(serviceLocator: serviceLocator)
-  func biometricPermissionModule() -> BiometricPermissionModuleProtocol {
-    return biometricPermissionModuleFake
-  }
+    lazy var createPasscodeModuleSpy: CreatePasscodeModuleSpy = {
+        CreatePasscodeModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  func cardProductSelectorModule() -> CardProductSelectorModuleProtocol {
-    Swift.fatalError("cardProductSelectorModule() has not been implemented")
-  }
+    func createPasscodeModule() -> CreatePasscodeModuleProtocol {
+        return createPasscodeModuleSpy
+    }
 
-  lazy var verifyPhoneModuleSpy: VerifyPhoneModuleSpy = {
-    return VerifyPhoneModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func verifyPhoneModule(verificationType: VerificationParams<PhoneNumber, Verification>) -> VerifyPhoneModuleProtocol {
-    return verifyPhoneModuleSpy
-  }
+    lazy var verifyPasscodeModuleSpy: VerifyPasscodeModuleSpy = {
+        VerifyPasscodeModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var verifyEmailModuleSpy: VerifyEmailModuleSpy = {
-    return VerifyEmailModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func verifyEmailModule(verificationType: VerificationParams<Email, Verification>) -> VerifyEmailModuleProtocol {
-    return verifyEmailModuleSpy
-  }
+    func verifyPasscodeModule() -> VerifyPasscodeModuleProtocol {
+        return verifyPasscodeModuleSpy
+    }
 
-  lazy var verifyBirthDateModuleSpy: VerifyBirthDateModuleSpy = {
-    return VerifyBirthDateModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func verifyBirthDateModule(verificationType: VerificationParams<BirthDate, Verification>)
-      -> VerifyBirthDateModuleProtocol {
-    return verifyBirthDateModuleSpy
-  }
+    lazy var changePasscodeModuleSpy: ChangePasscodeModuleSpy = {
+        ChangePasscodeModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  func userDataCollectorModule(userRequiredData: RequiredDataPointList,
-                               mode: UserDataCollectorFinalStepMode,
-                               backButtonMode: UIViewControllerLeftButtonMode) -> UserDataCollectorModule {
-    Swift.fatalError("userDataCollectorModule(...) has not been implemented")
-  }
+    func changePasscodeModule() -> ChangePasscodeModuleProtocol {
+        return changePasscodeModuleSpy
+    }
 
-  lazy var selectBalanceStoreModuleSpy: SelectBalanceStoreModuleProtocol = {
-      return SelectBalanceStoreModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func selectBalanceStoreModule(application: CardApplication) -> SelectBalanceStoreModuleProtocol {
-    return selectBalanceStoreModuleSpy
-  }
+    lazy var biometricPermissionModuleFake = BiometricPermissionModuleFake(serviceLocator: serviceLocator)
+    func biometricPermissionModule() -> BiometricPermissionModuleProtocol {
+        return biometricPermissionModuleFake
+    }
 
-  lazy var showDisclaimerActionModuleSpy: ShowDisclaimerActionModuleProtocol = {
-    return ShowDisclaimerActionModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func showDisclaimerActionModule(workflowObject: WorkflowObject,
-                                  workflowAction: WorkflowAction) -> ShowDisclaimerActionModuleProtocol {
-    return showDisclaimerActionModuleSpy
-  }
+    func cardProductSelectorModule() -> CardProductSelectorModuleProtocol {
+        Swift.fatalError("cardProductSelectorModule() has not been implemented")
+    }
 
-  func verifyDocumentModule(workflowObject: WorkflowObject?) -> VerifyDocumentModule {
-    Swift.fatalError("verifyDocumentModule(workflowObject:) has not been implemented")
-  }
+    lazy var verifyPhoneModuleSpy: VerifyPhoneModuleSpy = {
+        VerifyPhoneModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var issueCardModuleSpy: IssueCardModuleSpy = {
-    return IssueCardModuleSpy(serviceLocator: serviceLocator)
-  }()
-    func issueCardModule(application: CardApplication, initializationData: InitializationData?) -> UIModuleProtocol {
-    return issueCardModuleSpy
-  }
+    func verifyPhoneModule(verificationType _: VerificationParams<PhoneNumber, Verification>) -> VerifyPhoneModuleProtocol {
+        return verifyPhoneModuleSpy
+    }
 
-  lazy var waitListModuleSpy: WaitListModuleSpy = {
-    return WaitListModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func waitListModule(application: CardApplication) -> WaitListModuleProtocol {
-    return waitListModuleSpy
-  }
+    lazy var verifyEmailModuleSpy: VerifyEmailModuleSpy = {
+        VerifyEmailModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var cardWaitListModuleSpy: CardWaitListModuleSpy = {
-    return CardWaitListModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func cardWaitListModule(card: Card) -> CardWaitListModuleProtocol {
-    return cardWaitListModuleSpy
-  }
+    func verifyEmailModule(verificationType _: VerificationParams<Email, Verification>) -> VerifyEmailModuleProtocol {
+        return verifyEmailModuleSpy
+    }
 
-  lazy var serverMaintenanceErrorModuleSpy: ServerMaintenanceErrorModuleSpy = {
-    return ServerMaintenanceErrorModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func serverMaintenanceErrorModule() -> ServerMaintenanceErrorModuleProtocol {
-    return serverMaintenanceErrorModuleSpy
-  }
+    lazy var verifyBirthDateModuleSpy: VerifyBirthDateModuleSpy = {
+        VerifyBirthDateModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  func accountSettingsModule() -> UIModuleProtocol {
-    Swift.fatalError("accountSettingsModule() has not been implemented")
-  }
+    func verifyBirthDateModule(verificationType _: VerificationParams<BirthDate, Verification>)
+        -> VerifyBirthDateModuleProtocol
+    {
+        return verifyBirthDateModuleSpy
+    }
 
-  lazy var contentPresenterModuleSpy: ContentPresenterModuleSpy = {
-    return ContentPresenterModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func contentPresenterModule(content: Content, title: String) -> ContentPresenterModuleProtocol {
-    return contentPresenterModuleSpy
-  }
+    func userDataCollectorModule(userRequiredData _: RequiredDataPointList,
+                                 mode _: UserDataCollectorFinalStepMode,
+                                 backButtonMode _: UIViewControllerLeftButtonMode) -> UserDataCollectorModule
+    {
+        Swift.fatalError("userDataCollectorModule(...) has not been implemented")
+    }
 
-  lazy var dataConfirmationModuleSpy: DataConfirmationModuleSpy = {
-    return DataConfirmationModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func dataConfirmationModule(userData: DataPointList) -> DataConfirmationModuleProtocol {
-    return dataConfirmationModuleSpy
-  }
+    lazy var selectBalanceStoreModuleSpy: SelectBalanceStoreModuleProtocol = {
+        SelectBalanceStoreModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var webBrowserModuleSpy: WebBrowserModuleSpy = {
-    return WebBrowserModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func webBrowserModule(url: URL, headers: [String: String]? = nil, alternativeTitle: String?) -> UIModuleProtocol {
-    return webBrowserModuleSpy
-  }
+    func selectBalanceStoreModule(application _: CardApplication) -> SelectBalanceStoreModuleProtocol {
+        return selectBalanceStoreModuleSpy
+    }
 
-  // MARK: - Manage card
-  func manageCardModule(card: Card, mode: AptoUISDKMode) -> UIModuleProtocol {
-    Swift.fatalError("manageCardModule(card:mode:) has not been implemented")
-  }
+    lazy var showDisclaimerActionModuleSpy: ShowDisclaimerActionModuleProtocol = {
+        ShowDisclaimerActionModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  func fundingSourceSelector(card: Card) -> FundingSourceSelectorModuleProtocol {
-    Swift.fatalError("fundingSourceSelector(card:) has not been implemented")
-  }
+    func showDisclaimerActionModule(workflowObject _: WorkflowObject,
+                                    workflowAction _: WorkflowAction) -> ShowDisclaimerActionModuleProtocol
+    {
+        return showDisclaimerActionModuleSpy
+    }
 
-  func cardSettingsModule(card: Card) -> CardSettingsModuleProtocol {
-    Swift.fatalError("cardSettingsModule(card:) has not been implemented")
-  }
+    func verifyDocumentModule(workflowObject _: WorkflowObject?) -> VerifyDocumentModule {
+        Swift.fatalError("verifyDocumentModule(workflowObject:) has not been implemented")
+    }
 
-  lazy var cardMonthlyStatsModuleSpy: CardMonthlyStatsModuleSpy = {
-    return CardMonthlyStatsModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func cardMonthlyStatsModule(card: Card) -> CardMonthlyStatsModuleProtocol {
-    return cardMonthlyStatsModuleSpy
-  }
+    lazy var issueCardModuleSpy: IssueCardModuleSpy = {
+        IssueCardModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var transactionListModuleSpy: TransactionListModuleSpy = {
-    return TransactionListModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func transactionListModule(card: Card, config: TransactionListModuleConfig) -> TransactionListModuleProtocol {
-    return transactionListModuleSpy
-  }
+    func issueCardModule(application _: CardApplication, initializationData _: InitializationData?) -> UIModuleProtocol {
+        return issueCardModuleSpy
+    }
 
-  lazy var notificationPreferencesModuleSpy: NotificationPreferencesModuleSpy = {
-    return NotificationPreferencesModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func notificationPreferencesModule() -> NotificationPreferencesModuleProtocol {
-    return notificationPreferencesModuleSpy
-  }
+    lazy var waitListModuleSpy: WaitListModuleSpy = {
+        WaitListModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var setPinModuleSpy: SetCodeModuleSpy = {
-    return SetCodeModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func setPinModule(card: Card) -> SetCodeModuleProtocol {
-    return setPinModuleSpy
-  }
+    func waitListModule(application _: CardApplication) -> WaitListModuleProtocol {
+        return waitListModuleSpy
+    }
 
-  lazy var setPassCodeModuleSpy: SetCodeModuleSpy = {
-    return SetCodeModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func setPassCodeModule(card: Card, verification: Verification?) -> SetCodeModuleProtocol {
-    return setPassCodeModuleSpy
-  }
+    lazy var cardWaitListModuleSpy: CardWaitListModuleSpy = {
+        CardWaitListModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var voIPModuleSpy: VoIPModuleSpy = {
-    return VoIPModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func voIPModule(card: Card, actionSource: VoIPActionSource) -> VoIPModuleProtocol {
-    return voIPModuleSpy
-  }
+    func cardWaitListModule(card _: Card) -> CardWaitListModuleProtocol {
+        return cardWaitListModuleSpy
+    }
 
-  lazy var monthlyStatementsListModuleSpy: MonthlyStatementsListModuleSpy = {
-    return MonthlyStatementsListModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func monthlyStatementsList() -> MonthlyStatementsListModuleProtocol {
-    return monthlyStatementsListModuleSpy
-  }
+    lazy var serverMaintenanceErrorModuleSpy: ServerMaintenanceErrorModuleSpy = {
+        ServerMaintenanceErrorModuleSpy(serviceLocator: serviceLocator)
+    }()
 
-  lazy var monthlyStatementsReportModuleSpy: MonthlyStatementsReportModuleSpy = {
-    return MonthlyStatementsReportModuleSpy(serviceLocator: serviceLocator)
-  }()
-  func monthlyStatementsReportModule(month: Month) -> MonthlyStatementsReportModuleProtocol {
-    return monthlyStatementsReportModuleSpy
-  }
+    func serverMaintenanceErrorModule() -> ServerMaintenanceErrorModuleProtocol {
+        return serverMaintenanceErrorModuleSpy
+    }
 
-  // MARK: - Physical card activation
-  func physicalCardActivationModule(card: Card) -> PhysicalCardActivationModuleProtocol {
-    Swift.fatalError("physicalCardActivationModule(card:) has not been implemented")
-  }
+    func accountSettingsModule() -> UIModuleProtocol {
+        Swift.fatalError("accountSettingsModule() has not been implemented")
+    }
 
-  lazy var physicalCardActivationSucceedModuleFake: PhysicalCardActivationSucceedModuleFake = {
-    return PhysicalCardActivationSucceedModuleFake(serviceLocator: serviceLocator)
-  }()
-  func physicalCardActivationSucceedModule(card: Card) -> PhysicalCardActivationSucceedModuleProtocol {
-    return physicalCardActivationSucceedModuleFake
-  }
-    
+    lazy var contentPresenterModuleSpy: ContentPresenterModuleSpy = {
+        ContentPresenterModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func contentPresenterModule(content _: Content, title _: String) -> ContentPresenterModuleProtocol {
+        return contentPresenterModuleSpy
+    }
+
+    lazy var dataConfirmationModuleSpy: DataConfirmationModuleSpy = {
+        DataConfirmationModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func dataConfirmationModule(userData _: DataPointList) -> DataConfirmationModuleProtocol {
+        return dataConfirmationModuleSpy
+    }
+
+    lazy var webBrowserModuleSpy: WebBrowserModuleSpy = {
+        WebBrowserModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func webBrowserModule(url _: URL, headers _: [String: String]? = nil, alternativeTitle _: String?) -> UIModuleProtocol {
+        return webBrowserModuleSpy
+    }
+
+    // MARK: - Manage card
+
+    func manageCardModule(card _: Card, mode _: AptoUISDKMode) -> UIModuleProtocol {
+        Swift.fatalError("manageCardModule(card:mode:) has not been implemented")
+    }
+
+    func fundingSourceSelector(card _: Card) -> FundingSourceSelectorModuleProtocol {
+        Swift.fatalError("fundingSourceSelector(card:) has not been implemented")
+    }
+
+    func cardSettingsModule(card _: Card) -> CardSettingsModuleProtocol {
+        Swift.fatalError("cardSettingsModule(card:) has not been implemented")
+    }
+
+    lazy var cardMonthlyStatsModuleSpy: CardMonthlyStatsModuleSpy = {
+        CardMonthlyStatsModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func cardMonthlyStatsModule(card _: Card) -> CardMonthlyStatsModuleProtocol {
+        return cardMonthlyStatsModuleSpy
+    }
+
+    lazy var transactionListModuleSpy: TransactionListModuleSpy = {
+        TransactionListModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func transactionListModule(card _: Card, config _: TransactionListModuleConfig) -> TransactionListModuleProtocol {
+        return transactionListModuleSpy
+    }
+
+    lazy var notificationPreferencesModuleSpy: NotificationPreferencesModuleSpy = {
+        NotificationPreferencesModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func notificationPreferencesModule() -> NotificationPreferencesModuleProtocol {
+        return notificationPreferencesModuleSpy
+    }
+
+    lazy var setPinModuleSpy: SetCodeModuleSpy = {
+        SetCodeModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    lazy var setPassCodeModuleSpy: SetCodeModuleSpy = {
+        SetCodeModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func setPassCodeModule(card _: Card, verification _: Verification?) -> SetCodeModuleProtocol {
+        return setPassCodeModuleSpy
+    }
+
+    lazy var voIPModuleSpy: VoIPModuleSpy = {
+        VoIPModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func voIPModule(card _: Card, actionSource _: VoIPActionSource) -> VoIPModuleProtocol {
+        return voIPModuleSpy
+    }
+
+    lazy var monthlyStatementsListModuleSpy: MonthlyStatementsListModuleSpy = {
+        MonthlyStatementsListModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func monthlyStatementsList() -> MonthlyStatementsListModuleProtocol {
+        return monthlyStatementsListModuleSpy
+    }
+
+    lazy var monthlyStatementsReportModuleSpy: MonthlyStatementsReportModuleSpy = {
+        MonthlyStatementsReportModuleSpy(serviceLocator: serviceLocator)
+    }()
+
+    func monthlyStatementsReportModule(month _: Month) -> MonthlyStatementsReportModuleProtocol {
+        return monthlyStatementsReportModuleSpy
+    }
+
+    // MARK: - Physical card activation
+
+    func physicalCardActivationModule(card _: Card) -> PhysicalCardActivationModuleProtocol {
+        Swift.fatalError("physicalCardActivationModule(card:) has not been implemented")
+    }
+
+    lazy var physicalCardActivationSucceedModuleFake: PhysicalCardActivationSucceedModuleFake = {
+        PhysicalCardActivationSucceedModuleFake(serviceLocator: serviceLocator)
+    }()
+
+    func physicalCardActivationSucceedModule(card _: Card) -> PhysicalCardActivationSucceedModuleProtocol {
+        return physicalCardActivationSucceedModuleFake
+    }
+
     func showACHAccountAgreements(disclaimer: Content, cardId: String) -> ShowAgreementModule {
         return ShowAgreementModule(serviceLocator: serviceLocator,
                                    cardId: cardId, disclaimer: disclaimer,
                                    actionConfirmer: UIAlertController.self,
                                    analyticsManager: nil)
     }
-
 }

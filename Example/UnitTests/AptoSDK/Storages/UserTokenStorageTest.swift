@@ -5,174 +5,177 @@
 //  Created by Takeichi Kanzaki on 24/03/2020.
 //
 
-import XCTest
 @testable import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class UserTokenStorageTest: XCTestCase {
-  private var sut: UserTokenStorage! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: UserTokenStorage! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let notificationHandler = NotificationHandlerFake()
-  private let keychain = InMemoryKeychain()
-  private let token = "token"
-  private let primaryCredential = DataPointType.phoneNumber
-  private let secondaryCredential = DataPointType.email
-  private let tokenKey = "com.aptopayments.user.token"
+    // Collaborators
+    private let notificationHandler = NotificationHandlerFake()
+    private let keychain = InMemoryKeychain()
+    private let token = "token"
+    private let primaryCredential = DataPointType.phoneNumber
+    private let secondaryCredential = DataPointType.email
+    private let tokenKey = "com.aptopayments.user.token"
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = UserTokenStorage(notificationHandler: notificationHandler, keychain: keychain)
-  }
+        sut = UserTokenStorage(notificationHandler: notificationHandler, keychain: keychain)
+    }
 
-  // MARK: - Notifications
-  func testSetTokenRegisterForNotifications() {
-    // Then
-    XCTAssertTrue(notificationHandler.addObserverCalled)
-  }
+    // MARK: - Notifications
 
-  func testSessionTokenExpiredNotificationClearCurrentSession() {
-    // Given
-    givenCurrentToken()
-    XCTAssertNotNil(sut.currentToken())
-    XCTAssertNotNil(keychain.value(for: tokenKey))
+    func testSetTokenRegisterForNotifications() {
+        // Then
+        XCTAssertTrue(notificationHandler.addObserverCalled)
+    }
 
-    // When
-    notificationHandler.postNotification(.UserTokenSessionExpiredNotification)
+    func testSessionTokenExpiredNotificationClearCurrentSession() {
+        // Given
+        givenCurrentToken()
+        XCTAssertNotNil(sut.currentToken())
+        XCTAssertNotNil(keychain.value(for: tokenKey))
 
-    // Then
-    XCTAssertNil(sut.currentToken())
-    XCTAssertNil(keychain.value(for: tokenKey))
-  }
+        // When
+        notificationHandler.postNotification(.UserTokenSessionExpiredNotification)
 
-  func testSessionTokenInvalidNotificationClearCurrentSession() {
-    // Given
-    givenCurrentToken()
-    XCTAssertNotNil(sut.currentToken())
-    XCTAssertNotNil(keychain.value(for: tokenKey))
+        // Then
+        XCTAssertNil(sut.currentToken())
+        XCTAssertNil(keychain.value(for: tokenKey))
+    }
 
-    // When
-    notificationHandler.postNotification(.UserTokenSessionInvalidNotification)
+    func testSessionTokenInvalidNotificationClearCurrentSession() {
+        // Given
+        givenCurrentToken()
+        XCTAssertNotNil(sut.currentToken())
+        XCTAssertNotNil(keychain.value(for: tokenKey))
 
-    // Then
-    XCTAssertNil(sut.currentToken())
-    XCTAssertNil(keychain.value(for: tokenKey))
-  }
+        // When
+        notificationHandler.postNotification(.UserTokenSessionInvalidNotification)
 
-  func testSessionTokenClosedNotificationClearCurrentSession() {
-    // Given
-    givenCurrentToken()
-    XCTAssertNotNil(sut.currentToken())
-    XCTAssertNotNil(keychain.value(for: tokenKey))
+        // Then
+        XCTAssertNil(sut.currentToken())
+        XCTAssertNil(keychain.value(for: tokenKey))
+    }
 
-    // When
-    notificationHandler.postNotification(.UserTokenSessionClosedNotification)
+    func testSessionTokenClosedNotificationClearCurrentSession() {
+        // Given
+        givenCurrentToken()
+        XCTAssertNotNil(sut.currentToken())
+        XCTAssertNotNil(keychain.value(for: tokenKey))
 
-    // Then
-    XCTAssertNil(sut.currentToken())
-    XCTAssertNil(keychain.value(for: tokenKey))
-  }
+        // When
+        notificationHandler.postNotification(.UserTokenSessionClosedNotification)
 
-  // MARK: - Token handling
-  func testSetCurrentTokenPersistTokenToKeychain() {
-    // When
-    givenCurrentToken()
+        // Then
+        XCTAssertNil(sut.currentToken())
+        XCTAssertNil(keychain.value(for: tokenKey))
+    }
 
-    // Then
-    XCTAssertNotNil(keychain.value(for: tokenKey))
-  }
+    // MARK: - Token handling
 
-  func testSetCurrentTokenCurrrentTokenReturnToken() {
-    // Given
-    givenCurrentToken()
+    func testSetCurrentTokenPersistTokenToKeychain() {
+        // When
+        givenCurrentToken()
 
-    // When
-    let currentToken = sut.currentToken()
+        // Then
+        XCTAssertNotNil(keychain.value(for: tokenKey))
+    }
 
-    // Then
-    XCTAssertEqual(token, currentToken)
-  }
+    func testSetCurrentTokenCurrrentTokenReturnToken() {
+        // Given
+        givenCurrentToken()
 
-  func testSetCurrentTokenPrimaryCredentialReturnPrimaryCredential() {
-    // Given
-    givenCurrentToken()
+        // When
+        let currentToken = sut.currentToken()
 
-    // When
-    let credential = sut.currentTokenPrimaryCredential()
+        // Then
+        XCTAssertEqual(token, currentToken)
+    }
 
-    // Then
-    XCTAssertEqual(primaryCredential, credential)
-  }
+    func testSetCurrentTokenPrimaryCredentialReturnPrimaryCredential() {
+        // Given
+        givenCurrentToken()
 
-  func testSetCurrentTokenSecondaryCredentialReturnSecondaryCredential() {
-    // Given
-    givenCurrentToken()
+        // When
+        let credential = sut.currentTokenPrimaryCredential()
 
-    // When
-    let credential = sut.currentTokenSecondaryCredential()
+        // Then
+        XCTAssertEqual(primaryCredential, credential)
+    }
 
-    // Then
-    XCTAssertEqual(secondaryCredential, credential)
-  }
+    func testSetCurrentTokenSecondaryCredentialReturnSecondaryCredential() {
+        // Given
+        givenCurrentToken()
 
-  func testCurrentTokenLoadTokenFromKeychain() {
-    // Given
-    let data = currentTokenPersistedData()
-    keychain.save(value: data, for: tokenKey)
+        // When
+        let credential = sut.currentTokenSecondaryCredential()
 
-    // When
-    let currentToken = sut.currentToken()
+        // Then
+        XCTAssertEqual(secondaryCredential, credential)
+    }
 
-    // Then
-    XCTAssertEqual(token, currentToken)
-  }
+    func testCurrentTokenLoadTokenFromKeychain() {
+        // Given
+        let data = currentTokenPersistedData()
+        keychain.save(value: data, for: tokenKey)
 
-  func testPrimaryCredentialLoadCredentialFromKeychain() {
-    // Given
-    let data = currentTokenPersistedData()
-    keychain.save(value: data, for: tokenKey)
+        // When
+        let currentToken = sut.currentToken()
 
-    // When
-    let credential = sut.currentTokenPrimaryCredential()
+        // Then
+        XCTAssertEqual(token, currentToken)
+    }
 
-    // Then
-    XCTAssertEqual(primaryCredential, credential)
-  }
+    func testPrimaryCredentialLoadCredentialFromKeychain() {
+        // Given
+        let data = currentTokenPersistedData()
+        keychain.save(value: data, for: tokenKey)
 
-  func testSecondaryCredentialLoadCredentialFromKeychain() {
-    // Given
-    let data = currentTokenPersistedData()
-    keychain.save(value: data, for: tokenKey)
+        // When
+        let credential = sut.currentTokenPrimaryCredential()
 
-    // When
-    let credential = sut.currentTokenSecondaryCredential()
+        // Then
+        XCTAssertEqual(primaryCredential, credential)
+    }
 
-    // Then
-    XCTAssertEqual(secondaryCredential, credential)
-  }
+    func testSecondaryCredentialLoadCredentialFromKeychain() {
+        // Given
+        let data = currentTokenPersistedData()
+        keychain.save(value: data, for: tokenKey)
 
-  func testClearCurrentTokenRemoveValueFromKeychain() {
-    // Given
-    givenCurrentToken()
+        // When
+        let credential = sut.currentTokenSecondaryCredential()
 
-    // When
-    sut.clearCurrentToken()
+        // Then
+        XCTAssertEqual(secondaryCredential, credential)
+    }
 
-    // Then
-    XCTAssertNil(keychain.value(for: tokenKey))
-    XCTAssertNil(sut.currentToken())
-  }
+    func testClearCurrentTokenRemoveValueFromKeychain() {
+        // Given
+        givenCurrentToken()
 
-  // MARK: - Helpers
-  private func givenCurrentToken() {
-    sut.setCurrent(token: token, withPrimaryCredential: primaryCredential, andSecondaryCredential: secondaryCredential)
-  }
+        // When
+        sut.clearCurrentToken()
 
-  private func currentTokenPersistedData() -> Data? {
-    givenCurrentToken()
-    let data = keychain.value(for: tokenKey)
-    sut.clearCurrentToken()
-    return data
-  }
+        // Then
+        XCTAssertNil(keychain.value(for: tokenKey))
+        XCTAssertNil(sut.currentToken())
+    }
+
+    // MARK: - Helpers
+
+    private func givenCurrentToken() {
+        sut.setCurrent(token: token, withPrimaryCredential: primaryCredential, andSecondaryCredential: secondaryCredential)
+    }
+
+    private func currentTokenPersistedData() -> Data? {
+        givenCurrentToken()
+        let data = keychain.value(for: tokenKey)
+        sut.clearCurrentToken()
+        return data
+    }
 }

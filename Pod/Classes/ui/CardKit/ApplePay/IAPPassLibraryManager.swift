@@ -11,7 +11,7 @@ import PassKit
 public struct PassLibraryItem {
     let cardLastFourDigits: String
     let deviceAccountIdentifier: String
-    
+
     public init(cardLastFourDigits: String, deviceAccountIdentifier: String) {
         self.cardLastFourDigits = cardLastFourDigits
         self.deviceAccountIdentifier = deviceAccountIdentifier
@@ -26,22 +26,23 @@ public protocol InAppPassLibrary {
 
 public class IAPPassLibraryManager: InAppPassLibrary {
     public init() {}
-    
+
     public func isPassKitAvailable() -> Bool {
         PKPassLibrary.isPassLibraryAvailable()
     }
-    
+
     public func passes() -> [PassLibraryItem] {
         guard PKPassLibrary.isPassLibraryAvailable() else { return [] }
         return passes().compactMap(map(pkpass:))
     }
-    
+
     public func remotePasses() -> [PassLibraryItem] {
         guard PKPassLibrary.isPassLibraryAvailable() else { return [] }
         return remotePasses().compactMap(map(pkpass:))
     }
-    
+
     // MARK: Private methods
+
     private func passes() -> [PKPass] {
         let passLibrary = PKPassLibrary()
         if #available(iOS 13.4, *) {
@@ -72,8 +73,8 @@ public class IAPPassLibraryManager: InAppPassLibrary {
     }
 
     private func map(pkpass: PKPass) -> PassLibraryItem? {
-        guard let dai = self.deviceAccountIdentifier(for: pkpass) else { return nil }
-        guard let lastFourDigits = self.cardLastFourDigits(for: pkpass) else { return nil }
+        guard let dai = deviceAccountIdentifier(for: pkpass) else { return nil }
+        guard let lastFourDigits = cardLastFourDigits(for: pkpass) else { return nil }
         return PassLibraryItem(cardLastFourDigits: lastFourDigits, deviceAccountIdentifier: dai)
     }
 }

@@ -9,31 +9,31 @@
 import Foundation
 
 class ListSeparatorCellController: CellController {
-  private let backgroundColor: UIColor
-  private let height: CGFloat
+    private let backgroundColor: UIColor
+    private let height: CGFloat
 
-  init(backgroundColor: UIColor, height: CGFloat) {
-    self.backgroundColor = backgroundColor
-    self.height = height
-    super.init()
-  }
-
-  override func cellClass() -> AnyClass? {
-    return ListSeparatorCell.classForCoder()
-  }
-
-  override func reuseIdentificator() -> String? {
-    return NSStringFromClass(ListSeparatorCell.classForCoder())
-  }
-
-  override func setupCell(_ cell: UITableViewCell) {
-    guard let cell = cell as? ListSeparatorCell else {
-      return
+    init(backgroundColor: UIColor, height: CGFloat) {
+        self.backgroundColor = backgroundColor
+        self.height = height
+        super.init()
     }
-    cell.contentView.snp.makeConstraints { make in
-      make.height.equalTo(self.height)
+
+    override func cellClass() -> AnyClass? {
+        return ListSeparatorCell.classForCoder()
     }
-    cell.backgroundColor = self.backgroundColor
-    cell.contentView.backgroundColor = self.backgroundColor
-  }
+
+    override func reuseIdentificator() -> String? {
+        return NSStringFromClass(ListSeparatorCell.classForCoder())
+    }
+
+    override func setupCell(_ cell: UITableViewCell) {
+        guard let cell = cell as? ListSeparatorCell else {
+            return
+        }
+        cell.contentView.snp.makeConstraints { make in
+            make.height.equalTo(self.height)
+        }
+        cell.backgroundColor = backgroundColor
+        cell.contentView.backgroundColor = backgroundColor
+    }
 }

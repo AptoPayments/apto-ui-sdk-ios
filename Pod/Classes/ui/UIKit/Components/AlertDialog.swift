@@ -7,7 +7,7 @@
 
 import AptoSDK
 
-public final class AlertDialog {
+public enum AlertDialog {
     public static func showToast(to viewController: UIViewController, error: Error, uiConfig: UIConfig?) {
         let backgroundColor = uiConfig?.uiErrorColor ?? UIColor.colorFromHex(0xDC4337)
         let font = uiConfig?.fontProvider.mainItemRegularFont

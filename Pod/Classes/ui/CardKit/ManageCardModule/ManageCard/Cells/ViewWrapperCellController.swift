@@ -9,25 +9,25 @@
 import Foundation
 
 class ViewWrapperCellController: CellController {
-  private let view: UIView
+    private let view: UIView
 
-  init(view: UIView) {
-    self.view = view
-    super.init()
-  }
-
-  override func cellClass() -> AnyClass? {
-    return ViewWrapperCell.classForCoder()
-  }
-
-  override func reuseIdentificator() -> String? {
-    return NSStringFromClass(ViewWrapperCell.classForCoder())
-  }
-
-  override func setupCell(_ cell: UITableViewCell) {
-    guard let mainViewCell = cell as? ViewWrapperCell else {
-      return
+    init(view: UIView) {
+        self.view = view
+        super.init()
     }
-    mainViewCell.set(view: view)
-  }
+
+    override func cellClass() -> AnyClass? {
+        return ViewWrapperCell.classForCoder()
+    }
+
+    override func reuseIdentificator() -> String? {
+        return NSStringFromClass(ViewWrapperCell.classForCoder())
+    }
+
+    override func setupCell(_ cell: UITableViewCell) {
+        guard let mainViewCell = cell as? ViewWrapperCell else {
+            return
+        }
+        mainViewCell.set(view: view)
+    }
 }

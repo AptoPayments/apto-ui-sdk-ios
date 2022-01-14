@@ -5,69 +5,69 @@
 //  Created by Takeichi Kanzaki on 28/11/2019.
 //
 
-import XCTest
 @testable import AptoUISDK
+import XCTest
 
 class ChangePasscodeModuleTest: XCTestCase {
-  private var sut: ChangePasscodeModule! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var sut: ChangePasscodeModule! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = ChangePasscodeModule(serviceLocator: serviceLocator, actionConfirmer: ActionConfirmerFake.self)
-  }
-
-  func testInitializeCompleteSucceed() {
-    // When
-    sut.initialize { result in
-      // Then
-      XCTAssertTrue(result.isSuccess)
+        sut = ChangePasscodeModule(serviceLocator: serviceLocator, actionConfirmer: ActionConfirmerFake.self)
     }
-  }
 
-  func testInitializeSetUpPresenter() {
-    // Given
-    let presenter = serviceLocator.presenterLocatorFake.changePasscodePresenter()
+    func testInitializeCompleteSucceed() {
+        // When
+        sut.initialize { result in
+            // Then
+            XCTAssertTrue(result.isSuccess)
+        }
+    }
 
-    // When
-    sut.initialize { _ in }
+    func testInitializeSetUpPresenter() {
+        // Given
+        let presenter = serviceLocator.presenterLocatorFake.changePasscodePresenter()
 
-    // Then
-    XCTAssertNotNil(presenter.router)
-    XCTAssertNotNil(presenter.interactor)
-    XCTAssertNotNil(presenter.analyticsManager)
-  }
+        // When
+        sut.initialize { _ in }
 
-  func testShowForgotPasscode() {
-    // When
-    sut.showForgotPasscode()
+        // Then
+        XCTAssertNotNil(presenter.router)
+        XCTAssertNotNil(presenter.interactor)
+        XCTAssertNotNil(presenter.analyticsManager)
+    }
 
-    // Then
-    XCTAssertTrue(ActionConfirmerFake.confirmCalled)
-  }
+    func testShowForgotPasscode() {
+        // When
+        sut.showForgotPasscode()
 
-  func testShowPasscodeActionConfirmedCallLogout() {
-    // Given
-    ActionConfirmerFake.nextActionToExecute = .ok
+        // Then
+        XCTAssertTrue(ActionConfirmerFake.confirmCalled)
+    }
 
-    // When
-    sut.showForgotPasscode()
+    func testShowPasscodeActionConfirmedCallLogout() {
+        // Given
+        ActionConfirmerFake.nextActionToExecute = .ok
 
-    // Then
-    XCTAssertTrue(serviceLocator.platformFake.logoutCalled)
-  }
+        // When
+        sut.showForgotPasscode()
 
-  func testShowPasscodeActionCanceledLogoutNotCalled() {
-    // Given
-    ActionConfirmerFake.nextActionToExecute = .cancel
+        // Then
+        XCTAssertTrue(serviceLocator.platformFake.logoutCalled)
+    }
 
-    // When
-    sut.showForgotPasscode()
+    func testShowPasscodeActionCanceledLogoutNotCalled() {
+        // Given
+        ActionConfirmerFake.nextActionToExecute = .cancel
 
-    // Then
-    XCTAssertFalse(serviceLocator.platformFake.logoutCalled)
-  }
+        // When
+        sut.showForgotPasscode()
+
+        // Then
+        XCTAssertFalse(serviceLocator.platformFake.logoutCalled)
+    }
 }

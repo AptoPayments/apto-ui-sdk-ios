@@ -6,28 +6,27 @@
 //
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class KYCInteractor: KYCInteractorProtocol {
-  private let platform: AptoPlatformProtocol
-  private let card: Card
+    private let platform: AptoPlatformProtocol
+    private let card: Card
 
-  init(platform: AptoPlatformProtocol, card: Card) {
-    self.platform = platform
-    self.card = card
-  }
-
-  func provideKYCInfo(_ callback: @escaping Result<KYCState?, NSError>.Callback) {
-    platform.fetchCard(card.accountId, retrieveBalances: false) { result in
-      callback(result.flatMap { financialAccount -> Result<KYCState?, NSError> in
-        if let card = financialAccount as? Card {
-          return .success(card.kyc)
-        }
-        else {
-          return .success(nil)
-        }
-      })
+    init(platform: AptoPlatformProtocol, card: Card) {
+        self.platform = platform
+        self.card = card
     }
-  }
+
+    func provideKYCInfo(_ callback: @escaping Result<KYCState?, NSError>.Callback) {
+        platform.fetchCard(card.accountId, retrieveBalances: false) { result in
+            callback(result.flatMap { financialAccount -> Result<KYCState?, NSError> in
+                if let card = financialAccount as? Card {
+                    return .success(card.kyc)
+                } else {
+                    return .success(nil)
+                }
+            })
+        }
+    }
 }

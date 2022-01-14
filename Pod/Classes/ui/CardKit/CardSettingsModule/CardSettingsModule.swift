@@ -5,82 +5,84 @@
 //  Created by Ivan Oliver Martínez on 25/03/2018.
 //
 
-import UIKit
 import AptoSDK
 import Bond
 import ReactiveKit
+import UIKit
 
 class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
-  private let card: Card
-  private let caller: PhoneCallerProtocol
-  private var projectConfiguration: ProjectConfiguration! // swiftlint:disable:this implicitly_unwrapped_optional
-  private var presenter: CardSettingsPresenterProtocol?
-  private var contentPresenterModule: ContentPresenterModuleProtocol?
-  private let disposeBag = DisposeBag()
+    private let card: Card
+    private let caller: PhoneCallerProtocol
+    private var projectConfiguration: ProjectConfiguration! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var presenter: CardSettingsPresenterProtocol?
+    private var contentPresenterModule: ContentPresenterModuleProtocol?
+    private let disposeBag = DisposeBag()
 
-  weak var delegate: CardSettingsModuleDelegate?
+    weak var delegate: CardSettingsModuleDelegate?
 
-  public init(serviceLocator: ServiceLocatorProtocol, card: Card, phoneCaller: PhoneCallerProtocol) {
-    self.card = card
-    self.caller = phoneCaller
-    super.init(serviceLocator: serviceLocator)
-  }
-
-  override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
-    guard let cardProductId = card.cardProductId else {
-      return completion(.failure(ServiceError(code: .internalIncosistencyError)))
+    public init(serviceLocator: ServiceLocatorProtocol, card: Card, phoneCaller: PhoneCallerProtocol) {
+        self.card = card
+        caller = phoneCaller
+        super.init(serviceLocator: serviceLocator)
     }
-    platform.fetchContextConfiguration { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .failure(let error):
-        completion(.failure(error))
-      case .success(let contextConfiguration):
-        self.platform.fetchCardProduct(cardProductId: cardProductId) { [weak self] result in
-          guard let self = self else { return }
-          switch result {
-          case .failure(let error):
-            completion(.failure(error))
-          case .success(let cardProduct):
-            self.projectConfiguration = contextConfiguration.projectConfiguration
-            let viewController = self.buildShiftCardSettingsViewController(self.uiConfig, cardProduct: cardProduct,
-                                                                           card: self.card)
-            self.addChild(viewController: viewController, completion: completion)
-          }
+
+    override func initialize(completion: @escaping Result<UIViewController, NSError>.Callback) {
+        guard let cardProductId = card.cardProductId else {
+            return completion(.failure(ServiceError(code: .internalIncosistencyError)))
         }
-      }
+        platform.fetchContextConfiguration { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case let .success(contextConfiguration):
+                self.platform.fetchCardProduct(cardProductId: cardProductId) { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case let .failure(error):
+                        completion(.failure(error))
+                    case let .success(cardProduct):
+                        self.projectConfiguration = contextConfiguration.projectConfiguration
+                        let viewController = self.buildShiftCardSettingsViewController(self.uiConfig, cardProduct: cardProduct,
+                                                                                       card: self.card)
+                        self.addChild(viewController: viewController, completion: completion)
+                    }
+                }
+            }
+        }
     }
-  }
 
-  fileprivate func buildShiftCardSettingsViewController(_ uiConfig: UIConfig,
-                                                        cardProduct: CardProduct,
-                                                        card: Card) -> AptoViewController {
-    let isShowDetailedInfoEnabled = platform.isFeatureEnabled(.showDetailedCardActivityOption)
-    let isShowMonthlyStatementsEnabled = platform.isFeatureEnabled(.showMonthlyStatementsOption)
-    let presenterConfig = CardSettingsPresenterConfig(cardholderAgreement: cardProduct.cardholderAgreement,
-                                                      privacyPolicy: cardProduct.privacyPolicy,
-                                                      termsAndCondition: cardProduct.termsAndConditions,
-                                                      faq: cardProduct.faq,
-                                                      exchangeRates: cardProduct.exchangeRates,
-                                                      showDetailedCardActivity: isShowDetailedInfoEnabled,
-                                                      showMonthlyStatements: isShowMonthlyStatementsEnabled,
-                                                      iapRowTitle: iapCardSettingRowTitle())
-    let recipients = [self.projectConfiguration.supportEmailAddress]
-    let presenter = serviceLocator.presenterLocator.cardSettingsPresenter(card: card, config: presenterConfig,
-                                                                          emailRecipients: recipients,
-                                                                          uiConfig: uiConfig)
-    let interactor = serviceLocator.interactorLocator.cardSettingsInteractor()
-    let viewController = serviceLocator.viewLocator.cardSettingsView(presenter: presenter)
-    presenter.router = self
-    presenter.interactor = interactor
-    presenter.view = viewController
-    presenter.analyticsManager = serviceLocator.analyticsManager
-    self.presenter = presenter
-    return viewController
-  }
-    
+    fileprivate func buildShiftCardSettingsViewController(_ uiConfig: UIConfig,
+                                                          cardProduct: CardProduct,
+                                                          card: Card) -> AptoViewController
+    {
+        let isShowDetailedInfoEnabled = platform.isFeatureEnabled(.showDetailedCardActivityOption)
+        let isShowMonthlyStatementsEnabled = platform.isFeatureEnabled(.showMonthlyStatementsOption)
+        let presenterConfig = CardSettingsPresenterConfig(cardholderAgreement: cardProduct.cardholderAgreement,
+                                                          privacyPolicy: cardProduct.privacyPolicy,
+                                                          termsAndCondition: cardProduct.termsAndConditions,
+                                                          faq: cardProduct.faq,
+                                                          exchangeRates: cardProduct.exchangeRates,
+                                                          showDetailedCardActivity: isShowDetailedInfoEnabled,
+                                                          showMonthlyStatements: isShowMonthlyStatementsEnabled,
+                                                          iapRowTitle: iapCardSettingRowTitle())
+        let recipients = [projectConfiguration.supportEmailAddress]
+        let presenter = serviceLocator.presenterLocator.cardSettingsPresenter(card: card, config: presenterConfig,
+                                                                              emailRecipients: recipients,
+                                                                              uiConfig: uiConfig)
+        let interactor = serviceLocator.interactorLocator.cardSettingsInteractor()
+        let viewController = serviceLocator.viewLocator.cardSettingsView(presenter: presenter)
+        presenter.router = self
+        presenter.interactor = interactor
+        presenter.view = viewController
+        presenter.analyticsManager = serviceLocator.analyticsManager
+        self.presenter = presenter
+        return viewController
+    }
+
     private func dismissableContentPresenterModule(with content: Content,
-                                        title: String) -> ContentPresenterModuleProtocol {
+                                                   title: String) -> ContentPresenterModuleProtocol
+    {
         let module = serviceLocator.moduleLocator.contentPresenterModule(content: content, title: title)
         module.onClose = { [unowned self] _ in
             self.dismissModule {
@@ -89,7 +91,7 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
         }
         return module
     }
-    
+
     private func iapCardSettingRowTitle() -> String {
         let checker = IAPCardEnrolmentChecker()
         if checker.isCardEnrolledInPhoneWallet(lastFourDigits: card.lastFourDigits) == false {
@@ -103,110 +105,104 @@ class CardSettingsModule: UIModule, CardSettingsModuleProtocol {
 }
 
 extension CardSettingsModule: CardSettingsRouterProtocol {
-  func closeFromCardSettings() {
-    close()
-  }
-
-  func changeCardPin() {
-    let module = serviceLocator.moduleLocator.setPinModule(card: card)
-    module.onClose = { [weak self] _ in
-      self?.dismissModule {}
+    func closeFromCardSettings() {
+        close()
     }
-    module.onFinish = { [weak self] _ in
-      self?.dismissModule {}
-      self?.show(message: "manage_card.confirm_pin.pin_updated.message".podLocalized(),
-                 title: "manage_card.confirm_pin.pin_updated.title".podLocalized(), isError: false)
+
+    func changeCardPin() {
+        delegate?.setCardPin()
     }
-    present(module: module) { _ in }
-  }
 
-  func setPassCode() {
-    guard card.state == .active else {
-      self.show(message: "manage_card.confirm_pass_code.card_not_active.message".podLocalized(),
-                title: "manage_card.confirm_pass_code.card_not_active.title".podLocalized(), isError: false)
-      return
+    func setPassCode() {
+        guard card.state == .active else {
+            show(message: "manage_card.confirm_pass_code.card_not_active.message".podLocalized(),
+                 title: "manage_card.confirm_pass_code.card_not_active.title".podLocalized(), isError: false)
+            return
+        }
+        let viewModel = PassCodeOnboardingViewModel(card: card)
+        let viewController = PassCodeOnboardingViewController(viewModel: viewModel, uiConfig: uiConfig)
+        viewModel.navigator = PassCodeOnboardingNavigator(
+            from: viewController,
+            uiConfig: uiConfig,
+            serviceLocator: serviceLocator
+        )
+        let navigationController = UINavigationController(rootViewController: viewController)
+        present(viewController: navigationController, animated: true, embedInNavigationController: false) {}
+        viewModel.output.moduleState.observeNext { [weak self] state in
+            switch state {
+            case .idle:
+                self?.hideLoadingView()
+            case .finished:
+                self?.show(message: "manage_card.confirm_pass_code.pin_updated.message".podLocalized(),
+                           title: "manage_card.confirm_pass_code.pin_updated.title".podLocalized(), isError: false)
+            }
+        }.dispose(in: disposeBag)
     }
-    let viewModel = PassCodeOnboardingViewModel(card: card)
-    let viewController = PassCodeOnboardingViewController(viewModel: viewModel, uiConfig: uiConfig)
-    viewModel.navigator = PassCodeOnboardingNavigator(
-      from: viewController,
-      uiConfig: uiConfig,
-      serviceLocator: serviceLocator
-    )
-    let navigationController = UINavigationController(rootViewController: viewController)
-    present(viewController: navigationController, animated: true, embedInNavigationController: false) {}
-    viewModel.output.moduleState.observeNext { [weak self] state in
-      switch state {
-      case .idle:
-        self?.hideLoadingView()
-      case .finished:
-        self?.show(message: "manage_card.confirm_pass_code.pin_updated.message".podLocalized(),
-                   title: "manage_card.confirm_pass_code.pin_updated.title".podLocalized(), isError: false)
-      }
-    }.dispose(in: disposeBag)
-  }
 
-  func showVoIP(actionSource: VoIPActionSource) {
-    let module = serviceLocator.moduleLocator.voIPModule(card: card, actionSource: actionSource)
-    module.onClose = { [weak self] _ in
-      self?.dismissModule {}
+    func showVoIP(actionSource: VoIPActionSource) {
+        let module = serviceLocator.moduleLocator.voIPModule(card: card, actionSource: actionSource)
+        module.onClose = { [weak self] _ in
+            self?.dismissModule {}
+        }
+        module.onFinish = { [weak self] _ in
+            self?.dismissModule {}
+        }
+        present(module: module) { _ in }
     }
-    module.onFinish = { [weak self] _ in
-      self?.dismissModule {}
+
+    func call(url: URL, completion: @escaping () -> Void) {
+        caller.call(phoneNumberURL: url, from: self, completion: completion)
     }
-    present(module: module) { _ in }
-  }
 
-  func call(url: URL, completion: @escaping () -> Void) {
-    caller.call(phoneNumberURL: url, from: self, completion: completion)
-  }
-
-  func showCardInfo() {
-    delegate?.showCardInfo()
-  }
-
-  func hideCardInfo() {
-    delegate?.hideCardInfo()
-  }
-
-  func cardStateChanged(includingTransactions: Bool) {
-    delegate?.cardStateChanged(includingTransactions: includingTransactions)
-    close()
-  }
-
-  func show(content: Content, title: String) {
-    let module = dismissableContentPresenterModule(with: content, title: title)
-    contentPresenterModule = module
-    present(module: module, leftButtonMode: .close) { _ in }
-  }
-
-  func showMonthlyStatements() {
-    let module = serviceLocator.moduleLocator.monthlyStatementsList()
-    module.onClose = { [weak self] _ in
-      self?.popModule {}
+    func showCardInfo() {
+        delegate?.showCardInfo()
     }
-    push(module: module) { _ in }
-  }
 
-  func authenticate(completion: @escaping (Bool) -> Void) {
-    let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
-    authenticationManager.authenticate(from: self, completion: completion)
-  }
-  
+    func hideCardInfo() {
+        delegate?.hideCardInfo()
+    }
+
+    func cardStateChanged(includingTransactions: Bool) {
+        delegate?.cardStateChanged(includingTransactions: includingTransactions)
+        close()
+    }
+
+    func show(content: Content, title: String) {
+        let module = dismissableContentPresenterModule(with: content, title: title)
+        contentPresenterModule = module
+        present(module: module, leftButtonMode: .close) { _ in }
+    }
+
+    func showMonthlyStatements() {
+        let module = serviceLocator.moduleLocator.monthlyStatementsList()
+        module.onClose = { [weak self] _ in
+            self?.popModule {}
+        }
+        push(module: module) { _ in }
+    }
+
+    func authenticate(completion: @escaping (Bool) -> Void) {
+        let authenticationManager = serviceLocator.systemServicesLocator.authenticationManager()
+        authenticationManager.authenticate(from: self, completion: completion)
+    }
+
     func showAddFunds(for card: Card, extraContent: ExtraContent? = nil) {
         let viewController = addFundsUIComposer(with: card, extraContent: extraContent)
         navigationController?.pushViewController(viewController, animated: true, completion: nil)
     }
-    
+
+    // swiftlint:disable trailing_closure
     private func addFundsUIComposer(with card: Card, extraContent: ExtraContent? = nil) -> AddFundsViewController {
         let viewModel = AddFundsViewModel(card: card)
         let viewController = AddFundsViewController(viewModel: viewModel, uiConfig: uiConfig)
         viewController.onPaymentSourceLoaded = {
             if LoadFundsOnBoardingHelper.shouldPresentOnBoarding() {
-                
                 let actionCompletion = { [weak self] in
                     if let addCardController = self?.addCardUIComposer() {
-                        self?.present(viewController: addCardController, animated: true, embedInNavigationController: true, completion: {})
+                        self?.present(viewController: addCardController,
+                                      animated: true,
+                                      embedInNavigationController: true,
+                                      completion: {})
                     }
                 }
                 let closeCompletion: AddCardOnboardingViewController.CloseCompletionResult = { controller in
@@ -218,8 +214,11 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
                                                                      extraContent: extraContent,
                                                                      platform: self.serviceLocator.platform,
                                                                      actionCompletion: actionCompletion,
-                                                                     closeCompletion:  closeCompletion)
-                self.present(viewController: controller, animated: true, embedInNavigationController: true, completion: {})
+                                                                     closeCompletion: closeCompletion)
+                self.present(viewController: controller,
+                             animated: true,
+                             embedInNavigationController: true,
+                             completion: {})
             }
         }
         let fundsNavigator = AddFundsNavigator(
@@ -229,7 +228,8 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
             cardNetworks: card.features?.funding?.cardNetworks ?? []
         )
         if let extraContent = extraContent,
-           let content = extraContent.content {
+           let content = extraContent.content
+        {
             fundsNavigator.presentExtraContent = { [weak self] presenter in
                 self?.presentExtraContent(from: presenter, content: content, title: extraContent.title)
             }
@@ -237,7 +237,7 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
         viewModel.navigator = fundsNavigator
         return viewController
     }
-    
+
     private func addCardUIComposer() -> AddCardViewController {
         let cardNetworks = card.features?.funding?.cardNetworks ?? []
         let viewModel = AddCardViewModel(cardNetworks: cardNetworks)
@@ -247,11 +247,12 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
         }
         return controller
     }
-    
+
     func showACHAccountAgreements(disclaimer: Content,
-                                   cardId: String,
-                                   acceptCompletion: @escaping () -> Void,
-                                   declineCompletion: @escaping () -> Void) {
+                                  cardId: String,
+                                  acceptCompletion: @escaping () -> Void,
+                                  declineCompletion: @escaping () -> Void)
+    {
         let module = serviceLocator.moduleLocator.showACHAccountAgreements(disclaimer: disclaimer, cardId: cardId)
         module.onDeclineAgreements = { [weak self] in
             self?.dismissModule(animated: false, completion: {
@@ -265,9 +266,11 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
         }
         present(module: module, leftButtonMode: .close) { _ in }
     }
-    
+
     func showAddMoneyBottomSheet(card: Card, extraContent: ExtraContent? = nil) {
-        let viewModel = AddMoneyViewModel(cardId: card.accountId, loader: serviceLocator.platform, analyticsManager: serviceLocator.analyticsManager)
+        let viewModel = AddMoneyViewModel(cardId: card.accountId,
+                                          loader: serviceLocator.platform,
+                                          analyticsManager: serviceLocator.analyticsManager)
         let addMoneyController = AddMoneyViewController(uiConfiguration: uiConfig, viewModel: viewModel)
         addMoneyController.directDepositAction = { [weak self] in
             guard let self = self else { return }
@@ -275,7 +278,9 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
                                                    loader: self.serviceLocator.platform,
                                                    analyticsManager: self.serviceLocator.analyticsManager)
             let controller = DirectDepositViewController(uiConfiguration: UIConfig.default, viewModel: viewModel)
-            self.present(viewController: controller, animated: true, embedInNavigationController: true, completion: {})
+            self.present(viewController: controller,
+                         animated: true,
+                         embedInNavigationController: true, completion: {})
         }
         addMoneyController.debitCardAction = { [weak self] in
             self?.showAddFunds(for: card, extraContent: extraContent)
@@ -283,8 +288,9 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
         addMoneyController.modalPresentationStyle = .overCurrentContext
         present(viewController: addMoneyController, completion: {})
     }
-    
+
     // MARK: Private methods
+
     private func presentExtraContent(from presenter: UIViewController?, content: Content, title: String) {
         let module = dismissableContentPresenterModule(with: content, title: title)
         if let presenter = presenter {
@@ -294,7 +300,8 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
     }
 
     func showOrderPhysicalCard(_ card: Card,
-                               completion: OrderPhysicalCardUIComposer.OrderedCompletion? = nil) {
+                               completion: OrderPhysicalCardUIComposer.OrderedCompletion? = nil)
+    {
         let errorCompletion: OrderPhysicalCardUIComposer.CardConfigErrorCompletion = { [weak self] error in
             self?.show(error: error)
         }
@@ -307,32 +314,40 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
                           cardConfigErrorCompletion: errorCompletion)
         present(viewController: viewController, animated: true, embedInNavigationController: true, completion: {})
     }
-    
+
     func showP2PTransferScreen(with config: ProjectConfiguration?) {
-        let controller = P2PTransferUIComposer.compose(with: uiConfig, platform: serviceLocator.platform, projectConfig: config)
-        controller.navigationController?.navigationBar.setUpWith(uiConfig: self.uiConfig)
+        let controller = P2PTransferUIComposer.compose(with: uiConfig,
+                                                       platform: serviceLocator.platform,
+                                                       projectConfig: config)
+        controller.navigationController?.navigationBar.setUpWith(uiConfig: uiConfig)
 
         controller.continueTransferCompletion = { [weak self, controller] transferModel in
             if let transferFundsVC = self?.createTransferVC(transferModel) {
                 controller.navigationController?.pushViewController(transferFundsVC, animated: true)
             }
         }
-        
-        present(viewController: controller, animated: true, embedInNavigationController: true, showNavigationBar: true, presentationStyle: .pageSheet, completion: {})
+
+        present(viewController: controller,
+                animated: true,
+                embedInNavigationController: true,
+                showNavigationBar: true,
+                presentationStyle: .pageSheet, completion: {})
     }
-    
+
     func showApplePayIAP(cardId: String, completion: ApplePayIAPUIComposer.IAPCompletion? = nil) {
-        let viewController = ApplePayIAPUIComposer.composedWith(cardId: cardId,
-                                                                cardLoader: serviceLocator.platform, uiConfiguration: UIConfig.default,
-                                                                iapCompletion: completion)
+        let viewController = ApplePayIAPUIComposer
+            .composedWith(cardId: cardId,
+                          cardLoader: serviceLocator.platform,
+                          uiConfiguration: UIConfig.default,
+                          iapCompletion: completion)
         present(viewController: viewController, animated: true, completion: {})
     }
 
     private func createTransferVC(_ transferModel: P2PTransferModel) -> P2PTransferFundsViewController {
-        let controller = P2PTransferUIComposer.compose(with: self.uiConfig,
-                                                       platform: self.serviceLocator.platform,
+        let controller = P2PTransferUIComposer.compose(with: uiConfig,
+                                                       platform: serviceLocator.platform,
                                                        transferModel: transferModel,
-                                                       cardId: self.card.accountId)
+                                                       cardId: card.accountId)
         controller.onTransferCompletion = { [weak self, controller] transferResponse in
             if let resultVC = self?.createResultScreen(response: transferResponse) {
                 controller.navigationController?.pushViewController(resultVC, animated: true)
@@ -340,10 +355,10 @@ extension CardSettingsModule: CardSettingsRouterProtocol {
         }
         return controller
     }
-    
+
     private func createResultScreen(response: P2PTransferResponse) -> P2PTransferResultViewController {
         let controller = P2PTransferUIComposer.composeSuccess(with: uiConfig, transferResponse: response)
         return controller
     }
-    
+    // swiftlint:enable trailing_closure
 }

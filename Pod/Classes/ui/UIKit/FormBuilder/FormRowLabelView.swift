@@ -9,36 +9,38 @@
 import UIKit
 
 open class FormRowLabelView: FormRowView {
-  let label: UILabel
+    let label: UILabel
 
-  public init(label: UILabel,
-              showSplitter: Bool,
-              height: CGFloat = 44,
-              position: PositionInRow = .center) {
-    self.label = label
-    super.init(showSplitter: showSplitter, height: height)
-    self.contentView.snp.makeConstraints { make in
-      make.height.equalTo(height)
+    public init(label: UILabel,
+                showSplitter: Bool,
+                height: CGFloat = 44,
+                position: PositionInRow = .center)
+    {
+        self.label = label
+        super.init(showSplitter: showSplitter, height: height)
+        contentView.snp.makeConstraints { make in
+            make.height.equalTo(height)
+        }
+        layoutLabel(position: position)
     }
-    self.layoutLabel(position: position)
-  }
 
-  required public init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  private func layoutLabel(position: PositionInRow) {
-    contentView.addSubview(label)
-    label.snp.makeConstraints { make in
-      make.left.right.equalTo(contentView)
-      switch position {
-      case .top:
-        make.top.equalTo(contentView)
-      case .center:
-        make.centerY.equalTo(contentView)
-      case .bottom:
-        make.bottom.equalTo(contentView)
-      }
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-  }
+
+    private func layoutLabel(position: PositionInRow) {
+        contentView.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.right.equalTo(contentView)
+            switch position {
+            case .top:
+                make.top.equalTo(contentView)
+            case .center:
+                make.centerY.equalTo(contentView)
+            case .bottom:
+                make.bottom.equalTo(contentView)
+            }
+        }
+    }
 }

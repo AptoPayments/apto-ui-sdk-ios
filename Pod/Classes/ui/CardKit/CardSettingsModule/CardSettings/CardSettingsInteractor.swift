@@ -6,21 +6,21 @@
 //
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 class CardSettingsInteractor: CardSettingsInteractorProtocol {
-  private let platform: AptoPlatformProtocol
+    private let platform: AptoPlatformProtocol
 
-  init(platform: AptoPlatformProtocol) {
-    self.platform = platform
-  }
+    init(platform: AptoPlatformProtocol) {
+        self.platform = platform
+    }
 
-  func isShowDetailedCardActivityEnabled() -> Bool {
-    return platform.isShowDetailedCardActivityEnabled()
-  }
+    func isShowDetailedCardActivityEnabled() -> Bool {
+        return platform.isShowDetailedCardActivityEnabled()
+    }
 
-  func setShowDetailedCardActivityEnabled(_ isEnabled: Bool) {
-    platform.setShowDetailedCardActivityEnabled(isEnabled)
-  }
+    func setShowDetailedCardActivityEnabled(_ isEnabled: Bool) {
+        platform.setShowDetailedCardActivityEnabled(isEnabled)
+    }
 }

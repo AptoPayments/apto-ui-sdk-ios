@@ -9,52 +9,51 @@
 @testable import AptoUISDK
 
 class BiometricPermissionModuleSpy: UIModuleSpy, BiometricPermissionModuleProtocol {
-  private(set) var requestBiometricPermissionCalled = false
-  func requestBiometricPermission(completion: @escaping (_ granted: Bool) -> Void) {
-    requestBiometricPermissionCalled = true
-  }
+    private(set) var requestBiometricPermissionCalled = false
+    func requestBiometricPermission(completion _: @escaping (_ granted: Bool) -> Void) {
+        requestBiometricPermissionCalled = true
+    }
 }
 
 class BiometricPermissionModuleFake: BiometricPermissionModuleSpy {
-  var nextRequestBiometricPermissionGrantedResult: Bool?
-  override func requestBiometricPermission(completion: @escaping (_ granted: Bool) -> Void) {
-    super.requestBiometricPermission(completion: completion)
-    if let result = nextRequestBiometricPermissionGrantedResult {
-      completion(result)
+    var nextRequestBiometricPermissionGrantedResult: Bool?
+    override func requestBiometricPermission(completion: @escaping (_ granted: Bool) -> Void) {
+        super.requestBiometricPermission(completion: completion)
+        if let result = nextRequestBiometricPermissionGrantedResult {
+            completion(result)
+        }
     }
-  }
 }
 
 class BiometricPermissionInteractorSpy: BiometricPermissionInteractorProtocol {
-  private(set) var setIsBiometricPermissionEnabledCalled = false
-  private(set) var lastIsBiometricPermissionEnabled: Bool?
-  func setBiometricPermissionEnabled(_ isEnabled: Bool) {
-    setIsBiometricPermissionEnabledCalled = true
-    lastIsBiometricPermissionEnabled = isEnabled
-  }
+    private(set) var setIsBiometricPermissionEnabledCalled = false
+    private(set) var lastIsBiometricPermissionEnabled: Bool?
+    func setBiometricPermissionEnabled(_ isEnabled: Bool) {
+        setIsBiometricPermissionEnabledCalled = true
+        lastIsBiometricPermissionEnabled = isEnabled
+    }
 }
 
-class BiometricPermissionInteractorFake: BiometricPermissionInteractorSpy {
-}
+class BiometricPermissionInteractorFake: BiometricPermissionInteractorSpy {}
 
 class BiometricPermissionPresenterSpy: BiometricPermissionPresenterProtocol {
-  let viewModel = BiometricPermissionViewModel()
-  var interactor: BiometricPermissionInteractorProtocol?
-  var router: BiometricPermissionModuleProtocol?
-  var analyticsManager: AnalyticsServiceProtocol?
+    let viewModel = BiometricPermissionViewModel()
+    var interactor: BiometricPermissionInteractorProtocol?
+    var router: BiometricPermissionModuleProtocol?
+    var analyticsManager: AnalyticsServiceProtocol?
 
-  private(set) var viewLoadedCalled = false
-  func viewLoaded() {
-    viewLoadedCalled = true
-  }
+    private(set) var viewLoadedCalled = false
+    func viewLoaded() {
+        viewLoadedCalled = true
+    }
 
-  private(set) var requestPermissionTappedCalled = false
-  func requestPermissionTapped() {
-    requestPermissionTappedCalled = true
-  }
+    private(set) var requestPermissionTappedCalled = false
+    func requestPermissionTapped() {
+        requestPermissionTappedCalled = true
+    }
 
-  private(set) var closeTappedCalled = false
-  func closeTapped() {
-    closeTappedCalled = true
-  }
+    private(set) var closeTappedCalled = false
+    func closeTapped() {
+        closeTappedCalled = true
+    }
 }

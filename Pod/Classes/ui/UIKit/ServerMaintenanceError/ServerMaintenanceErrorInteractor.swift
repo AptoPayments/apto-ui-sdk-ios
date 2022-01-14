@@ -9,13 +9,13 @@
 import AptoSDK
 
 class ServerMaintenanceErrorInteractor: ServerMaintenanceErrorInteractorProtocol {
-  private let aptoPlatform: AptoPlatformProtocol
+    private let aptoPlatform: AptoPlatformProtocol
 
-  init(aptoPlatform: AptoPlatformProtocol) {
-    self.aptoPlatform = aptoPlatform
-  }
+    init(aptoPlatform: AptoPlatformProtocol) {
+        self.aptoPlatform = aptoPlatform
+    }
 
-  func runPendingRequests() {
-    aptoPlatform.runPendingNetworkRequests()
-  }
+    func runPendingRequests() {
+        aptoPlatform.runPendingNetworkRequests()
+    }
 }

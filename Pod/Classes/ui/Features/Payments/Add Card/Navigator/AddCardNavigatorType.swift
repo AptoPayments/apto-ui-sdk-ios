@@ -1,5 +1,5 @@
 import Foundation
 
 protocol AddCardNavigatorType {
-  func close()
+    func close()
 }

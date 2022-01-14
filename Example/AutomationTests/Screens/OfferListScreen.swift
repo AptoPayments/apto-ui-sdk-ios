@@ -8,26 +8,20 @@
 import UIKit
 
 class OfferListScreen: Screen {
+    enum Labels {
+        static let ViewControllerTitle = "My Loan Offers"
+        static let ApplyToOfferButton = "Apply To Offer Button"
+    }
 
-  struct Labels {
-    static let ViewControllerTitle = "My Loan Offers"
-    static let ApplyToOfferButton = "Apply To Offer Button"
-  }
+    @discardableResult override func waitForScreen() -> Self {
+        waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
 
-  @discardableResult override func waitForScreen() -> Self {
+        return self
+    } // end waitForScreen
 
-    waitForViewWith(accessibilityLabel: Labels.ViewControllerTitle)
+    @discardableResult func applyToFirstOffer() -> Self {
+        tapView(withAccessibilityLabel: "\(Labels.ApplyToOfferButton) 1")
 
-    return self
-
-  } // end waitForScreen
-
-  @discardableResult func applyToFirstOffer() -> Self {
-
-    tapView(withAccessibilityLabel: "\(Labels.ApplyToOfferButton) 1")
-
-    return self
-
-  } // end applyToFirstOffer
-
+        return self
+    } // end applyToFirstOffer
 }

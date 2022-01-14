@@ -9,17 +9,17 @@
 import Foundation
 
 extension UILabel {
-  func updateAttributedText(_ text: String?) {
-    guard let text = text else {
-      self.text = ""
-      return
+    func updateAttributedText(_ text: String?) {
+        guard let text = text else {
+            self.text = ""
+            return
+        }
+        guard let attributedText = attributedText else {
+            self.text = text
+            return
+        }
+        let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
+        mutableAttributedString.mutableString.setString(text)
+        self.attributedText = mutableAttributedString
     }
-    guard let attributedText = self.attributedText else {
-      self.text = text
-      return
-    }
-    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
-    mutableAttributedString.mutableString.setString(text)
-    self.attributedText = mutableAttributedString
-  }
 }

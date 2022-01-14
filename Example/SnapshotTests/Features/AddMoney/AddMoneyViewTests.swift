@@ -5,15 +5,14 @@
 //  Created by Fabio Cuomo on 26/1/21.
 //
 
-import XCTest
-import SnapshotTesting
 import SnapKit
+import SnapshotTesting
+import XCTest
 
-@testable import AptoUISDK
 @testable import AptoSDK
+@testable import AptoUISDK
 
 class AddMoneyViewTests: XCTestCase {
-    
     func test_headerTextView_rendersViewWithText() {
         let view = HeaderTextView(uiconfig: UIConfig.default, text: "Add Money")
         let vc = HostViewController(with: view)
@@ -22,7 +21,7 @@ class AddMoneyViewTests: XCTestCase {
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        
+
         assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
@@ -34,7 +33,7 @@ class AddMoneyViewTests: XCTestCase {
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        
+
         assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 
@@ -44,7 +43,7 @@ class AddMoneyViewTests: XCTestCase {
 
         let bottomView = AddMoneyView(uiconfig: UIConfig.default)
         backgroundView.addSubview(bottomView)
-        
+
         bottomView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(15)
             make.bottom.equalToSuperview().inset(10)
@@ -56,7 +55,7 @@ class AddMoneyViewTests: XCTestCase {
             make.height.equalTo(896)
             make.width.equalTo(414)
         }
-        
+
         assertSnapshot(matching: vc, as: .image(on: .iPhoneSe))
     }
 }

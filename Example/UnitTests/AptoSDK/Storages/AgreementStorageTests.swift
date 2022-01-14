@@ -6,12 +6,11 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
-import SwiftyJSON
 @testable import AptoSDK
+import SwiftyJSON
+import XCTest
 
 class AgreementStorageTests: XCTestCase {
-
     private let apiKey = "api_key"
     private let userToken = "user_token"
 
@@ -28,7 +27,7 @@ class AgreementStorageTests: XCTestCase {
         let request = AgreementRequest(key: ["apto_cha", "apto_privacy"], userAction: .accepted)
 
         sut.recordAgreement(apiKey, userToken: userToken, agreementRequest: request) { _ in }
-        
+
         XCTAssertTrue(transport.postCalled)
         XCTAssertEqual(transport.requestesURLs, [try url.asURL()])
     }
@@ -56,7 +55,7 @@ class AgreementStorageTests: XCTestCase {
                userToken: userToken,
                agreementRequest: request,
                when: {
-                transport.complete(with: clientError)
+                   transport.complete(with: clientError)
                })
     }
 
@@ -71,7 +70,7 @@ class AgreementStorageTests: XCTestCase {
                userToken: userToken,
                agreementRequest: request,
                when: {
-                transport.complete(withResult: json)
+                   transport.complete(withResult: json)
                })
     }
 
@@ -86,11 +85,12 @@ class AgreementStorageTests: XCTestCase {
                userToken: userToken,
                agreementRequest: request,
                when: {
-                transport.complete(withResult: item.json)
+                   transport.complete(withResult: item.json)
                })
     }
 
     // MARK: Private Helper methods
+
     private func makeSUT() -> (sut: AgreementStorage, transport: StorageTransportSpy) {
         let transport = StorageTransportSpy()
         let sut = AgreementStorage(transport: transport)
@@ -102,20 +102,19 @@ class AgreementStorageTests: XCTestCase {
                         apiKey: String,
                         userToken: String,
                         agreementRequest: AgreementRequest,
-                        when action: () -> Void) {
-        
+                        when action: () -> Void)
+    {
         var capturedResults = [RecordedAgreementsResult]()
         sut.recordAgreement(apiKey,
                             userToken: userToken,
-                            agreementRequest: agreementRequest) {  capturedResults.append($0) }
+                            agreementRequest: agreementRequest) { capturedResults.append($0) }
 
         action()
-        
+
         XCTAssertEqual(capturedResults, [result])
     }
 
     private func makeUserAgreements() -> (userAgreements: [AgreementDetail], json: JSON) {
-        
         let detail1 = AgreementDetail(idStr: "agreement_629adb2cc537cdf9",
                                       agreementKey: "evolve_eua",
                                       userAction: .accepted,
@@ -131,8 +130,8 @@ class AgreementStorageTests: XCTestCase {
                 "id": "agreement_629adb2cc537cdf9",
                 "agreement_key": "evolve_eua",
                 "action": "ACCEPTED",
-                "recorded_at": "2020-11-20T01:56:24.543-05:00"
-            ]
+                "recorded_at": "2020-11-20T01:56:24.543-05:00",
+            ],
         ]
 
         let json2: JSON = [
@@ -140,21 +139,18 @@ class AgreementStorageTests: XCTestCase {
                 "id": "agreement_629adb2cc537cdff",
                 "agreement_key": "apto_privacy",
                 "action": "DECLINED",
-                "recorded_at": "2020-11-22T01:56:24.543-05:00"
-            ]
+                "recorded_at": "2020-11-22T01:56:24.543-05:00",
+            ],
         ]
 
         let json: JSON = ["user_agreements": [json1.object, json2.object]]
-        
+
         let agreements = [detail1, detail2]
-        
+
         return (agreements, json)
     }
-
 }
 
 class AgreementStorageSpy: AgreementStorageProtocol {
-    func recordAgreement(_ apiKey: String, userToken: String, agreementRequest: AgreementRequest, completion: @escaping (RecordedAgreementsResult) -> Void) {
-        
-    }
+    func recordAgreement(_: String, userToken _: String, agreementRequest _: AgreementRequest, completion _: @escaping (RecordedAgreementsResult) -> Void) {}
 }

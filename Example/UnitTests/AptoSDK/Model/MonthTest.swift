@@ -5,85 +5,88 @@
 //  Created by Takeichi Kanzaki on 01/10/2019.
 //
 
-import XCTest
 @testable import AptoSDK
+import XCTest
 
 class MonthTest: XCTestCase {
-  private let dataProvider = ModelDataProvider.provider
+    private let dataProvider = ModelDataProvider.provider
 
-  // MARK: - Init from date
-  func testSutProperlyInitializedFromDate() {
-    // Given
-    // swiftlint:disable:next force_unwrapping
-    let date = Calendar.current.date(from: DateComponents(year: 2019, month: 2))!
+    // MARK: - Init from date
 
-    // When
-    let sut = Month(from: date)
+    func testSutProperlyInitializedFromDate() {
+        // Given
+        // swiftlint:disable:next force_unwrapping
+        let date = Calendar.current.date(from: DateComponents(year: 2019, month: 2))!
 
-    // Then
-    XCTAssertEqual(2019, sut.year)
-    XCTAssertEqual(2, sut.month)
-  }
+        // When
+        let sut = Month(from: date)
 
-  // MARK: - Date methods
-  func testFromDateReturnExpectedMonth() {
-    // Given
-    // swiftlint:disable:next force_unwrapping
-    let date = Calendar.current.date(from: DateComponents(year: 2019, month: 2))!
+        // Then
+        XCTAssertEqual(2019, sut.year)
+        XCTAssertEqual(2, sut.month)
+    }
 
-    // When
-    let sut = Month(from: date)
+    // MARK: - Date methods
 
-    // Then
-    let expectedMonth = Month(month: 2, year: 2019)
-    XCTAssertEqual(expectedMonth, sut)
-  }
+    func testFromDateReturnExpectedMonth() {
+        // Given
+        // swiftlint:disable:next force_unwrapping
+        let date = Calendar.current.date(from: DateComponents(year: 2019, month: 2))!
 
-  func testToDateReturnExpectedDate() {
-    // Given
-    let sut = Month(month: 2, year: 2019)
+        // When
+        let sut = Month(from: date)
 
-    // When
-    let date = sut.toDate()
+        // Then
+        let expectedMonth = Month(month: 2, year: 2019)
+        XCTAssertEqual(expectedMonth, sut)
+    }
 
-    // Then
-    // swiftlint:disable:next force_unwrapping
-    let expectedDate = Calendar.current.date(from: DateComponents(year: 2019, month: 2))!
-    XCTAssertEqual(expectedDate, date)
-  }
+    func testToDateReturnExpectedDate() {
+        // Given
+        let sut = Month(month: 2, year: 2019)
 
-  // MARK: - JSON parser test
-  func testMonthIsCreatedFromJSON() {
-    // Given
-    let sut = dataProvider.monthJSON
+        // When
+        let date = sut.toDate()
 
-    // When
-    let month = sut.month
+        // Then
+        // swiftlint:disable:next force_unwrapping
+        let expectedDate = Calendar.current.date(from: DateComponents(year: 2019, month: 2))!
+        XCTAssertEqual(expectedDate, date)
+    }
 
-    // Then
-    XCTAssertNotNil(month)
-  }
+    // MARK: - JSON parser test
 
-  func testMonthIsReturnedFromLinkObject() {
-    // Given
-    let sut = dataProvider.monthJSON
+    func testMonthIsCreatedFromJSON() {
+        // Given
+        let sut = dataProvider.monthJSON
 
-    // When
-    let month = sut.linkObject
+        // When
+        let month = sut.month
 
-    // Then
-    XCTAssertNotNil(month)
-    XCTAssertTrue(month is Month)
-  }
+        // Then
+        XCTAssertNotNil(month)
+    }
 
-  func testInvalidJSONMonthIsNil() {
-    // Given
-    let sut = dataProvider.emptyJSON
+    func testMonthIsReturnedFromLinkObject() {
+        // Given
+        let sut = dataProvider.monthJSON
 
-    // When
-    let month = sut.month
+        // When
+        let month = sut.linkObject
 
-    // Then
-    XCTAssertNil(month)
-  }
+        // Then
+        XCTAssertNotNil(month)
+        XCTAssertTrue(month is Month)
+    }
+
+    func testInvalidJSONMonthIsNil() {
+        // Given
+        let sut = dataProvider.emptyJSON
+
+        // When
+        let month = sut.month
+
+        // Then
+        XCTAssertNil(month)
+    }
 }

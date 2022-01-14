@@ -5,15 +5,17 @@
 //  Created by Fabio Cuomo on 23/6/21.
 //
 
-import Foundation
 import AptoSDK
+import Foundation
 
 struct AddCardOnBoardingUIComposer {
     public static func compose(with card: Card,
-                               extraContent: ExtraContent?,
+                               extraContent _: ExtraContent?,
                                platform: AptoPlatformProtocol,
                                actionCompletion: @escaping () -> Void,
-                               closeCompletion: @escaping (UIViewController) -> Void) -> AddCardOnboardingViewController {
+                               closeCompletion: @escaping (UIViewController) -> Void)
+        -> AddCardOnboardingViewController
+    {
         let viewModel = AddCardOnboardingViewModel(cardId: card.accountId, loader: platform)
         let controller = AddCardOnboardingViewController(uiConfiguration: UIConfig.default, viewModel: viewModel)
         controller.modalPresentationStyle = .formSheet

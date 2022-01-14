@@ -9,13 +9,13 @@
 import AptoSDK
 
 class ContentPresenterInteractor: ContentPresenterInteractorProtocol {
-  private let content: Content
+    private let content: Content
 
-  init(content: Content) {
-    self.content = content
-  }
+    init(content: Content) {
+        self.content = content
+    }
 
-  func provideContent(completion: (_ conent: Content) -> Void) {
-    completion(content)
-  }
+    func provideContent(completion: (_ conent: Content) -> Void) {
+        completion(content)
+    }
 }

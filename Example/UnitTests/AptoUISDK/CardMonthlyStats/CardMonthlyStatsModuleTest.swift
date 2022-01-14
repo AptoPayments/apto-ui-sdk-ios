@@ -5,69 +5,69 @@
 // Created by Takeichi Kanzaki on 07/01/2019.
 //
 
-import XCTest
 import AptoSDK
 @testable import AptoUISDK
+import XCTest
 
 class CardMonthlyStatsModuleTest: XCTestCase {
-  var sut: CardMonthlyStatsModule! // swiftlint:disable:this implicitly_unwrapped_optional
+    var sut: CardMonthlyStatsModule! // swiftlint:disable:this implicitly_unwrapped_optional
 
-  // Collaborators
-  private let serviceLocator = ServiceLocatorFake()
-  private let card = ModelDataProvider.provider.card
-  private lazy var presenter = serviceLocator.presenterLocatorFake.cardMonthlyStatsPresenterSpy
+    // Collaborators
+    private let serviceLocator = ServiceLocatorFake()
+    private let card = ModelDataProvider.provider.card
+    private lazy var presenter = serviceLocator.presenterLocatorFake.cardMonthlyStatsPresenterSpy
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    sut = CardMonthlyStatsModule(serviceLocator: serviceLocator, card: card)
-  }
-
-  func testInitializeCompleteSucceed() {
-    // Given
-    var returnedResult: Result<UIViewController, NSError>?
-
-    // When
-    sut.initialize { result in
-      returnedResult = result
+        sut = CardMonthlyStatsModule(serviceLocator: serviceLocator, card: card)
     }
 
-    // Then
-    XCTAssertEqual(true, returnedResult?.isSuccess)
-  }
+    func testInitializeCompleteSucceed() {
+        // Given
+        var returnedResult: Result<UIViewController, NSError>?
 
-  func testInitializeConfigurePresenter() {
-    // When
-    sut.initialize { _ in }
+        // When
+        sut.initialize { result in
+            returnedResult = result
+        }
 
-    // Then
-    XCTAssertNotNil(presenter.router)
-    XCTAssertNotNil(presenter.interactor)
-    XCTAssertNotNil(presenter.analyticsManager)
-  }
+        // Then
+        XCTAssertEqual(true, returnedResult?.isSuccess)
+    }
 
-  func testShowTransactionsInitializeTransactionListModule() {
-    // Given
-    let transactionListModule = serviceLocator.moduleLocatorFake.transactionListModuleSpy
+    func testInitializeConfigurePresenter() {
+        // When
+        sut.initialize { _ in }
 
-    // When
-    sut.showTransactions(for: ModelDataProvider.provider.categorySpending, startDate: Date(), endDate: Date())
+        // Then
+        XCTAssertNotNil(presenter.router)
+        XCTAssertNotNil(presenter.interactor)
+        XCTAssertNotNil(presenter.analyticsManager)
+    }
 
-    // Then
-    XCTAssertTrue(transactionListModule.initializeCalled)
-  }
+    func testShowTransactionsInitializeTransactionListModule() {
+        // Given
+        let transactionListModule = serviceLocator.moduleLocatorFake.transactionListModuleSpy
 
-  func testShowStatementReportShowMonthlyStatementsReportModule() {
-    // Given
-    let month = ModelDataProvider.provider.month
-    let moduleLocator = serviceLocator.moduleLocatorFake
-    let monthlyStatementsReportModule = moduleLocator.monthlyStatementsReportModuleSpy
+        // When
+        sut.showTransactions(for: ModelDataProvider.provider.categorySpending, startDate: Date(), endDate: Date())
 
-    // When
-    sut.showStatementReport(month: month)
+        // Then
+        XCTAssertTrue(transactionListModule.initializeCalled)
+    }
 
-    // Then
-    XCTAssertTrue(monthlyStatementsReportModule.initializeCalled)
-    XCTAssertNotNil(monthlyStatementsReportModule.onClose)
-  }
+    func testShowStatementReportShowMonthlyStatementsReportModule() {
+        // Given
+        let month = ModelDataProvider.provider.month
+        let moduleLocator = serviceLocator.moduleLocatorFake
+        let monthlyStatementsReportModule = moduleLocator.monthlyStatementsReportModuleSpy
+
+        // When
+        sut.showStatementReport(month: month)
+
+        // Then
+        XCTAssertTrue(monthlyStatementsReportModule.initializeCalled)
+        XCTAssertNotNil(monthlyStatementsReportModule.onClose)
+    }
 }

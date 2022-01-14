@@ -8,17 +8,17 @@
 @testable import AptoSDK
 
 class InMemoryUserDefaultsStorage: UserDefaultsStorageProtocol {
-  private var cache = [String: Any]()
+    private var cache = [String: Any]()
 
-  func object(forKey key: String) -> Any? {
-    return cache[key]
-  }
+    func object(forKey key: String) -> Any? {
+        return cache[key]
+    }
 
-  func set(_ value: Bool, forKey key: String) {
-    cache[key] = value
-  }
+    func set(_ value: Bool, forKey key: String) {
+        cache[key] = value
+    }
 
-  func removeObject(forKey key: String) {
-    cache.removeValue(forKey: key)
-  }
+    func removeObject(forKey key: String) {
+        cache.removeValue(forKey: key)
+    }
 }

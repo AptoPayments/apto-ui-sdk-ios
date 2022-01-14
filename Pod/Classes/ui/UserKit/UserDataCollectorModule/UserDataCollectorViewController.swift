@@ -7,90 +7,91 @@
 //
 
 import AptoSDK
-import SnapKit
 import Bond
+import SnapKit
 
-protocol UserDataCollectorEventHandler: class {
-  func viewLoaded()
-  func nextStepTapped()
-  func previousStepTapped()
+protocol UserDataCollectorEventHandler: AnyObject {
+    func viewLoaded()
+    func nextStepTapped()
+    func previousStepTapped()
 }
 
 class UserDataCollectorViewController: AptoViewController, UserDataCollectorViewProtocol {
-  private unowned let eventHandler: UserDataCollectorEventHandler
-  fileprivate let formView: MultiStepForm
-  fileprivate let progressView: ProgressView
+    private unowned let eventHandler: UserDataCollectorEventHandler
+    fileprivate let formView: MultiStepForm
+    fileprivate let progressView: ProgressView
 
-  init(uiConfiguration: UIConfig, eventHandler: UserDataCollectorEventHandler) {
-    self.formView = MultiStepForm()
-    self.progressView = ProgressView(maxValue: 100, uiConfig: uiConfiguration)
-    self.eventHandler = eventHandler
-    super.init(uiConfiguration: uiConfiguration)
-  }
+    init(uiConfiguration: UIConfig, eventHandler: UserDataCollectorEventHandler) {
+        formView = MultiStepForm()
+        progressView = ProgressView(maxValue: 100, uiConfig: uiConfiguration)
+        self.eventHandler = eventHandler
+        super.init(uiConfiguration: uiConfiguration)
+    }
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    setUpUI()
-    self.eventHandler.viewLoaded()
-  }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpUI()
+        eventHandler.viewLoaded()
+    }
 
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-  // MARK: - Public methods
+    // MARK: - Public methods
 
-  func show(fields: [FormRowView]) {
-    self.formView.show(rows: fields)
-  }
+    func show(fields: [FormRowView]) {
+        formView.show(rows: fields)
+    }
 
-  func push(fields: [FormRowView]) {
-    self.formView.show(rows: fields, withAnimation: .push)
-  }
+    func push(fields: [FormRowView]) {
+        formView.show(rows: fields, withAnimation: .push)
+    }
 
-  func pop(fields: [FormRowView]) {
-    self.formView.show(rows: fields, withAnimation: .pop)
-  }
+    func pop(fields: [FormRowView]) {
+        formView.show(rows: fields, withAnimation: .pop)
+    }
 
-  func showNavProfileButton() {
-    self.installNavRightButton(UIImage.imageFromPodBundle("top_profile.png"),
-                               target: self,
-                               action: #selector(UserDataCollectorViewController.nextTapped))
-  }
+    func showNavProfileButton() {
+        installNavRightButton(UIImage.imageFromPodBundle("top_profile.png"),
+                              target: self,
+                              action: #selector(UserDataCollectorViewController.nextTapped))
+    }
 
-  func update(progress: Float) {
-    self.progressView.update(progress: progress)
-  }
+    func update(progress: Float) {
+        progressView.update(progress: progress)
+    }
 
-  // MARK: - Private methods
+    // MARK: - Private methods
 
-  override func closeTapped() {
-    self.eventHandler.previousStepTapped()
-  }
+    override func closeTapped() {
+        eventHandler.previousStepTapped()
+    }
 
-  override func nextTapped() {
-    _ = self.formView.resignFirstResponder()
-    self.eventHandler.nextStepTapped()
-  }
+    override func nextTapped() {
+        _ = formView.resignFirstResponder()
+        eventHandler.nextStepTapped()
+    }
 }
 
 private extension UserDataCollectorViewController {
-  func setUpUI() {
-    view.backgroundColor = self.uiConfiguration.uiBackgroundPrimaryColor
-    navigationController?.navigationBar.setUpWith(uiConfig: uiConfiguration)
-    edgesForExtendedLayout = .top
-    extendedLayoutIncludesOpaqueBars = true
-    view.addSubview(progressView)
-    view.addSubview(formView)
-    progressView.snp.makeConstraints { make in
-      make.top.equalTo(topLayoutGuide.snp.bottom)
-      make.left.right.equalTo(view)
-      make.height.equalTo(4)
+    func setUpUI() {
+        view.backgroundColor = uiConfiguration.uiBackgroundPrimaryColor
+        navigationController?.navigationBar.setUpWith(uiConfig: uiConfiguration)
+        edgesForExtendedLayout = .top
+        extendedLayoutIncludesOpaqueBars = true
+        view.addSubview(progressView)
+        view.addSubview(formView)
+        progressView.snp.makeConstraints { make in
+            make.top.equalTo(topLayoutGuide.snp.bottom)
+            make.left.right.equalTo(view)
+            make.height.equalTo(4)
+        }
+        formView.snp.makeConstraints { make in
+            make.top.equalTo(progressView.snp.bottom)
+            make.left.right.bottom.equalTo(view)
+        }
+        formView.backgroundColor = UIColor.clear
     }
-    formView.snp.makeConstraints { make in
-      make.top.equalTo(progressView.snp.bottom)
-      make.left.right.bottom.equalTo(view)
-    }
-    formView.backgroundColor = UIColor.clear
-  }
 }

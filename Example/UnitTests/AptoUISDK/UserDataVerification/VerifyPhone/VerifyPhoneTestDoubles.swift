@@ -10,5 +10,5 @@ import AptoSDK
 @testable import AptoUISDK
 
 class VerifyPhoneModuleSpy: UIModuleSpy, VerifyPhoneModuleProtocol {
-  open var onVerificationPassed: ((_ verifyPhoneModule: VerifyPhoneModule, _ verification: Verification) -> Void)?
+    open var onVerificationPassed: ((_ verifyPhoneModule: VerifyPhoneModule, _ verification: Verification) -> Void)?
 }

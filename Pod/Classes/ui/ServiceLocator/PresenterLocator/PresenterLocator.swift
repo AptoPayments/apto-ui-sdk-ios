@@ -9,150 +9,159 @@
 import AptoSDK
 
 final class PresenterLocator: PresenterLocatorProtocol {
-  private unowned let serviceLocator: ServiceLocatorProtocol
+    private unowned let serviceLocator: ServiceLocatorProtocol
 
-  init(serviceLocator: ServiceLocatorProtocol) {
-    self.serviceLocator = serviceLocator
-  }
+    init(serviceLocator: ServiceLocatorProtocol) {
+        self.serviceLocator = serviceLocator
+    }
 
-  func fullScreenDisclaimerPresenter() -> FullScreenDisclaimerPresenterProtocol {
-    return FullScreenDisclaimerPresenter()
-  }
+    func fullScreenDisclaimerPresenter() -> FullScreenDisclaimerPresenterProtocol {
+        return FullScreenDisclaimerPresenter()
+    }
 
-  func countrySelectorPresenter() -> CountrySelectorPresenterProtocol {
-    return CountrySelectorPresenter()
-  }
+    func countrySelectorPresenter() -> CountrySelectorPresenterProtocol {
+        return CountrySelectorPresenter()
+    }
 
-  func authPresenter(authConfig: AuthModuleConfig, uiConfig: UIConfig) -> AuthPresenterProtocol {
-    return AuthPresenter(config: authConfig, uiConfig: uiConfig)
-  }
+    func authPresenter(authConfig: AuthModuleConfig, uiConfig: UIConfig) -> AuthPresenterProtocol {
+        return AuthPresenter(config: authConfig, uiConfig: uiConfig)
+    }
 
-  func verifyPhonePresenter() -> VerifyPhonePresenterProtocol {
-    return VerifyPhonePresenter()
-  }
+    func verifyPhonePresenter() -> VerifyPhonePresenterProtocol {
+        return VerifyPhonePresenter()
+    }
 
-  func verifyBirthDatePresenter() -> VerifyBirthDatePresenterProtocol {
-    return VerifyBirthDatePresenter()
-  }
+    func verifyBirthDatePresenter() -> VerifyBirthDatePresenterProtocol {
+        return VerifyBirthDatePresenter()
+    }
 
-  func externalOAuthPresenter(config: ExternalOAuthModuleConfig) -> ExternalOAuthPresenterProtocol {
-    return ExternalOAuthPresenter(config: config)
-  }
+    func externalOAuthPresenter(config: ExternalOAuthModuleConfig) -> ExternalOAuthPresenterProtocol {
+        return ExternalOAuthPresenter(config: config)
+    }
 
-  // MARK: - Biometrics
-  func createPasscodePresenter() -> CreatePasscodePresenterProtocol {
-    return CreatePasscodePresenter()
-  }
+    // MARK: - Biometrics
 
-  func verifyPasscodePresenter(config: VerifyPasscodePresenterConfig) -> VerifyPasscodePresenterProtocol {
-    return VerifyPasscodePresenter(config: config)
-  }
+    func createPasscodePresenter() -> CreatePasscodePresenterProtocol {
+        return CreatePasscodePresenter()
+    }
 
-  func changePasscodePresenter() -> ChangePasscodePresenterProtocol {
-    return ChangePasscodePresenter()
-  }
+    func verifyPasscodePresenter(config: VerifyPasscodePresenterConfig) -> VerifyPasscodePresenterProtocol {
+        return VerifyPasscodePresenter(config: config)
+    }
 
-  func biometricPermissionPresenter() -> BiometricPermissionPresenterProtocol {
-    return BiometricPermissionPresenter()
-  }
+    func changePasscodePresenter() -> ChangePasscodePresenterProtocol {
+        return ChangePasscodePresenter()
+    }
 
-  func issueCardPresenter(router: IssueCardRouter,
-                          interactor: IssueCardInteractorProtocol,
-                          configuration: IssueCardActionConfiguration?) -> IssueCardPresenterProtocol {
-    return IssueCardPresenter(router: router, interactor: interactor, configuration: configuration)
-  }
+    func biometricPermissionPresenter() -> BiometricPermissionPresenterProtocol {
+        return BiometricPermissionPresenter()
+    }
 
-  func waitListPresenter(config: WaitListActionConfiguration?) -> CardApplicationWaitListPresenterProtocol {
-    return WaitListPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
-  }
+    func issueCardPresenter(router: IssueCardRouter,
+                            interactor: IssueCardInteractorProtocol,
+                            configuration: IssueCardActionConfiguration?) -> IssueCardPresenterProtocol
+    {
+        return IssueCardPresenter(router: router, interactor: interactor, configuration: configuration)
+    }
 
-  func cardWaitListPresenter(config: WaitListActionConfiguration?) -> CardWaitListPresenterProtocol {
-    return CardWaitListPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
-  }
+    func waitListPresenter(config: WaitListActionConfiguration?) -> CardApplicationWaitListPresenterProtocol {
+        return WaitListPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
+    }
 
-  func serverMaintenanceErrorPresenter() -> ServerMaintenanceErrorPresenterProtocol {
-    return ServerMaintenanceErrorPresenter()
-  }
+    func cardWaitListPresenter(config: WaitListActionConfiguration?) -> CardWaitListPresenterProtocol {
+        return CardWaitListPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
+    }
 
-  func accountSettingsPresenter(config: AccountSettingsPresenterConfig) -> AccountSettingsPresenterProtocol {
-    return AccountSettingsPresenter(config: config)
-  }
+    func serverMaintenanceErrorPresenter() -> ServerMaintenanceErrorPresenterProtocol {
+        return ServerMaintenanceErrorPresenter()
+    }
 
-  func contentPresenterPresenter() -> ContentPresenterPresenterProtocol {
-    return ContentPresenterPresenter()
-  }
+    func accountSettingsPresenter(config: AccountSettingsPresenterConfig) -> AccountSettingsPresenterProtocol {
+        return AccountSettingsPresenter(config: config)
+    }
 
-  func dataConfirmationPresenter() -> DataConfirmationPresenterProtocol {
-    return DataConfirmationPresenter()
-  }
+    func contentPresenterPresenter() -> ContentPresenterPresenterProtocol {
+        return ContentPresenterPresenter()
+    }
 
-  func webBrowserPresenter() -> WebBrowserPresenterProtocol {
-    return WebBrowserPresenter()
-  }
+    func dataConfirmationPresenter() -> DataConfirmationPresenterProtocol {
+        return DataConfirmationPresenter()
+    }
 
-  // MARK: - Manage card
-  func manageCardPresenter(config: ManageCardPresenterConfig) -> ManageCardPresenterProtocol {
-    return ManageCardPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
-  }
+    func webBrowserPresenter() -> WebBrowserPresenterProtocol {
+        return WebBrowserPresenter()
+    }
 
-  func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig)
-      -> FundingSourceSelectorPresenterProtocol {
-    return FundingSourceSelectorPresenter(config: config)
-  }
+    // MARK: - Manage card
 
-  func cardSettingsPresenter(card: Card, config: CardSettingsPresenterConfig, emailRecipients: [String?],
-                             uiConfig: UIConfig) -> CardSettingsPresenterProtocol {
-    return CardSettingsPresenter(platform: AptoPlatform.defaultManager(), card: card, config: config,
-                                 emailRecipients: emailRecipients, uiConfig: uiConfig)
-  }
+    func manageCardPresenter(config: ManageCardPresenterConfig) -> ManageCardPresenterProtocol {
+        return ManageCardPresenter(config: config, notificationHandler: serviceLocator.notificationHandler)
+    }
 
-  func kycPresenter() -> KYCPresenterProtocol {
-    return KYCPresenter()
-  }
+    func fundingSourceSelectorPresenter(config: FundingSourceSelectorPresenterConfig)
+        -> FundingSourceSelectorPresenterProtocol
+    {
+        return FundingSourceSelectorPresenter(config: config)
+    }
 
-  func cardMonthlyStatsPresenter() -> CardMonthlyStatsPresenterProtocol {
-    return CardMonthlyStatsPresenter()
-  }
+    func cardSettingsPresenter(card: Card, config: CardSettingsPresenterConfig, emailRecipients: [String?],
+                               uiConfig: UIConfig) -> CardSettingsPresenterProtocol
+    {
+        return CardSettingsPresenter(platform: AptoPlatform.defaultManager(), card: card, config: config,
+                                     emailRecipients: emailRecipients, uiConfig: uiConfig)
+    }
 
-  func transactionListPresenter(config: TransactionListModuleConfig) -> TransactionListPresenterProtocol {
-    transactionListPresenter(config: config, transactionListEvents: nil)
-  }
-  
-  func transactionListPresenter(config: TransactionListModuleConfig, transactionListEvents: TransactionListEvents?) -> TransactionListPresenterProtocol {
-    return TransactionListPresenter(config: config, transactionListEvents: transactionListEvents)
-  }
+    func kycPresenter() -> KYCPresenterProtocol {
+        return KYCPresenter()
+    }
 
-  func notificationPreferencesPresenter() -> NotificationPreferencesPresenterProtocol {
-    return NotificationPreferencesPresenter()
-  }
+    func cardMonthlyStatsPresenter() -> CardMonthlyStatsPresenterProtocol {
+        return CardMonthlyStatsPresenter()
+    }
 
-  func setCodePresenter() -> SetCodePresenterProtocol {
-    return SetCodePresenter()
-  }
+    func transactionListPresenter(config: TransactionListModuleConfig) -> TransactionListPresenterProtocol {
+        transactionListPresenter(config: config, transactionListEvents: nil)
+    }
 
-  func voIPPresenter() -> VoIPPresenterProtocol {
-    return VoIPPresenter(voIPCaller: TwilioVoIPClient())
-  }
+    func transactionListPresenter(config: TransactionListModuleConfig,
+                                  transactionListEvents: TransactionListEvents?) -> TransactionListPresenterProtocol
+    {
+        return TransactionListPresenter(config: config, transactionListEvents: transactionListEvents)
+    }
 
-  func monthlyStatementsListPresenter() -> MonthlyStatementsListPresenterProtocol {
-    return MonthlyStatementsListPresenter()
-  }
+    func notificationPreferencesPresenter() -> NotificationPreferencesPresenterProtocol {
+        return NotificationPreferencesPresenter()
+    }
 
-  func monthlyStatementsReportPresenter() -> MonthlyStatementsReportPresenterProtocol {
-    return MonthlyStatementsReportPresenter()
-  }
+    func setCodePresenter() -> SetCodePresenterProtocol {
+        return SetCodePresenter()
+    }
 
-  // MARK: - Physical card activation
-  func physicalCardActivationPresenter() -> PhysicalCardActivationPresenterProtocol {
-    return PhysicalCardActivationPresenter(notificationHandler: serviceLocator.notificationHandler)
-  }
+    func voIPPresenter() -> VoIPPresenterProtocol {
+        return VoIPPresenter(voIPCaller: TwilioVoIPClient())
+    }
 
-  func physicalCardActivationSucceedPresenter() -> PhysicalCardActivationSucceedPresenterProtocol {
-    return PhysicalCardActivationSucceedPresenter()
-  }
+    func monthlyStatementsListPresenter() -> MonthlyStatementsListPresenterProtocol {
+        return MonthlyStatementsListPresenter()
+    }
 
-  // MARK: - Transaction Details
-  func transactionDetailsPresenter() -> AptoCardTransactionDetailsPresenterProtocol {
-    return AptoCardTransactionDetailsPresenter()
-  }
+    func monthlyStatementsReportPresenter() -> MonthlyStatementsReportPresenterProtocol {
+        return MonthlyStatementsReportPresenter()
+    }
+
+    // MARK: - Physical card activation
+
+    func physicalCardActivationPresenter() -> PhysicalCardActivationPresenterProtocol {
+        return PhysicalCardActivationPresenter(notificationHandler: serviceLocator.notificationHandler)
+    }
+
+    func physicalCardActivationSucceedPresenter() -> PhysicalCardActivationSucceedPresenterProtocol {
+        return PhysicalCardActivationSucceedPresenter()
+    }
+
+    // MARK: - Transaction Details
+
+    func transactionDetailsPresenter() -> AptoCardTransactionDetailsPresenterProtocol {
+        return AptoCardTransactionDetailsPresenter()
+    }
 }

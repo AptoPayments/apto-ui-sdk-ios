@@ -9,18 +9,18 @@
 import AptoSDK
 
 class ServerMaintenanceErrorPresenter: ServerMaintenanceErrorPresenterProtocol {
-  // swiftlint:disable implicitly_unwrapped_optional
-  var router: ServerMaintenanceErrorModuleProtocol!
-  var interactor: ServerMaintenanceErrorInteractorProtocol!
-  // swiftlint:enable implicitly_unwrapped_optional
-  var analyticsManager: AnalyticsServiceProtocol?
+    // swiftlint:disable implicitly_unwrapped_optional
+    var router: ServerMaintenanceErrorModuleProtocol!
+    var interactor: ServerMaintenanceErrorInteractorProtocol!
+    // swiftlint:enable implicitly_unwrapped_optional
+    var analyticsManager: AnalyticsServiceProtocol?
 
-  func viewLoaded() {
-    analyticsManager?.track(event: Event.maintenance)
-  }
+    func viewLoaded() {
+        analyticsManager?.track(event: Event.maintenance)
+    }
 
-  func retryTapped() {
-    router.pendingRequestsExecuted()
-    interactor.runPendingRequests()
-  }
+    func retryTapped() {
+        router.pendingRequestsExecuted()
+        interactor.runPendingRequests()
+    }
 }

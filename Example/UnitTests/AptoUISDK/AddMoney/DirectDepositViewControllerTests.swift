@@ -12,12 +12,11 @@ import XCTest
 @testable import AptoUISDK
 
 class DirectDepositViewControllerTests: XCTestCase {
-
     let cardId = "crd_1234567890"
-    
+
     func test_init_doesNotLoadCardInfo() {
         let (_, loader) = makeSUT()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 0)
     }
 
@@ -25,18 +24,18 @@ class DirectDepositViewControllerTests: XCTestCase {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 1)
     }
-    
+
     func test_loadCardInfo_showsLoadingIndicator() {
         let (sut, _) = makeSUT()
 
         sut.loadViewIfNeeded()
-        
+
         XCTAssertTrue(sut.isActivityIndicatorLoading)
     }
-    
+
     func test_loadCardCompletion_hidesLoadingIndicator() {
         let (sut, loader) = makeSUT()
 
@@ -45,16 +44,16 @@ class DirectDepositViewControllerTests: XCTestCase {
 
         XCTAssertFalse(sut.isActivityIndicatorLoading)
     }
-    
+
     func test_loadCardInfoCompletion_loadsCardProductInfo() {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
         loader.completeCardInfoLoading()
-        
+
         XCTAssertEqual(loader.loadCardInfoCallCount, 1)
     }
-    
+
     func test_loadCardCompletion_rendersSuccessfullyLoadedInfo() {
         let card = ModelDataProvider.provider.cardWithACHAccount
         let (sut, loader) = makeSUT()
@@ -67,6 +66,7 @@ class DirectDepositViewControllerTests: XCTestCase {
     }
 
     // MARK: - Helpers
+
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DirectDepositViewController, loader: CardLoaderSpy) {
         let loader = CardLoaderSpy()
         let viewModel = DirectDepositViewModel(cardId: cardId, loader: loader, analyticsManager: AnalyticsManagerSpy())
@@ -74,7 +74,7 @@ class DirectDepositViewControllerTests: XCTestCase {
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
-    }    
+    }
 }
 
 private extension DirectDepositViewController {
