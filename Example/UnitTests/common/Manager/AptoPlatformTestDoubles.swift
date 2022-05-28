@@ -10,6 +10,7 @@
 
 class AptoPlatformFake: AptoPlatformProtocol {
     var delegate: AptoPlatformDelegate?
+    var tokenProvider: AptoPlatformWebTokenProvider?
     var currentPCIAuthenticationType: PCIAuthType {
         lastCardOptionsSet?.authenticateOnPCI ?? .none
     }

@@ -23,6 +23,8 @@ class UserStorageSpy: UserStorageProtocol {
         lastCreateUserCustodianUid = custodianUid
         lastCreateUserMetadata = metadata
     }
+    
+    func createUser(_ apiKey: String, webToken: String, callback: @escaping Result<AptoUser, NSError>.Callback) {}
 
     func loginWith(_: String, verifications _: [Verification],
                    callback _: @escaping Result<AptoUser, NSError>.Callback) {}

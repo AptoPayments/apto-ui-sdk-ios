@@ -46,7 +46,8 @@ struct ConfigurationResolver {
         else {
             return storedConfiguration ?? .default
         }
-        let configuration = Configuration(apiKey: apiKey, environment: extract(from: environment))
+
+        let configuration = Configuration(apiKey: apiKey, environment: extract(from: environment), tokenKey: Configuration.default.tokenKey, tokenBaseUrl: Configuration.default.tokenBaseUrl)
         store(configuration)
         return configuration
     }
@@ -73,6 +74,7 @@ struct ConfigurationResolver {
         guard let apiKey = userDefaults.string(forKey: AptoBranchKeys.apiKey) else { return nil }
         let storedEnvironment = userDefaults.integer(forKey: AptoBranchKeys.environment)
         let environment = AptoPlatformEnvironment(rawValue: storedEnvironment) ?? AptoPlatformEnvironment.sandbox
-        return Configuration(apiKey: apiKey, environment: environment)
+
+        return Configuration(apiKey: apiKey, environment: environment, tokenKey: Configuration.default.tokenKey, tokenBaseUrl: Configuration.default.tokenBaseUrl)
     }
 }

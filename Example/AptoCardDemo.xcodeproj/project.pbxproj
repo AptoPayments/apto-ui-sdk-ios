@@ -64,6 +64,8 @@
 		2CFD38481FA8959500ADD20E /* SDKSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFD38471FA8959500ADD20E /* SDKSettingsScreen.swift */; };
 		2CFD384C1FA8962E00ADD20E /* LedgeUITestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFD384B1FA8962E00ADD20E /* LedgeUITestSuite.swift */; };
 		2CFD384E1FA8BA1500ADD20E /* InputPhoneScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */; };
+		2E240151B612F50FBC8C82E7 /* WebToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E240F74C6B43B9B8B08BCDE /* WebToken.swift */; };
+		2E24075DA5AC5E8E9EF4AC28 /* WebAuthTokenHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E240458207F35EEEF19D22E /* WebAuthTokenHelper.swift */; };
 		334E13232464479700BADC89 /* FundingSourceSelectorPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334E13222464479700BADC89 /* FundingSourceSelectorPresenterTest.swift */; };
 		334E13252464483500BADC89 /* FundingSourceSelectorTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334E13242464483500BADC89 /* FundingSourceSelectorTestDoubles.swift */; };
 		334E132724645B5400BADC89 /* FundingSourceSelectorInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334E132624645B5400BADC89 /* FundingSourceSelectorInteractorTest.swift */; };
@@ -399,6 +401,8 @@
 		2CFD38471FA8959500ADD20E /* SDKSettingsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKSettingsScreen.swift; sourceTree = "<group>"; };
 		2CFD384B1FA8962E00ADD20E /* LedgeUITestSuite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedgeUITestSuite.swift; sourceTree = "<group>"; };
 		2CFD384D1FA8BA1500ADD20E /* InputPhoneScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPhoneScreen.swift; sourceTree = "<group>"; };
+		2E240458207F35EEEF19D22E /* WebAuthTokenHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthTokenHelper.swift; sourceTree = "<group>"; };
+		2E240F74C6B43B9B8B08BCDE /* WebToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebToken.swift; sourceTree = "<group>"; };
 		2FD9B79683F0323F267BEC7B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		334E13222464479700BADC89 /* FundingSourceSelectorPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundingSourceSelectorPresenterTest.swift; sourceTree = "<group>"; };
 		334E13242464483500BADC89 /* FundingSourceSelectorTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundingSourceSelectorTestDoubles.swift; sourceTree = "<group>"; };
@@ -762,6 +766,7 @@
 				2CDCD1EE1E96983D00107D26 /* Link.entitlements */,
 				2C526ACC1DD5FE5D00537C86 /* Tools */,
 				2C526AD11DD5FE5D00537C86 /* ViewControllers */,
+				2E24070DC85F63765FE2BC7A /* token */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -921,6 +926,15 @@
 			);
 			name = Helpers;
 			path = Base/Helpers;
+			sourceTree = "<group>";
+		};
+		2E24070DC85F63765FE2BC7A /* token */ = {
+			isa = PBXGroup;
+			children = (
+				2E240F74C6B43B9B8B08BCDE /* WebToken.swift */,
+				2E240458207F35EEEF19D22E /* WebAuthTokenHelper.swift */,
+			);
+			path = token;
 			sourceTree = "<group>";
 		};
 		334E13212464477C00BADC89 /* FundingSource */ = {
@@ -2062,7 +2076,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework",
-				"${PODS_ROOT}/TwilioVoice/Build/iOS/TwilioVoice.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/TwilioVoice/TwilioVoice.framework/TwilioVoice",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -2404,6 +2418,8 @@
 				2C526ADC1DD5FE5D00537C86 /* PreProcessorMacros.m in Sources */,
 				3387119B244EE40300823377 /* ConfigurationResolver.swift in Sources */,
 				2C526AD41DD5FE5D00537C86 /* AppDelegate.swift in Sources */,
+				2E240151B612F50FBC8C82E7 /* WebToken.swift in Sources */,
+				2E24075DA5AC5E8E9EF4AC28 /* WebAuthTokenHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2769,7 +2785,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2789,7 +2805,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aptopayments.aptocard.local;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Apto Card Development with Apple Pay";
+				PROVISIONING_PROFILE_SPECIFIER = "Apto Card App Development (Local) Profile";
 				RUN_LINTER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Demo/tools/Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2873,7 +2889,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -2978,7 +2994,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3081,11 +3097,12 @@
 				BUNDLE_TYPE = Staging;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Link/Link.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
+				ENABLE_TESTABILITY = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -3104,7 +3121,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.aptopayments.aptocard.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Apto SDK Experiments Alpha";
+				PROVISIONING_PROFILE_SPECIFIER = "Apto Card Stg Profile";
 				RUN_LINTER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Demo/tools/Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3188,7 +3205,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = QWTPF9R98K;
 				ENABLE_TESTABILITY = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

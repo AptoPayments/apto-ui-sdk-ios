@@ -48,7 +48,13 @@ class JSONTransportSpy: JSONTransport {
         lastPostParameters = parameters
         lastPostFilterInvalidTokenResult = filterInvalidTokenResult
     }
-
+    func post(_ url: URLConvertible,
+              authorization: JSONTransportAuthorization,
+              body: String?,
+              headers: [String: String]?,
+              filterInvalidTokenResult: Bool,
+              callback: @escaping Swift.Result<JSON, NSError>.Callback){}
+    
     private(set) var putCalled = false
     private(set) var lastPutURL: URLConvertible?
     private(set) var lastPutAuthorization: JSONTransportAuthorization?

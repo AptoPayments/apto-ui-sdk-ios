@@ -105,6 +105,7 @@ class ModelDataProvider {
                              skipSteps: true,
                              strictAddressValidation: false,
                              defaultCountryCode: 1,
+                             requiredSignedPayloads: false,
                              products: [.link],
                              welcomeScreenAction: workflowAction,
                              supportEmailAddress: nil,

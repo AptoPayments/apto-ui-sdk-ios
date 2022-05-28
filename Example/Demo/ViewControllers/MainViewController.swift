@@ -58,6 +58,7 @@ class MainViewController: UIViewController {
         versionLabel.text = "Apto SDK Demo App (\(buildType))\nversion \(BuildInformation.version!), build \(BuildInformation.build!)"
 
         AptoPlatform.defaultManager().delegate = self
+        AptoPlatform.defaultManager().tokenProvider = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,6 +109,43 @@ class MainViewController: UIViewController {
                 break
             }
         }
+    }
+}
+
+extension MainViewController: AptoPlatformWebTokenProvider {
+    public func getToken(_ payload: [String: Any], callback:@escaping (Result<String, NSError>) -> ()) {
+        guard let reqUrl = URL(string: Configuration.default.tokenBaseUrl) else {
+            return
+        }
+
+        var req = URLRequest(url: reqUrl)
+        let bearer = WebAuthTokenHelper.generateAuthToken()
+
+        req.method = .post
+        req.headers = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": "Bearer " + bearer];
+        do {
+            req.httpBody = try JSONSerialization.data(withJSONObject: payload)
+        } catch {
+            print("HTTP Request Failed \(error)")
+            callback(.failure(WebTokenError()))
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: req) { data, response, error in
+            do {
+                if let data = data {
+                    let result: WebToken = try JSONDecoder().decode(WebToken.self, from: data)
+                    callback(.success(result.token))
+                } else if let error = error {
+                    print("HTTP Request returned bad data \(error)")
+                    callback(.failure(WebTokenError()))
+                }
+            } catch {
+                print("HTTP Request Failed \(error)")
+                callback(.failure(WebTokenError()))
+            }
+        }
+        task.resume()
     }
 }
 

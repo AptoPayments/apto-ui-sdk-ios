@@ -10,7 +10,7 @@ SCHEME = {
 PUBLIC_REPOS = {
   :core => "../../../apto-sdk-ios",
   :ui => "../../../apto-ui-sdk-ios",
-  :objc => "../../../apto-objc-sdk-ios",
+  :twilio_voip => "../../../apto-voip-twilio-ios-provider",
   :docs => "/static"
 }
 APTO_BOT_CREDENTIALS = ENV["USER_TOKEN"].to_s
@@ -19,7 +19,7 @@ APTO_DEVELOPER_DOCS_GIT = "https://" + APTO_BOT_CREDENTIALS + "@github.com/AptoP
 POD_SPECS = {
   :core => "../../AptoSDK.podspec",
   :ui => "../../AptoUISDK.podspec",
-  :objc => "../../AptoObjCSDK.podspec"
+  :twilio_voip => "../../AptoVoipTwilio.podspec"
 }
 
 platform :ios do
@@ -46,7 +46,7 @@ platform :ios do
   lane :automation_tests do
     scan(
       workspace: WORKSPACE,
-      device: "iPhone 11 Pro Max",
+      device: "iPhone 11 Pro Max (15.2)",
       scheme: SCHEME[:ui],
       clean: true,
       output_style: "rspec",
@@ -94,6 +94,30 @@ platform :ios do
     commit_local_ui_repo(version)
   end
 
+  desc "Publish Twilio VoIP wrapper"
+  lane :release_twilio_voip do
+    ensure_git_status_clean
+
+    current_branch = git_branch
+
+    # If not in the integration branch. Double check!!
+    should_continue = prompt(text: "Are you in the release branch? (Current branch: #{current_branch})", boolean: true)
+    UI.user_error!("Checkout the release branch to continue") unless should_continue
+
+    # New version
+    version = prompt(text: "New Twilio VoIP SDK version (Current version #{current_twilio_voip_pod_version}): ")
+    update_twilio_voip_pod_version(version)
+
+    # Update public repo
+    update_twilio_voip_repo
+    validate_twilio_voip_pod
+    publish_twilio_voip_repo(version)
+    update_private_repo_twilio_voip(version)
+
+    # Push repos to cocoapods
+    update_twilio_voip_cocoapods  
+  end
+
   desc "test_implementation"
   lane :test_implementation do
     version = prompt(text: "New Core SDK version (Current version #{current_core_pod_version}): ")
@@ -138,36 +162,6 @@ platform :ios do
     release_ui
   end
 
-  desc "Publish ObjC Wrapper SDK"
-  lane :release_objc do
-    # We will modify, commit and push files, better to start clean
-    ensure_git_status_clean
-
-    # Current branch
-    current_branch = git_branch
-
-    # If not in the integration branch. Double check!!
-    should_continue = prompt(text: "Are you in the release branch? (Current branch: #{current_branch})", boolean: true)
-    UI.user_error!("Checkout the release branch to continue") unless should_continue
-
-    # Verify tests pass before releasing.
-    # TODO: Replace by tests lane when Automation test are fixed
-    unit_tests
-
-    # New version
-    version = prompt(text: "New Core SDK version (Current version #{current_objc_pod_version}): ")
-    update_objc_pod_version(version)
-
-    # Update public repo
-    update_objc_repo
-    validate_objc_pod
-    publish_objc_repo(version)
-    update_private_repo_objc(version)
-
-    # Push repos to cocoapods
-    update_objc_cocoapods
-  end
-
   desc "Run linter"
   lane :linter do |options|
     if options[:file]
@@ -201,8 +195,8 @@ def current_ui_pod_version()
   current_version.scan(/".+"/).first
 end
 
-def current_objc_pod_version()
-  text = File.read(POD_SPECS[:objc])
+def current_twilio_voip_pod_version()
+  text = File.read(POD_SPECS[:twilio_voip])
   current_version = text.scan(/version.+".+"/).first
   current_version.scan(/".+"/).first
 end
@@ -222,15 +216,15 @@ def update_ui_pod_version(version)
   new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
   File.open(POD_SPECS[:ui], "w") {|file| file.puts new_contents }
 end
-
-def update_objc_pod_version(version)
-  # Update UI Podspec file
-  text = File.read(POD_SPECS[:objc])
+ 
+def update_twilio_voip_pod_version(version)
+  # Update Podspec file
+  text = File.read(POD_SPECS[:twilio_voip])
   new_contents = text.gsub(/version\s+=\s".+"/, "version          = \"#{version}\"")
   new_contents = new_contents.gsub(/tag\s=>\s".+"/, "tag => \"#{version}\"")
-  File.open(POD_SPECS[:objc], "w") {|file| file.puts new_contents }
+  File.open(POD_SPECS[:twilio_voip], "w") {|file| file.puts new_contents }
 end
- 
+
 def update_core_documentation
   repo = PUBLIC_REPOS[:docs]
  
@@ -314,18 +308,19 @@ def update_ui_repo
   sh("rm #{repo}/Assets/*.cer | true")
 end
 
-def update_objc_repo
-  repo = PUBLIC_REPOS[:objc]
+def update_twilio_voip_repo
+  repo = PUBLIC_REPOS[:twilio_voip]
   repo_pod = "#{repo}/Pod"
-  repo_code = "#{repo}/Pod/Classes/wrappers"
+  repo_code = "#{repo}/Pod/Classes/wrappers/"
 
   # Remove current content
-  sh("cp #{POD_SPECS[:objc]} #{repo}")
+  sh("cp #{POD_SPECS[:twilio_voip]} #{repo}")
   sh("rm -rf #{repo_pod} | true")
+  sh("mkdir -p #{repo_code}")
 
   # Copy new content
-  sh("mkdir -p #{repo_code}")
-  sh("cp -r ../../Pod/Classes/wrappers/objc #{repo_code}")
+  sh("cp -r ../../Pod/Classes/wrappers/twilio-voip #{repo_code}")
+  sh("cp ../../Pod/Classes/wrappers/twilio-voip/CHANGELOG.md #{repo}")
 end
 
 def validate_core_pod
@@ -342,13 +337,13 @@ def validate_ui_pod
   end
 end
 
-def validate_objc_pod
+def validate_twilio_voip_pod
   # Verify Podspec file. We do not wanna validate the dependencies. Unit tests already passed.
-  Dir.chdir(PUBLIC_REPOS[:objc]) do
-    sh("pod lib lint AptoObjCSDK.podspec --allow-warnings --no-subspecs --skip-tests --silent")
+  Dir.chdir(PUBLIC_REPOS[:twilio_voip]) do
+    sh("pod lib lint AptoVoipTwilio.podspec --allow-warnings --no-subspecs --skip-tests --silent")
   end
 end
- 
+
 def update_private_repo_core(version)
   sh("git add #{POD_SPECS[:core]}")
   sh("git commit -m \"bump core SDK podspec version to #{version}\"")
@@ -361,9 +356,9 @@ def update_private_repo_ui(version)
   sh("git push -u")
 end
 
-def update_private_repo_objc(version)
-  sh("git add #{POD_SPECS[:objc]}")
-  sh("git commit -m \"bump Obj-C wrapper podspec version to #{version}\"")
+def update_private_repo_twilio_voip(version)
+  sh("git add #{POD_SPECS[:twilio_voip]}")
+  sh("git commit -m \"bump Twilio VoIP wrapper podspec version to #{version}\"")
   sh("git push -u")
 end
 
@@ -387,8 +382,8 @@ def publish_ui_repo(version)
   end
 end
 
-def publish_objc_repo(version)
-  Dir.chdir(PUBLIC_REPOS[:objc]) do
+def publish_twilio_voip_repo(version)
+  Dir.chdir(PUBLIC_REPOS[:twilio_voip]) do
     sh("git add .")
     sh("git commit -m \"release version #{version}\"")
     sh("git push -u")
@@ -413,11 +408,11 @@ def update_ui_cocoapods
   end
 end
 
-def update_objc_cocoapods
+def update_twilio_voip_cocoapods
   # This step requires that you first:
   # pod trunk register user@server.com 'Your Full Name' --description='macbook pro'
-  Dir.chdir(PUBLIC_REPOS[:objc]) do
-    sh("pod trunk push AptoObjCSDK.podspec --allow-warnings --skip-tests")
+  Dir.chdir(PUBLIC_REPOS[:core]) do
+    sh("pod trunk push AptoVoipTwilio.podspec --allow-warnings --skip-tests")
   end
 end
 

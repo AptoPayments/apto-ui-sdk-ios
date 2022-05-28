@@ -58,14 +58,20 @@ class ToastView: UIView, ToastViewProtocol {
 
 extension UIViewController {
     func present(_ toast: ToastProtocol, animated: Bool) {
-        ToastController.shared.present(toast, toastView: ToastView(), animated: animated)
+        DispatchQueue.main.async {
+            ToastController.shared.present(toast, toastView: ToastView(), animated: animated)
+        }
     }
 
     func present(_ toast: ToastProtocol, withCustomToastView customToastView: ToastViewProtocol, animated: Bool) {
-        ToastController.shared.present(toast, toastView: customToastView, animated: animated)
+        DispatchQueue.main.async {
+            ToastController.shared.present(toast, toastView: customToastView, animated: animated)
+        }
     }
 
     func dismissToast(_ animated: Bool) {
-        ToastController.shared.dismiss(animated)
+        DispatchQueue.main.async {
+            ToastController.shared.dismiss(animated)
+        }
     }
 }

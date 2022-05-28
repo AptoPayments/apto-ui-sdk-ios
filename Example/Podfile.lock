@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.4.3)
+  - Alamofire (5.4.4)
   - AlamofireNetworkActivityIndicator (3.1.0):
     - Alamofire (~> 5.1)
   - AlamofireNetworkActivityLogger (3.4.0):
@@ -7,19 +7,19 @@ PODS:
   - AptoObjCSDK (1.1.0):
     - AptoSDK
   - AptoPCI (3.2.0)
-  - AptoSDK (3.8.0):
+  - AptoSDK (3.20.0):
     - Alamofire (~> 5.4.3)
     - AlamofireNetworkActivityIndicator (~> 3.1)
     - Bond (~> 7.6)
     - FTLinearActivityIndicator (= 1.2.1)
     - GoogleKit (~> 0.3)
-    - Mixpanel-swift (~> 2.7)
+    - Mixpanel-swift (~> 3.2.0)
     - PhoneNumberKit (~> 3.3.3)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.16.0):
+  - AptoUISDK (2.17.0):
     - AptoPCI (= 3.2.0)
-    - AptoSDK (= 3.8.0)
+    - AptoSDK (= 3.20.0)
     - Bond (~> 7.6)
     - Down (~> 0.8.0)
     - GoogleKit (~> 0.3)
@@ -28,7 +28,7 @@ PODS:
     - SnapKit (~> 5.0)
     - TrustKit (~> 1.6.0)
     - TTTAttributedLabel (~> 2.0)
-    - TwilioVoice (~> 5.0.0)
+    - TwilioVoice (~> 6.3.1)
   - Bond (7.8.1):
     - Differ (~> 1.4)
     - ReactiveKit (~> 3.14)
@@ -39,24 +39,24 @@ PODS:
   - Down (0.8.6)
   - FTLinearActivityIndicator (1.2.1)
   - GoogleKit (0.3.2)
-  - Mixpanel-swift (2.8.1):
-    - Mixpanel-swift/Complete (= 2.8.1)
-  - Mixpanel-swift/Complete (2.8.1)
-  - PhoneNumberKit (3.3.3):
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
-    - PhoneNumberKit/UIKit (= 3.3.3)
-  - PhoneNumberKit/PhoneNumberKitCore (3.3.3)
-  - PhoneNumberKit/UIKit (3.3.3):
+  - Mixpanel-swift (3.2.6):
+    - Mixpanel-swift/Complete (= 3.2.6)
+  - Mixpanel-swift/Complete (3.2.6)
+  - PhoneNumberKit (3.3.4):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.4)
+    - PhoneNumberKit/UIKit (= 3.3.4)
+  - PhoneNumberKit/PhoneNumberKitCore (3.3.4)
+  - PhoneNumberKit/UIKit (3.3.4):
     - PhoneNumberKit/PhoneNumberKitCore
   - PullToRefreshKit (0.8.8)
-  - ReactiveKit (3.17.4)
-  - SnapKit (5.0.1)
+  - ReactiveKit (3.19.1)
+  - SnapKit (5.6.0)
   - SnapshotTesting (1.7.2)
-  - SwiftLint (0.45.0)
-  - SwiftyJSON (5.0.0)
+  - SwiftLint (0.47.1)
+  - SwiftyJSON (5.0.1)
   - TrustKit (1.6.5)
   - TTTAttributedLabel (2.0.0)
-  - TwilioVoice (5.0.0)
+  - TwilioVoice (6.3.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.4.3)
@@ -70,7 +70,7 @@ DEPENDENCIES:
   - Down (~> 0.8)
   - FTLinearActivityIndicator (= 1.2.1)
   - GoogleKit (= 0.3.2)
-  - Mixpanel-swift (~> 2.7)
+  - Mixpanel-swift (~> 3.2.0)
   - PhoneNumberKit (~> 3.3.3)
   - PullToRefreshKit (~> 0.8)
   - SnapKit (~> 5.0)
@@ -113,31 +113,31 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
   AlamofireNetworkActivityLogger: 162ab8aee00e6267a4304d7cc134e13ccfe3bcc5
   AptoObjCSDK: c7c371631a33ca992fdfd8ace436fe9233eac31e
   AptoPCI: c6504de7ec402ce7570973d2957c193b5159390b
-  AptoSDK: 1ab7ac4e25c95c62610abbd9c3a342d050247b24
-  AptoUISDK: a96c047934277a8d4f83bf3c13be97db04ebd01c
+  AptoSDK: 5f25921eea0641b360c0b0e73a0213ee0143692e
+  AptoUISDK: bb4c1ae9b9d9b7edbb2e5c5ede3123bc763db972
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
   Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
   FTLinearActivityIndicator: a3ef57034bd05bc80c1a7c62c8797c0361fa7bee
   GoogleKit: c4b00706a0b1091b295e59920bbd46fd30f74243
-  Mixpanel-swift: 9d3a2597ef015f187abae0bfa5fda5997d5e4429
-  PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
+  Mixpanel-swift: ce120e0d51dcb0d0bf5a25e1ee232fe89ad1136b
+  PhoneNumberKit: 441e8b26ec88d598e3591de9061eff18f5dd12e8
   PullToRefreshKit: 7cc53e720e69f135cffa1a57784dfb534f0222ab
-  ReactiveKit: f9f9e079efa39312c597bf1508ef4810d111ce76
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  ReactiveKit: a36ebeb959fe6852dd674cc423163bfffb7e0541
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SnapshotTesting: 8caa6661fea7c8019d5b46de77c16bab99c36c5c
-  SwiftLint: e5c7f1fba68eccfc51509d5b2ce1699f5502e0c7
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
-  TwilioVoice: b75c5120e1e6a7402fd1f9f4917e8215ce8d7baf
+  TwilioVoice: 098a959181d4607921f5822d3c9f13043ea4075b
 
-PODFILE CHECKSUM: 2be361166817e533f80413d7b9ba6e89082d632d
+PODFILE CHECKSUM: c5ea0c90c51279a23840ca08ffb2f2485ddc2048
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
