@@ -15,7 +15,7 @@ import XCTest
 class DirectDepositViewTests: XCTestCase {
     func test_infoView_rendersViewWithInfoAndValue() {
         let view = ShowInfoView(uiconfig: UIConfig.default)
-        view.configure(with: "Bank Name", valueText: "Evolve Bank & Trust")
+        view.configure(with: "Bank Name", valueText: "Patriot Bank, N.A.")
         let vc = HostViewController(with: view)
 
         vc.view.snp.makeConstraints { make in
@@ -31,7 +31,7 @@ class DirectDepositViewTests: XCTestCase {
         let details = ACHAccountDetails(routingNumber: "123000789", accountNumber: "1234567890")
         let viewData = DirectDepositViewData(accountDetails: details,
                                              description: "Login to your external account to submit a direct deposit account request or ACH bank transfer. You'll need the information below to complete the set up:",
-                                             footer: "The [appName] account is offered by Evolve Bank & Trust.")
+                                             footer: "The [appName] account is offered by Patriot Bank, N.A.")
         view.configure(with: viewData)
         let vc = HostViewController(with: view)
 

@@ -79,14 +79,6 @@ Publish UI SDK
 
 Release core and UI SDKs
 
-### ios release_objc
-
-```sh
-[bundle exec] fastlane ios release_objc
-```
-
-Publish ObjC Wrapper SDK
-
 ### ios linter
 
 ```sh

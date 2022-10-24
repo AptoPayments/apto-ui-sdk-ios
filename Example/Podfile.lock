@@ -17,7 +17,7 @@ PODS:
     - PhoneNumberKit (~> 3.3.3)
     - SwiftyJSON (~> 5.0)
     - TrustKit (~> 1.6)
-  - AptoUISDK (2.17.0):
+  - AptoUISDK (3.21.0):
     - AptoPCI (= 3.2.0)
     - AptoSDK (= 3.20.0)
     - Bond (~> 7.6)
@@ -119,7 +119,7 @@ SPEC CHECKSUMS:
   AptoObjCSDK: c7c371631a33ca992fdfd8ace436fe9233eac31e
   AptoPCI: c6504de7ec402ce7570973d2957c193b5159390b
   AptoSDK: 5f25921eea0641b360c0b0e73a0213ee0143692e
-  AptoUISDK: bb4c1ae9b9d9b7edbb2e5c5ede3123bc763db972
+  AptoUISDK: 7212864815cbdb054c866696c6939bdc12938a51
   Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
   Branch: 65d05ffb137ef504777cff6bd4fb6f770f17145a
   Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e

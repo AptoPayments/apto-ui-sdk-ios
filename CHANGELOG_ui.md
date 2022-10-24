@@ -1,5 +1,8 @@
 ## CHANGELOG AptoUISDK
 
+# 2022-10-24 Version 3.21.0
+- feat: Update default Bank Name from Evolve to Patriot
+
 # 2022-05-27 Version 3.20.0
 - feat: Origin Verification added
 

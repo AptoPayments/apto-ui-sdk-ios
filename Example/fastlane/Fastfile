@@ -142,7 +142,7 @@ platform :ios do
     unit_tests
 
     # New version
-    version = prompt(text: "New Core SDK version (Current version #{current_ui_pod_version}): ")
+    version = prompt(text: "New UI SDK version (Current version #{current_ui_pod_version}): ")
     update_ui_pod_version(version)
 
     # Update public repo
